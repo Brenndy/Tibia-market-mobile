@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=375"/>
+<title>Statystyki</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0e1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  width: 375px; min-height: 812px; overflow-x: hidden; color: #f0e6c8;
+}
+.status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px 8px; margin-top: 44px; background: #111827;
+}
+.status-time { font-size: 15px; font-weight: 700; }
+.status-icons { font-size: 13px; display: flex; gap: 6px; }
+.navbar {
+  background: #111827; padding: 10px 16px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid #1e2d47;
+}
+.navbar-title { font-size: 20px; font-weight: 800; }
+.world-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: #1a2236; border: 1px solid #1e2d47;
+  padding: 5px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;
+}
+
+.content { padding: 14px; padding-bottom: 90px; display: flex; flex-direction: column; gap: 14px; }
+
+/* Rank tabs */
+.rank-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0; }
+.rank-scroll::-webkit-scrollbar { display: none; }
+.rank-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 12px; border-radius: 20px; border: 1px solid #1e2d47;
+  background: #131c2e; white-space: nowrap; font-size: 12px; font-weight: 600; color: #4a5568;
+}
+.rank-tab.active { border-color: #c8a84b; background: #1a2236; color: #c8a84b; }
+
+/* Bar chart */
+.chart-card {
+  background: #131c2e; border: 1px solid #1e2d47; border-radius: 14px; padding: 14px;
+}
+.chart-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+.bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 130px; padding: 0 4px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.bar-label { font-size: 9px; color: #4a5568; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar { width: 100%; background: linear-gradient(180deg, #c8a84b, #8a6f28); border-radius: 4px 4px 0 0; min-height: 4px; }
+.bar-val { font-size: 9px; color: #c8a84b; font-weight: 700; }
+.bar-axis { height: 1px; background: #1e2d47; margin: 2px 0; width: 100%; }
+
+/* Ranking list */
+.list-card {
+  background: #131c2e; border: 1px solid #1e2d47; border-radius: 14px; padding: 14px;
+}
+.list-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.rank-row {
+  display: flex; align-items: center; padding: 9px 0;
+  border-bottom: 1px solid #1a2236; gap: 10px;
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-num { font-size: 16px; font-weight: 800; width: 28px; }
+.rank-info { flex: 1; }
+.rank-name { font-size: 13px; font-weight: 600; color: #f0e6c8; }
+.rank-cat { font-size: 10px; color: #4a5568; margin-top: 2px; }
+.rank-value { font-size: 13px; font-weight: 700; color: #c8a84b; }
+
+/* Summary */
+.summary-card {
+  background: #131c2e; border: 1px solid #1e2d47; border-radius: 14px; padding: 14px;
+}
+.summary-grid { display: flex; justify-content: space-around; }
+.summary-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.summary-icon { font-size: 24px; }
+.summary-val { font-size: 15px; font-weight: 700; }
+.summary-lbl { font-size: 10px; color: #4a5568; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; text-align: center; }
+
+/* Tab bar */
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0; width: 375px;
+  background: #0d1220; border-top: 1px solid #1e2d47;
+  display: flex; height: 80px; padding-bottom: 20px;
+}
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding-top: 8px; }
+.tab-icon { font-size: 22px; }
+.tab-label { font-size: 10px; font-weight: 600; }
+.tab.active .tab-label { color: #c8a84b; }
+.tab.inactive .tab-label { color: #4a5568; }
+.tab.inactive .tab-icon { opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <div class="status-time">9:41</div>
+  <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+</div>
+
+<div class="navbar">
+  <div class="navbar-title">Statystyki</div>
+  <div class="world-badge">🌍 Antica ▾</div>
+</div>
+
+<div class="content">
+
+  <!-- Rank type scroll -->
+  <div class="rank-scroll">
+    <div class="rank-tab active">📈 Najczęściej sprzedawane</div>
+    <div class="rank-tab">🛒 Najczęściej kupowane</div>
+    <div class="rank-tab">💰 Najdroższe (kupno)</div>
+    <div class="rank-tab">🏷 Najdroższe (sprzedaż)</div>
+  </div>
+
+  <!-- Bar chart -->
+  <div class="chart-card">
+    <div class="chart-title">Top 5</div>
+    <div class="bar-chart">
+      <div class="bar-wrap">
+        <div class="bar-val">1248</div>
+        <div class="bar" style="height:100%;"></div>
+        <div class="bar-axis"></div>
+        <div class="bar-label">Demon Helm.</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-val">987</div>
+        <div class="bar" style="height:79%;"></div>
+        <div class="bar-axis"></div>
+        <div class="bar-label">Dragon S.M.</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-val">843</div>
+        <div class="bar" style="height:68%;"></div>
+        <div class="bar-axis"></div>
+        <div class="bar-label">Dwarven R.</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-val">712</div>
+        <div class="bar" style="height:57%;"></div>
+        <div class="bar-axis"></div>
+        <div class="bar-label">Crystal Sw.</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-val">589</div>
+        <div class="bar" style="height:47%;"></div>
+        <div class="bar-axis"></div>
+        <div class="bar-label">Mastermind</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranking list -->
+  <div class="list-card">
+    <div class="list-title">Najczęściej sprzedawane</div>
+    <div class="rank-row">
+      <div class="rank-num" style="color:#c8a84b;">#1</div>
+      <div class="rank-info">
+        <div class="rank-name">Demon Helmet</div>
+        <div class="rank-cat">Armor</div>
+      </div>
+      <div class="rank-value">1 248 szt.</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num" style="color:#9ca3af;">#2</div>
+      <div class="rank-info">
+        <div class="rank-name">Dragon Scale Mail</div>
+        <div class="rank-cat">Armor</div>
+      </div>
+      <div class="rank-value">987 szt.</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num" style="color:#b45309;">#3</div>
+      <div class="rank-info">
+        <div class="rank-name">Dwarven Ring</div>
+        <div class="rank-cat">Jewelry</div>
+      </div>
+      <div class="rank-value">843 szt.</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num" style="color:#4a5568;">#4</div>
+      <div class="rank-info">
+        <div class="rank-name">Crystal Sword</div>
+        <div class="rank-cat">Weapons</div>
+      </div>
+      <div class="rank-value">712 szt.</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num" style="color:#4a5568;">#5</div>
+      <div class="rank-info">
+        <div class="rank-name">Mastermind Shield</div>
+        <div class="rank-cat">Armor</div>
+      </div>
+      <div class="rank-value">589 szt.</div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-card">
+    <div class="list-title">Podsumowanie Antica</div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-icon">📦</div>
+        <div class="summary-val">50+</div>
+        <div class="summary-lbl">Przedmiotów</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon" style="color:#4ade80;">📈</div>
+        <div class="summary-val" style="color:#4ade80;">42.5k</div>
+        <div class="summary-lbl">Najwyższe kupno</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon" style="color:#8a96b0;">🕐</div>
+        <div class="summary-val">09:35</div>
+        <div class="summary-lbl">Ostatnia aktualizacja</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tabbar">
+  <div class="tab inactive">
+    <div class="tab-icon">🏪</div>
+    <div class="tab-label">Market</div>
+  </div>
+  <div class="tab active">
+    <div class="tab-icon">📈</div>
+    <div class="tab-label" style="color:#c8a84b;">Statystyki</div>
+  </div>
+  <div class="tab inactive">
+    <div class="tab-icon">⭐</div>
+    <div class="tab-label">Ulubione</div>
+  </div>
+</div>
+
+</body>
+</html>

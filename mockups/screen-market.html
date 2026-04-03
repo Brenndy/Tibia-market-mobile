@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=375"/>
+<title>Market</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0e1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  width: 375px;
+  min-height: 812px;
+  overflow-x: hidden;
+  color: #f0e6c8;
+}
+
+/* Status bar */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px 8px;
+  margin-top: 44px;
+  background: #111827;
+}
+.status-time { font-size: 15px; font-weight: 700; color: #f0e6c8; }
+.status-icons { display: flex; gap: 6px; align-items: center; }
+.status-icons span { font-size: 13px; color: #f0e6c8; }
+
+/* Nav bar */
+.navbar {
+  background: #111827;
+  padding: 10px 16px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1e2d47;
+}
+.navbar-title { font-size: 20px; font-weight: 800; color: #f0e6c8; }
+.world-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #1a2236;
+  border: 1px solid #1e2d47;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0e6c8;
+}
+.world-badge .dot { font-size: 14px; }
+
+/* Filter bar */
+.filter-bar {
+  background: #111827;
+  padding: 10px 12px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #1e2d47;
+}
+.search-box {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f1621;
+  border: 1px solid #1e2d47;
+  border-radius: 10px;
+  padding: 0 12px;
+  height: 40px;
+  color: #4a5568;
+  font-size: 14px;
+}
+.search-box svg { flex-shrink: 0; }
+.sort-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0f1621;
+  border: 1px solid #1e2d47;
+  border-radius: 10px;
+  padding: 0 10px;
+  height: 40px;
+  font-size: 12px;
+  color: #f0e6c8;
+}
+
+/* Summary */
+.summary {
+  padding: 5px 14px;
+  font-size: 11px;
+  color: #4a5568;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.summary .upd { color: #c8a84b; }
+
+/* Item cards */
+.cards { padding: 4px 0 80px; }
+.card {
+  background: #131c2e;
+  border: 1px solid #1e2d47;
+  border-radius: 12px;
+  padding: 13px;
+  margin: 4px 12px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.card-title-row { display: flex; align-items: center; gap: 7px; flex: 1; }
+.card-name { font-size: 15px; font-weight: 600; color: #f0e6c8; }
+.cat-badge {
+  background: #1a2236;
+  border: 1px solid #1e2d47;
+  border-radius: 5px;
+  padding: 2px 6px;
+  font-size: 10px;
+  color: #4a5568;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.star { font-size: 17px; color: #c8a84b; }
+.star.empty { color: #4a5568; }
+
+.prices-row { display: flex; align-items: center; }
+.price-block { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.price-label {
+  font-size: 10px; color: #4a5568; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px;
+}
+.price-val { font-size: 15px; font-weight: 700; }
+.price-avg { font-size: 10px; color: #4a5568; margin-top: 2px; }
+.buy { color: #4ade80; }
+.sell { color: #f87171; }
+.neutral { color: #f0e6c8; }
+.divider-v { width: 1px; height: 36px; background: #1e2d47; margin: 0 7px; }
+
+.spread-row {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid #1a2236;
+}
+.spread-label { color: #4a5568; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+.spread-val { color: #c8a84b; font-size: 13px; font-weight: 700; }
+
+/* Tab bar */
+.tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  width: 375px;
+  background: #0d1220;
+  border-top: 1px solid #1e2d47;
+  display: flex;
+  height: 80px;
+  padding-bottom: 20px;
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  padding-top: 8px;
+}
+.tab-icon { font-size: 22px; }
+.tab-label { font-size: 10px; font-weight: 600; }
+.tab.active .tab-label { color: #c8a84b; }
+.tab.active .tab-icon { filter: sepia(1) saturate(3) hue-rotate(5deg); }
+.tab.inactive .tab-label { color: #4a5568; }
+.tab.inactive .tab-icon { opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <div class="status-time">9:41</div>
+  <div class="status-icons">
+    <span>●●●</span>
+    <span>WiFi</span>
+    <span>🔋</span>
+  </div>
+</div>
+
+<div class="navbar">
+  <div class="navbar-title">Tibia Market</div>
+  <div class="world-badge">
+    <span class="dot">🌍</span>
+    Antica
+    <span style="color:#8a96b0;font-size:12px;">▾</span>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="search-box">
+    <svg width="16" height="16" fill="none" stroke="#4a5568" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    Szukaj przedmiotu...
+  </div>
+  <div class="sort-box">
+    <span style="color:#c8a84b;font-size:14px;">⇅</span>
+    Obrót/mies.
+    <span style="color:#8a96b0;font-size:12px;">↓</span>
+  </div>
+</div>
+
+<div class="summary">
+  <span>🔄</span>
+  <span>50 przedmiotów · Antica</span>
+  <span class="upd">Aktualizacja...</span>
+</div>
+
+<div class="cards">
+
+  <!-- Card 1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title-row">
+        <span class="card-name">Demon Helmet</span>
+        <span class="cat-badge">Armor</span>
+      </div>
+      <span class="star">★</span>
+    </div>
+    <div class="prices-row">
+      <div class="price-block">
+        <div class="price-label">Kupno</div>
+        <div class="price-val buy">42.5k</div>
+        <div class="price-avg">śr. 41.2k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Sprzedaż</div>
+        <div class="price-val sell">38k</div>
+        <div class="price-avg">śr. 37.8k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Obrót/mies.</div>
+        <div class="price-val neutral">1 248</div>
+        <div class="price-avg">szt.</div>
+      </div>
+    </div>
+    <div class="spread-row">
+      <span class="spread-label">Marża:</span>
+      <span class="spread-val">4.5k</span>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title-row">
+        <span class="card-name">Dragon Scale Mail</span>
+        <span class="cat-badge">Armor</span>
+      </div>
+      <span class="star empty">☆</span>
+    </div>
+    <div class="prices-row">
+      <div class="price-block">
+        <div class="price-label">Kupno</div>
+        <div class="price-val buy">12k</div>
+        <div class="price-avg">śr. 11.8k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Sprzedaż</div>
+        <div class="price-val sell">9.5k</div>
+        <div class="price-avg">śr. 9.3k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Obrót/mies.</div>
+        <div class="price-val neutral">987</div>
+        <div class="price-avg">szt.</div>
+      </div>
+    </div>
+    <div class="spread-row">
+      <span class="spread-label">Marża:</span>
+      <span class="spread-val">2.5k</span>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title-row">
+        <span class="card-name">Dwarven Ring</span>
+        <span class="cat-badge">Jewelry</span>
+      </div>
+      <span class="star">★</span>
+    </div>
+    <div class="prices-row">
+      <div class="price-block">
+        <div class="price-label">Kupno</div>
+        <div class="price-val buy">8.2k</div>
+        <div class="price-avg">śr. 8.1k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Sprzedaż</div>
+        <div class="price-val sell">6.8k</div>
+        <div class="price-avg">śr. 6.5k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Obrót/mies.</div>
+        <div class="price-val neutral">843</div>
+        <div class="price-avg">szt.</div>
+      </div>
+    </div>
+    <div class="spread-row">
+      <span class="spread-label">Marża:</span>
+      <span class="spread-val">1.4k</span>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title-row">
+        <span class="card-name">Crystal Sword</span>
+        <span class="cat-badge">Weapons</span>
+      </div>
+      <span class="star empty">☆</span>
+    </div>
+    <div class="prices-row">
+      <div class="price-block">
+        <div class="price-label">Kupno</div>
+        <div class="price-val buy">3.8k</div>
+        <div class="price-avg">śr. 3.7k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Sprzedaż</div>
+        <div class="price-val sell">3.1k</div>
+        <div class="price-avg">śr. 3.0k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Obrót/mies.</div>
+        <div class="price-val neutral">712</div>
+        <div class="price-avg">szt.</div>
+      </div>
+    </div>
+    <div class="spread-row">
+      <span class="spread-label">Marża:</span>
+      <span class="spread-val">700</span>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title-row">
+        <span class="card-name">Mastermind Shield</span>
+        <span class="cat-badge">Armor</span>
+      </div>
+      <span class="star empty">☆</span>
+    </div>
+    <div class="prices-row">
+      <div class="price-block">
+        <div class="price-label">Kupno</div>
+        <div class="price-val buy">18.5k</div>
+        <div class="price-avg">śr. 18.2k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Sprzedaż</div>
+        <div class="price-val sell">15k</div>
+        <div class="price-avg">śr. 14.8k</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="price-block">
+        <div class="price-label">Obrót/mies.</div>
+        <div class="price-val neutral">589</div>
+        <div class="price-avg">szt.</div>
+      </div>
+    </div>
+    <div class="spread-row">
+      <span class="spread-label">Marża:</span>
+      <span class="spread-val">3.5k</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="tabbar">
+  <div class="tab active">
+    <div class="tab-icon">🏪</div>
+    <div class="tab-label" style="color:#c8a84b;">Market</div>
+  </div>
+  <div class="tab inactive">
+    <div class="tab-icon">📈</div>
+    <div class="tab-label">Statystyki</div>
+  </div>
+  <div class="tab inactive">
+    <div class="tab-icon">⭐</div>
+    <div class="tab-label">Ulubione</div>
+  </div>
+</div>
+
+</body>
+</html>

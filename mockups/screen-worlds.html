@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=375"/>
+<title>Wybór świata</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0e1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  width: 375px; min-height: 812px; overflow-x: hidden; color: #f0e6c8;
+}
+.status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px 8px; margin-top: 44px; background: #111827;
+}
+.status-time { font-size: 15px; font-weight: 700; }
+.status-icons { font-size: 13px; display: flex; gap: 6px; }
+
+.navbar {
+  background: #111827; padding: 10px 16px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid #1e2d47;
+}
+.navbar-title { font-size: 20px; font-weight: 800; color: #f0e6c8; }
+.done-btn { color: #c8a84b; font-size: 15px; font-weight: 700; }
+
+.search-wrap {
+  padding: 10px 12px;
+  background: #111827;
+  border-bottom: 1px solid #1e2d47;
+}
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: #0f1621; border: 1px solid #1e2d47; border-radius: 10px;
+  padding: 0 12px; height: 40px; color: #4a5568; font-size: 14px;
+}
+
+.count { color: #4a5568; font-size: 11px; padding: 6px 16px; }
+
+.worlds-list { }
+.world-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  background: #111827;
+  border-bottom: 1px solid #1a2236;
+}
+.world-row.selected { background: #1a2236; }
+.world-left { display: flex; align-items: center; gap: 12px; }
+.location-icon { font-size: 22px; }
+.world-name { font-size: 15px; font-weight: 600; color: #f0e6c8; margin-bottom: 5px; }
+.world-name.selected-name { color: #c8a84b; }
+.badges { display: flex; gap: 4px; flex-wrap: wrap; }
+.badge {
+  border: 1px solid; border-radius: 4px;
+  padding: 1px 5px; font-size: 10px; font-weight: 600;
+}
+.badge-pvp-open { color: #22c55e; border-color: #22c55e; }
+.badge-pvp-hard { color: #ef4444; border-color: #ef4444; }
+.badge-pvp-opt { color: #3b82f6; border-color: #3b82f6; }
+.badge-battleye { color: #3b82f6; border-color: #3b82f6; }
+.badge-premium { color: #a855f7; border-color: #a855f7; }
+.world-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.online-row { display: flex; align-items: center; gap: 4px; }
+.online-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.online-text { color: #8a96b0; font-size: 12px; font-weight: 600; }
+.check { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <div class="status-time">9:41</div>
+  <div class="status-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
+</div>
+
+<div class="navbar">
+  <div class="navbar-title">Wybierz świat</div>
+  <div class="done-btn">Gotowe</div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <svg width="16" height="16" fill="none" stroke="#4a5568" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    Szukaj świata...
+  </div>
+</div>
+<div class="count">82 światów</div>
+
+<div class="worlds-list">
+
+  <div class="world-row selected">
+    <div class="world-left">
+      <div class="location-icon">🌍</div>
+      <div>
+        <div class="world-name selected-name">Antica</div>
+        <div class="badges">
+          <span class="badge badge-pvp-open">Open PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">1 204</div>
+      </div>
+      <div class="check">✔</div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌍</div>
+      <div>
+        <div class="world-name">Refugia</div>
+        <div class="badges">
+          <span class="badge badge-pvp-opt">Optional PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">987</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌍</div>
+      <div>
+        <div class="world-name">Secura</div>
+        <div class="badges">
+          <span class="badge badge-pvp-opt">Optional PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">843</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌎</div>
+      <div>
+        <div class="world-name">Lobera</div>
+        <div class="badges">
+          <span class="badge badge-pvp-open">Open PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+          <span class="badge badge-premium">Premium</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">721</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌍</div>
+      <div>
+        <div class="world-name">Harmonia</div>
+        <div class="badges">
+          <span class="badge badge-pvp-opt">Optional PvP</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">612</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌎</div>
+      <div>
+        <div class="world-name">Kalista</div>
+        <div class="badges">
+          <span class="badge badge-pvp-hard">Hardcore PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">589</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌏</div>
+      <div>
+        <div class="world-name">Gladera</div>
+        <div class="badges">
+          <span class="badge badge-pvp-open">Open PvP</span>
+          <span class="badge badge-battleye">BattlEye</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">501</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-row">
+    <div class="world-left">
+      <div class="location-icon">🌍</div>
+      <div>
+        <div class="world-name">Descubra</div>
+        <div class="badges">
+          <span class="badge badge-pvp-open">Retro Open PvP</span>
+        </div>
+      </div>
+    </div>
+    <div class="world-right">
+      <div class="online-row">
+        <div class="online-dot"></div>
+        <div class="online-text">468</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
