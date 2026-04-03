@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.tibiamarket.top:8001';
+const BASE_URL =
+  typeof window !== 'undefined' && window.location?.hostname !== 'localhost'
+    ? '/api/tibia'
+    : 'https://api.tibiamarket.top:8001';
 
 const api = axios.create({
   baseURL: BASE_URL,
