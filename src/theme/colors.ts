@@ -1,40 +1,51 @@
 export const colors = {
-  // Backgrounds
-  background: '#0a0e1a',
-  surface: '#111827',
-  surfaceElevated: '#1a2236',
-  card: '#131c2e',
-  cardBorder: '#1e2d47',
+  // Backgrounds — deep midnight
+  background: '#060b14',
+  surface: '#0c1423',
+  surfaceElevated: '#111e30',
+  card: '#0e1929',
+  cardBorder: '#1a2d45',
+  cardBorderGold: '#c9a22740',
 
-  // Tibia Gold accent
-  gold: '#c8a84b',
-  goldLight: '#e2c97e',
-  goldDark: '#8a6f28',
+  // Tibia Gold
+  gold: '#c9a227',
+  goldLight: '#e8c76a',
+  goldDim: '#c9a22720',
+  goldDark: '#7a5f0e',
 
   // Text
-  textPrimary: '#f0e6c8',
-  textSecondary: '#8a96b0',
-  textMuted: '#4a5568',
+  textPrimary: '#f0e8d0',
+  textSecondary: '#7a8ba8',
+  textMuted: '#3d5070',
 
-  // Status
-  buy: '#4ade80',
-  buyDim: '#166534',
-  sell: '#f87171',
-  sellDim: '#7f1d1d',
+  // Market colors
+  buy: '#16c784',
+  buyDim: '#16c78420',
+  buyBorder: '#16c78440',
+  sell: '#ea3943',
+  sellDim: '#ea394320',
+  sellBorder: '#ea394340',
 
   // UI
-  border: '#1e2d47',
-  divider: '#1a2236',
-  inputBg: '#0f1621',
+  border: '#1a2d45',
+  divider: '#0e1929',
+  inputBg: '#080f1c',
 
   // Tabs
-  tabActive: '#c8a84b',
-  tabInactive: '#4a5568',
-  tabBar: '#0d1220',
+  tabActive: '#c9a227',
+  tabInactive: '#3d5070',
+  tabBar: '#080f1c',
 
   // Badges
   badgePvp: '#ef4444',
   badgeOptional: '#3b82f6',
   badgeOpen: '#22c55e',
   badgePremium: '#a855f7',
+
+  // Glow colors
+  glowGold: '#c9a22730',
+  glowBuy: '#16c78420',
+  glowSell: '#ea394320',
 } as const;
+
+export type ColorKey = keyof typeof colors;

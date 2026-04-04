@@ -5,6 +5,7 @@ import {
   fetchItemHistory,
   fetchWorlds,
   fetchCategories,
+  fetchItemOffers,
   SortField,
 } from '../api/tibiaMarket';
 
@@ -60,4 +61,15 @@ export function useCategories() {
   return useQuery('categories', fetchCategories, {
     staleTime: 60 * 60_000,
   });
+}
+
+export function useItemOffers(world: string, itemName: string) {
+  return useQuery(
+    ['itemOffers', world, itemName],
+    () => fetchItemOffers(world, itemName),
+    {
+      enabled: !!world && !!itemName,
+      staleTime: 30_000,
+    }
+  );
 }

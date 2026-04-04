@@ -5,15 +5,33 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { MarketItem, formatGold } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
+import { ItemImage } from './ItemImage';
 
 interface MarketItemCardProps {
   item: MarketItem;
   world: string;
+}
+
+function PriceTrend({ current, average }: { current: number | null; average: number | null }) {
+  if (current == null || average == null || average === 0) return null;
+  const diff = ((current - average) / average) * 100;
+  const up = diff > 0;
+  const icon = up ? 'trending-up' : 'trending-down';
+  const color = up ? colors.sell : colors.buy;
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 3 }}>
+      <MaterialCommunityIcons name={icon as any} size={11} color={color} />
+      <Text style={{ color, fontSize: 10, fontWeight: '600' }}>
+        {Math.abs(diff).toFixed(1)}%
+      </Text>
+    </View>
+  );
 }
 
 export const MarketItemCard = memo(function MarketItemCard({
@@ -24,10 +42,18 @@ export const MarketItemCard = memo(function MarketItemCard({
   const { toggleFavorite, isFavorite } = useWorld();
   const favorite = isFavorite(item.name);
 
-  const spread =
-    item.sell_offer !== null && item.buy_offer !== null
+  const margin =
+    item.sell_offer != null && item.buy_offer != null
       ? item.sell_offer - item.buy_offer
       : null;
+
+  const marginPct =
+    margin != null && item.buy_offer != null && item.buy_offer > 0
+      ? (margin / item.buy_offer) * 100
+      : null;
+
+  const marginBarWidth =
+    marginPct != null ? Math.min(marginPct / 30, 1) : 0;
 
   return (
     <TouchableOpacity
@@ -38,23 +64,25 @@ export const MarketItemCard = memo(function MarketItemCard({
           params: { name: item.name, world },
         })
       }
-      activeOpacity={0.75}
+      activeOpacity={0.8}
     >
-      {/* Header row */}
-      <View style={styles.header}>
-        <View style={styles.titleRow}>
-          <Text style={styles.name} numberOfLines={1}>
-            {item.name}
-          </Text>
+      {/* Top row: image + name + category + star */}
+      <View style={styles.topRow}>
+        <View style={styles.imgWrap}>
+          <ItemImage wikiName={item.wiki_name} size={42} />
+        </View>
+        <View style={styles.titleCol}>
+          <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
           {item.category && (
-            <View style={styles.categoryBadge}>
-              <Text style={styles.categoryText}>{item.category}</Text>
+            <View style={styles.catBadge}>
+              <Text style={styles.catText}>{item.category}</Text>
             </View>
           )}
         </View>
         <TouchableOpacity
           onPress={() => toggleFavorite(item.name)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          style={styles.starBtn}
         >
           <MaterialCommunityIcons
             name={favorite ? 'star' : 'star-outline'}
@@ -64,42 +92,62 @@ export const MarketItemCard = memo(function MarketItemCard({
         </TouchableOpacity>
       </View>
 
+      {/* Divider */}
+      <View style={styles.dividerH} />
+
       {/* Price row */}
       <View style={styles.pricesRow}>
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>Kupno</Text>
+          <Text style={styles.priceLabel}>KUPNO</Text>
           <Text style={[styles.priceValue, { color: colors.buy }]}>
             {formatGold(item.buy_offer)}
           </Text>
-          <Text style={styles.avgText}>śr. {formatGold(item.month_average_buy)}</Text>
+          <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_buy)}</Text>
+          <PriceTrend current={item.buy_offer} average={item.month_average_buy} />
         </View>
 
-        <View style={styles.priceDivider} />
+        <View style={styles.dividerV} />
 
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>Sprzedaż</Text>
+          <Text style={styles.priceLabel}>SPRZEDAŻ</Text>
           <Text style={[styles.priceValue, { color: colors.sell }]}>
             {formatGold(item.sell_offer)}
           </Text>
-          <Text style={styles.avgText}>śr. {formatGold(item.month_average_sell)}</Text>
+          <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_sell)}</Text>
+          <PriceTrend current={item.sell_offer} average={item.month_average_sell} />
         </View>
 
-        <View style={styles.priceDivider} />
+        <View style={styles.dividerV} />
 
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>Obrót/mies.</Text>
+          <Text style={styles.priceLabel}>OBRÓT/M.</Text>
           <Text style={styles.priceValue}>
-            {item.month_sold ?? '—'}
+            {item.month_sold != null ? item.month_sold.toLocaleString() : '—'}
           </Text>
-          <Text style={styles.avgText}>szt.</Text>
+          <Text style={styles.avgLabel}>szt.</Text>
         </View>
       </View>
 
-      {/* Spread */}
-      {spread !== null && spread > 0 && (
-        <View style={styles.spreadRow}>
-          <Text style={styles.spreadLabel}>Marża:</Text>
-          <Text style={styles.spreadValue}>{formatGold(spread)}</Text>
+      {/* Margin bar */}
+      {margin != null && margin > 0 && (
+        <View style={styles.marginRow}>
+          <View style={styles.marginLeft}>
+            <Text style={styles.marginLabel}>MARŻA</Text>
+            <Text style={styles.marginValue}>{formatGold(margin)}</Text>
+            {marginPct != null && (
+              <Text style={styles.marginPct}>{marginPct.toFixed(1)}%</Text>
+            )}
+          </View>
+          <View style={styles.barWrap}>
+            <View style={styles.barTrack}>
+              <LinearGradient
+                colors={[colors.buy, colors.gold]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={[styles.barFill, { width: `${Math.round(marginBarWidth * 100)}%` }]}
+              />
+            </View>
+          </View>
         </View>
       )}
     </TouchableOpacity>
@@ -111,95 +159,140 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.cardBorder,
-    borderRadius: 12,
-    padding: 14,
+    borderRadius: 14,
     marginHorizontal: 12,
     marginVertical: 5,
+    overflow: 'hidden',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-  },
-  titleRow: {
-    flex: 1,
+  topRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    flexWrap: 'wrap',
-    marginRight: 8,
+    paddingHorizontal: 14,
+    paddingTop: 14,
+    paddingBottom: 10,
+    gap: 10,
   },
-  name: {
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '600',
-    flexShrink: 1,
-  },
-  categoryBadge: {
+  imgWrap: {
+    width: 44,
+    height: 44,
     backgroundColor: colors.surfaceElevated,
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    borderRadius: 6,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: colors.cardBorder,
   },
-  categoryText: {
+  titleCol: {
+    flex: 1,
+    gap: 5,
+  },
+  name: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 0.1,
+  },
+  catBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.surfaceElevated,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 5,
+  },
+  catText: {
     color: colors.textMuted,
-    fontSize: 10,
-    fontWeight: '600',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  starBtn: {
+    padding: 2,
+  },
+  dividerH: {
+    height: 1,
+    backgroundColor: colors.divider,
+    marginHorizontal: 14,
   },
   pricesRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 12,
   },
   priceBlock: {
     flex: 1,
     alignItems: 'center',
+    gap: 2,
   },
   priceLabel: {
     color: colors.textMuted,
-    fontSize: 10,
-    fontWeight: '600',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: 3,
   },
   priceValue: {
     color: colors.textPrimary,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
+    letterSpacing: -0.3,
   },
-  avgText: {
+  avgLabel: {
     color: colors.textMuted,
     fontSize: 10,
-    marginTop: 2,
   },
-  priceDivider: {
+  dividerV: {
     width: 1,
-    height: 36,
+    height: 44,
     backgroundColor: colors.border,
-    marginHorizontal: 8,
   },
-  spreadRow: {
+  marginRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
-    paddingTop: 8,
+    paddingHorizontal: 14,
+    paddingBottom: 12,
+    paddingTop: 4,
+    gap: 12,
     borderTopWidth: 1,
     borderTopColor: colors.divider,
-    gap: 6,
   },
-  spreadLabel: {
+  marginLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  marginLabel: {
     color: colors.textMuted,
-    fontSize: 11,
-    fontWeight: '600',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
-  spreadValue: {
-    color: colors.gold,
+  marginValue: {
+    color: colors.goldLight,
     fontSize: 13,
     fontWeight: '700',
+  },
+  marginPct: {
+    color: colors.textMuted,
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  barWrap: {
+    flex: 1,
+  },
+  barTrack: {
+    height: 4,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  barFill: {
+    height: '100%',
+    borderRadius: 2,
+    minWidth: 4,
   },
 });

@@ -13,14 +13,15 @@ import { colors } from '../theme/colors';
 import { SortField } from '../api/tibiaMarket';
 
 const SORT_OPTIONS: { label: string; value: SortField }[] = [
-  { label: 'Nazwa', value: 'name' },
+  { label: 'Obrót miesięczny', value: 'month_sold' },
+  { label: 'Marża', value: 'margin' },
   { label: 'Cena kupna', value: 'buy_offer' },
   { label: 'Cena sprzedaży', value: 'sell_offer' },
-  { label: 'Obrót miesięczny', value: 'month_sold' },
-  { label: 'Zakupy miesięczne', value: 'month_bought' },
-  { label: 'Obrót dzienny', value: 'day_sold' },
   { label: 'Śr. kupno/miesiąc', value: 'month_average_buy' },
   { label: 'Śr. sprzedaż/miesiąc', value: 'month_average_sell' },
+  { label: 'Zakupy miesięczne', value: 'month_bought' },
+  { label: 'Obrót dzienny', value: 'day_sold' },
+  { label: 'Nazwa', value: 'name' },
 ];
 
 interface SortPickerProps {

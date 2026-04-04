@@ -87,7 +87,22 @@ export type SortField =
   | 'day_sold'
   | 'day_bought'
   | 'month_average_buy'
-  | 'month_average_sell';
+  | 'month_average_sell'
+  | 'margin';
+
+export interface ItemOffer {
+  name: string;
+  amount: number;
+  price: number;
+  time: number;
+}
+
+export interface ItemOfferBook {
+  item_id: number;
+  sellers: ItemOffer[];
+  buyers: ItemOffer[];
+  update_time: number;
+}
 
 // ─── Internal API types ───────────────────────────────────────────────────────
 
@@ -157,6 +172,13 @@ export async function fetchMarketBoard(
     offset?: number;
     name?: string;
     category?: string;
+    categories?: string[];
+    minBuyPrice?: number;
+    maxBuyPrice?: number;
+    minSellPrice?: number;
+    maxSellPrice?: number;
+    minVolume?: number;
+    minMargin?: number;
   }
 ): Promise<MarketBoard> {
   const { metaById } = await getMetadata();
@@ -199,9 +221,45 @@ export async function fetchMarketBoard(
   if (options?.category) {
     items = items.filter((i) => i.category === options.category);
   }
+  if (options?.categories && options.categories.length > 0) {
+    const cats = new Set(options.categories);
+    items = items.filter((i) => i.category && cats.has(i.category));
+  }
+  if (options?.minBuyPrice != null) {
+    items = items.filter((i) => i.buy_offer != null && i.buy_offer >= options.minBuyPrice!);
+  }
+  if (options?.maxBuyPrice != null) {
+    items = items.filter((i) => i.buy_offer != null && i.buy_offer <= options.maxBuyPrice!);
+  }
+  if (options?.minSellPrice != null) {
+    items = items.filter((i) => i.sell_offer != null && i.sell_offer >= options.minSellPrice!);
+  }
+  if (options?.maxSellPrice != null) {
+    items = items.filter((i) => i.sell_offer != null && i.sell_offer <= options.maxSellPrice!);
+  }
+  if (options?.minVolume != null) {
+    items = items.filter((i) => (i.month_sold ?? 0) >= options.minVolume!);
+  }
+  if (options?.minMargin != null) {
+    items = items.filter((i) => {
+      if (i.sell_offer == null || i.buy_offer == null) return false;
+      return i.sell_offer - i.buy_offer >= options.minMargin!;
+    });
+  }
 
   // Client-side sorting
-  const field = options?.sort_field ?? 'month_sold';
+  const rawField = options?.sort_field ?? 'month_sold';
+  const field = rawField === 'margin' ? '_margin' : rawField;
+  // inject computed margin
+  if (rawField === 'margin') {
+    items = items.map((i) => ({
+      ...i,
+      _margin:
+        i.sell_offer != null && i.buy_offer != null
+          ? i.sell_offer - i.buy_offer
+          : null,
+    } as any));
+  }
   const order = options?.sort_order ?? 'desc';
   items.sort((a, b) => {
     const av = (a as any)[field] ?? (field === 'name' ? '' : -Infinity);
@@ -323,4 +381,37 @@ export function formatDate(dateStr: string): string {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+export async function fetchItemOffers(
+  world: string,
+  itemName: string
+): Promise<ItemOfferBook | null> {
+  const { metaByName } = await getMetadata();
+  const meta = metaByName.get(itemName.toLowerCase());
+  if (!meta) return null;
+
+  try {
+    const { data } = await api.get<{
+      id: number;
+      sellers: Array<{ name: string; amount: number; price: number; time: number }>;
+      buyers: Array<{ name: string; amount: number; price: number; time: number }>;
+      update_time: number;
+    }>('/market_board', {
+      params: { server: world, item_id: meta.id },
+    });
+    return {
+      item_id: data.id,
+      sellers: data.sellers ?? [],
+      buyers: data.buyers ?? [],
+      update_time: data.update_time,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function getItemImageUrl(wikiName: string): string {
+  const encoded = wikiName.replace(/ /g, '_');
+  return `https://tibiawiki.dev/images/${encoded}.gif`;
 }
