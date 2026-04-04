@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
 } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -19,8 +19,6 @@ import { colors } from '@/src/theme/colors';
 import { formatGold, MarketItem } from '@/src/api/tibiaMarket';
 import { useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
 
@@ -77,6 +75,7 @@ function RankCard({
 export default function StatisticsScreen() {
   const { selectedWorld } = useWorld();
   const navigation = useNavigation();
+  const { width: screenWidth } = useWindowDimensions();
   const [activeRank, setActiveRank] = useState<RankType>('month_sold');
 
   useLayoutEffect(() => {
@@ -158,7 +157,7 @@ export default function StatisticsScreen() {
           <Text style={styles.chartTitle}>Top 5</Text>
           <BarChart
             data={chartData}
-            width={SCREEN_WIDTH - 32}
+            width={screenWidth - 32}
             height={200}
             chartConfig={{
               backgroundColor: colors.card,
