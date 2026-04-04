@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { WorldProvider } from '@/src/context/WorldContext';
+import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { colors } from '@/src/theme/colors';
 
 const queryClient = new QueryClient({
@@ -21,6 +22,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={styles.root}>
       <QueryClientProvider client={queryClient}>
         <WorldProvider>
+          <WatchlistProvider>
           <StatusBar style="light" backgroundColor={colors.background} />
           <Stack
             screenOptions={{
@@ -47,6 +49,7 @@ export default function RootLayout() {
               }}
             />
           </Stack>
+          </WatchlistProvider>
         </WorldProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>

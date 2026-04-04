@@ -16,9 +16,11 @@ import { useItemStats, useItemHistory, useItemOffers } from '@/src/hooks/useMark
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
 import { ItemImage } from '@/src/components/ItemImage';
+import { WatchAlertModal } from '@/src/components/WatchAlertModal';
 import { colors } from '@/src/theme/colors';
 import { formatGold, formatDate } from '@/src/api/tibiaMarket';
 import { useWorld } from '@/src/context/WorldContext';
+import { useWatchlist } from '@/src/context/WatchlistContext';
 
 const HISTORY_DAYS_OPTIONS = [7, 14, 30, 90];
 
@@ -111,18 +113,32 @@ export default function ItemDetailScreen() {
     navigation.setOptions({
       title: name,
       headerRight: () => (
-        <TouchableOpacity onPress={() => toggleFavorite(name)} style={{ marginRight: 16 }}>
-          <MaterialCommunityIcons
-            name={favorite ? 'star' : 'star-outline'}
-            size={22}
-            color={favorite ? colors.gold : colors.textSecondary}
-          />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 12 }}>
+          <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={{ padding: 4 }}>
+            <MaterialCommunityIcons
+              name={watched ? 'bell' : 'bell-outline'}
+              size={22}
+              color={watched ? colors.gold : colors.textSecondary}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleFavorite(name)} style={{ padding: 4 }}>
+            <MaterialCommunityIcons
+              name={favorite ? 'star' : 'star-outline'}
+              size={22}
+              color={favorite ? colors.gold : colors.textSecondary}
+            />
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation, name, favorite, toggleFavorite]);
+  }, [navigation, name, favorite, toggleFavorite, watched]);
 
   const { width: screenWidth } = useWindowDimensions();
+  const [watchModalOpen, setWatchModalOpen] = useState(false);
+  const { isWatched, getAlert, addToWatchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const watched = isWatched(name);
+  const watchAlert = getAlert(name);
+
   const { data: stats, isLoading: statsLoading, isError: statsError, refetch } = useItemStats(world, name);
   const { data: history, isLoading: historyLoading } = useItemHistory(world, name, historyDays);
   const { data: offers, isLoading: offersLoading } = useItemOffers(world, name);
@@ -371,6 +387,26 @@ export default function ItemDetailScreen() {
         <StatRow label="Sprzedano" value={`${stats.day_sold?.toLocaleString() ?? '—'} szt.`} />
         <StatRow label="Zakupiono" value={`${stats.day_bought?.toLocaleString() ?? '—'} szt.`} />
       </View>
+
+      <WatchAlertModal
+        visible={watchModalOpen}
+        itemName={name}
+        wikiName={stats.name}
+        currentBuy={stats.buy_offer}
+        currentSell={stats.sell_offer}
+        initialBuyAlert={watchAlert?.buyAlert ?? null}
+        initialSellAlert={watchAlert?.sellAlert ?? null}
+        isEditing={watched}
+        onSave={(buy, sell) => {
+          if (buy == null && sell == null) {
+            removeFromWatchlist(name);
+          } else {
+            addToWatchlist({ itemName: name, wikiName: stats.name, buyAlert: buy, sellAlert: sell });
+          }
+        }}
+        onRemove={() => removeFromWatchlist(name)}
+        onClose={() => setWatchModalOpen(false)}
+      />
     </ScrollView>
   );
 }

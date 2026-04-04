@@ -1,6 +1,41 @@
 import { Tabs } from 'expo-router';
+import { View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/src/theme/colors';
+import { useWatchlist, isAlertTriggered } from '@/src/context/WatchlistContext';
+import { useMarketBoard } from '@/src/hooks/useMarket';
+import { useWorld } from '@/src/context/WorldContext';
+
+function WatchBellIcon({ color, size }: { color: string; size: number }) {
+  const { watchlist } = useWatchlist();
+  const { selectedWorld } = useWorld();
+  const { data } = useMarketBoard(selectedWorld, { rows: 2000 });
+
+  const triggered = watchlist.some((a) => {
+    const item = data?.items.find((i) => i.name === a.itemName);
+    const t = isAlertTriggered(a, item?.buy_offer ?? null, item?.sell_offer ?? null);
+    return t.buy || t.sell;
+  });
+
+  return (
+    <View>
+      <MaterialCommunityIcons name="bell" size={size} color={color} />
+      {triggered && (
+        <View style={{
+          position: 'absolute',
+          top: -2,
+          right: -4,
+          width: 8,
+          height: 8,
+          borderRadius: 4,
+          backgroundColor: colors.gold,
+          borderWidth: 1,
+          borderColor: colors.tabBar,
+        }} />
+      )}
+    </View>
+  );
+}
 
 export default function TabLayout() {
   return (
@@ -31,6 +66,14 @@ export default function TabLayout() {
             <MaterialCommunityIcons name="store" size={size} color={color} />
           ),
           headerTitle: 'Tibia Market',
+        }}
+      />
+      <Tabs.Screen
+        name="watchlist"
+        options={{
+          title: 'Alerty',
+          tabBarLabel: 'Alerty',
+          tabBarIcon: ({ color, size }) => <WatchBellIcon color={color} size={size} />,
         }}
       />
       <Tabs.Screen
