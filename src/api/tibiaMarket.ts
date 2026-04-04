@@ -3,9 +3,11 @@ import axios from 'axios';
 const IS_PRODUCTION_WEB =
   typeof window !== 'undefined' && window.location?.hostname !== 'localhost';
 
+// Web production: relative Vercel rewrite (/api/tibia → api.tibiamarket.top)
+// Native & web dev: Vercel proxy (avoids direct API rate limits from dev IP)
 const BASE_URL = IS_PRODUCTION_WEB
   ? '/api/tibia'
-  : 'https://api.tibiamarket.top:8001';
+  : 'https://tibia-market-mobile.vercel.app/api/tibia';
 
 const api = axios.create({
   baseURL: BASE_URL,
