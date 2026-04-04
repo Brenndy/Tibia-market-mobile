@@ -4,6 +4,6 @@
   "framework": null,
   "rewrites": [
     { "source": "/api/tibia/:path*", "destination": "https://api.tibiamarket.top:8001/:path*" },
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/((?!api/).*)", "destination": "/" }
   ]
 }

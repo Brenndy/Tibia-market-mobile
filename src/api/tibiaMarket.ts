@@ -412,6 +412,12 @@ export async function fetchItemOffers(
 }
 
 export function getItemImageUrl(wikiName: string): string {
+  if (!wikiName) return '';
   const encoded = wikiName.replace(/ /g, '_');
-  return `https://tibiawiki.dev/images/${encoded}.gif`;
+  // On web: use our Vercel proxy which fetches from Fandom wiki CDN
+  // On native: same proxy via full URL
+  if (typeof window !== 'undefined') {
+    return `/api/item-image?name=${encodeURIComponent(encoded)}`;
+  }
+  return `https://tibia-market-mobile.vercel.app/api/item-image?name=${encodeURIComponent(encoded)}`;
 }
