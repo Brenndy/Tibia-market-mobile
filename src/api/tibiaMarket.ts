@@ -52,6 +52,7 @@ export interface ItemHistory {
 
 export interface ItemStats {
   name: string;
+  wiki_name: string;
   world: string;
   buy_offer: number | null;
   sell_offer: number | null;
@@ -297,6 +298,7 @@ export async function fetchItemStats(
 
   return {
     name: meta.name,
+    wiki_name: meta.wiki_name,
     world,
     buy_offer: nullIfNegative(v.buy_offer),
     sell_offer: nullIfNegative(v.sell_offer),

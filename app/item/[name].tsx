@@ -39,6 +39,7 @@ const statStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 11,
+    paddingHorizontal: 14,
     borderBottomWidth: 1,
     borderBottomColor: colors.divider,
   },
@@ -192,7 +193,7 @@ export default function ItemDetailScreen() {
       >
         <View style={styles.heroLeft}>
           <View style={styles.heroImgWrap}>
-            <ItemImage wikiName={stats.name} size={64} />
+            <ItemImage wikiName={stats.wiki_name || stats.name} size={64} />
           </View>
           <View style={styles.heroInfo}>
             <Text style={styles.heroName} numberOfLines={2}>{stats.name}</Text>
