@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-const BASE_URL =
-  typeof window !== 'undefined' && window.location?.hostname !== 'localhost'
-    ? '/api/tibia'
-    : 'https://api.tibiamarket.top:8001';
+const IS_PRODUCTION_WEB =
+  typeof window !== 'undefined' && window.location?.hostname !== 'localhost';
+
+const BASE_URL = IS_PRODUCTION_WEB
+  ? '/api/tibia'
+  : 'https://api.tibiamarket.top:8001';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -414,10 +416,10 @@ export async function fetchItemOffers(
 export function getItemImageUrl(wikiName: string): string {
   if (!wikiName) return '';
   const encoded = wikiName.replace(/ /g, '_');
-  // On web: use our Vercel proxy which fetches from Fandom wiki CDN
-  // On native: same proxy via full URL
-  if (typeof window !== 'undefined') {
+  // In production web: use relative Vercel serverless proxy
+  if (IS_PRODUCTION_WEB) {
     return `/api/item-image?name=${encodeURIComponent(encoded)}`;
   }
+  // On localhost (dev) or native: use production Vercel proxy
   return `https://tibia-market-mobile.vercel.app/api/item-image?name=${encodeURIComponent(encoded)}`;
 }

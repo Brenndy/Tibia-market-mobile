@@ -107,7 +107,11 @@ export default function ItemDetailScreen() {
   const navigation = useNavigation();
   const [historyDays, setHistoryDays] = useState(30);
   const [activeChart, setActiveChart] = useState<'price' | 'volume'>('price');
+  const [watchModalOpen, setWatchModalOpen] = useState(false);
   const favorite = isFavorite(name);
+  const { isWatched, getAlert, addToWatchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const watched = isWatched(name);
+  const watchAlert = getAlert(name);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -134,10 +138,6 @@ export default function ItemDetailScreen() {
   }, [navigation, name, favorite, toggleFavorite, watched]);
 
   const { width: screenWidth } = useWindowDimensions();
-  const [watchModalOpen, setWatchModalOpen] = useState(false);
-  const { isWatched, getAlert, addToWatchlist, removeFromWatchlist, updateAlert } = useWatchlist();
-  const watched = isWatched(name);
-  const watchAlert = getAlert(name);
 
   const { data: stats, isLoading: statsLoading, isError: statsError, refetch } = useItemStats(world, name);
   const { data: history, isLoading: historyLoading } = useItemHistory(world, name, historyDays);
