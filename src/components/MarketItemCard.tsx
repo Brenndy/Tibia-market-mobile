@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -40,6 +41,8 @@ export const MarketItemCard = memo(function MarketItemCard({
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
+  const { width } = useWindowDimensions();
+  const narrow = width < 400;
   const favorite = isFavorite(item.name);
 
   const margin =
@@ -99,10 +102,10 @@ export const MarketItemCard = memo(function MarketItemCard({
       <View style={styles.pricesRow}>
         <View style={styles.priceBlock}>
           <Text style={styles.priceLabel}>KUPNO</Text>
-          <Text style={[styles.priceValue, { color: colors.buy }]}>
+          <Text style={[styles.priceValue, { color: colors.buy, fontSize: narrow ? 14 : 16 }]}>
             {formatGold(item.buy_offer)}
           </Text>
-          <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_buy)}</Text>
+          {!narrow && <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_buy)}</Text>}
           <PriceTrend current={item.buy_offer} average={item.month_average_buy} />
         </View>
 
@@ -110,10 +113,10 @@ export const MarketItemCard = memo(function MarketItemCard({
 
         <View style={styles.priceBlock}>
           <Text style={styles.priceLabel}>SPRZEDAŻ</Text>
-          <Text style={[styles.priceValue, { color: colors.sell }]}>
+          <Text style={[styles.priceValue, { color: colors.sell, fontSize: narrow ? 14 : 16 }]}>
             {formatGold(item.sell_offer)}
           </Text>
-          <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_sell)}</Text>
+          {!narrow && <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_sell)}</Text>}
           <PriceTrend current={item.sell_offer} average={item.month_average_sell} />
         </View>
 
@@ -121,7 +124,7 @@ export const MarketItemCard = memo(function MarketItemCard({
 
         <View style={styles.priceBlock}>
           <Text style={styles.priceLabel}>OBRÓT/M.</Text>
-          <Text style={styles.priceValue}>
+          <Text style={[styles.priceValue, { fontSize: narrow ? 14 : 16 }]}>
             {item.month_sold != null ? item.month_sold.toLocaleString() : '—'}
           </Text>
           <Text style={styles.avgLabel}>szt.</Text>
@@ -131,13 +134,11 @@ export const MarketItemCard = memo(function MarketItemCard({
       {/* Margin bar */}
       {margin != null && margin > 0 && (
         <View style={styles.marginRow}>
-          <View style={styles.marginLeft}>
-            <Text style={styles.marginLabel}>MARŻA</Text>
-            <Text style={styles.marginValue}>{formatGold(margin)}</Text>
-            {marginPct != null && (
-              <Text style={styles.marginPct}>{marginPct.toFixed(1)}%</Text>
-            )}
-          </View>
+          <Text style={styles.marginLabel}>MARŻA</Text>
+          <Text style={styles.marginValue}>{formatGold(margin)}</Text>
+          {marginPct != null && (
+            <Text style={styles.marginPct}>{marginPct.toFixed(1)}%</Text>
+          )}
           <View style={styles.barWrap}>
             <View style={styles.barTrack}>
               <LinearGradient
@@ -254,15 +255,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 14,
     paddingBottom: 12,
-    paddingTop: 4,
-    gap: 12,
+    paddingTop: 8,
+    gap: 8,
     borderTopWidth: 1,
     borderTopColor: colors.divider,
-  },
-  marginLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    flexWrap: 'nowrap',
   },
   marginLabel: {
     color: colors.textMuted,

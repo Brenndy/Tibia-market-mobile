@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
 } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
@@ -20,7 +20,6 @@ import { colors } from '@/src/theme/colors';
 import { formatGold, formatDate } from '@/src/api/tibiaMarket';
 import { useWorld } from '@/src/context/WorldContext';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const HISTORY_DAYS_OPTIONS = [7, 14, 30, 90];
 
 function StatRow({ label, value, valueColor }: { label: string; value: string; valueColor?: string }) {
@@ -123,6 +122,7 @@ export default function ItemDetailScreen() {
     });
   }, [navigation, name, favorite, toggleFavorite]);
 
+  const { width: screenWidth } = useWindowDimensions();
   const { data: stats, isLoading: statsLoading, isError: statsError, refetch } = useItemStats(world, name);
   const { data: history, isLoading: historyLoading } = useItemHistory(world, name, historyDays);
   const { data: offers, isLoading: offersLoading } = useItemOffers(world, name);
@@ -307,7 +307,7 @@ export default function ItemDetailScreen() {
           <>
             <LineChart
               data={chartData}
-              width={SCREEN_WIDTH - 64}
+              width={Math.min(screenWidth - 28, 700)}
               height={200}
               chartConfig={{
                 backgroundColor: colors.card,
