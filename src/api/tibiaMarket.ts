@@ -8,9 +8,6 @@ const BASE_URL =
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 15000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -92,6 +89,63 @@ export type SortField =
   | 'month_average_buy'
   | 'month_average_sell';
 
+// ─── Internal API types ───────────────────────────────────────────────────────
+
+interface RawMetadata {
+  id: number;
+  name: string;
+  wiki_name: string;
+  category: string | null;
+  tier: number | null;
+}
+
+interface RawMarketValue {
+  id: number;
+  time: number;
+  buy_offer: number;
+  sell_offer: number;
+  month_average_buy: number;
+  month_average_sell: number;
+  month_sold: number;
+  month_bought: number;
+  month_highest_buy: number;
+  month_lowest_sell: number;
+  day_average_buy: number;
+  day_average_sell: number;
+  day_sold: number;
+  day_bought: number;
+}
+
+interface RawWorldData {
+  name: string;
+  last_update: string;
+}
+
+// ─── Metadata cache ───────────────────────────────────────────────────────────
+
+let metaByName: Map<string, RawMetadata> | null = null;
+let metaById: Map<number, RawMetadata> | null = null;
+
+async function getMetadata() {
+  if (metaByName && metaById) return { metaByName, metaById };
+  const { data } = await api.get<RawMetadata[]>('/item_metadata');
+  metaByName = new Map();
+  metaById = new Map();
+  for (const item of data) {
+    metaByName.set(item.name.toLowerCase(), item);
+    metaById.set(item.id, item);
+  }
+  return { metaByName, metaById };
+}
+
+function nullIfNegative(v: number): number | null {
+  return v < 0 ? null : v;
+}
+
+function unixToISO(ts: number): string {
+  return new Date(ts * 1000).toISOString();
+}
+
 // ─── API Functions ────────────────────────────────────────────────────────────
 
 export async function fetchMarketBoard(
@@ -105,26 +159,97 @@ export async function fetchMarketBoard(
     category?: string;
   }
 ): Promise<MarketBoard> {
-  const params: Record<string, string | number> = { world };
-  if (options?.sort_field) params.sort_field = options.sort_field;
-  if (options?.sort_order) params.sort_order = options.sort_order;
-  if (options?.rows !== undefined) params.rows = options.rows;
-  if (options?.offset !== undefined) params.offset = options.offset;
-  if (options?.name) params.name = options.name;
-  if (options?.category) params.category = options.category;
+  const { metaById } = await getMetadata();
 
-  const { data } = await api.get<MarketBoard>('/market_board', { params });
-  return data;
+  const { data: rawValues } = await api.get<RawMarketValue[]>('/market_values', {
+    params: { server: world, limit: 2000 },
+  });
+
+  const { data: worldData } = await api.get<RawWorldData[]>('/world_data', {
+    params: { servers: world },
+  });
+  const last_update = worldData[0]?.last_update ?? new Date().toISOString();
+
+  let items: MarketItem[] = rawValues.map((v) => {
+    const meta = metaById.get(v.id);
+    return {
+      name: meta?.name ?? String(v.id),
+      wiki_name: meta?.wiki_name ?? '',
+      category: meta?.category ?? null,
+      tier: meta?.tier ?? null,
+      buy_offer: nullIfNegative(v.buy_offer),
+      sell_offer: nullIfNegative(v.sell_offer),
+      month_average_buy: nullIfNegative(v.month_average_buy),
+      month_average_sell: nullIfNegative(v.month_average_sell),
+      month_sold: nullIfNegative(v.month_sold),
+      month_bought: nullIfNegative(v.month_bought),
+      day_average_buy: nullIfNegative(v.day_average_buy),
+      day_average_sell: nullIfNegative(v.day_average_sell),
+      day_sold: nullIfNegative(v.day_sold),
+      day_bought: nullIfNegative(v.day_bought),
+      time: unixToISO(v.time),
+    };
+  });
+
+  // Client-side filtering
+  if (options?.name) {
+    const q = options.name.toLowerCase();
+    items = items.filter((i) => i.name.toLowerCase().includes(q));
+  }
+  if (options?.category) {
+    items = items.filter((i) => i.category === options.category);
+  }
+
+  // Client-side sorting
+  const field = options?.sort_field ?? 'month_sold';
+  const order = options?.sort_order ?? 'desc';
+  items.sort((a, b) => {
+    const av = (a as any)[field] ?? (field === 'name' ? '' : -Infinity);
+    const bv = (b as any)[field] ?? (field === 'name' ? '' : -Infinity);
+    if (av < bv) return order === 'desc' ? 1 : -1;
+    if (av > bv) return order === 'desc' ? -1 : 1;
+    return 0;
+  });
+
+  const offset = options?.offset ?? 0;
+  const rows = options?.rows ?? 50;
+  items = items.slice(offset, offset + rows);
+
+  return { world, last_update, items };
 }
 
 export async function fetchItemStats(
   world: string,
   itemName: string
 ): Promise<ItemStats> {
-  const { data } = await api.get<ItemStats>('/market_board/item', {
-    params: { world, name: itemName },
+  const { metaByName } = await getMetadata();
+  const meta = metaByName.get(itemName.toLowerCase());
+  if (!meta) throw new Error(`Item not found: ${itemName}`);
+
+  const { data } = await api.get<RawMarketValue[]>('/market_values', {
+    params: { server: world, item_ids: meta.id },
   });
-  return data;
+
+  const v = data[0];
+  if (!v) throw new Error(`No market data for: ${itemName}`);
+
+  return {
+    name: meta.name,
+    world,
+    buy_offer: nullIfNegative(v.buy_offer),
+    sell_offer: nullIfNegative(v.sell_offer),
+    month_average_buy: nullIfNegative(v.month_average_buy),
+    month_average_sell: nullIfNegative(v.month_average_sell),
+    month_sold: nullIfNegative(v.month_sold),
+    month_bought: nullIfNegative(v.month_bought),
+    day_average_buy: nullIfNegative(v.day_average_buy),
+    day_average_sell: nullIfNegative(v.day_average_sell),
+    day_sold: nullIfNegative(v.day_sold),
+    day_bought: nullIfNegative(v.day_bought),
+    highest_buy: nullIfNegative(v.month_highest_buy),
+    lowest_sell: nullIfNegative(v.month_lowest_sell),
+    time: unixToISO(v.time),
+  };
 }
 
 export async function fetchItemHistory(
@@ -132,20 +257,49 @@ export async function fetchItemHistory(
   itemName: string,
   days = 30
 ): Promise<ItemHistory[]> {
-  const { data } = await api.get<ItemHistory[]>('/market_board/item/history', {
-    params: { world, name: itemName, days },
+  const { metaByName } = await getMetadata();
+  const meta = metaByName.get(itemName.toLowerCase());
+  if (!meta) return [];
+
+  const { data } = await api.get<RawMarketValue[]>('/item_history', {
+    params: { server: world, item_id: meta.id, start_days_ago: days, end_days_ago: 0 },
   });
-  return data;
+
+  return data.map((v) => ({
+    date: unixToISO(v.time),
+    buy_offer: nullIfNegative(v.buy_offer),
+    sell_offer: nullIfNegative(v.sell_offer),
+    buy_average: nullIfNegative(v.day_average_buy),
+    sell_average: nullIfNegative(v.day_average_sell),
+    buy_volume: nullIfNegative(v.day_bought),
+    sell_volume: nullIfNegative(v.day_sold),
+  }));
 }
 
 export async function fetchWorlds(): Promise<World[]> {
-  const { data } = await api.get<World[]>('/worlds');
-  return data;
+  const { data } = await api.get<RawWorldData[]>('/world_data');
+  return data.map((w) => ({
+    name: w.name,
+    type: '',
+    location: '',
+    pvp_type: '',
+    battleye: false,
+    transfer_type: '',
+    players_online: 0,
+    record_players: 0,
+    record_date: '',
+    creation_date: '',
+    premium_only: false,
+  }));
 }
 
 export async function fetchCategories(): Promise<string[]> {
-  const { data } = await api.get<string[]>('/market_board/categories');
-  return data;
+  const { metaByName } = await getMetadata();
+  const cats = new Set<string>();
+  for (const item of metaByName.values()) {
+    if (item.category) cats.add(item.category);
+  }
+  return Array.from(cats).sort();
 }
 
 export function formatGold(value: number | null): string {
