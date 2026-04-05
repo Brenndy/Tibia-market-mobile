@@ -168,34 +168,19 @@ function unixToISO(ts: number): string {
 
 // ─── API Functions ────────────────────────────────────────────────────────────
 
-export async function fetchMarketBoard(
-  world: string,
-  options?: {
-    sort_field?: SortField;
-    sort_order?: 'asc' | 'desc';
-    name?: string;
-    category?: string;
-    categories?: string[];
-    minBuyPrice?: number;
-    maxBuyPrice?: number;
-    minSellPrice?: number;
-    maxSellPrice?: number;
-    minVolume?: number;
-    minMargin?: number;
-  }
-): Promise<MarketBoard> {
+// Fetches all raw market items for a world — no filtering, no sorting.
+// All processing happens client-side via filterAndSortItems().
+export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
   const { metaById } = await getMetadata();
 
-  const { data: rawValues } = await api.get<RawMarketValue[]>('/market_values', {
-    params: { server: world },
-  });
+  const [{ data: rawValues }, { data: worldData }] = await Promise.all([
+    api.get<RawMarketValue[]>('/market_values', { params: { server: world } }),
+    api.get<RawWorldData[]>('/world_data', { params: { servers: world } }),
+  ]);
 
-  const { data: worldData } = await api.get<RawWorldData[]>('/world_data', {
-    params: { servers: world },
-  });
   const last_update = worldData[0]?.last_update ?? new Date().toISOString();
 
-  let items: MarketItem[] = rawValues.map((v) => {
+  const items: MarketItem[] = rawValues.map((v) => {
     const meta = metaById.get(v.id);
     return {
       name: meta?.name ?? String(v.id),
@@ -216,63 +201,83 @@ export async function fetchMarketBoard(
     };
   });
 
-  // Client-side filtering
-  if (options?.name) {
+  return { world, last_update, items };
+}
+
+export interface FilterSortOptions {
+  sort_field?: SortField;
+  sort_order?: 'asc' | 'desc';
+  selectedItemNames?: string[];  // filter to exact item names (multi-select)
+  name?: string;                 // substring search fallback
+  categories?: string[];
+  minBuyPrice?: number;
+  maxBuyPrice?: number;
+  minSellPrice?: number;
+  maxSellPrice?: number;
+  minVolume?: number;
+  minMargin?: number;
+}
+
+// Pure client-side filter + sort on already-fetched items.
+// Call this inside useMemo — no API requests.
+export function filterAndSortItems(items: MarketItem[], options: FilterSortOptions): MarketItem[] {
+  let result = items;
+
+  if (options.selectedItemNames && options.selectedItemNames.length > 0) {
+    const nameSet = new Set(options.selectedItemNames.map((n) => n.toLowerCase()));
+    result = result.filter((i) => nameSet.has(i.name.toLowerCase()));
+  } else if (options.name) {
     const q = options.name.toLowerCase();
-    items = items.filter((i) => i.name.toLowerCase().includes(q));
+    result = result.filter((i) => i.name.toLowerCase().includes(q));
   }
-  if (options?.category) {
-    items = items.filter((i) => i.category === options.category);
-  }
-  if (options?.categories && options.categories.length > 0) {
+  if (options.categories && options.categories.length > 0) {
     const cats = new Set(options.categories);
-    items = items.filter((i) => i.category && cats.has(i.category));
+    result = result.filter((i) => i.category != null && cats.has(i.category));
   }
-  if (options?.minBuyPrice != null) {
-    items = items.filter((i) => i.buy_offer != null && i.buy_offer >= options.minBuyPrice!);
+  if (options.minBuyPrice != null) {
+    result = result.filter((i) => i.buy_offer != null && i.buy_offer >= options.minBuyPrice!);
   }
-  if (options?.maxBuyPrice != null) {
-    items = items.filter((i) => i.buy_offer != null && i.buy_offer <= options.maxBuyPrice!);
+  if (options.maxBuyPrice != null) {
+    result = result.filter((i) => i.buy_offer != null && i.buy_offer <= options.maxBuyPrice!);
   }
-  if (options?.minSellPrice != null) {
-    items = items.filter((i) => i.sell_offer != null && i.sell_offer >= options.minSellPrice!);
+  if (options.minSellPrice != null) {
+    result = result.filter((i) => i.sell_offer != null && i.sell_offer >= options.minSellPrice!);
   }
-  if (options?.maxSellPrice != null) {
-    items = items.filter((i) => i.sell_offer != null && i.sell_offer <= options.maxSellPrice!);
+  if (options.maxSellPrice != null) {
+    result = result.filter((i) => i.sell_offer != null && i.sell_offer <= options.maxSellPrice!);
   }
-  if (options?.minVolume != null) {
-    items = items.filter((i) => (i.month_sold ?? 0) >= options.minVolume!);
+  if (options.minVolume != null) {
+    result = result.filter((i) => (i.month_sold ?? 0) >= options.minVolume!);
   }
-  if (options?.minMargin != null) {
-    items = items.filter((i) => {
+  if (options.minMargin != null) {
+    result = result.filter((i) => {
       if (i.sell_offer == null || i.buy_offer == null) return false;
       return i.sell_offer - i.buy_offer >= options.minMargin!;
     });
   }
 
-  // Client-side sorting
-  const rawField = options?.sort_field ?? 'month_sold';
-  const field = rawField === 'margin' ? '_margin' : rawField;
-  // inject computed margin
-  if (rawField === 'margin') {
-    items = items.map((i) => ({
-      ...i,
-      _margin:
-        i.sell_offer != null && i.buy_offer != null
-          ? i.sell_offer - i.buy_offer
-          : null,
-    } as any));
-  }
-  const order = options?.sort_order ?? 'desc';
-  items.sort((a, b) => {
-    const av = (a as any)[field] ?? (field === 'name' ? '' : -Infinity);
-    const bv = (b as any)[field] ?? (field === 'name' ? '' : -Infinity);
-    if (av < bv) return order === 'desc' ? 1 : -1;
-    if (av > bv) return order === 'desc' ? -1 : 1;
-    return 0;
-  });
+  const rawField = options.sort_field ?? 'month_sold';
+  const order = options.sort_order ?? 'desc';
 
-  return { world, last_update, items };
+  if (rawField === 'margin') {
+    result = result
+      .map((i) => ({ ...i, _margin: i.sell_offer != null && i.buy_offer != null ? i.sell_offer - i.buy_offer : null }))
+      .sort((a: any, b: any) => {
+        const av = a._margin ?? -Infinity;
+        const bv = b._margin ?? -Infinity;
+        return order === 'desc' ? bv - av : av - bv;
+      });
+  } else {
+    result = [...result].sort((a, b) => {
+      const av = (a as any)[rawField] ?? (rawField === 'name' ? '' : -Infinity);
+      const bv = (b as any)[rawField] ?? (rawField === 'name' ? '' : -Infinity);
+      if (av < bv) return order === 'desc' ? 1 : -1;
+      if (av > bv) return order === 'desc' ? -1 : 1;
+      return 0;
+    });
+  }
+
+  return result;
 }
 
 export async function fetchItemStats(

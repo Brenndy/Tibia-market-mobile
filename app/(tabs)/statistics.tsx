@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import { useMarketBoard } from '@/src/hooks/useMarket';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
-import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
+import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/api/tibiaMarket';
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
 
@@ -163,13 +163,16 @@ export default function StatisticsScreen() {
 
   const RANK_OPTIONS = RANK_OPTION_KEYS.map((o) => ({ ...o, label: t(o.key) }));
 
-  const { data, isLoading, isError, refetch } = useMarketBoard(selectedWorld, {
-    sort_field: activeRank,
-    sort_order: 'desc',
-  });
+  const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
-  const top5 = data?.items.slice(0, 5) ?? [];
-  const top10 = data?.items.slice(0, 10) ?? [];
+  const rankedItems = useMemo(() =>
+    rawData ? filterAndSortItems(rawData.items, { sort_field: activeRank, sort_order: 'desc' }) : [],
+    [rawData, activeRank]
+  );
+
+  const data = rawData ? { ...rawData, items: rankedItems } : undefined;
+  const top5 = rankedItems.slice(0, 5);
+  const top10 = rankedItems.slice(0, 10);
 
   if (isLoading) {
     return <LoadingState message={t('loading_stats')} />;

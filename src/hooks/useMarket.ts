@@ -6,32 +6,18 @@ import {
   fetchWorlds,
   fetchCategories,
   fetchItemOffers,
-  SortField,
 } from '../api/tibiaMarket';
 
-export function useMarketBoard(
-  world: string,
-  options?: {
-    sort_field?: SortField;
-    sort_order?: 'asc' | 'desc';
-    name?: string;
-    category?: string;
-    categories?: string[];
-    minBuyPrice?: number;
-    maxBuyPrice?: number;
-    minSellPrice?: number;
-    maxSellPrice?: number;
-    minVolume?: number;
-    minMargin?: number;
-  }
-) {
+// One fetch per world. staleTime=10min (no refetch while fresh), cacheTime=30min (stays in memory).
+export function useMarketBoard(world: string) {
   return useQuery(
-    ['marketBoard', world, options],
-    () => fetchMarketBoard(world, options),
+    ['marketBoard', world],
+    () => fetchMarketBoard(world),
     {
       enabled: !!world,
       keepPreviousData: true,
-      staleTime: 60_000,
+      staleTime: 10 * 60_000,  // won't refetch for 10 minutes
+      cacheTime: 30 * 60_000,  // stays in memory 30 minutes after unmount
     }
   );
 }
@@ -42,6 +28,7 @@ export function useItemStats(world: string, itemName: string) {
     () => fetchItemStats(world, itemName),
     {
       enabled: !!world && !!itemName,
+      staleTime: 60_000,
     }
   );
 }
@@ -52,6 +39,7 @@ export function useItemHistory(world: string, itemName: string, days = 30) {
     () => fetchItemHistory(world, itemName, days),
     {
       enabled: !!world && !!itemName,
+      staleTime: 60_000,
     }
   );
 }

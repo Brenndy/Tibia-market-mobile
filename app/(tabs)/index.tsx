@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   FlatList,
@@ -14,13 +14,13 @@ import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
-import { SearchBar } from '@/src/components/SearchBar';
+import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { SkeletonCard } from '@/src/components/SkeletonCard';
 import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
-import { SortField } from '@/src/api/tibiaMarket';
+import { SortField, filterAndSortItems } from '@/src/api/tibiaMarket';
 
 const PAGE_SIZE = 50;
 const INITIAL_COUNT = 50;
@@ -74,24 +74,18 @@ const PRESETS: Preset[] = [
 export default function MarketScreen() {
   const { selectedWorld } = useWorld();
   const { t } = useTranslation();
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('month_sold');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [displayCount, setDisplayCount] = useState(INITIAL_COUNT);
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [activePreset, setActivePreset] = useState<PresetId>('hot');
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeFilterCount = countActiveFilters(filters);
 
-  const handleSearchChange = useCallback((text: string) => {
-    setSearch(text);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      setDebouncedSearch(text);
-      setDisplayCount(INITIAL_COUNT);
-    }, 350);
+  const handleSelectedItemsChange = useCallback((items: string[]) => {
+    setSelectedItems(items);
+    setDisplayCount(INITIAL_COUNT);
   }, []);
 
   const handlePresetSelect = useCallback((preset: Preset) => {
@@ -107,14 +101,18 @@ export default function MarketScreen() {
       setSortOrder(preset.order);
       setFilters({ ...DEFAULT_FILTERS, ...preset.filters });
     }
+    setSelectedItems([]);
     setDisplayCount(INITIAL_COUNT);
   }, [activePreset]);
 
-  const queryOptions = useMemo(
-    () => ({
+  const { data: rawData, isLoading, isError, refetch, isFetching } = useMarketBoard(selectedWorld);
+
+  const filteredItems = useMemo(() => {
+    if (!rawData) return [];
+    return filterAndSortItems(rawData.items, {
       sort_field: sortField,
       sort_order: sortOrder,
-      name: debouncedSearch || undefined,
+      selectedItemNames: selectedItems.length > 0 ? selectedItems : undefined,
       categories: filters.categories.length > 0 ? filters.categories : undefined,
       minBuyPrice: filters.minBuyPrice ? Number(filters.minBuyPrice) : undefined,
       maxBuyPrice: filters.maxBuyPrice ? Number(filters.maxBuyPrice) : undefined,
@@ -122,14 +120,8 @@ export default function MarketScreen() {
       maxSellPrice: filters.maxSellPrice ? Number(filters.maxSellPrice) : undefined,
       minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
       minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
-    }),
-    [sortField, sortOrder, debouncedSearch, filters]
-  );
-
-  const { data, isLoading, isError, refetch, isFetching } = useMarketBoard(
-    selectedWorld,
-    queryOptions
-  );
+    });
+  }, [rawData, sortField, sortOrder, selectedItems, filters]);
 
   const handleSortChange = useCallback((field: SortField, order: 'asc' | 'desc') => {
     setSortField(field);
@@ -159,14 +151,18 @@ export default function MarketScreen() {
     );
   }
 
-  const showSkeleton = isLoading && !data;
+  const showSkeleton = isLoading && !rawData;
 
   return (
     <View style={styles.container}>
       {/* Top bar */}
       <View style={styles.topBar}>
         <View style={styles.searchWrap}>
-          <SearchBar value={search} onChangeText={handleSearchChange} placeholder={t('search_placeholder')} />
+          <ItemSearchBar
+            selectedItems={selectedItems}
+            onSelectedItemsChange={handleSelectedItemsChange}
+            placeholder={t('search_placeholder')}
+          />
         </View>
         <SortPicker
           sortField={sortField}
@@ -226,13 +222,13 @@ export default function MarketScreen() {
           <Text style={styles.statsText}>
             {showSkeleton
               ? t('loading')
-              : `${Math.min(displayCount, data?.items.length ?? 0)}/${data?.items.length ?? 0} ${t('items_label').toLowerCase()}`}
+              : `${Math.min(displayCount, filteredItems.length)}/${filteredItems.length} ${t('items_label').toLowerCase()}`}
           </Text>
           <Text style={styles.statsDot}>·</Text>
           <Text style={styles.statsWorld}>{selectedWorld}</Text>
         </View>
         {activeFilterCount > 0 && (
-          <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setDisplayCount(INITIAL_COUNT); }}>
+          <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
             <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
           </TouchableOpacity>
         )}
@@ -248,7 +244,7 @@ export default function MarketScreen() {
         />
       ) : (
         <FlatList
-          data={(data?.items ?? []).slice(0, displayCount)}
+          data={filteredItems.slice(0, displayCount)}
           keyExtractor={(item) => item.name}
           renderItem={({ item }) => (
             <MarketItemCard item={item} world={selectedWorld} />
@@ -258,7 +254,7 @@ export default function MarketScreen() {
           onEndReachedThreshold={0.3}
           refreshControl={
             <RefreshControl
-              refreshing={isFetching && !!data}
+              refreshing={isFetching && !!rawData}
               onRefresh={() => {
                 setDisplayCount(INITIAL_COUNT);
                 refetch();
@@ -271,19 +267,19 @@ export default function MarketScreen() {
               <MaterialCommunityIcons name="package-variant-closed" size={52} color={colors.textMuted} />
               <Text style={styles.emptyTitle}>{t('no_results')}</Text>
               <Text style={styles.emptyText}>
-                {debouncedSearch ? `"${debouncedSearch}"` : t('clear_filters')}
+                {selectedItems.length > 0 ? selectedItems.map(n => `"${n}"`).join(', ') : t('clear_filters')}
               </Text>
             </View>
           }
           ListFooterComponent={
-            data?.items && displayCount < data.items.length ? (
+            displayCount < filteredItems.length ? (
               <TouchableOpacity style={styles.loadMore} onPress={handleLoadMore}>
                 <LinearGradient
                   colors={[colors.surfaceElevated, colors.card]}
                   style={styles.loadMoreGrad}
                 >
                   <MaterialCommunityIcons name="chevron-down" size={16} color={colors.gold} />
-                  <Text style={styles.loadMoreText}>{t('load_more')} ({data.items.length - displayCount})</Text>
+                  <Text style={styles.loadMoreText}>{t('load_more')} ({filteredItems.length - displayCount})</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : null
