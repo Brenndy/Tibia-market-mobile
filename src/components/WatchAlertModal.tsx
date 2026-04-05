@@ -12,7 +12,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../theme/colors';
-import { formatGold } from '../api/tibiaMarket';
+import { formatGold, toTitleCase } from '../api/tibiaMarket';
 import { ItemImage } from './ItemImage';
 import { useTranslation } from '../context/LanguageContext';
 
@@ -56,9 +56,20 @@ export function WatchAlertModal({
     }
   }, [visible, initialBuyAlert, initialSellAlert]);
 
+  const parseGold = (raw: string): number | null => {
+    const s = raw.trim().toLowerCase();
+    if (!s) return null;
+    const kk = s.match(/^([0-9.]+)kk$/);
+    if (kk) return Math.round(parseFloat(kk[1]) * 1_000_000);
+    const k = s.match(/^([0-9.]+)k$/);
+    if (k) return Math.round(parseFloat(k[1]) * 1_000);
+    const plain = parseFloat(s.replace(/[^0-9.]/g, ''));
+    return isNaN(plain) ? null : Math.round(plain);
+  };
+
   const handleSave = () => {
-    const buy = buyAlert.trim() ? Number(buyAlert.replace(/[^0-9.]/g, '')) : null;
-    const sell = sellAlert.trim() ? Number(sellAlert.replace(/[^0-9.]/g, '')) : null;
+    const buy = parseGold(buyAlert);
+    const sell = parseGold(sellAlert);
     onSave(buy, sell);
     onClose();
   };
@@ -76,7 +87,7 @@ export function WatchAlertModal({
                 <ItemImage wikiName={wikiName} size={36} />
               </View>
               <View>
-                <Text style={styles.headerName} numberOfLines={1}>{itemName}</Text>
+                <Text style={styles.headerName} numberOfLines={1}>{toTitleCase(itemName)}</Text>
                 <View style={styles.headerMeta}>
                   <View style={styles.worldBadge}>
                     <MaterialCommunityIcons name="earth" size={10} color={colors.gold} />
@@ -115,7 +126,7 @@ export function WatchAlertModal({
                     style={styles.input}
                     value={buyAlert}
                     onChangeText={setBuyAlert}
-                    placeholder={currentBuy ? formatGold(currentBuy) : 'np. 50000'}
+                    placeholder={currentBuy ? formatGold(currentBuy) : 'np. 100k'}
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -151,7 +162,7 @@ export function WatchAlertModal({
                     style={styles.input}
                     value={sellAlert}
                     onChangeText={setSellAlert}
-                    placeholder={currentSell ? formatGold(currentSell) : 'np. 55000'}
+                    placeholder={currentSell ? formatGold(currentSell) : 'np. 110k'}
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"

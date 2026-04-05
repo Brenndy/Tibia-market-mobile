@@ -551,7 +551,7 @@ export default function ItemDetailScreen() {
           if (buy == null && sell == null) {
             removeFromWatchlist(name, world);
           } else {
-            addToWatchlist({ itemName: name, wikiName: stats.name, world, buyAlert: buy, sellAlert: sell });
+            addToWatchlist({ itemName: name, wikiName: stats.wiki_name, world, buyAlert: buy, sellAlert: sell });
           }
         }}
         onRemove={() => removeFromWatchlist(name, world)}
