@@ -311,6 +311,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
     backgroundColor: colors.surface,
     alignItems: 'center',
+    zIndex: 10,
   },
   searchWrap: {
     flex: 1.5,
