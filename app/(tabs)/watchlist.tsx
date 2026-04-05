@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     color: colors.gold,
   },
 
-  content: { padding: 12, gap: 16, paddingBottom: 32 },
+  content: { padding: 12, gap: 16, paddingBottom: 80 },
 
   worldSection: { gap: 8 },
   worldHeader: {

@@ -7,9 +7,9 @@ import {
   ScrollView,
   TextInput,
   StyleSheet,
-  SafeAreaView,
   Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { useCategories } from '../hooks/useMarket';

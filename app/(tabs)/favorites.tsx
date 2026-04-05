@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 8,
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   emptyContainer: {
     flex: 1,

@@ -1,10 +1,12 @@
 import axios from 'axios';
-
-const IS_PRODUCTION_WEB =
-  typeof window !== 'undefined' && window.location?.hostname !== 'localhost';
+import { Platform } from 'react-native';
 
 // Web production: relative Vercel rewrite (/api/tibia → api.tibiamarket.top)
 // Native & web dev: Vercel proxy (avoids direct API rate limits from dev IP)
+// NOTE: React Native sets global.window = global, so typeof window check alone is unreliable.
+const IS_PRODUCTION_WEB =
+  Platform.OS === 'web' && window.location?.hostname !== 'localhost';
+
 const BASE_URL = IS_PRODUCTION_WEB
   ? '/api/tibia'
   : 'https://tibia-market-mobile.vercel.app/api/tibia';
@@ -423,10 +425,8 @@ export async function fetchItemOffers(
 export function getItemImageUrl(wikiName: string): string {
   if (!wikiName) return '';
   const encoded = wikiName.replace(/ /g, '_');
-  // In production web: use relative Vercel serverless proxy
   if (IS_PRODUCTION_WEB) {
     return `/api/item-image?name=${encodeURIComponent(encoded)}`;
   }
-  // On localhost (dev) or native: use production Vercel proxy
   return `https://tibia-market-mobile.vercel.app/api/item-image?name=${encodeURIComponent(encoded)}`;
 }

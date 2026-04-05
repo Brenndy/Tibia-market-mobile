@@ -2,6 +2,11 @@ node_modules/
 .expo/
 dist/
 web-build/
+.playwright-mcp/
+.idea/
+ios/
+*.png
+*.jpeg
 *.orig.*
 *.jks
 *.p8

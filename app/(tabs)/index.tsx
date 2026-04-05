@@ -187,33 +187,28 @@ export default function MarketScreen() {
       </View>
 
       {/* Quick presets */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.presetsScroll}
-        contentContainerStyle={styles.presetsContent}
-      >
+      <View style={styles.presetsRow}>
         {PRESETS.map((preset) => {
           const active = activePreset === preset.id;
           return (
             <TouchableOpacity
               key={preset.id}
-              style={[styles.presetChip, active && styles.presetChipActive]}
+              style={[styles.presetTab, active && styles.presetTabActive]}
               onPress={() => handlePresetSelect(preset)}
               activeOpacity={0.7}
             >
               <MaterialCommunityIcons
                 name={preset.icon as any}
-                size={13}
-                color={active ? colors.background : colors.textMuted}
+                size={15}
+                color={active ? colors.gold : colors.textMuted}
               />
-              <Text style={[styles.presetText, active && styles.presetTextActive]}>
+              <Text style={[styles.presetText, active && styles.presetTextActive]} numberOfLines={1}>
                 {t(preset.labelKey)}
               </Text>
             </TouchableOpacity>
           );
         })}
-      </ScrollView>
+      </View>
 
       {/* Stats row */}
       <View style={styles.statsRow}>
@@ -346,40 +341,31 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: '800',
   },
-  presetsScroll: {
+  presetsRow: {
+    flexDirection: 'row',
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    flexGrow: 0,
   },
-  presetsContent: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    gap: 8,
-    flexDirection: 'row',
-  },
-  presetChip: {
-    flexDirection: 'row',
+  presetTab: {
+    flex: 1,
     alignItems: 'center',
-    gap: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    backgroundColor: colors.card,
+    justifyContent: 'center',
+    paddingVertical: 9,
+    gap: 3,
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
   },
-  presetChipActive: {
-    backgroundColor: colors.gold,
-    borderColor: colors.gold,
+  presetTabActive: {
+    borderBottomColor: colors.gold,
   },
   presetText: {
     color: colors.textMuted,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
   },
   presetTextActive: {
-    color: colors.background,
+    color: colors.gold,
   },
   statsRow: {
     flexDirection: 'row',
@@ -423,7 +409,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: 6,
-    paddingBottom: 24,
+    paddingBottom: 80,
   },
   empty: {
     alignItems: 'center',
