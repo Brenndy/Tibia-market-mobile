@@ -187,7 +187,7 @@ export async function fetchMarketBoard(
   const { metaById } = await getMetadata();
 
   const { data: rawValues } = await api.get<RawMarketValue[]>('/market_values', {
-    params: { server: world, limit: 2000 },
+    params: { server: world },
   });
 
   const { data: worldData } = await api.get<RawWorldData[]>('/world_data', {
