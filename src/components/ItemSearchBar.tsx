@@ -41,7 +41,7 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
     onSelectedItemsChange(selectedItems.filter((n) => n !== name));
   }, [selectedItems, onSelectedItemsChange]);
 
-  const showDropdown = focused && suggestions.length > 0;
+  const showDropdown = query.length >= 2 && suggestions.length > 0;
 
   return (
     <View style={styles.wrapper}>
