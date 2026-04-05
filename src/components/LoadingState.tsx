@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { colors } from '../theme/colors';
+import { useTranslation } from '../context/LanguageContext';
 
 interface LoadingStateProps {
   message?: string;
 }
 
-export function LoadingState({ message = 'Ładowanie...' }: LoadingStateProps) {
+export function LoadingState({ message }: LoadingStateProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={colors.gold} />
-      <Text style={styles.text}>{message}</Text>
+      <Text style={styles.text}>{message ?? t('loading')}</Text>
     </View>
   );
 }

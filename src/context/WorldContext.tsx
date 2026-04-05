@@ -2,9 +2,11 @@ import React, {
   createContext,
   useContext,
   useState,
+  useEffect,
   ReactNode,
   useCallback,
 } from 'react';
+import { storage } from '../utils/storage';
 
 interface WorldContextType {
   selectedWorld: string;
@@ -22,9 +24,43 @@ const WorldContext = createContext<WorldContextType>({
   isFavorite: () => false,
 });
 
+const WORLD_KEY = 'tibia_selected_world_v1';
+const FAVORITES_KEY = 'tibia_favorites_v1';
+
 export function WorldProvider({ children }: { children: ReactNode }) {
-  const [selectedWorld, setSelectedWorld] = useState('Antica');
+  const [selectedWorld, setSelectedWorldState] = useState('Antica');
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Load from storage on mount
+  useEffect(() => {
+    Promise.all([
+      storage.getItem(WORLD_KEY),
+      storage.getItem(FAVORITES_KEY),
+    ]).then(([world, favs]) => {
+      if (world) setSelectedWorldState(world);
+      if (favs) {
+        try { setFavorites(JSON.parse(favs)); } catch {}
+      }
+      setHydrated(true);
+    });
+  }, []);
+
+  // Persist world selection
+  useEffect(() => {
+    if (!hydrated) return;
+    storage.setItem(WORLD_KEY, selectedWorld);
+  }, [selectedWorld, hydrated]);
+
+  // Persist favorites
+  useEffect(() => {
+    if (!hydrated) return;
+    storage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+  }, [favorites, hydrated]);
+
+  const setSelectedWorld = useCallback((world: string) => {
+    setSelectedWorldState(world);
+  }, []);
 
   const toggleFavorite = useCallback((itemName: string) => {
     setFavorites((prev) =>

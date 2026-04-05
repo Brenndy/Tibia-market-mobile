@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
+import { useTranslation } from '../context/LanguageContext';
 
 interface ErrorStateProps {
   message?: string;
@@ -9,16 +10,21 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  message = 'Coś poszło nie tak. Spróbuj ponownie.',
+  message,
   onRetry,
 }: ErrorStateProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
-      <MaterialCommunityIcons name="alert-circle-outline" size={48} color={colors.sell} />
-      <Text style={styles.message}>{message}</Text>
+      <View style={styles.iconWrap}>
+        <MaterialCommunityIcons name="wifi-off" size={40} color={colors.sell} />
+      </View>
+      <Text style={styles.message}>{message ?? t('item_not_found')}</Text>
       {onRetry && (
-        <TouchableOpacity style={styles.button} onPress={onRetry}>
-          <Text style={styles.buttonText}>Spróbuj ponownie</Text>
+        <TouchableOpacity style={styles.button} onPress={onRetry} activeOpacity={0.8}>
+          <MaterialCommunityIcons name="refresh" size={16} color={colors.background} />
+          <Text style={styles.buttonText}>{t('load_more')}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -34,6 +40,16 @@ const styles = StyleSheet.create({
     padding: 24,
     gap: 16,
   },
+  iconWrap: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    backgroundColor: colors.sellDim,
+    borderWidth: 1,
+    borderColor: colors.sellBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   message: {
     color: colors.textSecondary,
     fontSize: 15,
@@ -41,17 +57,18 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   button: {
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.gold,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: colors.gold,
     paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 10,
+    paddingVertical: 13,
+    borderRadius: 12,
     marginTop: 8,
   },
   buttonText: {
-    color: colors.gold,
-    fontWeight: '600',
+    color: colors.background,
+    fontWeight: '700',
     fontSize: 14,
   },
 });

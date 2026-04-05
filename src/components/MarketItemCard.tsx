@@ -9,9 +9,10 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { MarketItem, formatGold } from '../api/tibiaMarket';
+import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
+import { useTranslation } from '../context/LanguageContext';
 import { ItemImage } from './ItemImage';
 
 interface MarketItemCardProps {
@@ -35,15 +36,26 @@ function PriceTrend({ current, average }: { current: number | null; average: num
   );
 }
 
+function getDealQuality(item: MarketItem): 'premium' | 'good' | 'none' {
+  if (item.sell_offer == null || item.buy_offer == null || item.buy_offer <= 0) return 'none';
+  const marginPct = ((item.sell_offer - item.buy_offer) / item.buy_offer) * 100;
+  const volume = item.month_sold ?? 0;
+  if (marginPct >= 15 && volume >= 100) return 'premium';
+  if (marginPct >= 7 && volume >= 30) return 'good';
+  return 'none';
+}
+
 export const MarketItemCard = memo(function MarketItemCard({
   item,
   world,
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const narrow = width < 400;
   const favorite = isFavorite(item.name);
+  const dealQuality = getDealQuality(item);
 
   const margin =
     item.sell_offer != null && item.buy_offer != null
@@ -58,9 +70,14 @@ export const MarketItemCard = memo(function MarketItemCard({
   const marginBarWidth =
     marginPct != null ? Math.min(marginPct / 30, 1) : 0;
 
+  const dealColor =
+    dealQuality === 'premium' ? colors.gold :
+    dealQuality === 'good' ? colors.buy :
+    'transparent';
+
   return (
     <TouchableOpacity
-      style={styles.card}
+      style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
       onPress={() =>
         router.push({
           pathname: '/item/[name]',
@@ -69,18 +86,37 @@ export const MarketItemCard = memo(function MarketItemCard({
       }
       activeOpacity={0.8}
     >
+      {/* Deal quality accent strip */}
+      {dealQuality !== 'none' && (
+        <View style={[styles.dealStrip, { backgroundColor: dealColor }]} />
+      )}
+
       {/* Top row: image + name + category + star */}
-      <View style={styles.topRow}>
+      <View style={[styles.topRow, dealQuality !== 'none' && styles.topRowWithStrip]}>
         <View style={styles.imgWrap}>
           <ItemImage wikiName={item.wiki_name} size={42} />
         </View>
         <View style={styles.titleCol}>
-          <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
-          {item.category && (
-            <View style={styles.catBadge}>
-              <Text style={styles.catText}>{item.category}</Text>
-            </View>
-          )}
+          <Text style={styles.name} numberOfLines={1}>{toTitleCase(item.name)}</Text>
+          <View style={styles.badgeRow}>
+            {item.category && (
+              <View style={styles.catBadge}>
+                <Text style={styles.catText}>{item.category}</Text>
+              </View>
+            )}
+            {dealQuality === 'premium' && (
+              <View style={[styles.dealBadge, { backgroundColor: colors.goldDim, borderColor: colors.gold + '80' }]}>
+                <MaterialCommunityIcons name="fire" size={9} color={colors.gold} />
+                <Text style={[styles.dealBadgeText, { color: colors.gold }]}>{t('deal_premium')}</Text>
+              </View>
+            )}
+            {dealQuality === 'good' && (
+              <View style={[styles.dealBadge, { backgroundColor: colors.buyDim, borderColor: colors.buyBorder }]}>
+                <MaterialCommunityIcons name="check-circle" size={9} color={colors.buy} />
+                <Text style={[styles.dealBadgeText, { color: colors.buy }]}>{t('deal_good')}</Text>
+              </View>
+            )}
+          </View>
         </View>
         <TouchableOpacity
           onPress={() => toggleFavorite(item.name)}
@@ -101,48 +137,50 @@ export const MarketItemCard = memo(function MarketItemCard({
       {/* Price row */}
       <View style={styles.pricesRow}>
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>KUPNO</Text>
+          <Text style={styles.priceLabel}>{t('buy')}</Text>
           <Text style={[styles.priceValue, { color: colors.buy, fontSize: narrow ? 14 : 16 }]}>
             {formatGold(item.buy_offer)}
           </Text>
-          {!narrow && <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_buy)}</Text>}
+          {!narrow && <Text style={styles.avgLabel}>{t('avg_prefix')} {formatGold(item.month_average_buy)}</Text>}
           <PriceTrend current={item.buy_offer} average={item.month_average_buy} />
         </View>
 
         <View style={styles.dividerV} />
 
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>SPRZEDAŻ</Text>
+          <Text style={styles.priceLabel}>{t('sell')}</Text>
           <Text style={[styles.priceValue, { color: colors.sell, fontSize: narrow ? 14 : 16 }]}>
             {formatGold(item.sell_offer)}
           </Text>
-          {!narrow && <Text style={styles.avgLabel}>śr. {formatGold(item.month_average_sell)}</Text>}
+          {!narrow && <Text style={styles.avgLabel}>{t('avg_prefix')} {formatGold(item.month_average_sell)}</Text>}
           <PriceTrend current={item.sell_offer} average={item.month_average_sell} />
         </View>
 
         <View style={styles.dividerV} />
 
         <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>OBRÓT/M.</Text>
+          <Text style={styles.priceLabel}>{t('volume_monthly')}</Text>
           <Text style={[styles.priceValue, { fontSize: narrow ? 14 : 16 }]}>
             {item.month_sold != null ? item.month_sold.toLocaleString() : '—'}
           </Text>
-          <Text style={styles.avgLabel}>szt.</Text>
+          <Text style={styles.avgLabel}>{t('units')}</Text>
         </View>
       </View>
 
       {/* Margin bar */}
       {margin != null && margin > 0 && (
         <View style={styles.marginRow}>
-          <Text style={styles.marginLabel}>MARŻA</Text>
+          <Text style={styles.marginLabel}>{t('margin')}</Text>
           <Text style={styles.marginValue}>{formatGold(margin)}</Text>
           {marginPct != null && (
-            <Text style={styles.marginPct}>{marginPct.toFixed(1)}%</Text>
+            <Text style={[styles.marginPct, marginPct >= 15 ? { color: colors.gold } : marginPct >= 7 ? { color: colors.buy } : {}]}>
+              {marginPct.toFixed(1)}%
+            </Text>
           )}
           <View style={styles.barWrap}>
             <View style={styles.barTrack}>
               <LinearGradient
-                colors={[colors.buy, colors.gold]}
+                colors={marginPct != null && marginPct >= 15 ? [colors.goldDark, colors.gold] : [colors.buy, colors.buy + 'aa']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={[styles.barFill, { width: `${Math.round(marginBarWidth * 100)}%` }]}
@@ -165,6 +203,13 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     overflow: 'hidden',
   },
+  dealStrip: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 3,
+  },
   topRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -172,6 +217,9 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 10,
     gap: 10,
+  },
+  topRowWithStrip: {
+    paddingLeft: 18,
   },
   imgWrap: {
     width: 44,
@@ -193,6 +241,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 0.1,
   },
+  badgeRow: {
+    flexDirection: 'row',
+    gap: 5,
+    flexWrap: 'wrap',
+  },
   catBadge: {
     alignSelf: 'flex-start',
     backgroundColor: colors.surfaceElevated,
@@ -208,6 +261,20 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 0.5,
     textTransform: 'uppercase',
+  },
+  dealBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    borderWidth: 1,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 5,
+  },
+  dealBadgeText: {
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   starBtn: {
     padding: 2,

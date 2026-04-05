@@ -14,10 +14,15 @@ export function useMarketBoard(
   options?: {
     sort_field?: SortField;
     sort_order?: 'asc' | 'desc';
-    rows?: number;
-    offset?: number;
     name?: string;
     category?: string;
+    categories?: string[];
+    minBuyPrice?: number;
+    maxBuyPrice?: number;
+    minSellPrice?: number;
+    maxSellPrice?: number;
+    minVolume?: number;
+    minMargin?: number;
   }
 ) {
   return useQuery(

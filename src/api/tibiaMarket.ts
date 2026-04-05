@@ -173,8 +173,6 @@ export async function fetchMarketBoard(
   options?: {
     sort_field?: SortField;
     sort_order?: 'asc' | 'desc';
-    rows?: number;
-    offset?: number;
     name?: string;
     category?: string;
     categories?: string[];
@@ -274,10 +272,6 @@ export async function fetchMarketBoard(
     return 0;
   });
 
-  const offset = options?.offset ?? 0;
-  const rows = options?.rows ?? 50;
-  items = items.slice(offset, offset + rows);
-
   return { world, last_update, items };
 }
 
@@ -364,6 +358,10 @@ export async function fetchCategories(): Promise<string[]> {
     if (item.category) cats.add(item.category);
   }
   return Array.from(cats).sort();
+}
+
+export function toTitleCase(name: string): string {
+  return name.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export function formatGold(value: number | null): string {

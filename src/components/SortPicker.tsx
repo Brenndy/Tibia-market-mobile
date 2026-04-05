@@ -11,17 +11,19 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { SortField } from '../api/tibiaMarket';
+import { useTranslation } from '../context/LanguageContext';
+import { TranslationKey } from '../i18n';
 
-const SORT_OPTIONS: { label: string; value: SortField }[] = [
-  { label: 'Obrót miesięczny', value: 'month_sold' },
-  { label: 'Marża', value: 'margin' },
-  { label: 'Cena kupna', value: 'buy_offer' },
-  { label: 'Cena sprzedaży', value: 'sell_offer' },
-  { label: 'Śr. kupno/miesiąc', value: 'month_average_buy' },
-  { label: 'Śr. sprzedaż/miesiąc', value: 'month_average_sell' },
-  { label: 'Zakupy miesięczne', value: 'month_bought' },
-  { label: 'Obrót dzienny', value: 'day_sold' },
-  { label: 'Nazwa', value: 'name' },
+const SORT_OPTION_KEYS: { key: TranslationKey; value: SortField }[] = [
+  { key: 'sort_month_sold', value: 'month_sold' },
+  { key: 'sort_margin', value: 'margin' },
+  { key: 'sort_buy_offer', value: 'buy_offer' },
+  { key: 'sort_sell_offer', value: 'sell_offer' },
+  { key: 'sort_month_avg_buy', value: 'month_average_buy' },
+  { key: 'sort_month_avg_sell', value: 'month_average_sell' },
+  { key: 'sort_month_bought', value: 'month_bought' },
+  { key: 'sort_day_sold', value: 'day_sold' },
+  { key: 'sort_name', value: 'name' },
 ];
 
 interface SortPickerProps {
@@ -32,6 +34,8 @@ interface SortPickerProps {
 
 export function SortPicker({ sortField, sortOrder, onSortChange }: SortPickerProps) {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
+  const SORT_OPTIONS = SORT_OPTION_KEYS.map((o) => ({ ...o, label: t(o.key) }));
   const current = SORT_OPTIONS.find((o) => o.value === sortField);
 
   return (
@@ -39,7 +43,7 @@ export function SortPicker({ sortField, sortOrder, onSortChange }: SortPickerPro
       <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
         <MaterialCommunityIcons name="sort" size={15} color={colors.gold} />
         <Text style={styles.buttonText} numberOfLines={1}>
-          {current?.label ?? 'Sortuj'}
+          {current?.label ?? t('sort_by')}
         </Text>
         <MaterialCommunityIcons
           name={sortOrder === 'asc' ? 'arrow-up' : 'arrow-down'}
@@ -56,7 +60,7 @@ export function SortPicker({ sortField, sortOrder, onSortChange }: SortPickerPro
         >
           <SafeAreaView style={styles.sheet}>
             <View style={styles.handle} />
-            <Text style={styles.sheetTitle}>Sortuj według</Text>
+            <Text style={styles.sheetTitle}>{t('sort_by')}</Text>
             <ScrollView>
               {SORT_OPTIONS.map((opt) => {
                 const isActive = opt.value === sortField;

@@ -13,6 +13,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { useCategories } from '../hooks/useMarket';
+import { useTranslation } from '../context/LanguageContext';
 
 export interface FilterState {
   categories: string[];
@@ -97,6 +98,7 @@ const inputStyles = StyleSheet.create({
 export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelProps) {
   const [local, setLocal] = useState<FilterState>(filters);
   const { data: allCategories } = useCategories();
+  const { t } = useTranslation();
 
   const reset = useCallback(() => setLocal(DEFAULT_FILTERS), []);
 
@@ -127,15 +129,15 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Filtry zaawansowane</Text>
+            <Text style={styles.title}>{t('advanced_filters')}</Text>
             <TouchableOpacity onPress={reset} style={styles.resetBtn}>
-              <Text style={styles.resetText}>Resetuj</Text>
+              <Text style={styles.resetText}>{t('reset')}</Text>
             </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
             {/* Categories */}
-            <Text style={styles.sectionLabel}>Kategoria</Text>
+            <Text style={styles.sectionLabel}>{t('category')}</Text>
             <View style={styles.categoryGrid}>
               {(allCategories ?? []).map((cat) => {
                 const active = local.categories.includes(cat);
@@ -154,17 +156,17 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </View>
 
             {/* Buy price range */}
-            <Text style={styles.sectionLabel}>Cena kupna</Text>
+            <Text style={styles.sectionLabel}>{t('buy_price_range')}</Text>
             <View style={styles.row}>
               <NumInput
-                label="Min"
+                label={t('min_label')}
                 value={local.minBuyPrice}
                 onChange={(v) => setLocal((p) => ({ ...p, minBuyPrice: v }))}
                 placeholder="0"
               />
               <View style={styles.rangeSep}><Text style={styles.rangeSepText}>–</Text></View>
               <NumInput
-                label="Max"
+                label={t('max_label')}
                 value={local.maxBuyPrice}
                 onChange={(v) => setLocal((p) => ({ ...p, maxBuyPrice: v }))}
                 placeholder="∞"
@@ -172,17 +174,17 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </View>
 
             {/* Sell price range */}
-            <Text style={styles.sectionLabel}>Cena sprzedaży</Text>
+            <Text style={styles.sectionLabel}>{t('sell_price_range')}</Text>
             <View style={styles.row}>
               <NumInput
-                label="Min"
+                label={t('min_label')}
                 value={local.minSellPrice}
                 onChange={(v) => setLocal((p) => ({ ...p, minSellPrice: v }))}
                 placeholder="0"
               />
               <View style={styles.rangeSep}><Text style={styles.rangeSepText}>–</Text></View>
               <NumInput
-                label="Max"
+                label={t('max_label')}
                 value={local.maxSellPrice}
                 onChange={(v) => setLocal((p) => ({ ...p, maxSellPrice: v }))}
                 placeholder="∞"
@@ -190,24 +192,24 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </View>
 
             {/* Volume */}
-            <Text style={styles.sectionLabel}>Min. obrót miesięczny (szt.)</Text>
+            <Text style={styles.sectionLabel}>{t('min_volume_monthly')}</Text>
             <View style={styles.row}>
               <NumInput
-                label="Min. wolumen"
+                label={t('min_volume_label')}
                 value={local.minVolume}
                 onChange={(v) => setLocal((p) => ({ ...p, minVolume: v }))}
-                placeholder="np. 100"
+                placeholder={t('placeholder_volume')}
               />
             </View>
 
             {/* Margin */}
-            <Text style={styles.sectionLabel}>Min. marża (gp)</Text>
+            <Text style={styles.sectionLabel}>{t('min_margin_gp')}</Text>
             <View style={styles.row}>
               <NumInput
-                label="Min. marża"
+                label={t('min_margin_label')}
                 value={local.minMargin}
                 onChange={(v) => setLocal((p) => ({ ...p, minMargin: v }))}
-                placeholder="np. 500"
+                placeholder={t('placeholder_margin')}
               />
             </View>
 
@@ -217,7 +219,7 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
           {/* Apply */}
           <View style={styles.footer}>
             <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
-              <Text style={styles.cancelText}>Anuluj</Text>
+              <Text style={styles.cancelText}>{t('cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.applyBtn}
@@ -227,7 +229,7 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
               }}
             >
               <MaterialCommunityIcons name="check" size={18} color={colors.background} />
-              <Text style={styles.applyText}>Zastosuj filtry</Text>
+              <Text style={styles.applyText}>{t('apply_filters')}</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>

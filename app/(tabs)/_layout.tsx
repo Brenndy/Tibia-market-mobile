@@ -5,11 +5,14 @@ import { colors } from '@/src/theme/colors';
 import { useWatchlist, isAlertTriggered } from '@/src/context/WatchlistContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { useWorld } from '@/src/context/WorldContext';
+import { useTranslation } from '@/src/context/LanguageContext';
+import { WorldBadge } from '@/src/components/WorldBadge';
+import { LanguageToggle } from '@/src/components/LanguageToggle';
 
 function WatchBellIcon({ color, size }: { color: string; size: number }) {
   const { watchlist } = useWatchlist();
   const { selectedWorld } = useWorld();
-  const { data } = useMarketBoard(selectedWorld, { rows: 2000 });
+  const { data } = useMarketBoard(selectedWorld);
 
   const triggered = watchlist.some((a) => {
     const item = data?.items.find((i) => i.name === a.itemName);
@@ -37,7 +40,18 @@ function WatchBellIcon({ color, size }: { color: string; size: number }) {
   );
 }
 
+function HeaderRightDefault() {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginRight: 12 }}>
+      <LanguageToggle />
+      <WorldBadge />
+    </View>
+  );
+}
+
 export default function TabLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -55,13 +69,14 @@ export default function TabLayout() {
         headerTintColor: colors.gold,
         headerTitleStyle: { color: colors.textPrimary, fontWeight: '700' },
         headerShadowVisible: false,
+        headerRight: () => <HeaderRightDefault />,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Market',
-          tabBarLabel: 'Market',
+          title: 'Tibia Market',
+          tabBarLabel: t('tab_market'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="store" size={size} color={color} />
           ),
@@ -71,16 +86,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="watchlist"
         options={{
-          title: 'Alerty',
-          tabBarLabel: 'Alerty',
+          title: t('tab_alerts'),
+          tabBarLabel: t('tab_alerts'),
           tabBarIcon: ({ color, size }) => <WatchBellIcon color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="statistics"
         options={{
-          title: 'Statystyki',
-          tabBarLabel: 'Statystyki',
+          title: t('tab_statistics'),
+          tabBarLabel: t('tab_statistics'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chart-line" size={size} color={color} />
           ),
@@ -89,8 +104,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorites"
         options={{
-          title: 'Ulubione',
-          tabBarLabel: 'Ulubione',
+          title: t('tab_favorites'),
+          tabBarLabel: t('tab_favorites'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="star" size={size} color={color} />
           ),

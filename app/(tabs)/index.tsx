@@ -6,17 +6,16 @@ import {
   RefreshControl,
   Text,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import { useNavigation } from 'expo-router';
-import { useLayoutEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useWorld } from '@/src/context/WorldContext';
+import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { SearchBar } from '@/src/components/SearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
-import { WorldBadge } from '@/src/components/WorldBadge';
 import { SkeletonCard } from '@/src/components/SkeletonCard';
 import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
@@ -24,42 +23,97 @@ import { colors } from '@/src/theme/colors';
 import { SortField } from '@/src/api/tibiaMarket';
 
 const PAGE_SIZE = 50;
+const INITIAL_COUNT = 50;
+
+type PresetId = 'none' | 'hot' | 'flips' | 'cheap' | 'expensive';
+
+interface Preset {
+  id: PresetId;
+  icon: string;
+  labelKey: 'preset_hot' | 'preset_flips' | 'preset_cheap' | 'preset_expensive';
+  sort: SortField;
+  order: 'asc' | 'desc';
+  filters: Partial<FilterState>;
+}
+
+const PRESETS: Preset[] = [
+  {
+    id: 'hot',
+    icon: 'fire',
+    labelKey: 'preset_hot',
+    sort: 'month_sold',
+    order: 'desc',
+    filters: {},
+  },
+  {
+    id: 'flips',
+    icon: 'swap-horizontal-bold',
+    labelKey: 'preset_flips',
+    sort: 'margin',
+    order: 'desc',
+    filters: { minMargin: '500' },
+  },
+  {
+    id: 'cheap',
+    icon: 'trending-down',
+    labelKey: 'preset_cheap',
+    sort: 'buy_offer',
+    order: 'asc',
+    filters: {},
+  },
+  {
+    id: 'expensive',
+    icon: 'diamond-stone',
+    labelKey: 'preset_expensive',
+    sort: 'sell_offer',
+    order: 'desc',
+    filters: {},
+  },
+];
 
 export default function MarketScreen() {
   const { selectedWorld } = useWorld();
-  const navigation = useNavigation();
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [sortField, setSortField] = useState<SortField>('month_sold');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [offset, setOffset] = useState(0);
+  const [displayCount, setDisplayCount] = useState(INITIAL_COUNT);
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+  const [activePreset, setActivePreset] = useState<PresetId>('hot');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeFilterCount = countActiveFilters(filters);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <WorldBadge />,
-      headerRightContainerStyle: { paddingRight: 12 },
-    });
-  }, [navigation]);
 
   const handleSearchChange = useCallback((text: string) => {
     setSearch(text);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       setDebouncedSearch(text);
-      setOffset(0);
+      setDisplayCount(INITIAL_COUNT);
     }, 350);
   }, []);
+
+  const handlePresetSelect = useCallback((preset: Preset) => {
+    if (activePreset === preset.id) {
+      // Deactivate
+      setActivePreset('none');
+      setSortField('month_sold');
+      setSortOrder('desc');
+      setFilters(DEFAULT_FILTERS);
+    } else {
+      setActivePreset(preset.id);
+      setSortField(preset.sort);
+      setSortOrder(preset.order);
+      setFilters({ ...DEFAULT_FILTERS, ...preset.filters });
+    }
+    setDisplayCount(INITIAL_COUNT);
+  }, [activePreset]);
 
   const queryOptions = useMemo(
     () => ({
       sort_field: sortField,
       sort_order: sortOrder,
-      rows: PAGE_SIZE,
-      offset,
       name: debouncedSearch || undefined,
       categories: filters.categories.length > 0 ? filters.categories : undefined,
       minBuyPrice: filters.minBuyPrice ? Number(filters.minBuyPrice) : undefined,
@@ -69,7 +123,7 @@ export default function MarketScreen() {
       minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
       minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
     }),
-    [sortField, sortOrder, offset, debouncedSearch, filters]
+    [sortField, sortOrder, debouncedSearch, filters]
   );
 
   const { data, isLoading, isError, refetch, isFetching } = useMarketBoard(
@@ -80,24 +134,26 @@ export default function MarketScreen() {
   const handleSortChange = useCallback((field: SortField, order: 'asc' | 'desc') => {
     setSortField(field);
     setSortOrder(order);
-    setOffset(0);
+    setActivePreset('none');
+    setDisplayCount(INITIAL_COUNT);
   }, []);
 
   const handleLoadMore = useCallback(() => {
-    if (!isFetching && data?.items && data.items.length === PAGE_SIZE) {
-      setOffset((prev) => prev + PAGE_SIZE);
+    if (!isFetching) {
+      setDisplayCount((prev) => prev + PAGE_SIZE);
     }
-  }, [isFetching, data]);
+  }, [isFetching]);
 
   const handleApplyFilters = useCallback((f: FilterState) => {
     setFilters(f);
-    setOffset(0);
+    setActivePreset('none');
+    setDisplayCount(INITIAL_COUNT);
   }, []);
 
   if (isError) {
     return (
       <ErrorState
-        message="Nie udało się pobrać danych marketu. Sprawdź połączenie."
+        message={t('item_not_found')}
         onRetry={refetch}
       />
     );
@@ -110,7 +166,7 @@ export default function MarketScreen() {
       {/* Top bar */}
       <View style={styles.topBar}>
         <View style={styles.searchWrap}>
-          <SearchBar value={search} onChangeText={handleSearchChange} />
+          <SearchBar value={search} onChangeText={handleSearchChange} placeholder={t('search_placeholder')} />
         </View>
         <SortPicker
           sortField={sortField}
@@ -134,19 +190,50 @@ export default function MarketScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Quick presets */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.presetsScroll}
+        contentContainerStyle={styles.presetsContent}
+      >
+        {PRESETS.map((preset) => {
+          const active = activePreset === preset.id;
+          return (
+            <TouchableOpacity
+              key={preset.id}
+              style={[styles.presetChip, active && styles.presetChipActive]}
+              onPress={() => handlePresetSelect(preset)}
+              activeOpacity={0.7}
+            >
+              <MaterialCommunityIcons
+                name={preset.icon as any}
+                size={13}
+                color={active ? colors.background : colors.textMuted}
+              />
+              <Text style={[styles.presetText, active && styles.presetTextActive]}>
+                {t(preset.labelKey)}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+
       {/* Stats row */}
       <View style={styles.statsRow}>
         <View style={styles.statsLeft}>
           <View style={[styles.pulse, isFetching && styles.pulseLive]} />
           <Text style={styles.statsText}>
-            {showSkeleton ? 'Ładowanie...' : `${data?.items.length ?? 0} przedmiotów`}
+            {showSkeleton
+              ? t('loading')
+              : `${Math.min(displayCount, data?.items.length ?? 0)}/${data?.items.length ?? 0} ${t('items_label').toLowerCase()}`}
           </Text>
           <Text style={styles.statsDot}>·</Text>
           <Text style={styles.statsWorld}>{selectedWorld}</Text>
         </View>
         {activeFilterCount > 0 && (
-          <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setOffset(0); }}>
-            <Text style={styles.clearFilters}>Wyczyść filtry ×</Text>
+          <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setDisplayCount(INITIAL_COUNT); }}>
+            <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -161,7 +248,7 @@ export default function MarketScreen() {
         />
       ) : (
         <FlatList
-          data={data?.items ?? []}
+          data={(data?.items ?? []).slice(0, displayCount)}
           keyExtractor={(item) => item.name}
           renderItem={({ item }) => (
             <MarketItemCard item={item} world={selectedWorld} />
@@ -173,7 +260,7 @@ export default function MarketScreen() {
             <RefreshControl
               refreshing={isFetching && !!data}
               onRefresh={() => {
-                setOffset(0);
+                setDisplayCount(INITIAL_COUNT);
                 refetch();
               }}
               tintColor={colors.gold}
@@ -182,23 +269,21 @@ export default function MarketScreen() {
           ListEmptyComponent={
             <View style={styles.empty}>
               <MaterialCommunityIcons name="package-variant-closed" size={52} color={colors.textMuted} />
-              <Text style={styles.emptyTitle}>Brak wyników</Text>
+              <Text style={styles.emptyTitle}>{t('no_results')}</Text>
               <Text style={styles.emptyText}>
-                {debouncedSearch
-                  ? `Nie znaleziono "${debouncedSearch}"`
-                  : 'Zmień filtry lub świat'}
+                {debouncedSearch ? `"${debouncedSearch}"` : t('clear_filters')}
               </Text>
             </View>
           }
           ListFooterComponent={
-            data?.items && data.items.length === PAGE_SIZE ? (
+            data?.items && displayCount < data.items.length ? (
               <TouchableOpacity style={styles.loadMore} onPress={handleLoadMore}>
                 <LinearGradient
                   colors={[colors.surfaceElevated, colors.card]}
                   style={styles.loadMoreGrad}
                 >
                   <MaterialCommunityIcons name="chevron-down" size={16} color={colors.gold} />
-                  <Text style={styles.loadMoreText}>Załaduj więcej</Text>
+                  <Text style={styles.loadMoreText}>{t('load_more')} ({data.items.length - displayCount})</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : null
@@ -263,6 +348,41 @@ const styles = StyleSheet.create({
     color: colors.background,
     fontSize: 8,
     fontWeight: '800',
+  },
+  presetsScroll: {
+    backgroundColor: colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    flexGrow: 0,
+  },
+  presetsContent: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    gap: 8,
+    flexDirection: 'row',
+  },
+  presetChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    backgroundColor: colors.card,
+  },
+  presetChipActive: {
+    backgroundColor: colors.gold,
+    borderColor: colors.gold,
+  },
+  presetText: {
+    color: colors.textMuted,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  presetTextActive: {
+    color: colors.background,
   },
   statsRow: {
     flexDirection: 'row',

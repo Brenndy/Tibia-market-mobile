@@ -14,11 +14,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../theme/colors';
 import { formatGold } from '../api/tibiaMarket';
 import { ItemImage } from './ItemImage';
+import { useTranslation } from '../context/LanguageContext';
 
 interface WatchAlertModalProps {
   visible: boolean;
   itemName: string;
   wikiName: string;
+  world: string;
   currentBuy: number | null;
   currentSell: number | null;
   initialBuyAlert: number | null;
@@ -33,6 +35,7 @@ export function WatchAlertModal({
   visible,
   itemName,
   wikiName,
+  world,
   currentBuy,
   currentSell,
   initialBuyAlert,
@@ -44,6 +47,7 @@ export function WatchAlertModal({
 }: WatchAlertModalProps) {
   const [buyAlert, setBuyAlert] = useState(initialBuyAlert?.toString() ?? '');
   const [sellAlert, setSellAlert] = useState(initialSellAlert?.toString() ?? '');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (visible) {
@@ -73,11 +77,17 @@ export function WatchAlertModal({
               </View>
               <View>
                 <Text style={styles.headerName} numberOfLines={1}>{itemName}</Text>
-                <Text style={styles.headerSub}>
-                  Kupno: <Text style={{ color: colors.buy }}>{formatGold(currentBuy)}</Text>
-                  {'  '}
-                  Sprzedaż: <Text style={{ color: colors.sell }}>{formatGold(currentSell)}</Text>
-                </Text>
+                <View style={styles.headerMeta}>
+                  <View style={styles.worldBadge}>
+                    <MaterialCommunityIcons name="earth" size={10} color={colors.gold} />
+                    <Text style={styles.worldBadgeText}>{world}</Text>
+                  </View>
+                  <Text style={styles.headerSub}>
+                    {t('buy_prefix')} <Text style={{ color: colors.buy }}>{formatGold(currentBuy)}</Text>
+                    {'  '}
+                    {t('sell_prefix')} <Text style={{ color: colors.sell }}>{formatGold(currentSell)}</Text>
+                  </Text>
+                </View>
               </View>
             </View>
             <TouchableOpacity onPress={onClose}>
@@ -94,11 +104,11 @@ export function WatchAlertModal({
               >
                 <View style={styles.alertHeader}>
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.buy} />
-                  <Text style={[styles.alertTitle, { color: colors.buy }]}>Alert kupna</Text>
+                  <Text style={[styles.alertTitle, { color: colors.buy }]}>{t('buy_alert')}</Text>
                 </View>
                 <Text style={styles.alertDesc}>
-                  Powiadomienie gdy cena kupna jest{' '}
-                  <Text style={{ color: colors.buy, fontWeight: '700' }}>≤ wartości</Text>
+                  {t('buy_alert_desc')}{' '}
+                  <Text style={{ color: colors.buy, fontWeight: '700' }}>{t('below_value')}</Text>
                 </Text>
                 <View style={styles.inputRow}>
                   <TextInput
@@ -115,8 +125,8 @@ export function WatchAlertModal({
                 {currentBuy != null && buyAlert.trim() && Number(buyAlert) > 0 && (
                   <Text style={styles.alertHint}>
                     {currentBuy <= Number(buyAlert)
-                      ? '🟢 Alert jest teraz aktywny!'
-                      : `Cena musi spaść o ${formatGold(currentBuy - Number(buyAlert))} gp`}
+                      ? t('alert_active')
+                      : `${t('price_must_drop')} ${formatGold(currentBuy - Number(buyAlert))} gp`}
                   </Text>
                 )}
               </LinearGradient>
@@ -130,11 +140,11 @@ export function WatchAlertModal({
               >
                 <View style={styles.alertHeader}>
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.sell} />
-                  <Text style={[styles.alertTitle, { color: colors.sell }]}>Alert sprzedaży</Text>
+                  <Text style={[styles.alertTitle, { color: colors.sell }]}>{t('sell_alert')}</Text>
                 </View>
                 <Text style={styles.alertDesc}>
-                  Powiadomienie gdy cena sprzedaży jest{' '}
-                  <Text style={{ color: colors.sell, fontWeight: '700' }}>≥ wartości</Text>
+                  {t('sell_alert_desc')}{' '}
+                  <Text style={{ color: colors.sell, fontWeight: '700' }}>{t('above_value')}</Text>
                 </Text>
                 <View style={styles.inputRow}>
                   <TextInput
@@ -151,8 +161,8 @@ export function WatchAlertModal({
                 {currentSell != null && sellAlert.trim() && Number(sellAlert) > 0 && (
                   <Text style={styles.alertHint}>
                     {currentSell >= Number(sellAlert)
-                      ? '🟢 Alert jest teraz aktywny!'
-                      : `Cena musi wzrosnąć o ${formatGold(Number(sellAlert) - currentSell)} gp`}
+                      ? t('alert_active')
+                      : `${t('price_must_rise')} ${formatGold(Number(sellAlert) - currentSell)} gp`}
                   </Text>
                 )}
               </LinearGradient>
@@ -167,11 +177,11 @@ export function WatchAlertModal({
               </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
-              <Text style={styles.cancelText}>Anuluj</Text>
+              <Text style={styles.cancelText}>{t('cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
               <MaterialCommunityIcons name="bell-check" size={18} color={colors.background} />
-              <Text style={styles.saveText}>{isEditing ? 'Zapisz' : 'Obserwuj'}</Text>
+              <Text style={styles.saveText}>{isEditing ? t('save') : t('watch')}</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -232,10 +242,29 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+  headerMeta: {
+    gap: 4,
+  },
+  worldBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    alignSelf: 'flex-start',
+    backgroundColor: colors.goldDim,
+    borderWidth: 1,
+    borderColor: colors.gold + '40',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 20,
+  },
+  worldBadgeText: {
+    color: colors.gold,
+    fontSize: 10,
+    fontWeight: '700',
+  },
   headerSub: {
     color: colors.textMuted,
     fontSize: 12,
-    marginTop: 2,
   },
   body: {
     padding: 16,

@@ -9,6 +9,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
+import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { LoadingState } from '@/src/components/LoadingState';
@@ -16,11 +17,10 @@ import { colors } from '@/src/theme/colors';
 
 export default function FavoritesScreen() {
   const { selectedWorld, favorites } = useWorld();
+  const { t } = useTranslation();
   const router = useRouter();
 
-  const { data, isLoading } = useMarketBoard(selectedWorld, {
-    rows: 1000,
-  });
+  const { data, isLoading } = useMarketBoard(selectedWorld);
 
   const favoriteItems = data?.items.filter((item) =>
     favorites.includes(item.name)
@@ -30,30 +30,28 @@ export default function FavoritesScreen() {
     return (
       <View style={styles.emptyContainer}>
         <MaterialCommunityIcons name="star-outline" size={64} color={colors.textMuted} />
-        <Text style={styles.emptyTitle}>Brak ulubionych</Text>
-        <Text style={styles.emptySubtitle}>
-          Dodaj przedmioty do ulubionych, klikając gwiazdkę na liście marketu.
-        </Text>
+        <Text style={styles.emptyTitle}>{t('no_favorites_title')}</Text>
+        <Text style={styles.emptySubtitle}>{t('no_favorites_desc')}</Text>
         <TouchableOpacity
           style={styles.goButton}
           onPress={() => router.push('/')}
         >
           <MaterialCommunityIcons name="store" size={16} color={colors.gold} />
-          <Text style={styles.goButtonText}>Przejdź do marketu</Text>
+          <Text style={styles.goButtonText}>{t('go_to_market')}</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   if (isLoading) {
-    return <LoadingState message="Pobieranie ulubionych..." />;
+    return <LoadingState message={t('loading_favorites')} />;
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
-          {favoriteItems.length} ulubionych przedmiotów
+          {favoriteItems.length} {t('tab_favorites').toLowerCase()}
         </Text>
         <Text style={styles.headerWorld}>
           <MaterialCommunityIcons name="earth" size={12} color={colors.textMuted} />{' '}
@@ -76,9 +74,7 @@ export default function FavoritesScreen() {
                 size={40}
                 color={colors.textMuted}
               />
-              <Text style={styles.notFoundText}>
-                Ulubione przedmioty nie zostały znalezione na tym świecie.
-              </Text>
+              <Text style={styles.notFoundText}>{t('favorites_not_found')}</Text>
             </View>
           ) : null
         }

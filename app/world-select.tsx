@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useWorld } from '@/src/context/WorldContext';
+import { useTranslation } from '@/src/context/LanguageContext';
 import { useWorlds } from '@/src/hooks/useMarket';
 import { SearchBar } from '@/src/components/SearchBar';
 import { LoadingState } from '@/src/components/LoadingState';
@@ -87,6 +88,7 @@ function WorldRow({
 export default function WorldSelectScreen() {
   const router = useRouter();
   const { selectedWorld, setSelectedWorld } = useWorld();
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data: worlds, isLoading } = useWorlds();
 
@@ -100,7 +102,7 @@ export default function WorldSelectScreen() {
   };
 
   if (isLoading) {
-    return <LoadingState message="Pobieranie listy światów..." />;
+    return <LoadingState message={t('loading_worlds')} />;
   }
 
   return (
@@ -109,12 +111,12 @@ export default function WorldSelectScreen() {
         <SearchBar
           value={search}
           onChangeText={setSearch}
-          placeholder="Szukaj świata..."
+          placeholder={t('search_world')}
         />
       </View>
 
       {filtered && (
-        <Text style={styles.count}>{filtered.length} światów</Text>
+        <Text style={styles.count}>{filtered.length} {t('select_world_title').toLowerCase()}</Text>
       )}
 
       <FlatList
