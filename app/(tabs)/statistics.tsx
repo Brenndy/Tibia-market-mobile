@@ -158,6 +158,9 @@ export default function StatisticsScreen() {
 
   const RANK_OPTIONS = RANK_OPTION_KEYS.map((o) => ({ ...o, label: t(o.key) }));
 
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => { setIsMounted(true); }, []);
+
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
   const rankedItems = useMemo(() =>
@@ -168,7 +171,7 @@ export default function StatisticsScreen() {
   const data = rawData ? { ...rawData, items: rankedItems } : undefined;
   const top15 = rankedItems.slice(0, 15);
 
-  if (isLoading) {
+  if (!isMounted || isLoading) {
     return <LoadingState message={t('loading_stats')} />;
   }
 

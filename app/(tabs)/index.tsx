@@ -84,6 +84,7 @@ export default function MarketScreen() {
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [activePreset, setActivePreset] = useState<PresetId>('hot');
+  const [isMounted, setIsMounted] = useState(false);
   const activeFilterCount = countActiveFilters(filters);
 
   const handleSelectedItemsChange = useCallback((items: string[]) => {
@@ -116,6 +117,8 @@ export default function MarketScreen() {
   const HEADER_HEIGHT = TOP_BAR_H + PRESETS_H;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => { setIsMounted(true); }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
@@ -187,7 +190,7 @@ export default function MarketScreen() {
     );
   }
 
-  const showSkeleton = isLoading && !rawData;
+  const showSkeleton = !isMounted || (isLoading && !rawData);
 
   return (
     <View style={styles.container}>
