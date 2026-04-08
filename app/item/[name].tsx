@@ -11,7 +11,7 @@ import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Path, Circle, Line, Text as SvgText, G } from 'react-native-svg';
+import Svg, { Path, Circle, Line, Text as SvgText, G, Defs, LinearGradient as SvgGradient, Stop, Rect } from 'react-native-svg';
 import { useItemStats, useItemHistory, useItemOffers } from '@/src/hooks/useMarket';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
@@ -48,6 +48,20 @@ const statStyles = StyleSheet.create({
   value: { color: colors.textPrimary, fontSize: 14, fontWeight: '700', textAlign: 'right' },
 });
 
+// Offer `time` is the EXPIRY timestamp (30 days after creation).
+const OFFER_DURATION_SECS = 30 * 24 * 3600;
+
+function formatOfferTime(expiryUnixSecs: number): string {
+  const createdAtSecs = expiryUnixSecs - OFFER_DURATION_SECS;
+  const ageSecs = Date.now() / 1000 - createdAtSecs;
+  if (ageSecs < 0) return '?';
+  const minutes = Math.floor(ageSecs / 60);
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(ageSecs / 3600);
+  if (hours < 24) return `${hours}h`;
+  return `${Math.floor(ageSecs / 86400)}d`;
+}
+
 function OfferRow({ side, amount, price, name, time }: {
   side: 'buy' | 'sell';
   amount: number;
@@ -75,7 +89,10 @@ function OfferRow({ side, amount, price, name, time }: {
       />
       <Text style={[offerStyles.price, { color }]}>{formatGold(price)}</Text>
       <Text style={offerStyles.amount}>{amount.toLocaleString()} {t('units')}</Text>
-      <Text style={offerStyles.seller} numberOfLines={1}>{name}</Text>
+      <View style={offerStyles.rightCol}>
+        <Text style={offerStyles.seller} numberOfLines={1}>{name}</Text>
+        <Text style={offerStyles.offerAge}>{formatOfferTime(time)}</Text>
+      </View>
     </View>
   );
 }
@@ -100,7 +117,9 @@ const offerStyles = StyleSheet.create({
   },
   price: { fontSize: 14, fontWeight: '700', minWidth: 70 },
   amount: { color: colors.textSecondary, fontSize: 12, flex: 1 },
+  rightCol: { alignItems: 'flex-end' },
   seller: { color: colors.textMuted, fontSize: 11, maxWidth: 100 },
+  offerAge: { color: colors.textMuted, fontSize: 10 },
 });
 
 function CustomLineChart({
@@ -108,19 +127,18 @@ function CustomLineChart({
   sellData,
   dates,
   width,
-  showDots,
 }: {
   buyData: number[];
   sellData: number[];
   dates: string[];
   width: number;
-  showDots: boolean;
+  showDots?: boolean;
 }) {
-  const CHART_H = 200;
-  const PAD_TOP = 16;
-  const PAD_BOTTOM = 28;
+  const CHART_H = 220;
+  const PAD_TOP = 20;
+  const PAD_BOTTOM = 32;
   const PAD_LEFT = 52;
-  const PAD_RIGHT = 8;
+  const PAD_RIGHT = 12;
   const plotW = width - PAD_LEFT - PAD_RIGHT;
   const plotH = CHART_H - PAD_TOP - PAD_BOTTOM;
 
@@ -129,78 +147,99 @@ function CustomLineChart({
 
   const minV = Math.min(...allVals);
   const maxV = Math.max(...allVals);
-  const range = maxV - minV || 1;
+  // Add 5% padding so lines don't touch edges
+  const pad = (maxV - minV) * 0.08 || maxV * 0.05;
+  const lo = minV - pad;
+  const hi = maxV + pad;
+  const range = hi - lo;
 
   const xOf = (i: number) => PAD_LEFT + (i / Math.max(buyData.length - 1, 1)) * plotW;
-  const yOf = (v: number) => PAD_TOP + plotH - ((v - minV) / range) * plotH;
+  const yOf = (v: number) => PAD_TOP + plotH - ((v - lo) / range) * plotH;
 
-  const makePath = (data: number[]) =>
-    data
-      .map((v, i) => `${i === 0 ? 'M' : 'L'} ${xOf(i).toFixed(1)} ${yOf(v).toFixed(1)}`)
-      .join(' ');
+  // Smooth cubic bezier path
+  const smoothPath = (data: number[]) => {
+    if (data.length === 0) return '';
+    if (data.length === 1) return `M ${xOf(0)} ${yOf(data[0])}`;
+    let d = `M ${xOf(0).toFixed(1)} ${yOf(data[0]).toFixed(1)}`;
+    for (let i = 1; i < data.length; i++) {
+      const x0 = xOf(i - 1), y0 = yOf(data[i - 1]);
+      const x1 = xOf(i), y1 = yOf(data[i]);
+      const cx = (x0 + x1) / 2;
+      d += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+    }
+    return d;
+  };
 
-  // Y-axis: 4 labels
-  const yLabels = [0, 1, 2, 3].map((i) => minV + (i / 3) * range);
-
-  // X-axis: up to 5 labels
+  const yLabels = [0, 1, 2, 3].map((i) => lo + (i / 3) * range);
   const step = Math.max(1, Math.ceil(dates.length / 5));
+
+  // Spread fill between buy and sell
+  const spreadPath = () => {
+    if (buyData.length === 0 || sellData.length === 0) return '';
+    const top = smoothPath(buyData);
+    const n = sellData.length - 1;
+    let bottom = '';
+    for (let i = n; i >= 0; i--) {
+      const x0 = i > 0 ? xOf(i - 1) : xOf(0);
+      const y0 = i > 0 ? yOf(sellData[i - 1]) : yOf(sellData[0]);
+      const x1 = xOf(i), y1 = yOf(sellData[i]);
+      const cx = (x0 + x1) / 2;
+      bottom += i === n
+        ? ` L ${x1.toFixed(1)} ${y1.toFixed(1)}`
+        : ` C ${cx.toFixed(1)} ${y1.toFixed(1)}, ${cx.toFixed(1)} ${y0.toFixed(1)}, ${x0.toFixed(1)} ${y0.toFixed(1)}`;
+    }
+    return `${top}${bottom} Z`;
+  };
 
   return (
     <Svg width={width} height={CHART_H}>
+      <Defs>
+        <SvgGradient id="spreadGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%" stopColor={colors.buy} stopOpacity="0.12" />
+          <Stop offset="100%" stopColor={colors.sell} stopOpacity="0.06" />
+        </SvgGradient>
+      </Defs>
+
+      {/* Chart background */}
+      <Rect x={PAD_LEFT} y={PAD_TOP} width={plotW} height={plotH} fill={colors.surfaceElevated} opacity={0.3} rx={4} />
+
       {/* Grid lines + Y labels */}
       {yLabels.map((v, i) => (
         <G key={i}>
           <Line
-            x1={PAD_LEFT}
-            y1={yOf(v)}
-            x2={width - PAD_RIGHT}
-            y2={yOf(v)}
-            stroke={colors.border}
-            strokeDasharray="4"
-            strokeWidth={0.5}
+            x1={PAD_LEFT} y1={yOf(v)}
+            x2={width - PAD_RIGHT} y2={yOf(v)}
+            stroke={colors.border} strokeDasharray="4 5" strokeWidth={0.7}
           />
-          <SvgText
-            x={PAD_LEFT - 4}
-            y={yOf(v) + 4}
-            textAnchor="end"
-            fill={colors.textMuted}
-            fontSize={9}
-          >
+          <SvgText x={PAD_LEFT - 5} y={yOf(v) + 4} textAnchor="end" fill={colors.textMuted} fontSize={9}>
             {formatGold(v)}
           </SvgText>
         </G>
       ))}
 
-      {/* Buy line */}
-      <Path d={makePath(buyData)} stroke={colors.buy} strokeWidth={2} fill="none" />
-      {/* Sell line */}
-      <Path d={makePath(sellData)} stroke={colors.sell} strokeWidth={2} fill="none" />
+      {/* Spread fill between the two lines */}
+      <Path d={spreadPath()} fill="url(#spreadGrad)" />
+
+      {/* Sell line — draw first (behind) */}
+      <Path d={smoothPath(sellData)} stroke={colors.sell} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Buy line — draw on top */}
+      <Path d={smoothPath(buyData)} stroke={colors.buy} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
 
       {/* Dots */}
-      {showDots &&
-        buyData.map((v, i) => (
-          <Circle key={`b${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.buy} />
-        ))}
-      {showDots &&
-        sellData.map((v, i) => (
-          <Circle key={`s${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.sell} />
-        ))}
+      {sellData.map((v, i) => (
+        <Circle key={`s${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.sell} stroke={colors.card} strokeWidth={1.5} />
+      ))}
+      {buyData.map((v, i) => (
+        <Circle key={`b${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.buy} stroke={colors.card} strokeWidth={1.5} />
+      ))}
 
       {/* X-axis date labels */}
-      {dates.map(
-        (d, i) =>
-          i % step === 0 && (
-            <SvgText
-              key={i}
-              x={xOf(i)}
-              y={CHART_H - 8}
-              textAnchor="middle"
-              fill={colors.textMuted}
-              fontSize={9}
-            >
-              {d}
-            </SvgText>
-          )
+      {dates.map((d, i) =>
+        i % step === 0 ? (
+          <SvgText key={i} x={xOf(i)} y={CHART_H - 8} textAnchor="middle" fill={colors.textMuted} fontSize={9}>
+            {d}
+          </SvgText>
+        ) : null
       )}
     </Svg>
   );
@@ -221,7 +260,7 @@ export default function ItemDetailScreen() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: name,
+      title: toTitleCase(name),
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 12 }}>
           <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={{ padding: 4 }}>
@@ -398,6 +437,56 @@ export default function ItemDetailScreen() {
           )}
         </LinearGradient>
       </View>
+
+      {/* NPC price comparison */}
+      {(stats.npc_buy.length > 0 || stats.npc_sell.length > 0) && (() => {
+        const bestNpcBuy = stats.npc_buy.length > 0 ? Math.max(...stats.npc_buy.map((e) => e.price)) : null;
+        const bestNpcSell = stats.npc_sell.length > 0 ? Math.min(...stats.npc_sell.map((e) => e.price)) : null;
+        return (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <MaterialCommunityIcons name="store-outline" size={15} color={colors.gold} />
+              <Text style={styles.sectionTitle}>NPC</Text>
+            </View>
+            {bestNpcBuy != null && (
+              <View style={styles.npcRow}>
+                <Text style={styles.npcLabel}>{t('npc_buys_for')}</Text>
+                <Text style={[styles.npcPrice, { color: colors.sell }]}>{formatGold(bestNpcBuy)}</Text>
+                {stats.sell_offer != null && (
+                  <View style={[
+                    styles.npcDiff,
+                    stats.sell_offer > bestNpcBuy
+                      ? { backgroundColor: colors.buyDim, borderColor: colors.buyBorder }
+                      : { backgroundColor: colors.sellDim, borderColor: colors.sellBorder },
+                  ]}>
+                    <Text style={[styles.npcDiffText, { color: stats.sell_offer > bestNpcBuy ? colors.buy : colors.sell }]}>
+                      {stats.sell_offer > bestNpcBuy ? '+' : ''}{formatGold(stats.sell_offer - bestNpcBuy)} market
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+            {bestNpcSell != null && (
+              <View style={styles.npcRow}>
+                <Text style={styles.npcLabel}>{t('npc_sells_for')}</Text>
+                <Text style={[styles.npcPrice, { color: colors.buy }]}>{formatGold(bestNpcSell)}</Text>
+                {stats.buy_offer != null && (
+                  <View style={[
+                    styles.npcDiff,
+                    stats.buy_offer < bestNpcSell
+                      ? { backgroundColor: colors.buyDim, borderColor: colors.buyBorder }
+                      : { backgroundColor: colors.sellDim, borderColor: colors.sellBorder },
+                  ]}>
+                    <Text style={[styles.npcDiffText, { color: stats.buy_offer < bestNpcSell ? colors.buy : colors.sell }]}>
+                      {stats.buy_offer < bestNpcSell ? '-' : '+'}{formatGold(Math.abs(stats.buy_offer - bestNpcSell))} market
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
+        );
+      })()}
 
       {/* Order Book */}
       <View style={styles.section}>
@@ -676,6 +765,36 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
 
+  npcRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.divider,
+    gap: 8,
+  },
+  npcLabel: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    flex: 1,
+  },
+  npcPrice: {
+    fontSize: 14,
+    fontWeight: '700',
+    minWidth: 60,
+    textAlign: 'right',
+  },
+  npcDiff: {
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  npcDiffText: {
+    fontSize: 10,
+    fontWeight: '600',
+  },
   offerHeader: {
     paddingHorizontal: 14,
     paddingVertical: 6,

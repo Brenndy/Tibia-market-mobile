@@ -167,6 +167,31 @@ export const MarketItemCard = memo(function MarketItemCard({
         </View>
       </View>
 
+      {/* Active offers */}
+      {((item.buy_offers ?? 0) > 0 || (item.sell_offers ?? 0) > 0) && (
+        <View style={styles.activityRow}>
+          <Text style={styles.activityHeader}>{t('offers')}</Text>
+          <View style={styles.activityPills}>
+            {(item.buy_offers ?? 0) > 0 && (
+              <View style={[styles.activityPill, styles.activityPillBuy]}>
+                <Text style={styles.activityPillLabel}>{t('buy')}</Text>
+                <Text style={styles.activityPillValueBuy}>
+                  {(item.buy_offers as number).toLocaleString()}
+                </Text>
+              </View>
+            )}
+            {(item.sell_offers ?? 0) > 0 && (
+              <View style={[styles.activityPill, styles.activityPillSell]}>
+                <Text style={styles.activityPillLabel}>{t('sell')}</Text>
+                <Text style={styles.activityPillValueSell}>
+                  {(item.sell_offers as number).toLocaleString()}
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+      )}
+
       {/* Margin bar */}
       {margin != null && margin > 0 && (
         <View style={styles.marginRow}>
@@ -321,23 +346,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingBottom: 12,
-    paddingTop: 8,
-    gap: 8,
+    paddingBottom: 8,
+    paddingTop: 6,
+    gap: 6,
     borderTopWidth: 1,
     borderTopColor: colors.divider,
     flexWrap: 'nowrap',
   },
   marginLabel: {
     color: colors.textMuted,
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: '700',
-    letterSpacing: 0.8,
+    letterSpacing: 0.6,
     textTransform: 'uppercase',
   },
   marginValue: {
     color: colors.goldLight,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
   },
   marginPct: {
@@ -349,14 +374,69 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   barTrack: {
-    height: 4,
+    height: 5,
     backgroundColor: colors.surfaceElevated,
-    borderRadius: 2,
+    borderRadius: 10,
     overflow: 'hidden',
   },
   barFill: {
     height: '100%',
-    borderRadius: 2,
-    minWidth: 4,
+    borderRadius: 10,
+    minWidth: 6,
+  },
+  activityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderTopWidth: 1,
+    borderTopColor: colors.divider,
+    gap: 8,
+  },
+  activityHeader: {
+    color: colors.textMuted,
+    fontSize: 8,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+    minWidth: 28,
+  },
+  activityPills: {
+    flexDirection: 'row',
+    gap: 5,
+    flex: 1,
+  },
+  activityPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 6,
+    borderWidth: 1,
+  },
+  activityPillBuy: {
+    backgroundColor: colors.buyDim,
+    borderColor: colors.buyBorder,
+  },
+  activityPillSell: {
+    backgroundColor: colors.sellDim,
+    borderColor: colors.sellBorder,
+  },
+  activityPillLabel: {
+    color: colors.textMuted,
+    fontSize: 8,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
+  },
+  activityPillValueBuy: {
+    color: colors.buy,
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  activityPillValueSell: {
+    color: colors.sell,
+    fontSize: 11,
+    fontWeight: '700',
   },
 });

@@ -24,6 +24,7 @@ const SORT_OPTION_KEYS: { key: TranslationKey; value: SortField }[] = [
   { key: 'sort_month_bought', value: 'month_bought' },
   { key: 'sort_day_sold', value: 'day_sold' },
   { key: 'sort_name', value: 'name' },
+  { key: 'sort_npc_margin', value: 'npc_sell_margin' },
 ];
 
 interface SortPickerProps {

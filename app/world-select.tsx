@@ -15,6 +15,7 @@ import { SearchBar } from '@/src/components/SearchBar';
 import { LoadingState } from '@/src/components/LoadingState';
 import { colors } from '@/src/theme/colors';
 import { World } from '@/src/api/tibiaMarket';
+import { timeAgo } from '@/src/utils/timeAgo';
 
 const PVP_COLORS: Record<string, string> = {
   'Open PvP': colors.badgeOpen,
@@ -24,11 +25,12 @@ const PVP_COLORS: Record<string, string> = {
   'Retro Hardcore PvP': colors.badgePvp,
 };
 
-const LOCATION_ICONS: Record<string, string> = {
-  'North America': '🌎',
-  'South America': '🌎',
-  Europe: '🌍',
-  Oceania: '🌏',
+const PVP_LABELS: Record<string, string> = {
+  'Open PvP': 'Open',
+  'Retro Open PvP': 'Retro Open',
+  'Optional PvP': 'Optional',
+  'Hardcore PvP': 'Hardcore',
+  'Retro Hardcore PvP': 'Retro HC',
 };
 
 function WorldRow({
@@ -41,7 +43,8 @@ function WorldRow({
   onPress: () => void;
 }) {
   const pvpColor = PVP_COLORS[world.pvp_type] ?? colors.textMuted;
-  const locationIcon = LOCATION_ICONS[world.location] ?? '🌐';
+  const pvpLabel = PVP_LABELS[world.pvp_type] ?? world.pvp_type;
+  const relTime = timeAgo(world.last_update);
 
   return (
     <TouchableOpacity
@@ -50,35 +53,20 @@ function WorldRow({
       activeOpacity={0.7}
     >
       <View style={styles.rowLeft}>
-        <Text style={styles.locationIcon}>{locationIcon}</Text>
-        <View>
-          <Text style={[styles.worldName, isSelected && styles.worldNameSelected]}>
-            {world.name}
-          </Text>
-          <View style={styles.badges}>
-            <View style={[styles.badge, { borderColor: pvpColor }]}>
-              <Text style={[styles.badgeText, { color: pvpColor }]}>{world.pvp_type}</Text>
-            </View>
-            {world.battleye && (
-              <View style={[styles.badge, { borderColor: colors.badgeOptional }]}>
-                <Text style={[styles.badgeText, { color: colors.badgeOptional }]}>BattlEye</Text>
-              </View>
-            )}
-            {world.premium_only && (
-              <View style={[styles.badge, { borderColor: colors.badgePremium }]}>
-                <Text style={[styles.badgeText, { color: colors.badgePremium }]}>Premium</Text>
-              </View>
-            )}
-          </View>
-        </View>
+        <Text style={[styles.worldName, isSelected && styles.worldNameSelected]}>
+          {world.name}
+        </Text>
+        {relTime ? <Text style={styles.updateTime}>{relTime}</Text> : null}
       </View>
       <View style={styles.rowRight}>
-        <View style={styles.onlineRow}>
-          <View style={styles.onlineDot} />
-          <Text style={styles.onlineText}>{world.players_online}</Text>
-        </View>
+        {world.battleye && (
+          <MaterialCommunityIcons name="eye" size={16} color={colors.buy} />
+        )}
+        {pvpLabel ? (
+          <Text style={[styles.pvpLabel, { color: pvpColor }]}>{pvpLabel}</Text>
+        ) : null}
         {isSelected && (
-          <MaterialCommunityIcons name="check-circle" size={20} color={colors.gold} />
+          <MaterialCommunityIcons name="check-circle" size={18} color={colors.gold} />
         )}
       </View>
     </TouchableOpacity>
@@ -92,9 +80,9 @@ export default function WorldSelectScreen() {
   const [search, setSearch] = useState('');
   const { data: worlds, isLoading } = useWorlds();
 
-  const filtered = worlds?.filter((w) =>
-    w.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = worlds
+    ?.filter((w) => w.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   const handleSelect = (world: World) => {
     setSelectedWorld(world.name);
@@ -168,57 +156,28 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceElevated,
   },
   rowLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
     flex: 1,
-  },
-  locationIcon: {
-    fontSize: 22,
   },
   worldName: {
     color: colors.textPrimary,
     fontSize: 15,
     fontWeight: '600',
-    marginBottom: 4,
   },
   worldNameSelected: {
     color: colors.gold,
   },
-  badges: {
-    flexDirection: 'row',
-    gap: 5,
-    flexWrap: 'wrap',
-  },
-  badge: {
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingHorizontal: 5,
-    paddingVertical: 1,
-  },
-  badgeText: {
-    fontSize: 10,
-    fontWeight: '600',
+  updateTime: {
+    color: colors.textMuted,
+    fontSize: 12,
+    marginTop: 2,
   },
   rowRight: {
     alignItems: 'flex-end',
-    gap: 6,
-  },
-  onlineRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
     gap: 4,
   },
-  onlineDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.buy,
-  },
-  onlineText: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    fontWeight: '600',
+  pvpLabel: {
+    fontSize: 11,
+    fontWeight: '500',
   },
   separator: {
     height: 1,

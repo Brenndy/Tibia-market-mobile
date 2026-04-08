@@ -91,16 +91,9 @@ export interface ItemStats {
 
 export interface World {
   name: string;
-  type: string;
-  location: string;
+  last_update: string;
   pvp_type: string;
   battleye: boolean;
-  transfer_type: string;
-  players_online: number;
-  record_players: number;
-  record_date: string;
-  creation_date: string;
-  premium_only: boolean;
 }
 
 export type SortField =
@@ -164,6 +157,19 @@ interface RawMarketValue {
 interface RawWorldData {
   name: string;
   last_update: string;
+}
+
+interface TibiaDataWorld {
+  name: string;
+  pvp_type: string;
+  battleye_protected: boolean;
+}
+
+interface TibiaDataWorldsResponse {
+  worlds: {
+    regular_worlds: TibiaDataWorld[];
+    tournament_worlds?: TibiaDataWorld[];
+  };
 }
 
 // ─── Metadata cache ───────────────────────────────────────────────────────────
@@ -412,21 +418,39 @@ export async function fetchItemHistory(
   }));
 }
 
+const TIBIADATA_BASE = 'https://api.tibiadata.com/v4';
+
 export async function fetchWorlds(): Promise<World[]> {
-  const { data } = await api.get<RawWorldData[]>('/world_data');
-  return data.map((w) => ({
-    name: w.name,
-    type: '',
-    location: '',
-    pvp_type: '',
-    battleye: false,
-    transfer_type: '',
-    players_online: 0,
-    record_players: 0,
-    record_date: '',
-    creation_date: '',
-    premium_only: false,
-  }));
+  const [marketResult, tibiaResult] = await Promise.allSettled([
+    api.get<RawWorldData[]>('/world_data'),
+    axios.get<TibiaDataWorldsResponse>(`${TIBIADATA_BASE}/worlds`, { timeout: 8000 }),
+  ]);
+
+  if (marketResult.status === 'rejected') throw marketResult.reason;
+
+  const metaMap = new Map<string, { pvp_type: string; battleye: boolean }>();
+  if (tibiaResult.status === 'fulfilled') {
+    const all = [
+      ...(tibiaResult.value.data.worlds.regular_worlds ?? []),
+      ...(tibiaResult.value.data.worlds.tournament_worlds ?? []),
+    ];
+    for (const w of all) {
+      metaMap.set(w.name.toLowerCase(), {
+        pvp_type: w.pvp_type ?? '',
+        battleye: w.battleye_protected ?? false,
+      });
+    }
+  }
+
+  return marketResult.value.data.map((w) => {
+    const meta = metaMap.get(w.name.toLowerCase());
+    return {
+      name: w.name,
+      last_update: w.last_update,
+      pvp_type: meta?.pvp_type ?? '',
+      battleye: meta?.battleye ?? false,
+    };
+  });
 }
 
 export async function fetchCategories(): Promise<string[]> {

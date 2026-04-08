@@ -16,8 +16,10 @@ export function useMarketBoard(world: string) {
     {
       enabled: !!world,
       keepPreviousData: true,
-      staleTime: 10 * 60_000,  // won't refetch for 10 minutes
-      cacheTime: 30 * 60_000,  // stays in memory 30 minutes after unmount
+      staleTime: 10 * 60_000,
+      cacheTime: 30 * 60_000,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     }
   );
 }
@@ -46,7 +48,9 @@ export function useItemHistory(world: string, itemName: string, days = 30) {
 
 export function useWorlds() {
   return useQuery('worlds', fetchWorlds, {
-    staleTime: 5 * 60_000,
+    staleTime: 15 * 60_000,
+    cacheTime: 60 * 60_000,
+    retry: 1,
   });
 }
 

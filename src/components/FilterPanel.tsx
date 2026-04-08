@@ -4,16 +4,19 @@ import {
   Text,
   Modal,
   TouchableOpacity,
+  Pressable,
   ScrollView,
   TextInput,
   StyleSheet,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { useCategories } from '../hooks/useMarket';
 import { useTranslation } from '../context/LanguageContext';
+import { Vocation } from '../api/tibiaMarket';
 
 export interface FilterState {
   categories: string[];
@@ -23,6 +26,8 @@ export interface FilterState {
   maxSellPrice: string;
   minVolume: string;
   minMargin: string;
+  yasirOnly: boolean;
+  vocations: Vocation[];
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -33,6 +38,8 @@ export const DEFAULT_FILTERS: FilterState = {
   maxSellPrice: '',
   minVolume: '',
   minMargin: '',
+  yasirOnly: false,
+  vocations: [],
 };
 
 export function countActiveFilters(f: FilterState): number {
@@ -42,6 +49,8 @@ export function countActiveFilters(f: FilterState): number {
   if (f.minSellPrice || f.maxSellPrice) n++;
   if (f.minVolume) n++;
   if (f.minMargin) n++;
+  if (f.yasirOnly) n++;
+  if (f.vocations.length > 0) n++;
   return n;
 }
 
@@ -122,8 +131,9 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
       animationType="slide"
       onShow={handleOpen}
     >
-      <View style={styles.backdrop}>
-        <SafeAreaView style={styles.sheet}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <Pressable style={styles.backdrop} onPress={onClose}>
+        <SafeAreaView style={styles.sheet} onStartShouldSetResponder={() => true}>
           {/* Handle */}
           <View style={styles.handle} />
 
@@ -136,6 +146,46 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
           </View>
 
           <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+            {/* Quick toggles */}
+            <Text style={styles.sectionLabel}>{t('quick_filters')}</Text>
+            <View style={styles.categoryGrid}>
+              <TouchableOpacity
+                style={[styles.catChip, local.yasirOnly && styles.catChipActive]}
+                onPress={() => setLocal((p) => ({ ...p, yasirOnly: !p.yasirOnly }))}
+              >
+                <Text style={[styles.catChipText, local.yasirOnly && styles.catChipTextActive]}>
+                  🏺 {t('filter_yasir')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Vocation filter */}
+            <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
+            <View style={styles.categoryGrid}>
+              {(['knight', 'paladin', 'sorcerer', 'druid'] as Vocation[]).map((voc) => {
+                const active = local.vocations.includes(voc);
+                const icons: Record<Vocation, string> = {
+                  knight: '🗡', paladin: '🏹', sorcerer: '🔮', druid: '🌿',
+                };
+                return (
+                  <TouchableOpacity
+                    key={voc}
+                    style={[styles.catChip, active && styles.catChipActive]}
+                    onPress={() => setLocal((p) => ({
+                      ...p,
+                      vocations: active
+                        ? p.vocations.filter((v) => v !== voc)
+                        : [...p.vocations, voc],
+                    }))}
+                  >
+                    <Text style={[styles.catChipText, active && styles.catChipTextActive]}>
+                      {icons[voc]} {t((`voc_${voc}`) as 'voc_knight')}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
             {/* Categories */}
             <Text style={styles.sectionLabel}>{t('category')}</Text>
             <View style={styles.categoryGrid}>
@@ -233,7 +283,8 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-      </View>
+      </Pressable>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
