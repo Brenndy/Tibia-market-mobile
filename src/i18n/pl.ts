@@ -31,6 +31,7 @@ export const pl = {
   sort_month_bought: 'Zakupy miesięczne',
   sort_day_sold: 'Obrót dzienny',
   sort_name: 'Nazwa',
+  sort_npc_margin: 'Przebicie NPC',
 
   // Filter panel
   advanced_filters: 'Filtry zaawansowane',
@@ -116,6 +117,8 @@ export const pl = {
   highest_buy: 'Najwyższe kupno',
   lowest_sell: 'Najniższa sprzedaż',
   today: 'Dzisiaj',
+  day_activity: 'DZIŚ',
+  offers: 'OFERTY',
   today_avg_prefix: 'Dzisiaj śr.',
   monthly_avg_prefix: 'Mies. śr.',
   item_detail_title: 'Szczegóły przedmiotu',
@@ -124,6 +127,19 @@ export const pl = {
   load_more: 'Załaduj więcej',
   no_results: 'Brak wyników',
   clear_filters: 'Wyczyść filtry',
+
+  // Filter button
+  filters: 'Filtry',
+  quick_filters: 'Szybkie filtry',
+  filter_yasir: 'Yasir',
+  npc_buys_for: 'NPC kupuje za',
+  npc_sells_for: 'NPC sprzedaje za',
+  offer_date: 'Data',
+  vocation_filter: 'Profesja',
+  voc_knight: 'Knight',
+  voc_paladin: 'Paladin',
+  voc_sorcerer: 'Sorcerer',
+  voc_druid: 'Druid',
 
   // Quick presets
   preset_hot: 'Gorące',
@@ -137,6 +153,12 @@ export const pl = {
   margin_pct: '% marży',
   flip_score: 'Ocena flipu',
   vs_avg: 'vs śr.',
+
+  // Watchlist
+  alert_singular: 'alert',
+  alerts_plural: 'alertów',
+  syncing: 'sync…',
+  active_label: 'aktywnych',
 } as const;
 
 export type TranslationKey = keyof typeof pl;

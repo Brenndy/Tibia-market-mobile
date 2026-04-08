@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -76,7 +78,10 @@ export function WatchAlertModal({
 
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <View style={styles.backdrop}>
+      <KeyboardAvoidingView
+        style={styles.backdrop}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <SafeAreaView style={styles.sheet}>
           <View style={styles.handle} />
 
@@ -106,7 +111,7 @@ export function WatchAlertModal({
             </TouchableOpacity>
           </View>
 
-          <View style={styles.body}>
+          <ScrollView style={styles.body} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
             {/* Buy alert */}
             <View style={styles.alertBlock}>
               <LinearGradient
@@ -126,7 +131,7 @@ export function WatchAlertModal({
                     style={styles.input}
                     value={buyAlert}
                     onChangeText={setBuyAlert}
-                    placeholder={currentBuy ? formatGold(currentBuy) : 'np. 100k'}
+                    placeholder={currentBuy ? formatGold(currentBuy) : 'e.g. 100k'}
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -162,7 +167,7 @@ export function WatchAlertModal({
                     style={styles.input}
                     value={sellAlert}
                     onChangeText={setSellAlert}
-                    placeholder={currentSell ? formatGold(currentSell) : 'np. 110k'}
+                    placeholder={currentSell ? formatGold(currentSell) : 'e.g. 110k'}
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -178,7 +183,7 @@ export function WatchAlertModal({
                 )}
               </LinearGradient>
             </View>
-          </View>
+          </ScrollView>
 
           {/* Footer */}
           <View style={styles.footer}>
@@ -196,7 +201,7 @@ export function WatchAlertModal({
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -279,13 +284,13 @@ const styles = StyleSheet.create({
   },
   body: {
     padding: 16,
-    gap: 12,
   },
   alertBlock: {
     borderRadius: 14,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: colors.cardBorder,
+    marginBottom: 12,
   },
   alertGrad: {
     padding: 16,

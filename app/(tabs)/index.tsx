@@ -1,15 +1,16 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import {
   View,
   FlatList,
   StyleSheet,
-  RefreshControl,
   Text,
   TouchableOpacity,
   ScrollView,
+  Animated,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
@@ -74,6 +75,8 @@ const PRESETS: Preset[] = [
 export default function MarketScreen() {
   const { selectedWorld } = useWorld();
   const { t } = useTranslation();
+  const navigation = useNavigation();
+  const listRef = useRef<any>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('month_sold');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
@@ -105,7 +108,35 @@ export default function MarketScreen() {
     setDisplayCount(INITIAL_COUNT);
   }, [activePreset]);
 
-  const { data: rawData, isLoading, isError, refetch, isFetching } = useMarketBoard(selectedWorld);
+  const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
+
+  // Collapsing header: topBar fades+slides, presetsRow slides only
+  const TOP_BAR_H = 116; // searchBar(44) + toolRow(44) + gaps/padding
+  const PRESETS_H = 52;
+  const HEADER_HEIGHT = TOP_BAR_H + PRESETS_H;
+
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
+      if (navigation.isFocused()) {
+        listRef.current?.scrollToOffset({ offset: 0, animated: true });
+        scrollY.setValue(0);
+      }
+    });
+    return () => unsubscribe?.();
+  }, [navigation, scrollY]);
+
+  const topBarTranslate = scrollY.interpolate({
+    inputRange: [0, TOP_BAR_H],
+    outputRange: [0, -TOP_BAR_H],
+    extrapolate: 'clamp',
+  });
+  const topBarOpacity = scrollY.interpolate({
+    inputRange: [0, TOP_BAR_H * 0.55],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
 
   const filteredItems = useMemo(() => {
     if (!rawData) return [];
@@ -120,6 +151,8 @@ export default function MarketScreen() {
       maxSellPrice: filters.maxSellPrice ? Number(filters.maxSellPrice) : undefined,
       minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
       minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
+      yasirOnly: filters.yasirOnly || undefined,
+      vocations: filters.vocations.length > 0 ? filters.vocations : undefined,
     });
   }, [rawData, sortField, sortOrder, selectedItems, filters]);
 
@@ -131,10 +164,13 @@ export default function MarketScreen() {
   }, []);
 
   const handleLoadMore = useCallback(() => {
-    if (!isFetching) {
-      setDisplayCount((prev) => prev + PAGE_SIZE);
-    }
-  }, [isFetching]);
+    setDisplayCount((prev) => prev + PAGE_SIZE);
+  }, []);
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: true }
+  );
 
   const handleApplyFilters = useCallback((f: FilterState) => {
     setFilters(f);
@@ -155,78 +191,75 @@ export default function MarketScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Top bar */}
-      <View style={styles.topBar}>
-        <View style={styles.searchWrap}>
-          <ItemSearchBar
-            selectedItems={selectedItems}
-            onSelectedItemsChange={handleSelectedItemsChange}
-            placeholder={t('search_placeholder')}
-          />
-        </View>
-        <SortPicker
-          sortField={sortField}
-          sortOrder={sortOrder}
-          onSortChange={handleSortChange}
-        />
-        <TouchableOpacity
-          style={[styles.filterBtn, activeFilterCount > 0 && styles.filterBtnActive]}
-          onPress={() => setFilterPanelOpen(true)}
-        >
-          <MaterialCommunityIcons
-            name="tune-variant"
-            size={18}
-            color={activeFilterCount > 0 ? colors.gold : colors.textSecondary}
-          />
+      {/* Collapsing header */}
+      <View style={styles.headerWrapper}>
+        {/* Top bar: fades + slides up */}
+        <Animated.View style={{ transform: [{ translateY: topBarTranslate }], opacity: topBarOpacity }}>
+          <View style={styles.topBar}>
+            <ItemSearchBar
+              selectedItems={selectedItems}
+              onSelectedItemsChange={handleSelectedItemsChange}
+              placeholder={t('search_placeholder')}
+            />
+            <View style={styles.toolRow}>
+              <SortPicker
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSortChange={handleSortChange}
+              />
+              <TouchableOpacity
+                style={[styles.filterBtn, activeFilterCount > 0 && styles.filterBtnActive]}
+                onPress={() => setFilterPanelOpen(true)}
+              >
+                <MaterialCommunityIcons
+                  name="tune-variant"
+                  size={15}
+                  color={activeFilterCount > 0 ? colors.gold : colors.textSecondary}
+                />
+                <Text style={[styles.filterBtnText, activeFilterCount > 0 && styles.filterBtnTextActive]}>
+                  {t('filters')}
+                  {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Animated.View>
+
+        {/* Presets + stats: slides up only (stays sharp) */}
+        <Animated.View style={{ transform: [{ translateY: topBarTranslate }] }}>
+          <View style={styles.presetsRow}>
+            {PRESETS.map((preset) => {
+              const active = activePreset === preset.id;
+              return (
+                <TouchableOpacity
+                  key={preset.id}
+                  style={[styles.presetTab, active && styles.presetTabActive]}
+                  onPress={() => handlePresetSelect(preset)}
+                  activeOpacity={0.7}
+                >
+                  <MaterialCommunityIcons
+                    name={preset.icon as any}
+                    size={15}
+                    color={active ? colors.gold : colors.textMuted}
+                  />
+                  <Text style={[styles.presetText, active && styles.presetTextActive]} numberOfLines={1}>
+                    {t(preset.labelKey)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
           {activeFilterCount > 0 && (
-            <View style={styles.filterBadge}>
-              <Text style={styles.filterBadgeText}>{activeFilterCount}</Text>
+            <View style={styles.statsRow}>
+              <Text style={styles.statsText}>
+                {`${filteredItems.length} ${t('items_label').toLowerCase()}`}
+              </Text>
+              <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
+                <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
+              </TouchableOpacity>
             </View>
           )}
-        </TouchableOpacity>
-      </View>
-
-      {/* Quick presets */}
-      <View style={styles.presetsRow}>
-        {PRESETS.map((preset) => {
-          const active = activePreset === preset.id;
-          return (
-            <TouchableOpacity
-              key={preset.id}
-              style={[styles.presetTab, active && styles.presetTabActive]}
-              onPress={() => handlePresetSelect(preset)}
-              activeOpacity={0.7}
-            >
-              <MaterialCommunityIcons
-                name={preset.icon as any}
-                size={15}
-                color={active ? colors.gold : colors.textMuted}
-              />
-              <Text style={[styles.presetText, active && styles.presetTextActive]} numberOfLines={1}>
-                {t(preset.labelKey)}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-
-      {/* Stats row */}
-      <View style={styles.statsRow}>
-        <View style={styles.statsLeft}>
-          <View style={[styles.pulse, isFetching && styles.pulseLive]} />
-          <Text style={styles.statsText}>
-            {showSkeleton
-              ? t('loading')
-              : `${Math.min(displayCount, filteredItems.length)}/${filteredItems.length} ${t('items_label').toLowerCase()}`}
-          </Text>
-          <Text style={styles.statsDot}>·</Text>
-          <Text style={styles.statsWorld}>{selectedWorld}</Text>
-        </View>
-        {activeFilterCount > 0 && (
-          <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
-            <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
-          </TouchableOpacity>
-        )}
+        </Animated.View>
       </View>
 
       {showSkeleton ? (
@@ -238,25 +271,19 @@ export default function MarketScreen() {
           scrollEnabled={false}
         />
       ) : (
-        <FlatList
+        <Animated.FlatList
+          ref={listRef}
           data={filteredItems.slice(0, displayCount)}
           keyExtractor={(item) => item.name}
           renderItem={({ item }) => (
             <MarketItemCard item={item} world={selectedWorld} />
           )}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT }]}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.3}
-          refreshControl={
-            <RefreshControl
-              refreshing={isFetching && !!rawData}
-              onRefresh={() => {
-                setDisplayCount(INITIAL_COUNT);
-                refetch();
-              }}
-              tintColor={colors.gold}
-            />
-          }
+          onScroll={handleScroll}
+          scrollEventThrottle={1}
+          bounces={false}
           ListEmptyComponent={
             <View style={styles.empty}>
               <MaterialCommunityIcons name="package-variant-closed" size={52} color={colors.textMuted} />
@@ -297,49 +324,48 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  headerWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
   topBar: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     gap: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
     backgroundColor: colors.surface,
-    alignItems: 'center',
-    zIndex: 10,
   },
-  searchWrap: {
-    flex: 1.5,
+  toolRow: {
+    flexDirection: 'row',
+    gap: 8,
   },
   filterBtn: {
-    width: 44,
-    height: 44,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.inputBg,
     borderWidth: 1,
     borderColor: colors.cardBorder,
     borderRadius: 10,
+    paddingHorizontal: 12,
+    height: 44,
+    gap: 6,
+  },
+  filterBtnText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+  },
+  filterBtnTextActive: {
+    color: colors.gold,
   },
   filterBtnActive: {
     borderColor: colors.gold,
     backgroundColor: colors.goldDim,
-  },
-  filterBadge: {
-    position: 'absolute',
-    top: 6,
-    right: 6,
-    backgroundColor: colors.gold,
-    borderRadius: 8,
-    minWidth: 14,
-    height: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  filterBadgeText: {
-    color: colors.background,
-    fontSize: 8,
-    fontWeight: '800',
   },
   presetsRow: {
     flexDirection: 'row',
@@ -372,35 +398,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingVertical: 6,
     backgroundColor: colors.background,
-  },
-  statsLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
-  pulse: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.textMuted,
-  },
-  pulseLive: {
-    backgroundColor: colors.gold,
   },
   statsText: {
     color: colors.textMuted,
     fontSize: 11,
-  },
-  statsDot: {
-    color: colors.textMuted,
-    fontSize: 11,
-  },
-  statsWorld: {
-    color: colors.gold,
-    fontSize: 11,
-    fontWeight: '600',
   },
   clearFilters: {
     color: colors.sell,

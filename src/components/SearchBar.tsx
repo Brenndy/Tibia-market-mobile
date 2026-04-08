@@ -17,7 +17,7 @@ interface SearchBarProps {
 export function SearchBar({
   value,
   onChangeText,
-  placeholder = 'Szukaj przedmiotu...',
+  placeholder = 'Search...',
 }: SearchBarProps) {
   return (
     <View style={styles.container}>

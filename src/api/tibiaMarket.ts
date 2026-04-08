@@ -1,15 +1,21 @@
 import axios from 'axios';
 import { Platform } from 'react-native';
+import vocationsData from '../data/vocations.json';
 
 // Web production: relative Vercel rewrite (/api/tibia → api.tibiamarket.top)
 // Native & web dev: Vercel proxy (avoids direct API rate limits from dev IP)
+// Set EXPO_PUBLIC_API_PROXY_URL in your .env to point to your own Vercel deployment.
 // NOTE: React Native sets global.window = global, so typeof window check alone is unreliable.
+// Also guard typeof window for SSR/static rendering where window is undefined entirely.
 const IS_PRODUCTION_WEB =
-  Platform.OS === 'web' && window.location?.hostname !== 'localhost';
+  Platform.OS === 'web' &&
+  typeof window !== 'undefined' &&
+  window.location?.hostname !== 'localhost';
 
-const BASE_URL = IS_PRODUCTION_WEB
-  ? '/api/tibia'
-  : 'https://tibia-market-mobile.vercel.app/api/tibia';
+const PROXY_URL =
+  process.env.EXPO_PUBLIC_API_PROXY_URL ?? 'https://tibia-market-mobile.vercel.app';
+
+const BASE_URL = IS_PRODUCTION_WEB ? '/api/tibia' : `${PROXY_URL}/api/tibia`;
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -17,6 +23,12 @@ const api = axios.create({
 });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface NpcEntry {
+  name: string;
+  location: string;
+  price: number;
+}
 
 export interface MarketItem {
   name: string;
@@ -31,9 +43,13 @@ export interface MarketItem {
   day_average_sell: number | null;
   day_sold: number | null;
   day_bought: number | null;
+  buy_offers: number | null;
+  sell_offers: number | null;
   time: string;
   category: string | null;
   tier: number | null;
+  npc_sell: NpcEntry[];
+  npc_buy: NpcEntry[];
 }
 
 export interface MarketBoard {
@@ -69,6 +85,8 @@ export interface ItemStats {
   highest_buy: number | null;
   lowest_sell: number | null;
   time: string;
+  npc_sell: NpcEntry[];
+  npc_buy: NpcEntry[];
 }
 
 export interface World {
@@ -95,7 +113,8 @@ export type SortField =
   | 'day_bought'
   | 'month_average_buy'
   | 'month_average_sell'
-  | 'margin';
+  | 'margin'
+  | 'npc_sell_margin';
 
 export interface ItemOffer {
   name: string;
@@ -119,6 +138,8 @@ interface RawMetadata {
   wiki_name: string;
   category: string | null;
   tier: number | null;
+  npc_sell: Array<{ name: string; location: string; price: number; currency_object_type_id: number }>;
+  npc_buy: Array<{ name: string; location: string; price: number; currency_object_type_id: number }>;
 }
 
 interface RawMarketValue {
@@ -136,6 +157,8 @@ interface RawMarketValue {
   day_average_sell: number;
   day_sold: number;
   day_bought: number;
+  buy_offers: number;
+  sell_offers: number;
 }
 
 interface RawWorldData {
@@ -184,11 +207,22 @@ export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
 
   const items: MarketItem[] = rawValues.map((v) => {
     const meta = metaById.get(v.id);
+    const npcSellRaw = meta?.npc_sell ?? [];
+    const npcBuyRaw = meta?.npc_buy ?? [];
+    // Only include entries paid in gold (currency_object_type_id === 0)
+    const npc_sell = npcSellRaw
+      .filter((e) => e.currency_object_type_id === 0)
+      .map((e) => ({ name: e.name, location: e.location, price: e.price }));
+    const npc_buy = npcBuyRaw
+      .filter((e) => e.currency_object_type_id === 0)
+      .map((e) => ({ name: e.name, location: e.location, price: e.price }));
     return {
       name: meta?.name ?? String(v.id),
       wiki_name: meta?.wiki_name ?? '',
       category: meta?.category ?? null,
       tier: meta?.tier ?? null,
+      npc_sell,
+      npc_buy,
       buy_offer: nullIfNegative(v.buy_offer),
       sell_offer: nullIfNegative(v.sell_offer),
       month_average_buy: nullIfNegative(v.month_average_buy),
@@ -199,12 +233,16 @@ export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
       day_average_sell: nullIfNegative(v.day_average_sell),
       day_sold: nullIfNegative(v.day_sold),
       day_bought: nullIfNegative(v.day_bought),
+      buy_offers: nullIfNegative(v.buy_offers),
+      sell_offers: nullIfNegative(v.sell_offers),
       time: unixToISO(v.time),
     };
   });
 
   return { world, last_update, items };
 }
+
+export type Vocation = 'knight' | 'paladin' | 'sorcerer' | 'druid';
 
 export interface FilterSortOptions {
   sort_field?: SortField;
@@ -218,6 +256,8 @@ export interface FilterSortOptions {
   maxSellPrice?: number;
   minVolume?: number;
   minMargin?: number;
+  yasirOnly?: boolean;
+  vocations?: Vocation[];
 }
 
 // Pure client-side filter + sort on already-fetched items.
@@ -257,6 +297,17 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
       return i.sell_offer - i.buy_offer >= options.minMargin!;
     });
   }
+  if (options.yasirOnly) {
+    result = result.filter((i) => i.npc_buy.some((e) => e.name === 'Yasir'));
+  }
+  if (options.vocations && options.vocations.length > 0) {
+    const selectedVocs = new Set(options.vocations);
+    result = result.filter((i) => {
+      const itemVocs: string[] = (vocationsData as Record<string, string[]>)[i.name] ?? [];
+      if (itemVocs.length === 0) return false; // no restriction = not vocation-specific
+      return itemVocs.some((v) => selectedVocs.has(v as Vocation));
+    });
+  }
 
   const rawField = options.sort_field ?? 'month_sold';
   const order = options.sort_order ?? 'desc';
@@ -267,6 +318,22 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
       .sort((a: any, b: any) => {
         const av = a._margin ?? -Infinity;
         const bv = b._margin ?? -Infinity;
+        return order === 'desc' ? bv - av : av - bv;
+      });
+  } else if (rawField === 'npc_sell_margin') {
+    // Sort by how much more the market sell price is vs the cheapest NPC sell price
+    // Ratio = sell_offer / min(npc_sell.price) — filter out ratio >= 100_000 (unrealistic)
+    result = result
+      .filter((i) => i.npc_sell.length > 0 && i.sell_offer != null)
+      .map((i) => {
+        const minNpc = Math.min(...i.npc_sell.map((e) => e.price));
+        const ratio = minNpc > 0 ? (i.sell_offer as number) / minNpc : null;
+        return { ...i, _npcMargin: ratio !== null && ratio < 100_000 ? ratio : null };
+      })
+      .filter((i: any) => i._npcMargin !== null)
+      .sort((a: any, b: any) => {
+        const av = a._npcMargin ?? -Infinity;
+        const bv = b._npcMargin ?? -Infinity;
         return order === 'desc' ? bv - av : av - bv;
       });
   } else {
@@ -297,10 +364,14 @@ export async function fetchItemStats(
   const v = data[0];
   if (!v) throw new Error(`No market data for: ${itemName}`);
 
+  const npcSellRaw = meta.npc_sell ?? [];
+  const npcBuyRaw = meta.npc_buy ?? [];
   return {
     name: meta.name,
     wiki_name: meta.wiki_name,
     world,
+    npc_sell: npcSellRaw.filter((e) => e.currency_object_type_id === 0).map((e) => ({ name: e.name, location: e.location, price: e.price })),
+    npc_buy: npcBuyRaw.filter((e) => e.currency_object_type_id === 0).map((e) => ({ name: e.name, location: e.location, price: e.price })),
     buy_offer: nullIfNegative(v.buy_offer),
     sell_offer: nullIfNegative(v.sell_offer),
     month_average_buy: nullIfNegative(v.month_average_buy),
@@ -385,7 +456,7 @@ export function formatGold(value: number | null): string {
 export function formatDate(dateStr: string): string {
   if (!dateStr) return '—';
   const d = new Date(dateStr);
-  return d.toLocaleDateString('pl-PL', {
+  return d.toLocaleDateString(undefined, {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
@@ -428,5 +499,5 @@ export function getItemImageUrl(wikiName: string): string {
   if (IS_PRODUCTION_WEB) {
     return `/api/item-image?name=${encodeURIComponent(encoded)}`;
   }
-  return `https://tibia-market-mobile.vercel.app/api/item-image?name=${encodeURIComponent(encoded)}`;
+  return `${PROXY_URL}/api/item-image?name=${encodeURIComponent(encoded)}`;
 }

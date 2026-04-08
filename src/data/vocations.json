@@ -1,0 +1,1724 @@
+{
+  "terra legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "magma boots": [
+    "sorcerer",
+    "druid"
+  ],
+  "terra boots": [
+    "sorcerer",
+    "druid"
+  ],
+  "terra mantle": [
+    "sorcerer",
+    "druid"
+  ],
+  "lightning legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "glacier robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "lightning boots": [
+    "sorcerer",
+    "druid"
+  ],
+  "magma monocle": [
+    "sorcerer",
+    "druid"
+  ],
+  "glacier kilt": [
+    "sorcerer",
+    "druid"
+  ],
+  "glacier shoes": [
+    "sorcerer",
+    "druid"
+  ],
+  "lightning robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "glacier mask": [
+    "sorcerer",
+    "druid"
+  ],
+  "terra hood": [
+    "sorcerer",
+    "druid"
+  ],
+  "magma legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "magma coat": [
+    "sorcerer",
+    "druid"
+  ],
+  "lightning headband": [
+    "sorcerer",
+    "druid"
+  ],
+  "energy ring": [
+    "knight",
+    "paladin"
+  ],
+  "snakebite rod": [
+    "druid"
+  ],
+  "moonlight rod": [
+    "druid"
+  ],
+  "wand of decay": [
+    "sorcerer"
+  ],
+  "terra rod": [
+    "druid"
+  ],
+  "necrotic rod": [
+    "druid"
+  ],
+  "spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "wand of cosmic energy": [
+    "sorcerer"
+  ],
+  "wand of vortex": [
+    "sorcerer"
+  ],
+  "hailstorm rod": [
+    "druid"
+  ],
+  "wand of inferno": [
+    "sorcerer"
+  ],
+  "wand of dragonbreath": [
+    "sorcerer"
+  ],
+  "two handed sword": [
+    "knight"
+  ],
+  "hat of the mad": [
+    "sorcerer",
+    "druid"
+  ],
+  "battle axe": [
+    "knight"
+  ],
+  "war hammer": [
+    "knight"
+  ],
+  "magic longsword": [
+    "knight"
+  ],
+  "giant sword": [
+    "knight"
+  ],
+  "double axe": [
+    "knight"
+  ],
+  "warlord sword": [
+    "knight"
+  ],
+  "broadsword": [
+    "knight"
+  ],
+  "great axe": [
+    "knight"
+  ],
+  "ravager's axe": [
+    "knight"
+  ],
+  "daramian waraxe": [
+    "knight"
+  ],
+  "hammer of wrath": [
+    "knight"
+  ],
+  "heavy mace": [
+    "knight"
+  ],
+  "war axe": [
+    "knight"
+  ],
+  "twin axe": [
+    "knight"
+  ],
+  "golden armor": [
+    "knight",
+    "paladin"
+  ],
+  "golden legs": [
+    "knight",
+    "paladin"
+  ],
+  "magic plate armor": [
+    "knight",
+    "paladin"
+  ],
+  "knight legs": [
+    "knight",
+    "paladin"
+  ],
+  "knight armor": [
+    "knight",
+    "paladin"
+  ],
+  "dragon scale mail": [
+    "knight",
+    "paladin"
+  ],
+  "crown armor": [
+    "knight",
+    "paladin"
+  ],
+  "crown legs": [
+    "knight",
+    "paladin"
+  ],
+  "amazon armor": [
+    "paladin"
+  ],
+  "ranger's cloak": [
+    "paladin"
+  ],
+  "wood cape": [
+    "paladin"
+  ],
+  "draken boots": [
+    "knight",
+    "paladin"
+  ],
+  "arbalest": [
+    "paladin"
+  ],
+  "the avenger": [
+    "knight"
+  ],
+  "ruthless axe": [
+    "knight"
+  ],
+  "demonrage sword": [
+    "knight"
+  ],
+  "thaian sword": [
+    "knight"
+  ],
+  "dragon slayer": [
+    "knight"
+  ],
+  "mercenary sword": [
+    "knight"
+  ],
+  "berserker": [
+    "knight"
+  ],
+  "blacksteel sword": [
+    "knight"
+  ],
+  "titan axe": [
+    "knight"
+  ],
+  "headchopper": [
+    "knight"
+  ],
+  "haunted blade": [
+    "knight"
+  ],
+  "skullcrusher": [
+    "knight"
+  ],
+  "abyss hammer": [
+    "knight"
+  ],
+  "havoc blade": [
+    "knight"
+  ],
+  "bonebreaker": [
+    "knight"
+  ],
+  "spiked squelcher": [
+    "knight"
+  ],
+  "glorious axe": [
+    "knight"
+  ],
+  "angelic axe": [
+    "knight"
+  ],
+  "executioner": [
+    "knight"
+  ],
+  "crystal sword": [
+    "knight"
+  ],
+  "magician's robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "hammer of prophecy": [
+    "knight"
+  ],
+  "mage hat": [
+    "sorcerer",
+    "druid"
+  ],
+  "modified crossbow": [
+    "paladin"
+  ],
+  "composite hornbow": [
+    "paladin"
+  ],
+  "royal crossbow": [
+    "paladin"
+  ],
+  "Yol's bow": [
+    "paladin"
+  ],
+  "the devileye": [
+    "paladin"
+  ],
+  "dark lord's cape": [
+    "sorcerer"
+  ],
+  "the ironworker": [
+    "paladin"
+  ],
+  "Elethriel's elemental bow": [
+    "paladin"
+  ],
+  "dragon robe": [
+    "sorcerer"
+  ],
+  "robe of the ice queen": [
+    "druid"
+  ],
+  "warsinger bow": [
+    "paladin"
+  ],
+  "greenwood coat": [
+    "druid"
+  ],
+  "silkweaver bow": [
+    "paladin"
+  ],
+  "crystalline armor": [
+    "knight",
+    "paladin"
+  ],
+  "swamplair armor": [
+    "knight",
+    "paladin"
+  ],
+  "spirit cloak": [
+    "sorcerer",
+    "druid"
+  ],
+  "voltage armor": [
+    "knight",
+    "paladin"
+  ],
+  "focus cape": [
+    "sorcerer",
+    "druid"
+  ],
+  "lavos armor": [
+    "knight",
+    "paladin"
+  ],
+  "earthborn titan armor": [
+    "knight"
+  ],
+  "velvet mantle": [
+    "sorcerer"
+  ],
+  "windborn colossus armor": [
+    "knight"
+  ],
+  "robe of the underworld": [
+    "sorcerer"
+  ],
+  "skullcracker armor": [
+    "knight"
+  ],
+  "oceanborn leviathan armor": [
+    "knight"
+  ],
+  "molten plate": [
+    "paladin"
+  ],
+  "divine plate": [
+    "paladin"
+  ],
+  "frozen plate": [
+    "paladin"
+  ],
+  "master archer's armor": [
+    "paladin"
+  ],
+  "fireborn giant armor": [
+    "knight"
+  ],
+  "paladin armor": [
+    "paladin"
+  ],
+  "chain bolter": [
+    "paladin"
+  ],
+  "ethno coat": [
+    "sorcerer",
+    "druid"
+  ],
+  "spellbook of enlightenment": [
+    "sorcerer",
+    "druid"
+  ],
+  "spellbook of mind control": [
+    "sorcerer",
+    "druid"
+  ],
+  "spellscroll of prophecies": [
+    "sorcerer",
+    "druid"
+  ],
+  "rainbow shield": [
+    "knight"
+  ],
+  "icy rainbow shield": [
+    "knight"
+  ],
+  "spellbook of warding": [
+    "sorcerer",
+    "druid"
+  ],
+  "spellbook of lost souls": [
+    "sorcerer",
+    "druid"
+  ],
+  "terran rainbow shield": [
+    "knight"
+  ],
+  "sparking rainbow shield": [
+    "knight"
+  ],
+  "underworld rod": [
+    "druid"
+  ],
+  "spellbook of dark mysteries": [
+    "sorcerer",
+    "druid"
+  ],
+  "fiery rainbow shield": [
+    "knight"
+  ],
+  "wand of draconia": [
+    "sorcerer"
+  ],
+  "ranger legs": [
+    "paladin"
+  ],
+  "wand of starstorm": [
+    "sorcerer"
+  ],
+  "springsprout rod": [
+    "druid"
+  ],
+  "demonwing axe": [
+    "knight"
+  ],
+  "the stomper": [
+    "knight"
+  ],
+  "the calamity": [
+    "knight"
+  ],
+  "wand of voodoo": [
+    "sorcerer"
+  ],
+  "yalahari armor": [
+    "knight"
+  ],
+  "yalahari mask": [
+    "sorcerer",
+    "druid"
+  ],
+  "northwind rod": [
+    "druid"
+  ],
+  "yalahari leg piece": [
+    "paladin"
+  ],
+  "batwing hat": [
+    "sorcerer",
+    "druid"
+  ],
+  "witch hat": [
+    "sorcerer",
+    "druid"
+  ],
+  "dragon scale boots": [
+    "knight",
+    "paladin"
+  ],
+  "crystal boots": [
+    "knight",
+    "paladin"
+  ],
+  "Zaoan armor": [
+    "knight",
+    "paladin"
+  ],
+  "Zaoan helmet": [
+    "knight",
+    "paladin"
+  ],
+  "guardian boots": [
+    "knight",
+    "paladin"
+  ],
+  "Zaoan robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "twin hooks": [
+    "knight"
+  ],
+  "spellweaver's robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "twiceslicer": [
+    "knight"
+  ],
+  "jade hat": [
+    "sorcerer",
+    "druid"
+  ],
+  "royal draken mail": [
+    "knight"
+  ],
+  "cobra crown": [
+    "sorcerer",
+    "druid"
+  ],
+  "royal scale robe": [
+    "sorcerer",
+    "druid"
+  ],
+  "elite draken mail": [
+    "knight",
+    "paladin"
+  ],
+  "shield of corruption": [
+    "knight"
+  ],
+  "snake god's wristguard": [
+    "sorcerer",
+    "druid"
+  ],
+  "elite draken helmet": [
+    "paladin"
+  ],
+  "wand of dimensions": [
+    "sorcerer"
+  ],
+  "depth lorica": [
+    "paladin"
+  ],
+  "ornate chestplate": [
+    "knight"
+  ],
+  "depth calcei": [
+    "knight"
+  ],
+  "depth scutum": [
+    "sorcerer",
+    "druid"
+  ],
+  "depth ocrea": [
+    "sorcerer",
+    "druid"
+  ],
+  "mage's cap": [
+    "sorcerer",
+    "druid"
+  ],
+  "ornate legs": [
+    "knight"
+  ],
+  "ornate shield": [
+    "knight"
+  ],
+  "ornate crossbow": [
+    "paladin"
+  ],
+  "hive bow": [
+    "paladin"
+  ],
+  "calopteryx cape": [
+    "sorcerer",
+    "druid"
+  ],
+  "thorn spitter": [
+    "paladin"
+  ],
+  "spellbook of ancient arcana": [
+    "sorcerer",
+    "druid"
+  ],
+  "wand of defiance": [
+    "sorcerer"
+  ],
+  "gill gugel": [
+    "sorcerer",
+    "druid"
+  ],
+  "gill legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "gill coat": [
+    "sorcerer",
+    "druid"
+  ],
+  "spellbook of vigilance": [
+    "sorcerer",
+    "druid"
+  ],
+  "prismatic helmet": [
+    "knight"
+  ],
+  "prismatic shield": [
+    "knight"
+  ],
+  "prismatic boots": [
+    "paladin"
+  ],
+  "glacial rod": [
+    "druid"
+  ],
+  "wand of everblazing": [
+    "sorcerer"
+  ],
+  "prismatic armor": [
+    "knight",
+    "paladin"
+  ],
+  "prismatic legs": [
+    "paladin"
+  ],
+  "muck rod": [
+    "druid"
+  ],
+  "mycological bow": [
+    "paladin"
+  ],
+  "triple bolt crossbow": [
+    "paladin"
+  ],
+  "crystal crossbow": [
+    "paladin"
+  ],
+  "icy culottes": [
+    "sorcerer",
+    "druid"
+  ],
+  "crude umbral blade": [
+    "knight"
+  ],
+  "umbral blade": [
+    "knight"
+  ],
+  "crude umbral slayer": [
+    "knight"
+  ],
+  "furious frock": [
+    "sorcerer",
+    "druid"
+  ],
+  "umbral slayer": [
+    "knight"
+  ],
+  "umbral masterblade": [
+    "knight"
+  ],
+  "umbral axe": [
+    "knight"
+  ],
+  "umbral master axe": [
+    "knight"
+  ],
+  "crude umbral axe": [
+    "knight"
+  ],
+  "crude umbral chopper": [
+    "knight"
+  ],
+  "umbral chopper": [
+    "knight"
+  ],
+  "crude umbral mace": [
+    "knight"
+  ],
+  "umbral master slayer": [
+    "knight"
+  ],
+  "umbral hammer": [
+    "knight"
+  ],
+  "crude umbral hammer": [
+    "knight"
+  ],
+  "umbral master chopper": [
+    "knight"
+  ],
+  "umbral bow": [
+    "paladin"
+  ],
+  "crude umbral bow": [
+    "paladin"
+  ],
+  "crude umbral crossbow": [
+    "paladin"
+  ],
+  "umbral master crossbow": [
+    "paladin"
+  ],
+  "umbral crossbow": [
+    "paladin"
+  ],
+  "umbral master hammer": [
+    "knight"
+  ],
+  "umbral mace": [
+    "knight"
+  ],
+  "umbral master bow": [
+    "paladin"
+  ],
+  "umbral spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "crude umbral spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "umbral master mace": [
+    "knight"
+  ],
+  "glooth cape": [
+    "sorcerer",
+    "druid"
+  ],
+  "umbral master spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "mooh'tah plate": [
+    "knight",
+    "paladin"
+  ],
+  "rubber cap": [
+    "sorcerer",
+    "druid"
+  ],
+  "metal spats": [
+    "knight",
+    "paladin"
+  ],
+  "glooth club": [
+    "knight"
+  ],
+  "glooth blade": [
+    "knight"
+  ],
+  "oriental shoes": [
+    "sorcerer",
+    "druid"
+  ],
+  "glooth axe": [
+    "knight"
+  ],
+  "glooth amulet": [
+    "sorcerer",
+    "druid"
+  ],
+  "ogre scepta": [
+    "druid"
+  ],
+  "fireheart cuirass": [
+    "knight"
+  ],
+  "fireheart hauberk": [
+    "knight"
+  ],
+  "fireheart platemail": [
+    "knight"
+  ],
+  "earthheart hauberk": [
+    "knight"
+  ],
+  "thunderheart hauberk": [
+    "knight"
+  ],
+  "frostheart cuirass": [
+    "knight"
+  ],
+  "firesoul tabard": [
+    "paladin"
+  ],
+  "thundersoul tabard": [
+    "paladin"
+  ],
+  "thunderheart cuirass": [
+    "knight"
+  ],
+  "frostheart platemail": [
+    "knight"
+  ],
+  "frostheart hauberk": [
+    "knight"
+  ],
+  "frostsoul tabard": [
+    "paladin"
+  ],
+  "earthheart platemail": [
+    "knight"
+  ],
+  "thunderheart platemail": [
+    "knight"
+  ],
+  "earthheart cuirass": [
+    "knight"
+  ],
+  "earthsoul tabard": [
+    "paladin"
+  ],
+  "firemind raiment": [
+    "sorcerer",
+    "druid"
+  ],
+  "earthmind raiment": [
+    "sorcerer",
+    "druid"
+  ],
+  "thundermind raiment": [
+    "sorcerer",
+    "druid"
+  ],
+  "frostmind raiment": [
+    "sorcerer",
+    "druid"
+  ],
+  "book of lies": [
+    "sorcerer",
+    "druid"
+  ],
+  "rift bow": [
+    "paladin"
+  ],
+  "rift crossbow": [
+    "paladin"
+  ],
+  "collar of green plasma": [
+    "sorcerer",
+    "druid"
+  ],
+  "collar of red plasma": [
+    "knight"
+  ],
+  "collar of blue plasma": [
+    "paladin"
+  ],
+  "wooden spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "dream blossom staff": [
+    "sorcerer",
+    "druid"
+  ],
+  "blade of destruction": [
+    "knight"
+  ],
+  "slayer of destruction": [
+    "knight"
+  ],
+  "axe of destruction": [
+    "knight"
+  ],
+  "hammer of destruction": [
+    "knight"
+  ],
+  "mace of destruction": [
+    "knight"
+  ],
+  "chopper of destruction": [
+    "knight"
+  ],
+  "bow of destruction": [
+    "paladin"
+  ],
+  "crossbow of destruction": [
+    "paladin"
+  ],
+  "wand of destruction": [
+    "sorcerer"
+  ],
+  "rod of destruction": [
+    "druid"
+  ],
+  "gnome armor": [
+    "paladin"
+  ],
+  "falcon coif": [
+    "knight",
+    "paladin"
+  ],
+  "gnome legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "gnome sword": [
+    "knight"
+  ],
+  "gnome helmet": [
+    "sorcerer",
+    "druid"
+  ],
+  "falcon rod": [
+    "druid"
+  ],
+  "falcon wand": [
+    "sorcerer"
+  ],
+  "falcon plate": [
+    "knight"
+  ],
+  "falcon greaves": [
+    "knight",
+    "paladin"
+  ],
+  "gnome shield": [
+    "knight",
+    "paladin"
+  ],
+  "falcon bow": [
+    "paladin"
+  ],
+  "falcon shield": [
+    "knight",
+    "paladin"
+  ],
+  "deepling ceremonial dagger": [
+    "sorcerer",
+    "druid"
+  ],
+  "falcon longsword": [
+    "knight"
+  ],
+  "falcon mace": [
+    "knight"
+  ],
+  "falcon battleaxe": [
+    "knight"
+  ],
+  "falcon circlet": [
+    "sorcerer",
+    "druid"
+  ],
+  "falcon escutcheon": [
+    "knight",
+    "paladin"
+  ],
+  "living vine bow": [
+    "paladin"
+  ],
+  "resizer": [
+    "knight"
+  ],
+  "living armor": [
+    "sorcerer",
+    "druid"
+  ],
+  "pair of dreamwalkers": [
+    "sorcerer",
+    "druid"
+  ],
+  "dream shroud": [
+    "sorcerer",
+    "druid"
+  ],
+  "energized limb": [
+    "sorcerer",
+    "druid"
+  ],
+  "deepling fork": [
+    "sorcerer",
+    "druid"
+  ],
+  "winterblade": [
+    "knight"
+  ],
+  "shoulder plate": [
+    "sorcerer",
+    "druid"
+  ],
+  "summerblade": [
+    "knight"
+  ],
+  "brain in a jar": [
+    "sorcerer",
+    "druid"
+  ],
+  "sleep shawl": [
+    "paladin"
+  ],
+  "ectoplasmic shield": [
+    "knight"
+  ],
+  "pendulet": [
+    "paladin"
+  ],
+  "cobra axe": [
+    "knight"
+  ],
+  "cobra boots": [
+    "knight"
+  ],
+  "spirit guide": [
+    "sorcerer",
+    "druid"
+  ],
+  "cobra club": [
+    "knight"
+  ],
+  "cobra hood": [
+    "knight"
+  ],
+  "cobra wand": [
+    "sorcerer"
+  ],
+  "cobra rod": [
+    "druid"
+  ],
+  "terra helmet": [
+    "knight"
+  ],
+  "enchanted theurgic amulet": [
+    "sorcerer",
+    "druid"
+  ],
+  "cobra sword": [
+    "knight"
+  ],
+  "bear skin": [
+    "druid"
+  ],
+  "mortal mace": [
+    "knight"
+  ],
+  "amulet of theurgy": [
+    "sorcerer",
+    "druid"
+  ],
+  "embrace of nature": [
+    "paladin"
+  ],
+  "toga mortis": [
+    "sorcerer"
+  ],
+  "bow of cataclysm": [
+    "paladin"
+  ],
+  "galea mortis": [
+    "sorcerer"
+  ],
+  "tagralt blade": [
+    "knight"
+  ],
+  "winged boots": [
+    "paladin"
+  ],
+  "dark whispers": [
+    "paladin"
+  ],
+  "soulful legs": [
+    "sorcerer",
+    "druid"
+  ],
+  "cobra crossbow": [
+    "paladin"
+  ],
+  "ghost chestplate": [
+    "paladin"
+  ],
+  "phantasmal axe": [
+    "knight"
+  ],
+  "pair of nightmare boots": [
+    "sorcerer",
+    "druid"
+  ],
+  "fabulous legs": [
+    "knight",
+    "paladin"
+  ],
+  "souleater": [
+    "knight"
+  ],
+  "soulbiter": [
+    "knight"
+  ],
+  "soulshredder": [
+    "knight"
+  ],
+  "soulpiercer": [
+    "paladin"
+  ],
+  "soulhexer": [
+    "druid"
+  ],
+  "soulshanks": [
+    "sorcerer"
+  ],
+  "soulshell": [
+    "paladin"
+  ],
+  "soulcrusher": [
+    "knight"
+  ],
+  "soulstrider": [
+    "druid"
+  ],
+  "soulcutter": [
+    "knight"
+  ],
+  "soulmaimer": [
+    "knight"
+  ],
+  "soulbleeder": [
+    "paladin"
+  ],
+  "pair of soulwalkers": [
+    "knight"
+  ],
+  "soultainter": [
+    "sorcerer"
+  ],
+  "soulmantle": [
+    "sorcerer"
+  ],
+  "soulbastion": [
+    "knight"
+  ],
+  "pair of soulstalkers": [
+    "paladin"
+  ],
+  "soulshroud": [
+    "druid"
+  ],
+  "lion rod": [
+    "druid"
+  ],
+  "lion longbow": [
+    "paladin"
+  ],
+  "lion wand": [
+    "sorcerer"
+  ],
+  "lion spangenhelm": [
+    "paladin"
+  ],
+  "lion longsword": [
+    "knight"
+  ],
+  "lion spellbook": [
+    "sorcerer",
+    "druid"
+  ],
+  "lion axe": [
+    "knight"
+  ],
+  "lion hammer": [
+    "knight"
+  ],
+  "lion plate": [
+    "knight"
+  ],
+  "jungle flail": [
+    "knight"
+  ],
+  "throwing axe": [
+    "knight"
+  ],
+  "lion shield": [
+    "knight"
+  ],
+  "exotic legs": [
+    "knight"
+  ],
+  "makeshift boots": [
+    "sorcerer"
+  ],
+  "jungle wand": [
+    "sorcerer"
+  ],
+  "make-do boots": [
+    "druid"
+  ],
+  "jungle quiver": [
+    "paladin"
+  ],
+  "jungle bow": [
+    "paladin"
+  ],
+  "quiver": [
+    "paladin"
+  ],
+  "bast legs": [
+    "paladin"
+  ],
+  "blue quiver": [
+    "paladin"
+  ],
+  "red quiver": [
+    "paladin"
+  ],
+  "eldritch claymore": [
+    "knight"
+  ],
+  "eldritch shield": [
+    "knight"
+  ],
+  "eldritch warmace": [
+    "knight"
+  ],
+  "gilded eldritch claymore": [
+    "knight"
+  ],
+  "gilded eldritch warmace": [
+    "knight"
+  ],
+  "gilded eldritch greataxe": [
+    "knight"
+  ],
+  "eldritch greataxe": [
+    "knight"
+  ],
+  "eldritch cuirass": [
+    "knight"
+  ],
+  "eldritch quiver": [
+    "paladin"
+  ],
+  "gilded eldritch bow": [
+    "paladin"
+  ],
+  "gilded eldritch wand": [
+    "sorcerer"
+  ],
+  "eldritch hood": [
+    "druid"
+  ],
+  "eldritch wand": [
+    "sorcerer"
+  ],
+  "eldritch cowl": [
+    "sorcerer"
+  ],
+  "eldritch tome": [
+    "druid"
+  ],
+  "eldritch breeches": [
+    "paladin"
+  ],
+  "eldritch bow": [
+    "paladin"
+  ],
+  "eldritch rod": [
+    "druid"
+  ],
+  "jungle rod": [
+    "druid"
+  ],
+  "eldritch folio": [
+    "sorcerer"
+  ],
+  "gilded eldritch rod": [
+    "druid"
+  ],
+  "alicorn headguard": [
+    "paladin"
+  ],
+  "arcanomancer regalia": [
+    "sorcerer"
+  ],
+  "spiritthorn helmet": [
+    "knight"
+  ],
+  "alicorn quiver": [
+    "paladin"
+  ],
+  "arboreal tome": [
+    "druid"
+  ],
+  "naga sword": [
+    "knight"
+  ],
+  "naga axe": [
+    "knight"
+  ],
+  "arboreal crown": [
+    "druid"
+  ],
+  "arcanomancer folio": [
+    "sorcerer"
+  ],
+  "spiritthorn armor": [
+    "knight"
+  ],
+  "naga quiver": [
+    "paladin"
+  ],
+  "naga rod": [
+    "druid"
+  ],
+  "naga wand": [
+    "sorcerer"
+  ],
+  "naga club": [
+    "knight"
+  ],
+  "dawnfire sherwani": [
+    "sorcerer"
+  ],
+  "feverbloom boots": [
+    "paladin"
+  ],
+  "frostflower boots": [
+    "knight"
+  ],
+  "midnight tunic": [
+    "druid"
+  ],
+  "naga crossbow": [
+    "paladin"
+  ],
+  "spiritthorn ring": [
+    "knight"
+  ],
+  "midnight sarong": [
+    "druid"
+  ],
+  "alicorn ring": [
+    "paladin"
+  ],
+  "arcanomancer sigil": [
+    "sorcerer"
+  ],
+  "dawnfire pantaloons": [
+    "sorcerer"
+  ],
+  "turtle amulet": [
+    "knight"
+  ],
+  "stitched mutant hide legs": [
+    "knight"
+  ],
+  "enchanted turtle amulet": [
+    "knight"
+  ],
+  "mutant bone boots": [
+    "druid"
+  ],
+  "mutated skin legs": [
+    "paladin"
+  ],
+  "sanguine blade": [
+    "knight"
+  ],
+  "mutated skin armor": [
+    "paladin"
+  ],
+  "grand sanguine blade": [
+    "knight"
+  ],
+  "alchemist's notepad": [
+    "sorcerer"
+  ],
+  "sanguine cudgel": [
+    "knight"
+  ],
+  "sanguine hatchet": [
+    "knight"
+  ],
+  "alchemist's boots": [
+    "sorcerer"
+  ],
+  "grand sanguine hatchet": [
+    "knight"
+  ],
+  "sanguine razor": [
+    "knight"
+  ],
+  "grand sanguine razor": [
+    "knight"
+  ],
+  "mutant bone kilt": [
+    "druid"
+  ],
+  "antler-horn helmet": [
+    "knight"
+  ],
+  "sanguine battleaxe": [
+    "knight"
+  ],
+  "sanguine bludgeon": [
+    "knight"
+  ],
+  "grand sanguine bludgeon": [
+    "knight"
+  ],
+  "grand sanguine cudgel": [
+    "knight"
+  ],
+  "sanguine legs": [
+    "knight"
+  ],
+  "grand sanguine battleaxe": [
+    "knight"
+  ],
+  "sanguine bow": [
+    "paladin"
+  ],
+  "grand sanguine bow": [
+    "paladin"
+  ],
+  "sanguine crossbow": [
+    "paladin"
+  ],
+  "sanguine greaves": [
+    "paladin"
+  ],
+  "sanguine coil": [
+    "sorcerer"
+  ],
+  "grand sanguine coil": [
+    "sorcerer"
+  ],
+  "grand sanguine rod": [
+    "druid"
+  ],
+  "sanguine galoshes": [
+    "druid"
+  ],
+  "sanguine boots": [
+    "sorcerer"
+  ],
+  "stoic iks cuirass": [
+    "druid"
+  ],
+  "grand sanguine crossbow": [
+    "paladin"
+  ],
+  "dauntless dragon scale armor": [
+    "knight"
+  ],
+  "sanguine rod": [
+    "druid"
+  ],
+  "unerring dragon scale armor": [
+    "paladin"
+  ],
+  "stoic iks chestplate": [
+    "knight"
+  ],
+  "arcane dragon robe": [
+    "sorcerer"
+  ],
+  "stoic iks headpiece": [
+    "druid"
+  ],
+  "stoic iks casque": [
+    "paladin"
+  ],
+  "stoic iks boots": [
+    "paladin"
+  ],
+  "stoic iks sandals": [
+    "sorcerer"
+  ],
+  "stoic iks culet": [
+    "knight"
+  ],
+  "mystical dragon robe": [
+    "druid"
+  ],
+  "cocoa grimoire": [
+    "sorcerer"
+  ],
+  "biscuit barrier": [
+    "knight"
+  ],
+  "stoic iks faulds": [
+    "sorcerer"
+  ],
+  "candy-coated quiver": [
+    "paladin"
+  ],
+  "amber slayer": [
+    "knight"
+  ],
+  "amber greataxe": [
+    "knight"
+  ],
+  "amber sabre": [
+    "knight"
+  ],
+  "amber wand": [
+    "sorcerer"
+  ],
+  "amber rod": [
+    "druid"
+  ],
+  "creamy grimoire": [
+    "druid"
+  ],
+  "inferniarch bow": [
+    "paladin"
+  ],
+  "amber cudgel": [
+    "knight"
+  ],
+  "amber bludgeon": [
+    "knight"
+  ],
+  "amber axe": [
+    "knight"
+  ],
+  "inferniarch greataxe": [
+    "knight"
+  ],
+  "amber bow": [
+    "paladin"
+  ],
+  "amber crossbow": [
+    "paladin"
+  ],
+  "inferniarch arbalest": [
+    "paladin"
+  ],
+  "inferniarch warhammer": [
+    "knight"
+  ],
+  "inferniarch flail": [
+    "knight"
+  ],
+  "inferniarch wand": [
+    "sorcerer"
+  ],
+  "inferniarch battleaxe": [
+    "knight"
+  ],
+  "arboreal ring": [
+    "druid"
+  ],
+  "draining inferniarch bow": [
+    "paladin"
+  ],
+  "inferniarch blade": [
+    "knight"
+  ],
+  "maliceforged helmet": [
+    "knight"
+  ],
+  "demonfang mask": [
+    "druid"
+  ],
+  "hellstalker visor": [
+    "paladin"
+  ],
+  "dreadfire headpiece": [
+    "sorcerer"
+  ],
+  "inferniarch rod": [
+    "druid"
+  ],
+  "siphoning inferniarch bow": [
+    "paladin"
+  ],
+  "rending inferniarch bow": [
+    "paladin"
+  ],
+  "rending inferniarch arbalest": [
+    "paladin"
+  ],
+  "inferniarch slayer": [
+    "knight"
+  ],
+  "draining inferniarch arbalest": [
+    "paladin"
+  ],
+  "rending inferniarch battleaxe": [
+    "knight"
+  ],
+  "draining inferniarch battleaxe": [
+    "knight"
+  ],
+  "siphoning inferniarch battleaxe": [
+    "knight"
+  ],
+  "rending inferniarch greataxe": [
+    "knight"
+  ],
+  "draining inferniarch greataxe": [
+    "knight"
+  ],
+  "siphoning inferniarch greataxe": [
+    "knight"
+  ],
+  "draining inferniarch flail": [
+    "knight"
+  ],
+  "siphoning inferniarch arbalest": [
+    "paladin"
+  ],
+  "rending inferniarch warhammer": [
+    "knight"
+  ],
+  "draining inferniarch warhammer": [
+    "knight"
+  ],
+  "rending inferniarch flail": [
+    "knight"
+  ],
+  "rending inferniarch blade": [
+    "knight"
+  ],
+  "siphoning inferniarch warhammer": [
+    "knight"
+  ],
+  "siphoning inferniarch flail": [
+    "knight"
+  ],
+  "siphoning inferniarch blade": [
+    "knight"
+  ],
+  "draining inferniarch slayer": [
+    "knight"
+  ],
+  "siphoning inferniarch slayer": [
+    "knight"
+  ],
+  "draining inferniarch wand": [
+    "sorcerer"
+  ],
+  "rending inferniarch wand": [
+    "sorcerer"
+  ],
+  "siphoning inferniarch wand": [
+    "sorcerer"
+  ],
+  "rending inferniarch rod": [
+    "druid"
+  ],
+  "draining inferniarch blade": [
+    "knight"
+  ],
+  "draining inferniarch rod": [
+    "druid"
+  ],
+  "rending inferniarch slayer": [
+    "knight"
+  ],
+  "siphoning inferniarch rod": [
+    "druid"
+  ],
+  "norcferatu skullguard": [
+    "paladin"
+  ],
+  "norcferatu tuskplate": [
+    "knight"
+  ],
+  "norcferatu bloodhide": [
+    "sorcerer"
+  ],
+  "norcferatu thornwraps": [
+    "paladin"
+  ],
+  "norcferatu bonecloak": [
+    "druid"
+  ],
+  "norcferatu bloodstrider": [
+    "druid"
+  ],
+  "norcferatu goretrampers": [
+    "knight"
+  ],
+  "norcferatu fangstompers": [
+    "sorcerer"
+  ],
+  "the scorcher": [
+    "sorcerer"
+  ],
+  "spellbook of the novice": [
+    "sorcerer",
+    "druid"
+  ],
+  "the chiller": [
+    "druid"
+  ],
+  "crypt splitter": [
+    "knight"
+  ],
+  "crypt breaker": [
+    "knight"
+  ],
+  "crypt spine": [
+    "paladin"
+  ],
+  "crypt jaw": [
+    "druid"
+  ],
+  "crypt slicer": [
+    "knight"
+  ],
+  "stag helmet": [
+    "sorcerer"
+  ],
+  "crypt bile": [
+    "sorcerer"
+  ],
+  "stag boots": [
+    "druid"
+  ],
+  "stag plate": [
+    "paladin"
+  ],
+  "stag shinguards": [
+    "paladin"
+  ],
+  "refined stag shield": [
+    "knight"
+  ],
+  "stag legs": [
+    "knight"
+  ],
+  "stag scrolls": [
+    "druid"
+  ],
+  "stag spellbook": [
+    "sorcerer"
+  ],
+  "stag shield": [
+    "knight"
+  ]
+}

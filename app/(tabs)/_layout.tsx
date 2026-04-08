@@ -43,8 +43,15 @@ function WatchBellIcon({ color, size }: { color: string; size: number }) {
 function HeaderRightDefault() {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginRight: 12 }}>
-      <LanguageToggle />
       <WorldBadge />
+    </View>
+  );
+}
+
+function HeaderLeftDefault() {
+  return (
+    <View style={{ marginLeft: 12 }}>
+      <LanguageToggle />
     </View>
   );
 }
@@ -69,6 +76,7 @@ export default function TabLayout() {
         headerTitleStyle: { color: colors.textPrimary, fontWeight: '700' },
         headerShadowVisible: false,
         headerRight: () => <HeaderRightDefault />,
+        headerLeft: () => <HeaderLeftDefault />,
       }}
     >
       <Tabs.Screen
@@ -102,13 +110,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="favorites"
-        options={{
-          title: t('tab_favorites'),
-          tabBarLabel: t('tab_favorites'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="star" size={size} color={color} />
-          ),
-        }}
+        options={{ href: null }}
       />
     </Tabs>
   );

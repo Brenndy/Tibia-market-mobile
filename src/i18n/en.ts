@@ -33,6 +33,7 @@ export const en: Record<TranslationKey, string> = {
   sort_month_bought: 'Monthly purchases',
   sort_day_sold: 'Daily volume',
   sort_name: 'Name',
+  sort_npc_margin: 'NPC Markup',
 
   // Filter panel
   advanced_filters: 'Advanced filters',
@@ -118,6 +119,8 @@ export const en: Record<TranslationKey, string> = {
   highest_buy: 'Highest buy',
   lowest_sell: 'Lowest sell',
   today: 'Today',
+  day_activity: 'TODAY',
+  offers: 'OFFERS',
   today_avg_prefix: 'Today avg.',
   monthly_avg_prefix: 'Mo. avg.',
   item_detail_title: 'Item details',
@@ -126,6 +129,19 @@ export const en: Record<TranslationKey, string> = {
   load_more: 'Load more',
   no_results: 'No results',
   clear_filters: 'Clear filters',
+
+  // Filter button
+  filters: 'Filters',
+  quick_filters: 'Quick filters',
+  filter_yasir: 'Yasir',
+  npc_buys_for: 'NPC buys for',
+  npc_sells_for: 'NPC sells for',
+  offer_date: 'Date',
+  vocation_filter: 'Vocation',
+  voc_knight: 'Knight',
+  voc_paladin: 'Paladin',
+  voc_sorcerer: 'Sorcerer',
+  voc_druid: 'Druid',
 
   // Quick presets
   preset_hot: 'Hot',
@@ -139,4 +155,10 @@ export const en: Record<TranslationKey, string> = {
   margin_pct: '% margin',
   flip_score: 'Flip score',
   vs_avg: 'vs avg.',
+
+  // Watchlist
+  alert_singular: 'alert',
+  alerts_plural: 'alerts',
+  syncing: 'syncing…',
+  active_label: 'active',
 };

@@ -5,16 +5,19 @@ web-build/
 .playwright-mcp/
 .idea/
 ios/
-*.png
-*.jpeg
+android/
+.env
+.env.local
+# Root-level screenshots / dev images
+/*.png
+/*.jpeg
+/*.jpg
 *.orig.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
-*.orig.*
-web-build/
 .DS_Store
 npm-debug.*
 yarn-debug.*

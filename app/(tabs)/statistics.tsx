@@ -1,20 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  useWindowDimensions,
 } from 'react-native';
-import Svg, { Rect, Text as SvgText, G } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
+import { ItemImage } from '@/src/components/ItemImage';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/api/tibiaMarket';
 
@@ -27,8 +26,8 @@ const RANK_OPTION_KEYS: { key: 'most_sold' | 'most_bought' | 'most_expensive_buy
   { key: 'most_expensive_sell', value: 'sell_offer', icon: 'tag' },
 ];
 
-const MEDAL_ICONS = ['trophy', 'medal', 'medal-outline'] as const;
-const MEDAL_COLORS = [colors.gold, '#9ca3af', '#cd7f32'] as const;
+const PODIUM_COLORS = [colors.gold, '#9ca3af', '#cd7f32'] as const;
+const PODIUM_BG = ['#2a2410', '#1e1f20', '#231a10'] as const;
 
 function RankCard({
   item,
@@ -46,61 +45,58 @@ function RankCard({
   const router = useRouter();
   const value = item[field];
 
-  const isMedal = rank <= 3;
-  const medalColor = isMedal ? MEDAL_COLORS[rank - 1] : colors.textMuted;
-  const medalIcon = isMedal ? MEDAL_ICONS[rank - 1] : null;
+  const isPodium = rank <= 3;
+  const podiumColor = isPodium ? PODIUM_COLORS[rank - 1] : colors.textMuted;
 
   return (
     <TouchableOpacity
-      style={[styles.rankCard, isMedal && rank === 1 && styles.rankCardFirst]}
+      style={[styles.rankCard, rank === 1 && styles.rankCardFirst]}
       onPress={() =>
         router.push({ pathname: '/item/[name]', params: { name: item.name, world } })
       }
       activeOpacity={0.75}
     >
-      <View style={[styles.rankNumWrap, { borderColor: medalColor + '40', backgroundColor: medalColor + '15' }]}>
-        {medalIcon ? (
-          <MaterialCommunityIcons name={medalIcon} size={14} color={medalColor} />
-        ) : (
-          <Text style={[styles.rankNum, { color: medalColor }]}>{rank}</Text>
-        )}
+      {/* Rank badge */}
+      <View style={[styles.rankBadge, { borderColor: podiumColor + '50', backgroundColor: podiumColor + '18' }]}>
+        <Text style={[styles.rankNum, { color: podiumColor }]}>{rank}</Text>
       </View>
+
+      {/* Item image */}
+      <View style={styles.rankImgWrap}>
+        <ItemImage wikiName={item.wiki_name} size={36} />
+      </View>
+
+      {/* Name + category */}
       <View style={styles.rankInfo}>
         <Text style={styles.rankName} numberOfLines={1}>
           {toTitleCase(item.name)}
         </Text>
         {item.category && (
-          <Text style={styles.rankCategory}>{item.category}</Text>
+          <Text style={styles.rankCategory} numberOfLines={1}>{item.category}</Text>
         )}
       </View>
+
+      {/* Value */}
       <Text style={[styles.rankValue, rank === 1 && { color: colors.gold }]}>
         {field === 'month_sold' || field === 'month_bought'
-          ? `${value ?? '—'} ${units}`
+          ? `${(value ?? 0).toLocaleString()} ${units}`
           : formatGold(value as number | null)}
       </Text>
     </TouchableOpacity>
   );
 }
 
-function CustomBarChart({
+// Horizontal bar chart — easier to read item names
+function HorizontalBarChart({
   items,
   field,
-  width,
+  units,
 }: {
   items: MarketItem[];
   field: RankType;
-  width: number;
+  units: string;
 }) {
-  const CHART_H = 200;
-  const PAD_TOP = 28;
-  const PAD_BOTTOM = 32;
-  const PAD_H = 8;
-  const plotH = CHART_H - PAD_TOP - PAD_BOTTOM;
-  const barZoneW = width - PAD_H * 2;
-  const barSlot = barZoneW / items.length;
-  const barPad = barSlot * 0.22;
-  const barW = barSlot - barPad;
-
+  const isPrice = field === 'buy_offer' || field === 'sell_offer';
   const values = items.map((i) => {
     const v = i[field];
     return typeof v === 'number' ? v : 0;
@@ -108,58 +104,57 @@ function CustomBarChart({
   const maxVal = Math.max(...values, 1);
 
   return (
-    <Svg width={width} height={CHART_H}>
+    <View style={styles.hBarContainer}>
       {items.map((item, idx) => {
         const val = values[idx];
-        const barH = Math.max((val / maxVal) * plotH, 4);
-        const x = PAD_H + idx * barSlot + barPad / 2;
-        const y = PAD_TOP + plotH - barH;
-        const opacity = 1 - idx * 0.12;
-        const label = item.name.split(' ')[0].slice(0, 9);
-        const valLabel = formatGold(val);
+        const pct = val / maxVal;
+        const podiumColor = idx < 3 ? PODIUM_COLORS[idx] : colors.gold;
+        const label = isPrice ? formatGold(val) : `${val.toLocaleString()} ${units}`;
 
         return (
-          <G key={idx}>
-            <Rect
-              x={x}
-              y={y}
-              width={barW}
-              height={barH}
-              fill={colors.gold}
-              opacity={opacity}
-              rx={4}
-            />
-            <SvgText
-              x={x + barW / 2}
-              y={y - 5}
-              textAnchor="middle"
-              fill={colors.textSecondary}
-              fontSize={10}
-              fontWeight="600"
-            >
-              {valLabel}
-            </SvgText>
-            <SvgText
-              x={x + barW / 2}
-              y={CHART_H - 8}
-              textAnchor="middle"
-              fill={colors.textMuted}
-              fontSize={10}
-            >
+          <View key={item.name} style={styles.hBarRow}>
+            {/* Rank + image */}
+            <View style={styles.hBarLeft}>
+              <Text style={[styles.hBarRank, { color: idx < 3 ? podiumColor : colors.textMuted }]}>
+                {idx + 1}
+              </Text>
+              <View style={styles.hBarImg}>
+                <ItemImage wikiName={item.wiki_name} size={24} />
+              </View>
+              <Text style={styles.hBarName} numberOfLines={1}>
+                {toTitleCase(item.name).split(' ')[0]}
+              </Text>
+            </View>
+            {/* Bar */}
+            <View style={styles.hBarTrack}>
+              <View style={[styles.hBarFill, { width: `${Math.max(pct * 100, 3)}%` as any, backgroundColor: podiumColor + (idx === 0 ? 'ff' : 'bb') }]} />
+            </View>
+            {/* Value */}
+            <Text style={[styles.hBarVal, { color: idx === 0 ? colors.gold : colors.textSecondary }]}>
               {label}
-            </SvgText>
-          </G>
+            </Text>
+          </View>
         );
       })}
-    </Svg>
+    </View>
   );
 }
 
 export default function StatisticsScreen() {
   const { selectedWorld } = useWorld();
   const { t } = useTranslation();
-  const { width: screenWidth } = useWindowDimensions();
+  const navigation = useNavigation();
+  const scrollRef = useRef<ScrollView>(null);
   const [activeRank, setActiveRank] = useState<RankType>('month_sold');
+
+  useEffect(() => {
+    const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
+      if (navigation.isFocused()) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
+    });
+    return () => unsubscribe?.();
+  }, [navigation]);
 
   const RANK_OPTIONS = RANK_OPTION_KEYS.map((o) => ({ ...o, label: t(o.key) }));
 
@@ -171,8 +166,7 @@ export default function StatisticsScreen() {
   );
 
   const data = rawData ? { ...rawData, items: rankedItems } : undefined;
-  const top5 = rankedItems.slice(0, 5);
-  const top10 = rankedItems.slice(0, 10);
+  const top15 = rankedItems.slice(0, 15);
 
   if (isLoading) {
     return <LoadingState message={t('loading_stats')} />;
@@ -184,6 +178,7 @@ export default function StatisticsScreen() {
 
   return (
     <ScrollView
+      ref={scrollRef}
       style={styles.container}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
@@ -217,20 +212,12 @@ export default function StatisticsScreen() {
         ))}
       </ScrollView>
 
-      {/* Bar chart */}
-      {top5.length > 0 && (
-        <View style={styles.chartCard}>
-          <Text style={styles.chartTitle}>{t('top_5')}</Text>
-          <CustomBarChart items={top5} field={activeRank} width={Math.min(screenWidth - 32, 600)} />
-        </View>
-      )}
-
-      {/* Top 10 list */}
+      {/* Top 15 list */}
       <View style={styles.listCard}>
         <Text style={styles.listTitle}>
           {RANK_OPTIONS.find((o) => o.value === activeRank)?.label ?? t('ranking')}
         </Text>
-        {top10.map((item, idx) => (
+        {top15.map((item, idx) => (
           <RankCard
             key={item.name}
             item={item}
@@ -250,7 +237,7 @@ export default function StatisticsScreen() {
             <View style={styles.summaryItem}>
               <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
               <Text style={styles.summaryValue}>
-                {data.items.length > 0 ? '50+' : '0'}
+                {data.items.length.toLocaleString()}
               </Text>
               <Text style={styles.summaryLabel}>{t('items_label')}</Text>
             </View>
@@ -265,7 +252,7 @@ export default function StatisticsScreen() {
               <MaterialCommunityIcons name="update" size={24} color={colors.textSecondary} />
               <Text style={styles.summaryValue}>
                 {data.last_update
-                  ? new Date(data.last_update).toLocaleTimeString('pl-PL', {
+                  ? new Date(data.last_update).toLocaleTimeString(undefined, {
                       hour: '2-digit',
                       minute: '2-digit',
                     })
@@ -350,7 +337,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.divider,
-    gap: 12,
+    gap: 10,
   },
   rankCardFirst: {
     backgroundColor: colors.goldDim,
@@ -360,17 +347,29 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     marginBottom: 2,
   },
-  rankNumWrap: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
+  rankBadge: {
+    width: 26,
+    height: 26,
+    borderRadius: 7,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: 0,
   },
   rankNum: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '800',
+  },
+  rankImgWrap: {
+    width: 40,
+    height: 40,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
   },
   rankInfo: {
     flex: 1,
@@ -386,9 +385,64 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   rankValue: {
-    color: colors.gold,
-    fontSize: 14,
+    color: colors.textSecondary,
+    fontSize: 13,
     fontWeight: '700',
+    flexShrink: 0,
+  },
+  // Horizontal bar chart
+  hBarContainer: {
+    gap: 10,
+  },
+  hBarRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  hBarLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    width: 100,
+  },
+  hBarRank: {
+    fontSize: 11,
+    fontWeight: '800',
+    width: 16,
+    textAlign: 'center',
+  },
+  hBarImg: {
+    width: 28,
+    height: 28,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  hBarName: {
+    color: colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '600',
+    flex: 1,
+  },
+  hBarTrack: {
+    flex: 1,
+    height: 8,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  hBarFill: {
+    height: '100%',
+    borderRadius: 4,
+  },
+  hBarVal: {
+    fontSize: 11,
+    fontWeight: '700',
+    width: 72,
+    textAlign: 'right',
   },
   summaryCard: {
     backgroundColor: colors.card,
@@ -400,8 +454,10 @@ const styles = StyleSheet.create({
   summaryGrid: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    gap: 8,
   },
   summaryItem: {
+    flex: 1,
     alignItems: 'center',
     gap: 6,
   },
@@ -409,13 +465,12 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
   },
   summaryLabel: {
     color: colors.textMuted,
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
     textAlign: 'center',
   },
 });

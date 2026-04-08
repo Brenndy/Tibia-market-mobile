@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
 import { useWatchlist, isAlertTriggered, WatchAlert } from '@/src/context/WatchlistContext';
+import { useWorld } from '@/src/context/WorldContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { WatchAlertModal } from '@/src/components/WatchAlertModal';
+import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { ItemImage } from '@/src/components/ItemImage';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ─── WatchCard ────────────────────────────────────────────────────────────────
 
@@ -146,6 +151,8 @@ function WatchCard({
 
 // ─── WorldAlertsSection ───────────────────────────────────────────────────────
 
+const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
+
 function WorldAlertsSection({
   world,
   alerts,
@@ -156,8 +163,51 @@ function WorldAlertsSection({
   onEdit: (alert: WatchAlert) => void;
 }) {
   const { data, isLoading } = useMarketBoard(world);
+  const { t } = useTranslation();
+  const checkedRef = useRef<string>('');
 
   const getItem = (name: string) => data?.items.find((i) => i.name === name);
+
+  // Check alerts whenever fresh data arrives and send notifications
+  useEffect(() => {
+    if (!data) return;
+    const dataKey = data.last_update + alerts.length;
+    if (checkedRef.current === dataKey) return;
+    checkedRef.current = dataKey;
+
+    if (Platform.OS === 'web') return;
+    (async () => {
+      const { sendPriceAlert } = await import('@/src/services/notifications');
+      const raw = await AsyncStorage.getItem(NOTIFIED_KEY);
+      const notifiedSet: Set<string> = new Set(raw ? JSON.parse(raw) : []);
+      const toAdd: string[] = [];
+
+      for (const alert of alerts) {
+        const item = data.items.find((i) => i.name === alert.itemName);
+        if (!item) continue;
+
+        if (alert.buyAlert != null && item.buy_offer != null && item.buy_offer <= alert.buyAlert) {
+          const key = `${world}:${alert.itemName}:buy:${alert.buyAlert}`;
+          if (!notifiedSet.has(key)) {
+            await sendPriceAlert(alert.itemName, 'buy', item.buy_offer, alert.buyAlert);
+            toAdd.push(key);
+          }
+        }
+        if (alert.sellAlert != null && item.sell_offer != null && item.sell_offer >= alert.sellAlert) {
+          const key = `${world}:${alert.itemName}:sell:${alert.sellAlert}`;
+          if (!notifiedSet.has(key)) {
+            await sendPriceAlert(alert.itemName, 'sell', item.sell_offer, alert.sellAlert);
+            toAdd.push(key);
+          }
+        }
+      }
+
+      if (toAdd.length > 0) {
+        const updated = [...Array.from(notifiedSet), ...toAdd].slice(-500);
+        await AsyncStorage.setItem(NOTIFIED_KEY, JSON.stringify(updated));
+      }
+    })();
+  }, [data, alerts, world]);
 
   const triggeredCount = alerts.filter((a) => {
     const item = getItem(a.itemName);
@@ -172,15 +222,15 @@ function WorldAlertsSection({
           <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
           <Text style={styles.worldHeaderName}>{world}</Text>
           <Text style={styles.worldHeaderCount}>
-            {alerts.length} {alerts.length === 1 ? 'alert' : 'alerts'}
+            {alerts.length} {alerts.length === 1 ? t('alert_singular') : t('alerts_plural')}
           </Text>
         </View>
         {isLoading ? (
-          <Text style={styles.worldLoading}>sync…</Text>
+          <Text style={styles.worldLoading}>{t('syncing')}</Text>
         ) : triggeredCount > 0 ? (
           <View style={styles.triggeredPill}>
             <MaterialCommunityIcons name="bell-ring" size={11} color={colors.background} />
-            <Text style={styles.triggeredPillText}>{triggeredCount} active</Text>
+            <Text style={styles.triggeredPillText}>{triggeredCount} {t('active_label')}</Text>
           </View>
         ) : (
           <View style={styles.okPill}>
@@ -213,94 +263,136 @@ function WorldAlertsSection({
 // ─── WatchlistScreen ──────────────────────────────────────────────────────────
 
 export default function WatchlistScreen() {
-  const { watchlist, addToWatchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const { watchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const { selectedWorld, favorites } = useWorld();
   const { t } = useTranslation();
   const router = useRouter();
+  const navigation = useNavigation();
+  const scrollRef = useRef<ScrollView>(null);
   const [editingAlert, setEditingAlert] = useState<WatchAlert | null>(null);
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'alerts' | 'favorites'>('alerts');
+
+  useEffect(() => {
+    const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
+      if (navigation.isFocused()) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
+    });
+    return () => unsubscribe?.();
+  }, [navigation]);
+
+  const { data: marketData } = useMarketBoard(selectedWorld);
 
   // Unique worlds in watchlist (sorted alphabetically)
   const worlds = [...new Set(watchlist.map((a) => a.world))].sort();
-
-  const filteredAlerts = worldFilter
-    ? watchlist.filter((a) => a.world === worldFilter)
-    : watchlist;
-
+  const filteredAlerts = worldFilter ? watchlist.filter((a) => a.world === worldFilter) : watchlist;
   const filteredWorlds = worldFilter ? [worldFilter] : worlds;
 
-  // Total triggered count (approximate — based on last fetched data per section)
-  const totalAlerts = watchlist.length;
-
-  if (watchlist.length === 0) {
-    return (
-      <View style={styles.empty}>
-        <MaterialCommunityIcons name="bell-sleep-outline" size={72} color={colors.textMuted} />
-        <Text style={styles.emptyTitle}>{t('no_alerts_title')}</Text>
-        <Text style={styles.emptyDesc}>{t('no_alerts_desc')}</Text>
-        <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
-          <MaterialCommunityIcons name="store" size={16} color={colors.background} />
-          <Text style={styles.emptyBtnText}>{t('go_to_market')}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  const favoriteItems = marketData?.items.filter((item) => favorites.includes(item.name)) ?? [];
 
   return (
     <View style={styles.container}>
-      {/* Stats bar */}
-      <View style={styles.statsBar}>
-        <Text style={styles.statsText}>
-          {totalAlerts} {t('tab_alerts').toLowerCase()} · {worlds.length} {worlds.length === 1 ? 'serwer' : 'serwery'}
-        </Text>
+      {/* Tab switcher */}
+      <View style={styles.tabSwitcher}>
+        <TouchableOpacity
+          style={[styles.switchTab, activeTab === 'alerts' && styles.switchTabActive]}
+          onPress={() => setActiveTab('alerts')}
+        >
+          <MaterialCommunityIcons name="bell" size={14} color={activeTab === 'alerts' ? colors.gold : colors.textMuted} />
+          <Text style={[styles.switchTabText, activeTab === 'alerts' && styles.switchTabTextActive]}>
+            {t('tab_alerts')} {watchlist.length > 0 ? `(${watchlist.length})` : ''}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.switchTab, activeTab === 'favorites' && styles.switchTabActive]}
+          onPress={() => setActiveTab('favorites')}
+        >
+          <MaterialCommunityIcons name="star" size={14} color={activeTab === 'favorites' ? colors.gold : colors.textMuted} />
+          <Text style={[styles.switchTabText, activeTab === 'favorites' && styles.switchTabTextActive]}>
+            {t('tab_favorites')} {favorites.length > 0 ? `(${favorites.length})` : ''}
+          </Text>
+        </TouchableOpacity>
       </View>
 
-      {/* World filter tabs */}
-      {worlds.length > 1 && (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filterBar}
-        >
-          <TouchableOpacity
-            style={[styles.filterTab, worldFilter === null && styles.filterTabActive]}
-            onPress={() => setWorldFilter(null)}
-          >
-            <Text style={[styles.filterTabText, worldFilter === null && styles.filterTabTextActive]}>
-              {t('all_worlds')} ({watchlist.length})
-            </Text>
-          </TouchableOpacity>
-          {worlds.map((w) => {
-            const count = watchlist.filter((a) => a.world === w).length;
-            return (
-              <TouchableOpacity
-                key={w}
-                style={[styles.filterTab, worldFilter === w && styles.filterTabActive]}
-                onPress={() => setWorldFilter(w)}
-              >
-                <MaterialCommunityIcons
-                  name="earth"
-                  size={11}
-                  color={worldFilter === w ? colors.gold : colors.textMuted}
-                />
-                <Text style={[styles.filterTabText, worldFilter === w && styles.filterTabTextActive]}>
-                  {w} ({count})
-                </Text>
+      {activeTab === 'alerts' ? (
+        <>
+          {watchlist.length === 0 ? (
+            <View style={styles.empty}>
+              <MaterialCommunityIcons name="bell-sleep-outline" size={72} color={colors.textMuted} />
+              <Text style={styles.emptyTitle}>{t('no_alerts_title')}</Text>
+              <Text style={styles.emptyDesc}>{t('no_alerts_desc')}</Text>
+              <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
+                <MaterialCommunityIcons name="store" size={16} color={colors.background} />
+                <Text style={styles.emptyBtnText}>{t('go_to_market')}</Text>
               </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+            </View>
+          ) : (
+            <>
+              {/* World filter tabs */}
+              {worlds.length > 1 && (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterBar}>
+                  <TouchableOpacity
+                    style={[styles.filterTab, worldFilter === null && styles.filterTabActive]}
+                    onPress={() => setWorldFilter(null)}
+                  >
+                    <Text style={[styles.filterTabText, worldFilter === null && styles.filterTabTextActive]}>
+                      {t('all_worlds')} ({watchlist.length})
+                    </Text>
+                  </TouchableOpacity>
+                  {worlds.map((w) => {
+                    const count = watchlist.filter((a) => a.world === w).length;
+                    return (
+                      <TouchableOpacity
+                        key={w}
+                        style={[styles.filterTab, worldFilter === w && styles.filterTabActive]}
+                        onPress={() => setWorldFilter(w)}
+                      >
+                        <MaterialCommunityIcons name="earth" size={11} color={worldFilter === w ? colors.gold : colors.textMuted} />
+                        <Text style={[styles.filterTabText, worldFilter === w && styles.filterTabTextActive]}>
+                          {w} ({count})
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </ScrollView>
+              )}
+              <ScrollView ref={scrollRef} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+                {filteredWorlds.map((world) => (
+                  <WorldAlertsSection
+                    key={world}
+                    world={world}
+                    alerts={filteredAlerts.filter((a) => a.world === world)}
+                    onEdit={setEditingAlert}
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {favorites.length === 0 ? (
+            <View style={styles.empty}>
+              <MaterialCommunityIcons name="star-outline" size={72} color={colors.textMuted} />
+              <Text style={styles.emptyTitle}>{t('no_favorites_title')}</Text>
+              <Text style={styles.emptyDesc}>{t('no_favorites_desc')}</Text>
+              <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
+                <MaterialCommunityIcons name="store" size={16} color={colors.background} />
+                <Text style={styles.emptyBtnText}>{t('go_to_market')}</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <FlatList
+              data={favoriteItems}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) => <MarketItemCard item={item} world={selectedWorld} />}
+              contentContainerStyle={styles.content}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
+        </>
       )}
-
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        {filteredWorlds.map((world) => (
-          <WorldAlertsSection
-            key={world}
-            world={world}
-            alerts={filteredAlerts.filter((a) => a.world === world)}
-            onEdit={setEditingAlert}
-          />
-        ))}
-      </ScrollView>
 
       {editingAlert && (
         <WatchAlertModal
@@ -330,6 +422,34 @@ export default function WatchlistScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
+
+  tabSwitcher: {
+    flexDirection: 'row',
+    backgroundColor: colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  switchTab: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 12,
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
+  },
+  switchTabActive: {
+    borderBottomColor: colors.gold,
+  },
+  switchTabText: {
+    color: colors.textMuted,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  switchTabTextActive: {
+    color: colors.gold,
+  },
 
   statsBar: {
     flexDirection: 'row',

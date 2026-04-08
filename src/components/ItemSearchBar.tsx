@@ -5,12 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Pressable,
   StyleSheet,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { ITEM_LIST } from '../data/itemList';
 import { toTitleCase } from '../api/tibiaMarket';
+import { useTranslation } from '../context/LanguageContext';
 
 const MAX_SUGGESTIONS = 20;
 
@@ -24,6 +26,7 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
+  const { t } = useTranslation();
 
   const suggestions = query.length >= 2
     ? ITEM_LIST
@@ -41,12 +44,19 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
     onSelectedItemsChange(selectedItems.filter((n) => n !== name));
   }, [selectedItems, onSelectedItemsChange]);
 
-  const showDropdown = query.length >= 2 && suggestions.length > 0;
+  // Backspace on empty input removes last chip
+  const handleKeyPress = useCallback(({ nativeEvent }: { nativeEvent: { key: string } }) => {
+    if (nativeEvent.key === 'Backspace' && query === '' && selectedItems.length > 0) {
+      onSelectedItemsChange(selectedItems.slice(0, -1));
+    }
+  }, [query, selectedItems, onSelectedItemsChange]);
+
+  const showDropdown = focused && query.length >= 2 && suggestions.length > 0;
 
   return (
     <View style={styles.wrapper}>
-      {/* Selected chips + input row */}
-      <View style={styles.inputBox}>
+      {/* Tap anywhere on bar to focus input */}
+      <Pressable style={styles.inputBox} onPress={() => inputRef.current?.focus()}>
         <MaterialCommunityIcons name="magnify" size={16} color={colors.textMuted} />
 
         <ScrollView
@@ -69,9 +79,10 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
             style={[styles.input, selectedItems.length > 0 && { minWidth: 80 }]}
             value={query}
             onChangeText={setQuery}
+            onKeyPress={handleKeyPress}
             onFocus={() => setFocused(true)}
             onBlur={() => setTimeout(() => setFocused(false), 150)}
-            placeholder={selectedItems.length === 0 ? (placeholder ?? 'Szukaj przedmiotu...') : ''}
+            placeholder={selectedItems.length === 0 ? (placeholder ?? t('search_placeholder')) : ''}
             placeholderTextColor={colors.textMuted}
             autoCapitalize="none"
             autoCorrect={false}
@@ -83,11 +94,12 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
           <TouchableOpacity
             onPress={() => { setQuery(''); onSelectedItemsChange([]); }}
             style={styles.clear}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
             <MaterialCommunityIcons name="close-circle" size={16} color={colors.textMuted} />
           </TouchableOpacity>
         )}
-      </View>
+      </Pressable>
 
       {/* Dropdown */}
       {showDropdown && (
@@ -161,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     minWidth: 120,
     paddingVertical: 0,
+    flex: 1,
   },
   clear: {
     padding: 4,
