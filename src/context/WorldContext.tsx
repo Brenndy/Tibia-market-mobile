@@ -17,7 +17,7 @@ interface WorldContextType {
 }
 
 const WorldContext = createContext<WorldContextType>({
-  selectedWorld: '',
+  selectedWorld: 'Antica',
   setSelectedWorld: () => {},
   favorites: [],
   toggleFavorite: () => {},
@@ -28,7 +28,7 @@ const WORLD_KEY = 'tibia_selected_world_v1';
 const FAVORITES_KEY = 'tibia_favorites_v1';
 
 export function WorldProvider({ children }: { children: ReactNode }) {
-  const [selectedWorld, setSelectedWorldState] = useState('');
+  const [selectedWorld, setSelectedWorldState] = useState('Antica');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
