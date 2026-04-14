@@ -11,9 +11,9 @@ import { storage } from '../utils/storage';
 interface WorldContextType {
   selectedWorld: string;
   setSelectedWorld: (world: string) => void;
-  favorites: string[];
-  toggleFavorite: (itemName: string) => void;
-  isFavorite: (itemName: string) => boolean;
+  favorites: string[]; // favorites for the currently selected world
+  toggleFavorite: (itemName: string, world: string) => void;
+  isFavorite: (itemName: string, world: string) => boolean;
 }
 
 const WorldContext = createContext<WorldContextType>({
@@ -25,11 +25,12 @@ const WorldContext = createContext<WorldContextType>({
 });
 
 const WORLD_KEY = 'tibia_selected_world_v1';
-const FAVORITES_KEY = 'tibia_favorites_v1';
+// v2 uses per-world structure: Record<string, string[]>
+const FAVORITES_KEY = 'tibia_favorites_v2';
 
 export function WorldProvider({ children }: { children: ReactNode }) {
   const [selectedWorld, setSelectedWorldState] = useState('Antica');
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [allFavorites, setAllFavorites] = useState<Record<string, string[]>>({});
   const [hydrated, setHydrated] = useState(false);
 
   // Load from storage on mount
@@ -40,7 +41,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
     ]).then(([world, favs]) => {
       if (world) setSelectedWorldState(world);
       if (favs) {
-        try { setFavorites(JSON.parse(favs)); } catch {}
+        try { setAllFavorites(JSON.parse(favs)); } catch {}
       }
       setHydrated(true);
     });
@@ -52,28 +53,33 @@ export function WorldProvider({ children }: { children: ReactNode }) {
     storage.setItem(WORLD_KEY, selectedWorld);
   }, [selectedWorld, hydrated]);
 
-  // Persist favorites
+  // Persist all favorites
   useEffect(() => {
     if (!hydrated) return;
-    storage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-  }, [favorites, hydrated]);
+    storage.setItem(FAVORITES_KEY, JSON.stringify(allFavorites));
+  }, [allFavorites, hydrated]);
 
   const setSelectedWorld = useCallback((world: string) => {
     setSelectedWorldState(world);
   }, []);
 
-  const toggleFavorite = useCallback((itemName: string) => {
-    setFavorites((prev) =>
-      prev.includes(itemName)
-        ? prev.filter((f) => f !== itemName)
-        : [...prev, itemName]
-    );
+  const toggleFavorite = useCallback((itemName: string, world: string) => {
+    setAllFavorites((prev) => {
+      const worldFavs = prev[world] ?? [];
+      const updated = worldFavs.includes(itemName)
+        ? worldFavs.filter((f) => f !== itemName)
+        : [...worldFavs, itemName];
+      return { ...prev, [world]: updated };
+    });
   }, []);
 
   const isFavorite = useCallback(
-    (itemName: string) => favorites.includes(itemName),
-    [favorites]
+    (itemName: string, world: string) => (allFavorites[world] ?? []).includes(itemName),
+    [allFavorites]
   );
+
+  // Expose only the selected world's favorites for convenience
+  const favorites = allFavorites[selectedWorld] ?? [];
 
   return (
     <WorldContext.Provider

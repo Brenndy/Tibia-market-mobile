@@ -193,8 +193,8 @@ export default function MarketScreen() {
     <View style={styles.container}>
       {/* Collapsing header */}
       <View style={styles.headerWrapper}>
-        {/* Top bar: fades + slides up */}
-        <Animated.View style={{ transform: [{ translateY: topBarTranslate }], opacity: topBarOpacity }}>
+        {/* Top bar: fades + slides up — zIndex 2 so dropdown renders above presetsRow */}
+        <Animated.View style={{ transform: [{ translateY: topBarTranslate }], opacity: topBarOpacity, zIndex: 2 }}>
           <View style={styles.topBar}>
             <ItemSearchBar
               selectedItems={selectedItems}
@@ -278,7 +278,7 @@ export default function MarketScreen() {
           renderItem={({ item }) => (
             <MarketItemCard item={item} world={selectedWorld} />
           )}
-          contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT }]}
+          contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT + 12 }]}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.3}
           onScroll={handleScroll}
@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
+    backgroundColor: colors.surface,
   },
   topBar: {
     flexDirection: 'column',

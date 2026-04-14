@@ -465,6 +465,7 @@ const styles = StyleSheet.create({
 
   filterBar: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,

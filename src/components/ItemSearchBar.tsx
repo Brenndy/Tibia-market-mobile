@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Pressable,
   StyleSheet,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,6 +25,7 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
+  const blurTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { t } = useTranslation();
 
   const suggestions = query.length >= 2
@@ -34,10 +34,21 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
         .slice(0, MAX_SUGGESTIONS)
     : [];
 
+  const handleFocus = useCallback(() => {
+    if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
+    setFocused(true);
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    blurTimerRef.current = setTimeout(() => setFocused(false), 200);
+  }, []);
+
   const handleSelect = useCallback((name: string) => {
+    if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
     onSelectedItemsChange([...selectedItems, name]);
     setQuery('');
-    inputRef.current?.focus();
+    setFocused(true);
+    setTimeout(() => inputRef.current?.focus(), 0);
   }, [selectedItems, onSelectedItemsChange]);
 
   const handleRemove = useCallback((name: string) => {
@@ -56,7 +67,11 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
   return (
     <View style={styles.wrapper}>
       {/* Tap anywhere on bar to focus input */}
-      <Pressable style={styles.inputBox} onPress={() => inputRef.current?.focus()}>
+      <TouchableOpacity
+        style={styles.inputBox}
+        onPress={() => inputRef.current?.focus()}
+        activeOpacity={1}
+      >
         <MaterialCommunityIcons name="magnify" size={16} color={colors.textMuted} />
 
         <ScrollView
@@ -80,8 +95,8 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
             value={query}
             onChangeText={setQuery}
             onKeyPress={handleKeyPress}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setTimeout(() => setFocused(false), 150)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             placeholder={selectedItems.length === 0 ? (placeholder ?? t('search_placeholder')) : ''}
             placeholderTextColor={colors.textMuted}
             autoCapitalize="none"
@@ -99,7 +114,7 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
             <MaterialCommunityIcons name="close-circle" size={16} color={colors.textMuted} />
           </TouchableOpacity>
         )}
-      </Pressable>
+      </TouchableOpacity>
 
       {/* Dropdown */}
       {showDropdown && (

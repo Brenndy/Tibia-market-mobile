@@ -70,7 +70,7 @@ export default function TabLayout() {
         },
         tabBarActiveTintColor: colors.tabActive,
         tabBarInactiveTintColor: colors.tabInactive,
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
+        tabBarShowLabel: false,
         headerStyle: { backgroundColor: colors.surface },
         headerTintColor: colors.gold,
         headerTitleStyle: { color: colors.textPrimary, fontWeight: '700' },

@@ -253,7 +253,7 @@ export default function ItemDetailScreen() {
   const [historyDays, setHistoryDays] = useState(30);
   const [activeChart, setActiveChart] = useState<'price' | 'volume'>('price');
   const [watchModalOpen, setWatchModalOpen] = useState(false);
-  const favorite = isFavorite(name);
+  const favorite = isFavorite(name, world);
   const { isWatched, getAlert, addToWatchlist, removeFromWatchlist } = useWatchlist();
   const watched = isWatched(name, world);
   const watchAlert = getAlert(name, world);
@@ -270,7 +270,7 @@ export default function ItemDetailScreen() {
               color={watched ? colors.gold : colors.textSecondary}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleFavorite(name)} style={{ padding: 4 }}>
+          <TouchableOpacity onPress={() => toggleFavorite(name, world)} style={{ padding: 4 }}>
             <MaterialCommunityIcons
               name={favorite ? 'star' : 'star-outline'}
               size={22}

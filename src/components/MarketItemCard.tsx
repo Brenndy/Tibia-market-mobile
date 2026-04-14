@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -12,8 +12,10 @@ import { useRouter } from 'expo-router';
 import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
+import { useWatchlist } from '../context/WatchlistContext';
 import { useTranslation } from '../context/LanguageContext';
 import { ItemImage } from './ItemImage';
+import { WatchAlertModal } from './WatchAlertModal';
 
 interface MarketItemCardProps {
   item: MarketItem;
@@ -51,10 +53,14 @@ export const MarketItemCard = memo(function MarketItemCard({
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
+  const { isWatched, addToWatchlist, removeFromWatchlist, getAlert } = useWatchlist();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
+  const [watchModalVisible, setWatchModalVisible] = useState(false);
   const narrow = width < 400;
-  const favorite = isFavorite(item.name);
+  const favorite = isFavorite(item.name, world);
+  const watched = isWatched(item.name, world);
+  const existingAlert = getAlert(item.name, world);
   const dealQuality = getDealQuality(item);
 
   const margin =
@@ -76,6 +82,7 @@ export const MarketItemCard = memo(function MarketItemCard({
     'transparent';
 
   return (
+    <>
     <TouchableOpacity
       style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
       onPress={() =>
@@ -118,17 +125,30 @@ export const MarketItemCard = memo(function MarketItemCard({
             )}
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() => toggleFavorite(item.name)}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          style={styles.starBtn}
-        >
-          <MaterialCommunityIcons
-            name={favorite ? 'star' : 'star-outline'}
-            size={18}
-            color={favorite ? colors.gold : colors.textMuted}
-          />
-        </TouchableOpacity>
+        <View style={styles.actionBtns}>
+          <TouchableOpacity
+            onPress={() => setWatchModalVisible(true)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={styles.bellBtn}
+          >
+            <MaterialCommunityIcons
+              name={watched ? 'bell' : 'bell-outline'}
+              size={18}
+              color={watched ? colors.gold : colors.textMuted}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => toggleFavorite(item.name, world)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={styles.starBtn}
+          >
+            <MaterialCommunityIcons
+              name={favorite ? 'star' : 'star-outline'}
+              size={18}
+              color={favorite ? colors.gold : colors.textMuted}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Divider */}
@@ -215,6 +235,30 @@ export const MarketItemCard = memo(function MarketItemCard({
         </View>
       )}
     </TouchableOpacity>
+
+    {watchModalVisible && (
+      <WatchAlertModal
+        visible={watchModalVisible}
+        itemName={item.name}
+        wikiName={item.wiki_name}
+        world={world}
+        currentBuy={item.buy_offer}
+        currentSell={item.sell_offer}
+        initialBuyAlert={existingAlert?.buyAlert ?? null}
+        initialSellAlert={existingAlert?.sellAlert ?? null}
+        isEditing={watched}
+        onSave={(buy, sell) => {
+          if (buy == null && sell == null) {
+            removeFromWatchlist(item.name, world);
+          } else {
+            addToWatchlist({ itemName: item.name, wikiName: item.wiki_name, world, buyAlert: buy, sellAlert: sell });
+          }
+        }}
+        onRemove={() => removeFromWatchlist(item.name, world)}
+        onClose={() => setWatchModalVisible(false)}
+      />
+    )}
+    </>
   );
 });
 
@@ -300,6 +344,14 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: '700',
     letterSpacing: 0.3,
+  },
+  actionBtns: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  bellBtn: {
+    padding: 2,
   },
   starBtn: {
     padding: 2,
