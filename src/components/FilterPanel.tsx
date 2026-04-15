@@ -132,8 +132,9 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
       onShow={handleOpen}
     >
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Pressable style={styles.backdrop} onPress={onClose}>
-        <SafeAreaView style={styles.sheet} onStartShouldSetResponder={() => true}>
+      <View style={styles.backdrop}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
+        <SafeAreaView style={styles.sheet}>
           {/* Handle */}
           <View style={styles.handle} />
 
@@ -283,7 +284,7 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-      </Pressable>
+      </View>
       </KeyboardAvoidingView>
     </Modal>
   );

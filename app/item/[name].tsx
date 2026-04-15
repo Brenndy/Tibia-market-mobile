@@ -5,9 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  useWindowDimensions,
 } from 'react-native';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useLayoutEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -127,83 +126,120 @@ function CustomLineChart({
   sellData,
   dates,
   width,
+  showDots = false,
 }: {
-  buyData: number[];
-  sellData: number[];
+  buyData: (number | null)[];
+  sellData: (number | null)[];
   dates: string[];
   width: number;
   showDots?: boolean;
 }) {
-  const CHART_H = 220;
-  const PAD_TOP = 20;
+  const CHART_H = 240;
+  const PAD_TOP = 16;
   const PAD_BOTTOM = 32;
-  const PAD_LEFT = 52;
-  const PAD_RIGHT = 12;
-  const plotW = width - PAD_LEFT - PAD_RIGHT;
+  const PAD_LEFT = 56;
+  const PAD_RIGHT = 14;
+  const plotW = Math.max(width - PAD_LEFT - PAD_RIGHT, 50);
   const plotH = CHART_H - PAD_TOP - PAD_BOTTOM;
 
-  const allVals = [...buyData, ...sellData].filter((v) => v > 0);
+  // Treat 0 / null / missing as no-data
+  const buy = buyData.map((v) => (v != null && v > 0 ? v : null));
+  const sell = sellData.map((v) => (v != null && v > 0 ? v : null));
+
+  const allVals = [...buy, ...sell].filter((v): v is number => v != null);
   if (allVals.length === 0) return null;
 
   const minV = Math.min(...allVals);
   const maxV = Math.max(...allVals);
-  // Add 5% padding so lines don't touch edges
-  const pad = (maxV - minV) * 0.08 || maxV * 0.05;
-  const lo = minV - pad;
+  const pad = (maxV - minV) * 0.1 || maxV * 0.1 || 1;
+  const lo = Math.max(0, minV - pad);
   const hi = maxV + pad;
-  const range = hi - lo;
+  const range = Math.max(hi - lo, 1);
 
-  const xOf = (i: number) => PAD_LEFT + (i / Math.max(buyData.length - 1, 1)) * plotW;
+  const n = Math.max(buy.length, sell.length);
+  const xOf = (i: number) => PAD_LEFT + (i / Math.max(n - 1, 1)) * plotW;
   const yOf = (v: number) => PAD_TOP + plotH - ((v - lo) / range) * plotH;
 
-  // Smooth cubic bezier path
-  const smoothPath = (data: number[]) => {
-    if (data.length === 0) return '';
-    if (data.length === 1) return `M ${xOf(0)} ${yOf(data[0])}`;
-    let d = `M ${xOf(0).toFixed(1)} ${yOf(data[0]).toFixed(1)}`;
-    for (let i = 1; i < data.length; i++) {
-      const x0 = xOf(i - 1), y0 = yOf(data[i - 1]);
-      const x1 = xOf(i), y1 = yOf(data[i]);
-      const cx = (x0 + x1) / 2;
-      d += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
-    }
-    return d;
+  // Build smooth path segments — break at nulls
+  const segmentPaths = (data: (number | null)[]): string[] => {
+    const segments: Array<Array<{ i: number; v: number }>> = [];
+    let current: Array<{ i: number; v: number }> = [];
+    data.forEach((v, i) => {
+      if (v == null) {
+        if (current.length > 0) segments.push(current);
+        current = [];
+      } else {
+        current.push({ i, v });
+      }
+    });
+    if (current.length > 0) segments.push(current);
+
+    return segments.map((seg) => {
+      if (seg.length === 1) {
+        return `M ${xOf(seg[0].i).toFixed(1)} ${yOf(seg[0].v).toFixed(1)}`;
+      }
+      let d = `M ${xOf(seg[0].i).toFixed(1)} ${yOf(seg[0].v).toFixed(1)}`;
+      for (let k = 1; k < seg.length; k++) {
+        const p0 = seg[k - 1];
+        const p1 = seg[k];
+        const x0 = xOf(p0.i), y0 = yOf(p0.v);
+        const x1 = xOf(p1.i), y1 = yOf(p1.v);
+        const cx = (x0 + x1) / 2;
+        d += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+      }
+      return d;
+    });
   };
 
-  const yLabels = [0, 1, 2, 3].map((i) => lo + (i / 3) * range);
-  const step = Math.max(1, Math.ceil(dates.length / 5));
+  // Build area paths (segments closed to baseline)
+  const areaPaths = (data: (number | null)[]): string[] => {
+    const baseline = PAD_TOP + plotH;
+    const segments: Array<Array<{ i: number; v: number }>> = [];
+    let current: Array<{ i: number; v: number }> = [];
+    data.forEach((v, i) => {
+      if (v == null) {
+        if (current.length > 1) segments.push(current);
+        current = [];
+      } else {
+        current.push({ i, v });
+      }
+    });
+    if (current.length > 1) segments.push(current);
 
-  // Spread fill between buy and sell
-  const spreadPath = () => {
-    if (buyData.length === 0 || sellData.length === 0) return '';
-    const top = smoothPath(buyData);
-    const n = sellData.length - 1;
-    let bottom = '';
-    for (let i = n; i >= 0; i--) {
-      const x0 = i > 0 ? xOf(i - 1) : xOf(0);
-      const y0 = i > 0 ? yOf(sellData[i - 1]) : yOf(sellData[0]);
-      const x1 = xOf(i), y1 = yOf(sellData[i]);
-      const cx = (x0 + x1) / 2;
-      bottom += i === n
-        ? ` L ${x1.toFixed(1)} ${y1.toFixed(1)}`
-        : ` C ${cx.toFixed(1)} ${y1.toFixed(1)}, ${cx.toFixed(1)} ${y0.toFixed(1)}, ${x0.toFixed(1)} ${y0.toFixed(1)}`;
-    }
-    return `${top}${bottom} Z`;
+    return segments.map((seg) => {
+      let d = `M ${xOf(seg[0].i).toFixed(1)} ${baseline.toFixed(1)}`;
+      d += ` L ${xOf(seg[0].i).toFixed(1)} ${yOf(seg[0].v).toFixed(1)}`;
+      for (let k = 1; k < seg.length; k++) {
+        const p0 = seg[k - 1];
+        const p1 = seg[k];
+        const x0 = xOf(p0.i), y0 = yOf(p0.v);
+        const x1 = xOf(p1.i), y1 = yOf(p1.v);
+        const cx = (x0 + x1) / 2;
+        d += ` C ${cx.toFixed(1)} ${y0.toFixed(1)}, ${cx.toFixed(1)} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+      }
+      d += ` L ${xOf(seg[seg.length - 1].i).toFixed(1)} ${baseline.toFixed(1)} Z`;
+      return d;
+    });
   };
+
+  const yLabels = [0, 1, 2, 3, 4].map((i) => lo + (i / 4) * range);
+  const step = Math.max(1, Math.ceil(dates.length / 6));
 
   return (
     <Svg width={width} height={CHART_H}>
       <Defs>
-        <SvgGradient id="spreadGrad" x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0%" stopColor={colors.buy} stopOpacity="0.12" />
-          <Stop offset="100%" stopColor={colors.sell} stopOpacity="0.06" />
+        <SvgGradient id="buyGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%" stopColor={colors.buy} stopOpacity="0.28" />
+          <Stop offset="100%" stopColor={colors.buy} stopOpacity="0.02" />
+        </SvgGradient>
+        <SvgGradient id="sellGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%" stopColor={colors.sell} stopOpacity="0.28" />
+          <Stop offset="100%" stopColor={colors.sell} stopOpacity="0.02" />
         </SvgGradient>
       </Defs>
 
-      {/* Chart background */}
-      <Rect x={PAD_LEFT} y={PAD_TOP} width={plotW} height={plotH} fill={colors.surfaceElevated} opacity={0.3} rx={4} />
+      <Rect x={PAD_LEFT} y={PAD_TOP} width={plotW} height={plotH} fill={colors.surfaceElevated} opacity={0.25} rx={4} />
 
-      {/* Grid lines + Y labels */}
       {yLabels.map((v, i) => (
         <G key={i}>
           <Line
@@ -211,31 +247,43 @@ function CustomLineChart({
             x2={width - PAD_RIGHT} y2={yOf(v)}
             stroke={colors.border} strokeDasharray="4 5" strokeWidth={0.7}
           />
-          <SvgText x={PAD_LEFT - 5} y={yOf(v) + 4} textAnchor="end" fill={colors.textMuted} fontSize={9}>
+          <SvgText x={PAD_LEFT - 6} y={yOf(v) + 3} textAnchor="end" fill={colors.textMuted} fontSize={9}>
             {formatGold(v)}
           </SvgText>
         </G>
       ))}
 
-      {/* Spread fill between the two lines */}
-      <Path d={spreadPath()} fill="url(#spreadGrad)" />
-
-      {/* Sell line — draw first (behind) */}
-      <Path d={smoothPath(sellData)} stroke={colors.sell} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      {/* Buy line — draw on top */}
-      <Path d={smoothPath(buyData)} stroke={colors.buy} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* Dots */}
-      {sellData.map((v, i) => (
-        <Circle key={`s${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.sell} stroke={colors.card} strokeWidth={1.5} />
+      {/* Area fills */}
+      {areaPaths(sell).map((d, i) => (
+        <Path key={`sa${i}`} d={d} fill="url(#sellGrad)" />
       ))}
-      {buyData.map((v, i) => (
-        <Circle key={`b${i}`} cx={xOf(i)} cy={yOf(v)} r={3} fill={colors.buy} stroke={colors.card} strokeWidth={1.5} />
+      {areaPaths(buy).map((d, i) => (
+        <Path key={`ba${i}`} d={d} fill="url(#buyGrad)" />
       ))}
 
-      {/* X-axis date labels */}
+      {/* Lines */}
+      {segmentPaths(sell).map((d, i) => (
+        <Path key={`sl${i}`} d={d} stroke={colors.sell} strokeWidth={2.2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      ))}
+      {segmentPaths(buy).map((d, i) => (
+        <Path key={`bl${i}`} d={d} stroke={colors.buy} strokeWidth={2.2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      ))}
+
+      {/* Dots (optional) */}
+      {showDots && sell.map((v, i) =>
+        v != null ? (
+          <Circle key={`sd${i}`} cx={xOf(i)} cy={yOf(v)} r={2.8} fill={colors.sell} stroke={colors.card} strokeWidth={1.2} />
+        ) : null
+      )}
+      {showDots && buy.map((v, i) =>
+        v != null ? (
+          <Circle key={`bd${i}`} cx={xOf(i)} cy={yOf(v)} r={2.8} fill={colors.buy} stroke={colors.card} strokeWidth={1.2} />
+        ) : null
+      )}
+
+      {/* X-axis labels */}
       {dates.map((d, i) =>
-        i % step === 0 ? (
+        i % step === 0 || i === dates.length - 1 ? (
           <SvgText key={i} x={xOf(i)} y={CHART_H - 8} textAnchor="middle" fill={colors.textMuted} fontSize={9}>
             {d}
           </SvgText>
@@ -250,9 +298,11 @@ export default function ItemDetailScreen() {
   const { selectedWorld, toggleFavorite, isFavorite } = useWorld();
   const world = paramWorld ?? selectedWorld;
   const navigation = useNavigation();
+  const router = useRouter();
   const [historyDays, setHistoryDays] = useState(30);
   const [activeChart, setActiveChart] = useState<'price' | 'volume'>('price');
   const [watchModalOpen, setWatchModalOpen] = useState(false);
+  const [chartWidth, setChartWidth] = useState(0);
   const favorite = isFavorite(name, world);
   const { isWatched, getAlert, addToWatchlist, removeFromWatchlist } = useWatchlist();
   const watched = isWatched(name, world);
@@ -261,6 +311,18 @@ export default function ItemDetailScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: toTitleCase(name),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            if (router.canGoBack()) router.back();
+            else router.replace('/');
+          }}
+          style={{ padding: 8, marginLeft: 4 }}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <MaterialCommunityIcons name="chevron-left" size={26} color={colors.gold} />
+        </TouchableOpacity>
+      ),
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 12 }}>
           <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={{ padding: 4 }}>
@@ -280,10 +342,9 @@ export default function ItemDetailScreen() {
         </View>
       ),
     });
-  }, [navigation, name, favorite, toggleFavorite, watched]);
+  }, [navigation, name, world, favorite, toggleFavorite, watched, router]);
 
   const { t } = useTranslation();
-  const { width: screenWidth } = useWindowDimensions();
 
   const { data: stats, isLoading: statsLoading, isError: statsError, refetch } = useItemStats(world, name);
   const { data: history, isLoading: historyLoading } = useItemHistory(world, name, historyDays);
@@ -294,10 +355,10 @@ export default function ItemDetailScreen() {
 
   const hasHistory = history && history.length > 1;
 
-  const buyPrices = history?.map((h) => h.buy_offer ?? 0) ?? [];
-  const sellPrices = history?.map((h) => h.sell_offer ?? 0) ?? [];
-  const buyVolumes = history?.map((h) => h.buy_volume ?? 0) ?? [];
-  const sellVolumes = history?.map((h) => h.sell_volume ?? 0) ?? [];
+  const buyPrices: (number | null)[] = history?.map((h) => h.buy_offer ?? null) ?? [];
+  const sellPrices: (number | null)[] = history?.map((h) => h.sell_offer ?? null) ?? [];
+  const buyVolumes: (number | null)[] = history?.map((h) => h.buy_volume ?? null) ?? [];
+  const sellVolumes: (number | null)[] = history?.map((h) => h.sell_volume ?? null) ?? [];
 
   const chartDates = (history ?? []).map((h) => {
     const d = new Date(h.date);
@@ -571,13 +632,20 @@ export default function ItemDetailScreen() {
           </View>
         ) : hasHistory ? (
           <>
-            <CustomLineChart
-              buyData={chartBuy}
-              sellData={chartSell}
-              dates={chartDates}
-              width={Math.min(screenWidth - 28, 700)}
-              showDots={historyDays <= 14}
-            />
+            <View
+              style={styles.chartBox}
+              onLayout={(e) => setChartWidth(e.nativeEvent.layout.width)}
+            >
+              {chartWidth > 0 && (
+                <CustomLineChart
+                  buyData={chartBuy}
+                  sellData={chartSell}
+                  dates={chartDates}
+                  width={chartWidth}
+                  showDots={historyDays <= 14}
+                />
+              )}
+            </View>
             <View style={styles.legend}>
               <View style={styles.legendItem}>
                 <View style={[styles.legendDot, { backgroundColor: colors.buy }]} />
@@ -864,6 +932,10 @@ const styles = StyleSheet.create({
   chart: {
     borderRadius: 0,
     marginHorizontal: 14,
+  },
+  chartBox: {
+    width: '100%',
+    alignItems: 'stretch',
   },
   chartLoading: {
     height: 160,

@@ -331,7 +331,12 @@ export default function WatchlistScreen() {
             <>
               {/* World filter tabs */}
               {worlds.length > 1 && (
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterBar}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.filterBar}
+                  style={styles.filterBarScroll}
+                >
                   <TouchableOpacity
                     style={[styles.filterTab, worldFilter === null && styles.filterTabActive]}
                     onPress={() => setWorldFilter(null)}
@@ -463,6 +468,10 @@ const styles = StyleSheet.create({
   },
   statsText: { color: colors.textMuted, fontSize: 11 },
 
+  filterBarScroll: {
+    flexGrow: 0,
+    flexShrink: 0,
+  },
   filterBar: {
     flexDirection: 'row',
     alignItems: 'center',

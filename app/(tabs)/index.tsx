@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ScrollView,
   Animated,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,52 +25,6 @@ import { SortField, filterAndSortItems } from '@/src/api/tibiaMarket';
 const PAGE_SIZE = 50;
 const INITIAL_COUNT = 50;
 
-type PresetId = 'none' | 'hot' | 'flips' | 'cheap' | 'expensive';
-
-interface Preset {
-  id: PresetId;
-  icon: string;
-  labelKey: 'preset_hot' | 'preset_flips' | 'preset_cheap' | 'preset_expensive';
-  sort: SortField;
-  order: 'asc' | 'desc';
-  filters: Partial<FilterState>;
-}
-
-const PRESETS: Preset[] = [
-  {
-    id: 'hot',
-    icon: 'fire',
-    labelKey: 'preset_hot',
-    sort: 'month_sold',
-    order: 'desc',
-    filters: {},
-  },
-  {
-    id: 'flips',
-    icon: 'swap-horizontal-bold',
-    labelKey: 'preset_flips',
-    sort: 'margin',
-    order: 'desc',
-    filters: { minMargin: '500' },
-  },
-  {
-    id: 'cheap',
-    icon: 'trending-down',
-    labelKey: 'preset_cheap',
-    sort: 'buy_offer',
-    order: 'asc',
-    filters: {},
-  },
-  {
-    id: 'expensive',
-    icon: 'diamond-stone',
-    labelKey: 'preset_expensive',
-    sort: 'sell_offer',
-    order: 'desc',
-    filters: {},
-  },
-];
-
 export default function MarketScreen() {
   const { selectedWorld } = useWorld();
   const { t } = useTranslation();
@@ -83,7 +36,7 @@ export default function MarketScreen() {
   const [displayCount, setDisplayCount] = useState(INITIAL_COUNT);
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
-  const [activePreset, setActivePreset] = useState<PresetId>('hot');
+  const [showFab, setShowFab] = useState(false);
   const activeFilterCount = countActiveFilters(filters);
 
   const handleSelectedItemsChange = useCallback((items: string[]) => {
@@ -91,29 +44,10 @@ export default function MarketScreen() {
     setDisplayCount(INITIAL_COUNT);
   }, []);
 
-  const handlePresetSelect = useCallback((preset: Preset) => {
-    if (activePreset === preset.id) {
-      // Deactivate
-      setActivePreset('none');
-      setSortField('month_sold');
-      setSortOrder('desc');
-      setFilters(DEFAULT_FILTERS);
-    } else {
-      setActivePreset(preset.id);
-      setSortField(preset.sort);
-      setSortOrder(preset.order);
-      setFilters({ ...DEFAULT_FILTERS, ...preset.filters });
-    }
-    setSelectedItems([]);
-    setDisplayCount(INITIAL_COUNT);
-  }, [activePreset]);
-
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
-  // Collapsing header: topBar fades+slides, presetsRow slides only
-  const TOP_BAR_H = 116; // searchBar(44) + toolRow(44) + gaps/padding
-  const PRESETS_H = 52;
-  const HEADER_HEIGHT = TOP_BAR_H + PRESETS_H;
+  const TOP_BAR_H = 116;
+  const HEADER_HEIGHT = TOP_BAR_H;
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -159,7 +93,6 @@ export default function MarketScreen() {
   const handleSortChange = useCallback((field: SortField, order: 'asc' | 'desc') => {
     setSortField(field);
     setSortOrder(order);
-    setActivePreset('none');
     setDisplayCount(INITIAL_COUNT);
   }, []);
 
@@ -169,13 +102,22 @@ export default function MarketScreen() {
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: true }
+    {
+      useNativeDriver: true,
+      listener: (e: any) => {
+        const y = e.nativeEvent.contentOffset.y;
+        setShowFab(y > TOP_BAR_H);
+      },
+    }
   );
 
   const handleApplyFilters = useCallback((f: FilterState) => {
     setFilters(f);
-    setActivePreset('none');
     setDisplayCount(INITIAL_COUNT);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, []);
 
   if (isError) {
@@ -191,9 +133,7 @@ export default function MarketScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Collapsing header */}
       <View style={styles.headerWrapper}>
-        {/* Top bar: fades + slides up — zIndex 2 so dropdown renders above presetsRow */}
         <Animated.View style={{ transform: [{ translateY: topBarTranslate }], opacity: topBarOpacity, zIndex: 2 }}>
           <View style={styles.topBar}>
             <ItemSearchBar
@@ -225,41 +165,18 @@ export default function MarketScreen() {
           </View>
         </Animated.View>
 
-        {/* Presets + stats: slides up only (stays sharp) */}
-        <Animated.View style={{ transform: [{ translateY: topBarTranslate }] }}>
-          <View style={styles.presetsRow}>
-            {PRESETS.map((preset) => {
-              const active = activePreset === preset.id;
-              return (
-                <TouchableOpacity
-                  key={preset.id}
-                  style={[styles.presetTab, active && styles.presetTabActive]}
-                  onPress={() => handlePresetSelect(preset)}
-                  activeOpacity={0.7}
-                >
-                  <MaterialCommunityIcons
-                    name={preset.icon as any}
-                    size={15}
-                    color={active ? colors.gold : colors.textMuted}
-                  />
-                  <Text style={[styles.presetText, active && styles.presetTextActive]} numberOfLines={1}>
-                    {t(preset.labelKey)}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-          {activeFilterCount > 0 && (
+        {activeFilterCount > 0 && (
+          <Animated.View style={{ transform: [{ translateY: topBarTranslate }] }}>
             <View style={styles.statsRow}>
               <Text style={styles.statsText}>
                 {`${filteredItems.length} ${t('items_label').toLowerCase()}`}
               </Text>
-              <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setActivePreset('none'); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
+              <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
                 <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
               </TouchableOpacity>
             </View>
-          )}
-        </Animated.View>
+          </Animated.View>
+        )}
       </View>
 
       {showSkeleton ? (
@@ -282,7 +199,7 @@ export default function MarketScreen() {
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.3}
           onScroll={handleScroll}
-          scrollEventThrottle={1}
+          scrollEventThrottle={16}
           bounces={false}
           ListEmptyComponent={
             <View style={styles.empty}>
@@ -309,6 +226,12 @@ export default function MarketScreen() {
         />
       )}
 
+      {showFab && (
+        <TouchableOpacity style={styles.fab} onPress={scrollToTop} activeOpacity={0.85}>
+          <MaterialCommunityIcons name="chevron-up" size={24} color={colors.background} />
+        </TouchableOpacity>
+      )}
+
       <FilterPanel
         visible={filterPanelOpen}
         filters={filters}
@@ -330,7 +253,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
-    backgroundColor: colors.surface,
   },
   topBar: {
     flexDirection: 'column',
@@ -368,39 +290,15 @@ const styles = StyleSheet.create({
     borderColor: colors.gold,
     backgroundColor: colors.goldDim,
   },
-  presetsRow: {
-    flexDirection: 'row',
-    backgroundColor: colors.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  presetTab: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 9,
-    gap: 3,
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-  },
-  presetTabActive: {
-    borderBottomColor: colors.gold,
-  },
-  presetText: {
-    color: colors.textMuted,
-    fontSize: 11,
-    fontWeight: '600',
-  },
-  presetTextActive: {
-    color: colors.gold,
-  },
   statsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 14,
     paddingVertical: 6,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   statsText: {
     color: colors.textMuted,
@@ -450,5 +348,22 @@ const styles = StyleSheet.create({
     color: colors.gold,
     fontWeight: '700',
     fontSize: 14,
+  },
+  fab: {
+    position: 'absolute',
+    right: 16,
+    bottom: 90,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+    zIndex: 20,
   },
 });
