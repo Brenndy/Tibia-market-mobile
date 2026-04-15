@@ -1,28 +1,58 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Animated, StyleSheet } from 'react-native';
+import { View, Animated, StyleSheet, Easing } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../theme/colors';
 
-function SkeletonBox({ width, height, style }: { width: number | string; height: number; style?: any }) {
-  const opacity = useRef(new Animated.Value(0.3)).current;
+// Shared sweep animation — one driver for all skeletons
+const sweep = new Animated.Value(0);
+let sweepStarted = false;
+function ensureSweep() {
+  if (sweepStarted) return;
+  sweepStarted = true;
+  Animated.loop(
+    Animated.timing(sweep, {
+      toValue: 1,
+      duration: 1400,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    })
+  ).start();
+}
 
+function SkeletonBox({ width, height, style }: { width: number | string; height: number; style?: any }) {
   useEffect(() => {
-    const anim = Animated.loop(
-      Animated.sequence([
-        Animated.timing(opacity, { toValue: 0.7, duration: 800, useNativeDriver: true }),
-        Animated.timing(opacity, { toValue: 0.3, duration: 800, useNativeDriver: true }),
-      ])
-    );
-    anim.start();
-    return () => anim.stop();
-  }, [opacity]);
+    ensureSweep();
+  }, []);
+
+  const translateX = sweep.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-120, 220],
+  });
 
   return (
-    <Animated.View
+    <View
       style={[
-        { width, height, borderRadius: 6, backgroundColor: colors.surfaceElevated, opacity },
+        { width, height, borderRadius: 6, backgroundColor: colors.surfaceElevated, overflow: 'hidden' },
         style,
       ]}
-    />
+    >
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          width: 120,
+          transform: [{ translateX }],
+        }}
+      >
+        <LinearGradient
+          colors={['transparent', 'rgba(212,175,55,0.14)', 'rgba(212,175,55,0.28)', 'rgba(212,175,55,0.14)', 'transparent']}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          style={{ flex: 1 }}
+        />
+      </Animated.View>
+    </View>
   );
 }
 

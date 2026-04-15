@@ -17,6 +17,7 @@ import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { SkeletonCard } from '@/src/components/SkeletonCard';
+import { GoldSpinner } from '@/src/components/LoadingState';
 import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
@@ -189,13 +190,19 @@ export default function MarketScreen() {
       </View>
 
       {showSkeleton ? (
-        <FlatList
-          data={Array(7).fill(0)}
-          keyExtractor={(_, i) => String(i)}
-          renderItem={() => <SkeletonCard />}
-          contentContainerStyle={styles.list}
-          scrollEnabled={false}
-        />
+        <View style={{ flex: 1, paddingTop: HEADER_HEIGHT + 12 }}>
+          <View style={styles.loaderHero}>
+            <GoldSpinner size={52} />
+            <Text style={styles.loaderText}>{t('loading')}</Text>
+          </View>
+          <FlatList
+            data={Array(6).fill(0)}
+            keyExtractor={(_, i) => String(i)}
+            renderItem={() => <SkeletonCard />}
+            contentContainerStyle={styles.list}
+            scrollEnabled={false}
+          />
+        </View>
       ) : (
         <Animated.FlatList
           ref={listRef}
@@ -386,5 +393,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loaderHero: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    gap: 10,
+  },
+  loaderText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
 });
