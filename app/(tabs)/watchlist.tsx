@@ -280,7 +280,7 @@ function WorldFavoritesSection({
           <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
           <Text style={styles.worldHeaderName}>{world}</Text>
           <Text style={styles.worldHeaderCount}>
-            {favoriteNames.length} {favoriteNames.length === 1 ? t('alert_singular') : t('alerts_plural')}
+            {favoriteNames.length} {favoriteNames.length === 1 ? t('favorite_singular') : t('favorites_plural')}
           </Text>
         </View>
         {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}

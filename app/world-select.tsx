@@ -10,6 +10,17 @@ import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
+import type { TranslationKey } from '@/src/i18n';
+
+// Polish plural rules: 1 = one, 2-4 (excluding 12-14) = few, rest = many
+// English: 1 = one, rest = many (few === many)
+function pluralWorlds(count: number): TranslationKey {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (count === 1) return 'worlds_count_one';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'worlds_count_few';
+  return 'worlds_count_many';
+}
 import { useWorlds } from '@/src/hooks/useMarket';
 import { SearchBar } from '@/src/components/SearchBar';
 import { LoadingState } from '@/src/components/LoadingState';
@@ -104,7 +115,9 @@ export default function WorldSelectScreen() {
       </View>
 
       {filtered && (
-        <Text style={styles.count}>{filtered.length} {t('select_world_title').toLowerCase()}</Text>
+        <Text style={styles.count} testID="worlds-count">
+          {filtered.length} {t(pluralWorlds(filtered.length))}
+        </Text>
       )}
 
       <FlatList

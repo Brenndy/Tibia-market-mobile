@@ -69,10 +69,15 @@ export function WatchAlertModal({
     return isNaN(plain) ? null : Math.round(plain);
   };
 
+  const parsedBuy = parseGold(buyAlert);
+  const parsedSell = parseGold(sellAlert);
+  // Save is valid when at least one threshold is a positive number.
+  // When editing (both cleared) treat it as implicit remove.
+  const canSave = (parsedBuy != null && parsedBuy > 0) || (parsedSell != null && parsedSell > 0);
+
   const handleSave = () => {
-    const buy = parseGold(buyAlert);
-    const sell = parseGold(sellAlert);
-    onSave(buy, sell);
+    if (!canSave) return;
+    onSave(parsedBuy, parsedSell);
     onClose();
   };
 
@@ -135,6 +140,7 @@ export function WatchAlertModal({
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"
+                    testID="buy-alert-input"
                   />
                   <Text style={styles.inputUnit}>gp</Text>
                 </View>
@@ -171,6 +177,7 @@ export function WatchAlertModal({
                     placeholderTextColor={colors.textMuted}
                     keyboardType="numeric"
                     returnKeyType="done"
+                    testID="sell-alert-input"
                   />
                   <Text style={styles.inputUnit}>gp</Text>
                 </View>
@@ -195,7 +202,13 @@ export function WatchAlertModal({
             <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
               <Text style={styles.cancelText}>{t('cancel')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
+            <TouchableOpacity
+              style={[styles.saveBtn, !canSave && styles.saveBtnDisabled]}
+              onPress={handleSave}
+              disabled={!canSave}
+              accessibilityState={{ disabled: !canSave }}
+              testID="watch-save-btn"
+            >
               <MaterialCommunityIcons name="bell-check" size={18} color={colors.background} />
               <Text style={styles.saveText}>{isEditing ? t('save') : t('watch')}</Text>
             </TouchableOpacity>
@@ -380,6 +393,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: colors.gold,
     gap: 8,
+  },
+  saveBtnDisabled: {
+    opacity: 0.4,
   },
   saveText: {
     color: colors.background,

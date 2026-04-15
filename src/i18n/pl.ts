@@ -157,8 +157,15 @@ export const pl = {
   // Watchlist
   alert_singular: 'alert',
   alerts_plural: 'alertów',
+  favorite_singular: 'ulubiony',
+  favorites_plural: 'ulubionych',
   syncing: 'sync…',
   active_label: 'aktywnych',
+
+  // World select
+  worlds_count_one: 'świat',
+  worlds_count_few: 'światy',
+  worlds_count_many: 'światów',
 } as const;
 
 export type TranslationKey = keyof typeof pl;

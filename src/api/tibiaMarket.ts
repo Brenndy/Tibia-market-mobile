@@ -211,7 +211,16 @@ export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
 
   const last_update = worldData[0]?.last_update ?? new Date().toISOString();
 
-  const items: MarketItem[] = rawValues.map((v) => {
+  // Dedupe by id — live API occasionally returns the same id twice which causes
+  // React key collisions downstream. Keep first occurrence.
+  const seenIds = new Set<number>();
+  const uniqueValues = rawValues.filter((v) => {
+    if (seenIds.has(v.id)) return false;
+    seenIds.add(v.id);
+    return true;
+  });
+
+  const items: MarketItem[] = uniqueValues.map((v) => {
     const meta = metaById.get(v.id);
     const npcSellRaw = meta?.npc_sell ?? [];
     const npcBuyRaw = meta?.npc_buy ?? [];

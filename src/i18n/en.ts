@@ -159,6 +159,13 @@ export const en: Record<TranslationKey, string> = {
   // Watchlist
   alert_singular: 'alert',
   alerts_plural: 'alerts',
+  favorite_singular: 'favorite',
+  favorites_plural: 'favorites',
   syncing: 'syncing…',
   active_label: 'active',
+
+  // World select
+  worlds_count_one: 'world',
+  worlds_count_few: 'worlds',
+  worlds_count_many: 'worlds',
 };
