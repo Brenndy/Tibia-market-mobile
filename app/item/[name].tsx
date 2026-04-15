@@ -305,12 +305,18 @@ function CustomLineChart({
   );
 }
 
-export default function ItemDetailScreen() {
-  const { name, world: paramWorld } = useLocalSearchParams<{ name: string; world: string }>();
-  const { selectedWorld, toggleFavorite, isFavorite } = useWorld();
-  const world = paramWorld ?? selectedWorld;
+interface ItemDetailBodyProps {
+  name: string;
+  world: string;
+  embedded?: boolean;
+  onClose?: () => void;
+}
+
+export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemDetailBodyProps) {
+  const { toggleFavorite, isFavorite } = useWorld();
   const navigation = useNavigation();
   const router = useRouter();
+  const scrollRef = React.useRef<ScrollView>(null);
   const [historyDays, setHistoryDays] = useState(30);
   const [activeChart, setActiveChart] = useState<'price' | 'volume'>('price');
   const [watchModalOpen, setWatchModalOpen] = useState(false);
@@ -320,7 +326,16 @@ export default function ItemDetailScreen() {
   const watched = isWatched(name, world);
   const watchAlert = getAlert(name, world);
 
+  React.useEffect(() => {
+    if (embedded) {
+      // Defer to next frame so layout settles before scroll
+      const t = setTimeout(() => scrollRef.current?.scrollTo({ y: 0, animated: false }), 0);
+      return () => clearTimeout(t);
+    }
+  }, [embedded, name]);
+
   useLayoutEffect(() => {
+    if (embedded) return;
     navigation.setOptions({
       title: toTitleCase(name),
       headerLeft: () => (
@@ -354,7 +369,7 @@ export default function ItemDetailScreen() {
         </View>
       ),
     });
-  }, [navigation, name, world, favorite, toggleFavorite, watched, router]);
+  }, [embedded, navigation, name, world, favorite, toggleFavorite, watched, router]);
 
   const { t } = useTranslation();
 
@@ -396,7 +411,31 @@ export default function ItemDetailScreen() {
     'neutral';
 
   return (
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    {embedded && (
+      <View style={styles.modalHeader}>
+        <TouchableOpacity onPress={onClose} style={styles.modalHeaderBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+          <MaterialCommunityIcons name="close" size={22} color={colors.textSecondary} />
+        </TouchableOpacity>
+        <Text style={styles.modalHeaderTitle} numberOfLines={1}>{toTitleCase(name)}</Text>
+        <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={styles.modalHeaderBtn}>
+          <MaterialCommunityIcons
+            name={watched ? 'bell' : 'bell-outline'}
+            size={20}
+            color={watched ? colors.gold : colors.textSecondary}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => toggleFavorite(name, world)} style={styles.modalHeaderBtn}>
+          <MaterialCommunityIcons
+            name={favorite ? 'star' : 'star-outline'}
+            size={20}
+            color={favorite ? colors.gold : colors.textSecondary}
+          />
+        </TouchableOpacity>
+      </View>
+    )}
     <ScrollView
+      ref={scrollRef}
       style={styles.container}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
@@ -727,12 +766,38 @@ export default function ItemDetailScreen() {
         onClose={() => setWatchModalOpen(false)}
       />
     </ScrollView>
+    </View>
   );
+}
+
+export default function ItemDetailScreen() {
+  const { name, world: paramWorld } = useLocalSearchParams<{ name: string; world: string }>();
+  const { selectedWorld } = useWorld();
+  return <ItemDetailBody name={name} world={paramWorld ?? selectedWorld} />;
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   content: { paddingBottom: 40 },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    backgroundColor: colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  modalHeaderTitle: {
+    flex: 1,
+    color: colors.textPrimary,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  modalHeaderBtn: {
+    padding: 6,
+  },
 
   hero: {
     flexDirection: 'row',

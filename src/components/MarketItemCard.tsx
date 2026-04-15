@@ -20,6 +20,7 @@ import { WatchAlertModal } from './WatchAlertModal';
 interface MarketItemCardProps {
   item: MarketItem;
   world: string;
+  onPress?: () => void;
 }
 
 function PriceTrend({ current, average }: { current: number | null; average: number | null }) {
@@ -50,6 +51,7 @@ function getDealQuality(item: MarketItem): 'premium' | 'good' | 'none' {
 export const MarketItemCard = memo(function MarketItemCard({
   item,
   world,
+  onPress,
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
@@ -85,12 +87,16 @@ export const MarketItemCard = memo(function MarketItemCard({
     <>
     <TouchableOpacity
       style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
-      onPress={() =>
-        router.push({
-          pathname: '/item/[name]',
-          params: { name: item.name, world },
-        })
-      }
+      onPress={() => {
+        if (onPress) {
+          onPress();
+        } else {
+          router.push({
+            pathname: '/item/[name]',
+            params: { name: item.name, world },
+          });
+        }
+      }}
       activeOpacity={0.8}
     >
       {/* Deal quality accent strip */}

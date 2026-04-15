@@ -17,6 +17,7 @@ import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { GoldSpinner } from '@/src/components/LoadingState';
+import { ItemDetailModal } from '@/src/components/ItemDetailModal';
 import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
@@ -58,6 +59,8 @@ export default function MarketScreen() {
     setViewModeState(mode);
     storage.setItem(VIEW_MODE_KEY, mode);
   }, []);
+
+  const [modalItemName, setModalItemName] = useState<string | null>(null);
 
   useEffect(() => {
     Animated.timing(fabAnim, {
@@ -246,7 +249,11 @@ export default function MarketScreen() {
           columnWrapperStyle={numColumns > 1 ? styles.gridRow : undefined}
           renderItem={({ item }) => (
             <View style={numColumns > 1 ? styles.gridItem : undefined}>
-              <MarketItemCard item={item} world={selectedWorld} />
+              <MarketItemCard
+                item={item}
+                world={selectedWorld}
+                onPress={numColumns > 1 ? () => setModalItemName(item.name) : undefined}
+              />
             </View>
           )}
           contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT + 12 }]}
@@ -300,6 +307,12 @@ export default function MarketScreen() {
         filters={filters}
         onApply={handleApplyFilters}
         onClose={() => setFilterPanelOpen(false)}
+      />
+
+      <ItemDetailModal
+        name={modalItemName}
+        world={selectedWorld}
+        onClose={() => setModalItemName(null)}
       />
     </View>
   );
