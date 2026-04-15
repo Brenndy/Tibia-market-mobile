@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
@@ -51,6 +51,7 @@ export const MarketItemCard = memo(function MarketItemCard({
   item,
   world,
 }: MarketItemCardProps) {
+  const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
   const { isWatched, addToWatchlist, removeFromWatchlist, getAlert } = useWatchlist();
   const { t } = useTranslation();
@@ -82,12 +83,14 @@ export const MarketItemCard = memo(function MarketItemCard({
 
   return (
     <>
-    <Link
-      href={{ pathname: '/item/[name]', params: { name: item.name, world } }}
-      asChild
-    >
     <TouchableOpacity
       style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
+      onPress={() =>
+        router.push({
+          pathname: '/item/[name]',
+          params: { name: item.name, world },
+        })
+      }
       activeOpacity={0.8}
     >
       {/* Deal quality accent strip */}
@@ -240,7 +243,6 @@ export const MarketItemCard = memo(function MarketItemCard({
         </View>
       )}
     </TouchableOpacity>
-    </Link>
 
     {watchModalVisible && (
       <WatchAlertModal
