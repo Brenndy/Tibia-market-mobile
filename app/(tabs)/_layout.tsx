@@ -59,7 +59,11 @@ function HeaderLeftDefault() {
 function ClickableTitle({ title }: { title: string }) {
   const router = useRouter();
   return (
-    <TouchableOpacity onPress={() => router.navigate('/')} activeOpacity={0.6}>
+    <TouchableOpacity
+      onPress={() => router.navigate('/')}
+      activeOpacity={0.6}
+      style={{ paddingLeft: 10 }}
+    >
       <Text style={{ color: colors.textPrimary, fontWeight: '700', fontSize: 17 }}>{title}</Text>
     </TouchableOpacity>
   );
@@ -105,6 +109,7 @@ export default function TabLayout() {
           title: t('tab_alerts'),
           tabBarLabel: t('tab_alerts'),
           tabBarIcon: ({ color, size }) => <WatchBellIcon color={color} size={size} />,
+          headerTitle: () => <ClickableTitle title={t('tab_alerts')} />,
         }}
       />
       <Tabs.Screen
@@ -115,6 +120,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chart-line" size={size} color={color} />
           ),
+          headerTitle: () => <ClickableTitle title={t('tab_statistics')} />,
         }}
       />
     </Tabs>

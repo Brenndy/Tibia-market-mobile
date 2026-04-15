@@ -12,6 +12,7 @@ interface WorldContextType {
   selectedWorld: string;
   setSelectedWorld: (world: string) => void;
   favorites: string[]; // favorites for the currently selected world
+  allFavorites: Record<string, string[]>;
   toggleFavorite: (itemName: string, world: string) => void;
   isFavorite: (itemName: string, world: string) => boolean;
 }
@@ -20,6 +21,7 @@ const WorldContext = createContext<WorldContextType>({
   selectedWorld: 'Antica',
   setSelectedWorld: () => {},
   favorites: [],
+  allFavorites: {},
   toggleFavorite: () => {},
   isFavorite: () => false,
 });
@@ -83,7 +85,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
 
   return (
     <WorldContext.Provider
-      value={{ selectedWorld, setSelectedWorld, favorites, toggleFavorite, isFavorite }}
+      value={{ selectedWorld, setSelectedWorld, favorites, allFavorites, toggleFavorite, isFavorite }}
     >
       {children}
     </WorldContext.Provider>

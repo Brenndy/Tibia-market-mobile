@@ -140,47 +140,70 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>{t('advanced_filters')}</Text>
+            <View style={styles.headerLeft}>
+              <MaterialCommunityIcons name="tune-vertical-variant" size={20} color={colors.gold} />
+              <Text style={styles.title}>{t('advanced_filters')}</Text>
+            </View>
             <TouchableOpacity onPress={reset} style={styles.resetBtn}>
+              <MaterialCommunityIcons name="restore" size={13} color={colors.sell} />
               <Text style={styles.resetText}>{t('reset')}</Text>
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-            {/* Quick toggles */}
-            <Text style={styles.sectionLabel}>{t('quick_filters')}</Text>
-            <View style={styles.categoryGrid}>
-              <TouchableOpacity
-                style={[styles.catChip, local.yasirOnly && styles.catChipActive]}
-                onPress={() => setLocal((p) => ({ ...p, yasirOnly: !p.yasirOnly }))}
-              >
-                <Text style={[styles.catChipText, local.yasirOnly && styles.catChipTextActive]}>
-                  🏺 {t('filter_yasir')}
+          <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+            {/* Yasir — highlighted toggle card */}
+            <TouchableOpacity
+              style={[styles.yasirCard, local.yasirOnly && styles.yasirCardActive]}
+              onPress={() => setLocal((p) => ({ ...p, yasirOnly: !p.yasirOnly }))}
+              activeOpacity={0.8}
+            >
+              <View style={styles.yasirIcon}>
+                <MaterialCommunityIcons name="storefront-outline" size={20} color={local.yasirOnly ? colors.gold : colors.textSecondary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.yasirTitle, local.yasirOnly && { color: colors.gold }]}>
+                  {t('filter_yasir')}
                 </Text>
-              </TouchableOpacity>
-            </View>
+                <Text style={styles.yasirSub}>{t('quick_filters')}</Text>
+              </View>
+              <View style={[styles.toggle, local.yasirOnly && styles.toggleOn]}>
+                <View style={[styles.toggleKnob, local.yasirOnly && styles.toggleKnobOn]} />
+              </View>
+            </TouchableOpacity>
 
             {/* Vocation filter */}
-            <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
-            <View style={styles.categoryGrid}>
+            <View style={styles.sectionHead}>
+              <MaterialCommunityIcons name="shield-sword" size={14} color={colors.gold} />
+              <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
+            </View>
+            <View style={styles.vocationGrid}>
               {(['knight', 'paladin', 'sorcerer', 'druid'] as Vocation[]).map((voc) => {
                 const active = local.vocations.includes(voc);
-                const icons: Record<Vocation, string> = {
-                  knight: '🗡', paladin: '🏹', sorcerer: '🔮', druid: '🌿',
+                const icons: Record<Vocation, keyof typeof MaterialCommunityIcons.glyphMap> = {
+                  knight: 'sword-cross',
+                  paladin: 'bow-arrow',
+                  sorcerer: 'auto-fix',
+                  druid: 'leaf',
                 };
                 return (
                   <TouchableOpacity
                     key={voc}
-                    style={[styles.catChip, active && styles.catChipActive]}
+                    style={[styles.vocChip, active && styles.vocChipActive]}
                     onPress={() => setLocal((p) => ({
                       ...p,
                       vocations: active
                         ? p.vocations.filter((v) => v !== voc)
                         : [...p.vocations, voc],
                     }))}
+                    activeOpacity={0.8}
                   >
-                    <Text style={[styles.catChipText, active && styles.catChipTextActive]}>
-                      {icons[voc]} {t((`voc_${voc}`) as 'voc_knight')}
+                    <MaterialCommunityIcons
+                      name={icons[voc]}
+                      size={18}
+                      color={active ? colors.gold : colors.textSecondary}
+                    />
+                    <Text style={[styles.vocChipText, active && styles.vocChipTextActive]}>
+                      {t((`voc_${voc}`) as 'voc_knight')}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -188,7 +211,13 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
             </View>
 
             {/* Categories */}
-            <Text style={styles.sectionLabel}>{t('category')}</Text>
+            <View style={styles.sectionHead}>
+              <MaterialCommunityIcons name="tag-multiple-outline" size={14} color={colors.gold} />
+              <Text style={styles.sectionLabel}>{t('category')}</Text>
+              {local.categories.length > 0 && (
+                <Text style={styles.sectionCount}>{local.categories.length}</Text>
+              )}
+            </View>
             <View style={styles.categoryGrid}>
               {(allCategories ?? []).map((cat) => {
                 const active = local.categories.includes(cat);
@@ -197,7 +226,11 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
                     key={cat}
                     style={[styles.catChip, active && styles.catChipActive]}
                     onPress={() => toggleCategory(cat)}
+                    activeOpacity={0.8}
                   >
+                    {active && (
+                      <MaterialCommunityIcons name="check" size={12} color={colors.gold} />
+                    )}
                     <Text style={[styles.catChipText, active && styles.catChipTextActive]}>
                       {cat}
                     </Text>
@@ -206,8 +239,11 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
               })}
             </View>
 
-            {/* Buy price range */}
-            <Text style={styles.sectionLabel}>{t('buy_price_range')}</Text>
+            {/* Price row — buy + sell side by side */}
+            <View style={styles.sectionHead}>
+              <MaterialCommunityIcons name="cash-multiple" size={14} color={colors.gold} />
+              <Text style={styles.sectionLabel}>{t('buy_price_range')}</Text>
+            </View>
             <View style={styles.row}>
               <NumInput
                 label={t('min_label')}
@@ -224,8 +260,10 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
               />
             </View>
 
-            {/* Sell price range */}
-            <Text style={styles.sectionLabel}>{t('sell_price_range')}</Text>
+            <View style={styles.sectionHead}>
+              <MaterialCommunityIcons name="cash-plus" size={14} color={colors.gold} />
+              <Text style={styles.sectionLabel}>{t('sell_price_range')}</Text>
+            </View>
             <View style={styles.row}>
               <NumInput
                 label={t('min_label')}
@@ -242,26 +280,32 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
               />
             </View>
 
-            {/* Volume */}
-            <Text style={styles.sectionLabel}>{t('min_volume_monthly')}</Text>
-            <View style={styles.row}>
-              <NumInput
-                label={t('min_volume_label')}
-                value={local.minVolume}
-                onChange={(v) => setLocal((p) => ({ ...p, minVolume: v }))}
-                placeholder={t('placeholder_volume')}
-              />
-            </View>
-
-            {/* Margin */}
-            <Text style={styles.sectionLabel}>{t('min_margin_gp')}</Text>
-            <View style={styles.row}>
-              <NumInput
-                label={t('min_margin_label')}
-                value={local.minMargin}
-                onChange={(v) => setLocal((p) => ({ ...p, minMargin: v }))}
-                placeholder={t('placeholder_margin')}
-              />
+            {/* Volume + Margin side by side on wide, stacked on narrow */}
+            <View style={styles.twoCol}>
+              <View style={styles.colHalf}>
+                <View style={styles.sectionHead}>
+                  <MaterialCommunityIcons name="chart-bar" size={14} color={colors.gold} />
+                  <Text style={styles.sectionLabel}>{t('min_volume_monthly')}</Text>
+                </View>
+                <NumInput
+                  label={t('min_volume_label')}
+                  value={local.minVolume}
+                  onChange={(v) => setLocal((p) => ({ ...p, minVolume: v }))}
+                  placeholder={t('placeholder_volume')}
+                />
+              </View>
+              <View style={styles.colHalf}>
+                <View style={styles.sectionHead}>
+                  <MaterialCommunityIcons name="trending-up" size={14} color={colors.gold} />
+                  <Text style={styles.sectionLabel}>{t('min_margin_gp')}</Text>
+                </View>
+                <NumInput
+                  label={t('min_margin_label')}
+                  value={local.minMargin}
+                  onChange={(v) => setLocal((p) => ({ ...p, minMargin: v }))}
+                  placeholder={t('placeholder_margin')}
+                />
+              </View>
             </View>
 
             <View style={{ height: 20 }} />
@@ -293,22 +337,22 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
 const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.75)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     justifyContent: 'flex-end',
   },
   sheet: {
     backgroundColor: colors.surface,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    maxHeight: '88%',
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    maxHeight: '90%',
     borderTopWidth: 1,
     borderTopColor: colors.cardBorder,
   },
   handle: {
-    width: 40,
-    height: 4,
+    width: 44,
+    height: 5,
     backgroundColor: colors.border,
-    borderRadius: 2,
+    borderRadius: 3,
     alignSelf: 'center',
     marginTop: 12,
     marginBottom: 4,
@@ -317,48 +361,171 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingHorizontal: 22,
+    paddingVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.cardBorder,
   },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
   title: {
     color: colors.textPrimary,
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '700',
+    letterSpacing: -0.2,
   },
   resetBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 8,
+    backgroundColor: colors.sellDim,
+    borderWidth: 1,
+    borderColor: colors.sellBorder,
   },
   resetText: {
     color: colors.sell,
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
   },
   scroll: {
     paddingHorizontal: 20,
   },
-  sectionLabel: {
-    color: colors.textMuted,
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-    marginTop: 20,
+  scrollContent: {
+    paddingTop: 18,
+  },
+  sectionHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    marginTop: 22,
     marginBottom: 10,
   },
-  categoryGrid: {
+  sectionLabel: {
+    color: colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  sectionCount: {
+    marginLeft: 'auto',
+    color: colors.gold,
+    fontSize: 11,
+    fontWeight: '700',
+    backgroundColor: colors.goldDim,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+    minWidth: 22,
+    textAlign: 'center',
+  },
+  yasirCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    borderRadius: 14,
+    padding: 14,
+    marginTop: 2,
+  },
+  yasirCardActive: {
+    borderColor: colors.gold,
+    backgroundColor: colors.goldDim,
+  },
+  yasirIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: colors.surfaceElevated,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  yasirTitle: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  yasirSub: {
+    color: colors.textMuted,
+    fontSize: 11,
+    marginTop: 2,
+  },
+  toggle: {
+    width: 40,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: colors.surfaceElevated,
+    padding: 2,
+    justifyContent: 'center',
+  },
+  toggleOn: {
+    backgroundColor: colors.gold,
+  },
+  toggleKnob: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: colors.textMuted,
+    alignSelf: 'flex-start',
+  },
+  toggleKnobOn: {
+    backgroundColor: colors.background,
+    alignSelf: 'flex-end',
+  },
+  vocationGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
   },
-  catChip: {
+  vocChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flexGrow: 1,
+    minWidth: 120,
+    justifyContent: 'center',
+    backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.cardBorder,
-    borderRadius: 20,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+  },
+  vocChipActive: {
+    borderColor: colors.gold,
+    backgroundColor: colors.goldDim,
+  },
+  vocChipText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  vocChipTextActive: {
+    color: colors.gold,
+    fontWeight: '700',
+  },
+  categoryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 7,
+  },
+  catChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 7,
+    paddingVertical: 8,
     backgroundColor: colors.card,
   },
   catChipActive: {
@@ -368,16 +535,25 @@ const styles = StyleSheet.create({
   catChipText: {
     color: colors.textSecondary,
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   catChipTextActive: {
-    color: colors.goldLight,
+    color: colors.gold,
     fontWeight: '700',
   },
   row: {
     flexDirection: 'row',
     gap: 12,
     alignItems: 'flex-end',
+  },
+  twoCol: {
+    flexDirection: 'row',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  colHalf: {
+    flex: 1,
+    minWidth: 140,
   },
   rangeSep: {
     paddingBottom: 11,

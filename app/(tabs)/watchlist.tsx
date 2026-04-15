@@ -3,7 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  FlatList,
   TouchableOpacity,
   StyleSheet,
   Platform,
@@ -260,17 +259,51 @@ function WorldAlertsSection({
   );
 }
 
+// ─── WorldFavoritesSection ────────────────────────────────────────────────────
+
+function WorldFavoritesSection({
+  world,
+  favoriteNames,
+}: {
+  world: string;
+  favoriteNames: string[];
+}) {
+  const { data, isLoading } = useMarketBoard(world);
+  const { t } = useTranslation();
+
+  const items = (data?.items ?? []).filter((i) => favoriteNames.includes(i.name));
+
+  return (
+    <View style={styles.worldSection}>
+      <View style={styles.worldHeader}>
+        <View style={styles.worldHeaderLeft}>
+          <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
+          <Text style={styles.worldHeaderName}>{world}</Text>
+          <Text style={styles.worldHeaderCount}>
+            {favoriteNames.length} {favoriteNames.length === 1 ? t('alert_singular') : t('alerts_plural')}
+          </Text>
+        </View>
+        {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}
+      </View>
+      {items.map((item) => (
+        <MarketItemCard key={`${world}-${item.name}`} item={item} world={world} />
+      ))}
+    </View>
+  );
+}
+
 // ─── WatchlistScreen ──────────────────────────────────────────────────────────
 
 export default function WatchlistScreen() {
   const { watchlist, removeFromWatchlist, updateAlert } = useWatchlist();
-  const { selectedWorld, favorites } = useWorld();
+  const { allFavorites } = useWorld();
   const { t } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
   const scrollRef = useRef<ScrollView>(null);
   const [editingAlert, setEditingAlert] = useState<WatchAlert | null>(null);
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
+  const [favWorldFilter, setFavWorldFilter] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'alerts' | 'favorites'>('alerts');
 
   useEffect(() => {
@@ -282,14 +315,15 @@ export default function WatchlistScreen() {
     return () => unsubscribe?.();
   }, [navigation]);
 
-  const { data: marketData } = useMarketBoard(selectedWorld);
-
   // Unique worlds in watchlist (sorted alphabetically)
   const worlds = [...new Set(watchlist.map((a) => a.world))].sort();
   const filteredAlerts = worldFilter ? watchlist.filter((a) => a.world === worldFilter) : watchlist;
   const filteredWorlds = worldFilter ? [worldFilter] : worlds;
 
-  const favoriteItems = marketData?.items.filter((item) => favorites.includes(item.name)) ?? [];
+  // Favorites grouped per world
+  const favWorlds = Object.keys(allFavorites).filter((w) => (allFavorites[w] ?? []).length > 0).sort();
+  const filteredFavWorlds = favWorldFilter ? [favWorldFilter] : favWorlds;
+  const totalFavs = favWorlds.reduce((sum, w) => sum + (allFavorites[w]?.length ?? 0), 0);
 
   return (
     <View style={styles.container}>
@@ -310,7 +344,7 @@ export default function WatchlistScreen() {
         >
           <MaterialCommunityIcons name="star" size={14} color={activeTab === 'favorites' ? colors.gold : colors.textMuted} />
           <Text style={[styles.switchTabText, activeTab === 'favorites' && styles.switchTabTextActive]}>
-            {t('tab_favorites')} {favorites.length > 0 ? `(${favorites.length})` : ''}
+            {t('tab_favorites')} {totalFavs > 0 ? `(${totalFavs})` : ''}
           </Text>
         </TouchableOpacity>
       </View>
@@ -377,7 +411,7 @@ export default function WatchlistScreen() {
         </>
       ) : (
         <>
-          {favorites.length === 0 ? (
+          {totalFavs === 0 ? (
             <View style={styles.empty}>
               <MaterialCommunityIcons name="star-outline" size={72} color={colors.textMuted} />
               <Text style={styles.emptyTitle}>{t('no_favorites_title')}</Text>
@@ -388,13 +422,49 @@ export default function WatchlistScreen() {
               </TouchableOpacity>
             </View>
           ) : (
-            <FlatList
-              data={favoriteItems}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item }) => <MarketItemCard item={item} world={selectedWorld} />}
-              contentContainerStyle={styles.content}
-              showsVerticalScrollIndicator={false}
-            />
+            <>
+              {favWorlds.length > 1 && (
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.filterBar}
+                  style={styles.filterBarScroll}
+                >
+                  <TouchableOpacity
+                    style={[styles.filterTab, favWorldFilter === null && styles.filterTabActive]}
+                    onPress={() => setFavWorldFilter(null)}
+                  >
+                    <Text style={[styles.filterTabText, favWorldFilter === null && styles.filterTabTextActive]}>
+                      {t('all_worlds')} ({totalFavs})
+                    </Text>
+                  </TouchableOpacity>
+                  {favWorlds.map((w) => {
+                    const count = (allFavorites[w] ?? []).length;
+                    return (
+                      <TouchableOpacity
+                        key={w}
+                        style={[styles.filterTab, favWorldFilter === w && styles.filterTabActive]}
+                        onPress={() => setFavWorldFilter(w)}
+                      >
+                        <MaterialCommunityIcons name="earth" size={11} color={favWorldFilter === w ? colors.gold : colors.textMuted} />
+                        <Text style={[styles.filterTabText, favWorldFilter === w && styles.filterTabTextActive]}>
+                          {w} ({count})
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </ScrollView>
+              )}
+              <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+                {filteredFavWorlds.map((world) => (
+                  <WorldFavoritesSection
+                    key={world}
+                    world={world}
+                    favoriteNames={allFavorites[world] ?? []}
+                  />
+                ))}
+              </ScrollView>
+            </>
           )}
         </>
       )}

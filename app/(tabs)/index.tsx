@@ -37,7 +37,16 @@ export default function MarketScreen() {
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [showFab, setShowFab] = useState(false);
+  const fabAnim = useRef(new Animated.Value(0)).current;
   const activeFilterCount = countActiveFilters(filters);
+
+  useEffect(() => {
+    Animated.timing(fabAnim, {
+      toValue: showFab ? 1 : 0,
+      duration: 180,
+      useNativeDriver: true,
+    }).start();
+  }, [showFab, fabAnim]);
 
   const handleSelectedItemsChange = useCallback((items: string[]) => {
     setSelectedItems(items);
@@ -226,11 +235,20 @@ export default function MarketScreen() {
         />
       )}
 
-      {showFab && (
-        <TouchableOpacity style={styles.fab} onPress={scrollToTop} activeOpacity={0.85}>
+      <Animated.View
+        style={[
+          styles.fab,
+          {
+            opacity: fabAnim,
+            transform: [{ scale: fabAnim }],
+          },
+        ]}
+        pointerEvents={showFab ? 'auto' : 'none'}
+      >
+        <TouchableOpacity style={styles.fabBtn} onPress={scrollToTop} activeOpacity={0.85}>
           <MaterialCommunityIcons name="chevron-up" size={24} color={colors.background} />
         </TouchableOpacity>
-      )}
+      </Animated.View>
 
       <FilterPanel
         visible={filterPanelOpen}
@@ -357,13 +375,16 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     backgroundColor: colors.gold,
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 6,
     zIndex: 20,
+  },
+  fabBtn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
