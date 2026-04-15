@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import {
   View,
-  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,7 +15,6 @@ import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
-import { SkeletonCard } from '@/src/components/SkeletonCard';
 import { GoldSpinner } from '@/src/components/LoadingState';
 import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
@@ -190,18 +188,9 @@ export default function MarketScreen() {
       </View>
 
       {showSkeleton ? (
-        <View style={{ flex: 1, paddingTop: HEADER_HEIGHT + 12 }}>
-          <View style={styles.loaderHero}>
-            <GoldSpinner size={52} />
-            <Text style={styles.loaderText}>{t('loading')}</Text>
-          </View>
-          <FlatList
-            data={Array(6).fill(0)}
-            keyExtractor={(_, i) => String(i)}
-            renderItem={() => <SkeletonCard />}
-            contentContainerStyle={styles.list}
-            scrollEnabled={false}
-          />
+        <View style={styles.loaderCenter}>
+          <GoldSpinner size={64} />
+          <Text style={styles.loaderText}>{t('loading')}</Text>
         </View>
       ) : (
         <Animated.FlatList
@@ -394,11 +383,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loaderHero: {
+  loaderCenter: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 20,
-    gap: 10,
+    gap: 14,
   },
   loaderText: {
     color: colors.textSecondary,

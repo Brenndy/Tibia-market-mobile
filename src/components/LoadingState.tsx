@@ -18,13 +18,13 @@ export function GoldSpinner({ size = 56 }: { size?: number }) {
         toValue: 1,
         duration: 1200,
         easing: Easing.linear,
-        useNativeDriver: true,
+        useNativeDriver: false,
       })
     );
     const pulseAnim = Animated.loop(
       Animated.sequence([
-        Animated.timing(pulse, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
-        Animated.timing(pulse, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
+        Animated.timing(pulse, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
       ])
     );
     spinAnim.start();
@@ -80,8 +80,8 @@ export function LoadingState({ message }: LoadingStateProps) {
   useEffect(() => {
     const anim = Animated.loop(
       Animated.sequence([
-        Animated.timing(dots, { toValue: 1, duration: 600, useNativeDriver: true }),
-        Animated.timing(dots, { toValue: 0, duration: 600, useNativeDriver: true }),
+        Animated.timing(dots, { toValue: 1, duration: 600, useNativeDriver: false }),
+        Animated.timing(dots, { toValue: 0, duration: 600, useNativeDriver: false }),
       ])
     );
     anim.start();

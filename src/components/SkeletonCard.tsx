@@ -14,7 +14,7 @@ function ensureSweep() {
       toValue: 1,
       duration: 1400,
       easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
+      useNativeDriver: false,
     })
   ).start();
 }
