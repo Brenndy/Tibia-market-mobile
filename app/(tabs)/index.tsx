@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Animated,
+  useWindowDimensions,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -20,9 +21,13 @@ import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
 import { SortField, filterAndSortItems } from '@/src/api/tibiaMarket';
+import { storage } from '@/src/utils/storage';
 
 const PAGE_SIZE = 50;
 const INITIAL_COUNT = 50;
+const DESKTOP_BREAKPOINT = 900;
+const VIEW_MODE_KEY = 'tibia_view_mode_v1';
+type ViewMode = 'list' | 'grid';
 
 export default function MarketScreen() {
   const { selectedWorld } = useWorld();
@@ -38,6 +43,21 @@ export default function MarketScreen() {
   const [showFab, setShowFab] = useState(false);
   const fabAnim = useRef(new Animated.Value(0)).current;
   const activeFilterCount = countActiveFilters(filters);
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= DESKTOP_BREAKPOINT;
+  const [viewMode, setViewModeState] = useState<ViewMode>('list');
+  const numColumns = isDesktop && viewMode === 'grid' ? (width >= 1400 ? 3 : 2) : 1;
+
+  useEffect(() => {
+    storage.getItem(VIEW_MODE_KEY).then((v) => {
+      if (v === 'grid' || v === 'list') setViewModeState(v);
+    });
+  }, []);
+
+  const setViewMode = useCallback((mode: ViewMode) => {
+    setViewModeState(mode);
+    storage.setItem(VIEW_MODE_KEY, mode);
+  }, []);
 
   useEffect(() => {
     Animated.timing(fabAnim, {
@@ -169,6 +189,30 @@ export default function MarketScreen() {
                   {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
                 </Text>
               </TouchableOpacity>
+              {isDesktop && (
+                <View style={styles.viewToggle}>
+                  <TouchableOpacity
+                    style={[styles.viewToggleBtn, viewMode === 'list' && styles.viewToggleBtnActive]}
+                    onPress={() => setViewMode('list')}
+                  >
+                    <MaterialCommunityIcons
+                      name="view-agenda"
+                      size={16}
+                      color={viewMode === 'list' ? colors.gold : colors.textMuted}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.viewToggleBtn, viewMode === 'grid' && styles.viewToggleBtnActive]}
+                    onPress={() => setViewMode('grid')}
+                  >
+                    <MaterialCommunityIcons
+                      name="view-grid"
+                      size={16}
+                      color={viewMode === 'grid' ? colors.gold : colors.textMuted}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
         </Animated.View>
@@ -195,10 +239,15 @@ export default function MarketScreen() {
       ) : (
         <Animated.FlatList
           ref={listRef}
+          key={`grid-${numColumns}`}
           data={filteredItems.slice(0, displayCount)}
           keyExtractor={(item) => item.name}
+          numColumns={numColumns}
+          columnWrapperStyle={numColumns > 1 ? styles.gridRow : undefined}
           renderItem={({ item }) => (
-            <MarketItemCard item={item} world={selectedWorld} />
+            <View style={numColumns > 1 ? styles.gridItem : undefined}>
+              <MarketItemCard item={item} world={selectedWorld} />
+            </View>
           )}
           contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT + 12 }]}
           onEndReached={handleLoadMore}
@@ -303,6 +352,29 @@ const styles = StyleSheet.create({
   filterBtnActive: {
     borderColor: colors.gold,
     backgroundColor: colors.goldDim,
+  },
+  viewToggle: {
+    flexDirection: 'row',
+    backgroundColor: colors.inputBg,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    borderRadius: 10,
+    height: 44,
+    overflow: 'hidden',
+  },
+  viewToggleBtn: {
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  viewToggleBtnActive: {
+    backgroundColor: colors.goldDim,
+  },
+  gridRow: {
+    gap: 0,
+  },
+  gridItem: {
+    flex: 1,
   },
   statsRow: {
     flexDirection: 'row',

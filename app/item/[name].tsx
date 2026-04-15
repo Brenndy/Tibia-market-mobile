@@ -225,6 +225,12 @@ function CustomLineChart({
   const yLabels = [0, 1, 2, 3, 4].map((i) => lo + (i / 4) * range);
   const step = Math.max(1, Math.ceil(dates.length / 6));
 
+  // Auto-enable dots when data is sparse — many gaps mean lines look broken without point markers
+  const totalNonNull = buy.filter((v) => v != null).length + sell.filter((v) => v != null).length;
+  const totalSlots = buy.length + sell.length;
+  const sparse = totalSlots > 0 && totalNonNull / totalSlots < 0.5;
+  const renderDots = showDots || sparse;
+
   return (
     <Svg width={width} height={CHART_H}>
       <Defs>
@@ -269,17 +275,23 @@ function CustomLineChart({
         <Path key={`bl${i}`} d={d} stroke={colors.buy} strokeWidth={2.2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
       ))}
 
-      {/* Dots (optional) */}
-      {showDots && sell.map((v, i) =>
-        v != null ? (
-          <Circle key={`sd${i}`} cx={xOf(i)} cy={yOf(v)} r={2.8} fill={colors.sell} stroke={colors.card} strokeWidth={1.2} />
-        ) : null
-      )}
-      {showDots && buy.map((v, i) =>
-        v != null ? (
-          <Circle key={`bd${i}`} cx={xOf(i)} cy={yOf(v)} r={2.8} fill={colors.buy} stroke={colors.card} strokeWidth={1.2} />
-        ) : null
-      )}
+      {/* Dots: full size when showDots, otherwise only for isolated points (length-1 segments) */}
+      {sell.map((v, i) => {
+        if (v == null) return null;
+        const isolated = (i === 0 || sell[i - 1] == null) && (i === sell.length - 1 || sell[i + 1] == null);
+        if (!renderDots && !isolated) return null;
+        return (
+          <Circle key={`sd${i}`} cx={xOf(i)} cy={yOf(v)} r={renderDots ? 2.6 : 2.2} fill={colors.sell} stroke={colors.card} strokeWidth={1.2} />
+        );
+      })}
+      {buy.map((v, i) => {
+        if (v == null) return null;
+        const isolated = (i === 0 || buy[i - 1] == null) && (i === buy.length - 1 || buy[i + 1] == null);
+        if (!renderDots && !isolated) return null;
+        return (
+          <Circle key={`bd${i}`} cx={xOf(i)} cy={yOf(v)} r={renderDots ? 2.6 : 2.2} fill={colors.buy} stroke={colors.card} strokeWidth={1.2} />
+        );
+      })}
 
       {/* X-axis labels */}
       {dates.map((d, i) =>
