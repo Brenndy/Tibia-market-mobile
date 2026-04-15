@@ -161,6 +161,9 @@ export const pl = {
   favorites_plural: 'ulubionych',
   syncing: 'sync…',
   active_label: 'aktywnych',
+  active_label_one: 'aktywny',
+  active_label_few: 'aktywne',
+  active_label_many: 'aktywnych',
 
   // World select
   worlds_count_one: 'świat',

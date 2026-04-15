@@ -163,6 +163,9 @@ export const en: Record<TranslationKey, string> = {
   favorites_plural: 'favorites',
   syncing: 'syncing…',
   active_label: 'active',
+  active_label_one: 'active',
+  active_label_few: 'active',
+  active_label_many: 'active',
 
   // World select
   worlds_count_one: 'world',

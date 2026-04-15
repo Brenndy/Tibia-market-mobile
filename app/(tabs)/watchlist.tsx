@@ -21,6 +21,21 @@ import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Polish plural picker: 1 → one, 2–4 (excl. teens) → few, rest → many.
+// Works for EN too because all three keys resolve to the same English word.
+function pluralKey(
+  count: number,
+  keys: { one: 'active_label_one'; few: 'active_label_few'; many: 'active_label_many' }
+) {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (count === 1) return keys.one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return keys.few;
+  return keys.many;
+}
+const pluralActive = (n: number) =>
+  pluralKey(n, { one: 'active_label_one', few: 'active_label_few', many: 'active_label_many' });
+
 // ─── WatchCard ────────────────────────────────────────────────────────────────
 
 function WatchCard({
@@ -229,7 +244,7 @@ function WorldAlertsSection({
         ) : triggeredCount > 0 ? (
           <View style={styles.triggeredPill}>
             <MaterialCommunityIcons name="bell-ring" size={11} color={colors.background} />
-            <Text style={styles.triggeredPillText}>{triggeredCount} {t('active_label')}</Text>
+            <Text style={styles.triggeredPillText}>{triggeredCount} {t(pluralActive(triggeredCount))}</Text>
           </View>
         ) : (
           <View style={styles.okPill}>

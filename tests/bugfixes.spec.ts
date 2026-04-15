@@ -223,3 +223,57 @@ test.describe('i18n — world-select header count', () => {
     expect(text).toMatch(/^\d+\s+(świat|światy|światów)$/);
   });
 });
+
+/**
+ * BUG #4 — "1 aktywnych" zamiast "1 aktywny" w badge triggered alerts.
+ *
+ * Spotted during Android UAT sweep on 2026-04-15. Ternary `count===1 ? X : Y`
+ * doesn't work for Polish where 3 forms are needed (aktywny/aktywne/aktywnych).
+ * Fix introduced pluralActive() helper in watchlist.tsx using standard PL rules.
+ */
+test.describe('i18n — PL plural of "aktywny" on triggered pill', () => {
+  const alertBelowMarket = {
+    itemName: 'demon legs',
+    wikiName: 'Demon_Legs',
+    world: 'Antica',
+    buyAlert: 9_999_999, // way above current buy → always triggers
+    sellAlert: null,
+    addedAt: '2026-04-08T10:00:00Z',
+  };
+
+  test('1 triggered alert uses singular "aktywny"', async ({ page }) => {
+    await freshLoad(page);
+    await page.evaluate(() => localStorage.setItem('tibia_language_v1', 'pl'));
+    await page.evaluate(
+      (a) => localStorage.setItem('tibia_watchlist_v2', JSON.stringify([a])),
+      alertBelowMarket
+    );
+    await page.goto('/watchlist');
+    // Badge zawiera "1 aktywny" — nie "1 aktywnych".
+    await expect(page.getByText(/^1\s+aktywny$/).first()).toBeVisible();
+    await expect(page.getByText(/^1\s+aktywnych$/)).toHaveCount(0);
+    await page.screenshot({ path: 'tests/screenshots/watchlist-triggered-pl-1.png' });
+  });
+
+  test('5 triggered alerts use many "aktywnych"', async ({ page }) => {
+    await freshLoad(page);
+    await page.evaluate(() => localStorage.setItem('tibia_language_v1', 'pl'));
+    // Build 5 always-triggered alerts against items that exist in fixture.
+    const names = ['demon legs', 'magic sword', 'dragon scale mail', 'fire sword', 'terra mantle'];
+    const alerts = names.map((n) => ({
+      itemName: n,
+      wikiName: n,
+      world: 'Antica',
+      buyAlert: 9_999_999,
+      sellAlert: null,
+      addedAt: '2026-04-08T10:00:00Z',
+    }));
+    await page.evaluate(
+      (list) => localStorage.setItem('tibia_watchlist_v2', JSON.stringify(list)),
+      alerts
+    );
+    await page.goto('/watchlist');
+    // At minimum some will trigger; regardless of exact number, pill uses "aktywnych" for 5+.
+    await expect(page.getByText(/5\s+aktywnych/).first()).toBeVisible();
+  });
+});
