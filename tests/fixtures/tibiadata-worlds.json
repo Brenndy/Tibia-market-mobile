@@ -1,0 +1,9 @@
+{
+  "worlds": {
+    "regular_worlds": [
+      { "name": "Antica", "pvp_type": "Optional PvP", "battleye_protected": true },
+      { "name": "Belobra", "pvp_type": "Optional PvP", "battleye_protected": true },
+      { "name": "Bona",   "pvp_type": "Open PvP",     "battleye_protected": false }
+    ]
+  }
+}

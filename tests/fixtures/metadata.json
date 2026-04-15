@@ -1,0 +1,23 @@
+[
+  { "id": 1, "name": "demon legs", "wiki_name": "Demon_Legs", "category": "Legs", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 2, "name": "magic sword", "wiki_name": "Magic_Sword", "category": "Swords", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 3, "name": "dragon scale mail", "wiki_name": "Dragon_Scale_Mail", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 4, "name": "fire sword", "wiki_name": "Fire_Sword", "category": "Swords", "tier": null,
+    "npc_sell": [{ "name": "Rashid", "location": "Carlin", "price": 18000, "currency_object_type_id": 0 }], "npc_buy": [] },
+  { "id": 5, "name": "terra mantle", "wiki_name": "Terra_Mantle", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 6, "name": "steel helmet", "wiki_name": "Steel_Helmet", "category": "Helmets", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 7, "name": "lightning headband", "wiki_name": "Lightning_Headband", "category": "Helmets", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 8, "name": "mana potion", "wiki_name": "Mana_Potion", "category": "Potions", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 9, "name": "great mana potion", "wiki_name": "Great_Mana_Potion", "category": "Potions", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 10, "name": "paladin armor", "wiki_name": "Paladin_Armor", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 11, "name": "obsidian lance", "wiki_name": "Obsidian_Lance", "category": "Spears", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 12, "name": "gnarlhound leash", "wiki_name": "Gnarlhound_Leash", "category": "Containers", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 13, "name": "elvenhair rope", "wiki_name": "Elvenhair_Rope", "category": "Tools", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 14, "name": "ornate chestplate", "wiki_name": "Ornate_Chestplate", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 15, "name": "crystalline armor", "wiki_name": "Crystalline_Armor", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 16, "name": "boots of haste", "wiki_name": "Boots_of_Haste", "category": "Boots", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 17, "name": "demon shield", "wiki_name": "Demon_Shield", "category": "Shields", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 18, "name": "molten plate", "wiki_name": "Molten_Plate", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 19, "name": "spirit cloak", "wiki_name": "Spirit_Cloak", "category": "Legs", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 20, "name": "thunder hammer", "wiki_name": "Thunder_Hammer", "category": "Clubs", "tier": null, "npc_sell": [], "npc_buy": [] }
+]

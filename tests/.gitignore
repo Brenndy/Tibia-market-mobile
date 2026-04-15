@@ -1,0 +1,7 @@
+test-results/
+playwright-report/
+tests/screenshots/*.png
+tests/screenshots/*.jpg
+tests/screenshots/**/*.png
+tests/screenshots/**/*.jpg
+!tests/screenshots/.gitkeep
