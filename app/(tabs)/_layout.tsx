@@ -1,5 +1,5 @@
-import { Tabs } from 'expo-router';
-import { View } from 'react-native';
+import { Tabs, useRouter } from 'expo-router';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/src/theme/colors';
 import { useWatchlist, isAlertTriggered } from '@/src/context/WatchlistContext';
@@ -56,6 +56,15 @@ function HeaderLeftDefault() {
   );
 }
 
+function ClickableTitle({ title }: { title: string }) {
+  const router = useRouter();
+  return (
+    <TouchableOpacity onPress={() => router.navigate('/')} activeOpacity={0.6}>
+      <Text style={{ color: colors.textPrimary, fontWeight: '700', fontSize: 17 }}>{title}</Text>
+    </TouchableOpacity>
+  );
+}
+
 export default function TabLayout() {
   const { t } = useTranslation();
 
@@ -87,7 +96,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="store" size={size} color={color} />
           ),
-          headerTitle: 'Tibia Market',
+          headerTitle: () => <ClickableTitle title="Tibia Market" />,
         }}
       />
       <Tabs.Screen
