@@ -6,7 +6,6 @@ import {
   seedFavorites,
   seedWatchlist,
   getLocalStorage,
-  setLanguageEn,
   ALERT_ANTICA_DEMON_LEGS,
 } from './helpers/storage';
 

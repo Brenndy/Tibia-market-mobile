@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import type { TranslationKey } from '@/src/i18n';
+import { useWorlds } from '@/src/hooks/useMarket';
+import { SearchBar } from '@/src/components/SearchBar';
+import { LoadingState } from '@/src/components/LoadingState';
+import { colors } from '@/src/theme/colors';
+import { World } from '@/src/api/tibiaMarket';
+import { timeAgo } from '@/src/utils/timeAgo';
 
 // Polish plural rules: 1 = one, 2-4 (excluding 12-14) = few, rest = many
 // English: 1 = one, rest = many (few === many)
@@ -21,12 +21,6 @@ function pluralWorlds(count: number): TranslationKey {
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'worlds_count_few';
   return 'worlds_count_many';
 }
-import { useWorlds } from '@/src/hooks/useMarket';
-import { SearchBar } from '@/src/components/SearchBar';
-import { LoadingState } from '@/src/components/LoadingState';
-import { colors } from '@/src/theme/colors';
-import { World } from '@/src/api/tibiaMarket';
-import { timeAgo } from '@/src/utils/timeAgo';
 
 const PVP_COLORS: Record<string, string> = {
   'Open PvP': colors.badgeOpen,
@@ -64,21 +58,13 @@ function WorldRow({
       activeOpacity={0.7}
     >
       <View style={styles.rowLeft}>
-        <Text style={[styles.worldName, isSelected && styles.worldNameSelected]}>
-          {world.name}
-        </Text>
+        <Text style={[styles.worldName, isSelected && styles.worldNameSelected]}>{world.name}</Text>
         {relTime ? <Text style={styles.updateTime}>{relTime}</Text> : null}
       </View>
       <View style={styles.rowRight}>
-        {world.battleye && (
-          <MaterialCommunityIcons name="eye" size={16} color={colors.buy} />
-        )}
-        {pvpLabel ? (
-          <Text style={[styles.pvpLabel, { color: pvpColor }]}>{pvpLabel}</Text>
-        ) : null}
-        {isSelected && (
-          <MaterialCommunityIcons name="check-circle" size={18} color={colors.gold} />
-        )}
+        {world.battleye && <MaterialCommunityIcons name="eye" size={16} color={colors.buy} />}
+        {pvpLabel ? <Text style={[styles.pvpLabel, { color: pvpColor }]}>{pvpLabel}</Text> : null}
+        {isSelected && <MaterialCommunityIcons name="check-circle" size={18} color={colors.gold} />}
       </View>
     </TouchableOpacity>
   );
@@ -107,11 +93,7 @@ export default function WorldSelectScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.searchWrap}>
-        <SearchBar
-          value={search}
-          onChangeText={setSearch}
-          placeholder={t('search_world')}
-        />
+        <SearchBar value={search} onChangeText={setSearch} placeholder={t('search_world')} />
       </View>
 
       {filtered && (

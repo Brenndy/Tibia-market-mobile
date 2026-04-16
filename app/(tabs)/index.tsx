@@ -18,7 +18,12 @@ import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { GoldSpinner } from '@/src/components/LoadingState';
 import { ItemDetailModal } from '@/src/components/ItemDetailModal';
-import { FilterPanel, FilterState, DEFAULT_FILTERS, countActiveFilters } from '@/src/components/FilterPanel';
+import {
+  FilterPanel,
+  FilterState,
+  DEFAULT_FILTERS,
+  countActiveFilters,
+} from '@/src/components/FilterPanel';
 import { ErrorState } from '@/src/components/ErrorState';
 import { colors } from '@/src/theme/colors';
 import { SortField, filterAndSortItems } from '@/src/api/tibiaMarket';
@@ -131,16 +136,13 @@ export default function MarketScreen() {
     setDisplayCount((prev) => prev + PAGE_SIZE);
   }, []);
 
-  const handleScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    {
-      useNativeDriver: true,
-      listener: (e: any) => {
-        const y = e.nativeEvent.contentOffset.y;
-        setShowFab(y > TOP_BAR_H);
-      },
-    }
-  );
+  const handleScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+    useNativeDriver: true,
+    listener: (e: any) => {
+      const y = e.nativeEvent.contentOffset.y;
+      setShowFab(y > TOP_BAR_H);
+    },
+  });
 
   const handleApplyFilters = useCallback((f: FilterState) => {
     setFilters(f);
@@ -152,12 +154,7 @@ export default function MarketScreen() {
   }, []);
 
   if (isError) {
-    return (
-      <ErrorState
-        message={t('item_not_found')}
-        onRetry={refetch}
-      />
-    );
+    return <ErrorState message={t('item_not_found')} onRetry={refetch} />;
   }
 
   const showSkeleton = isLoading && !rawData;
@@ -165,7 +162,13 @@ export default function MarketScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
-        <Animated.View style={{ transform: [{ translateY: topBarTranslate }], opacity: topBarOpacity, zIndex: 2 }}>
+        <Animated.View
+          style={{
+            transform: [{ translateY: topBarTranslate }],
+            opacity: topBarOpacity,
+            zIndex: 2,
+          }}
+        >
           <View style={styles.topBar}>
             <ItemSearchBar
               selectedItems={selectedItems}
@@ -187,7 +190,12 @@ export default function MarketScreen() {
                   size={15}
                   color={activeFilterCount > 0 ? colors.gold : colors.textSecondary}
                 />
-                <Text style={[styles.filterBtnText, activeFilterCount > 0 && styles.filterBtnTextActive]}>
+                <Text
+                  style={[
+                    styles.filterBtnText,
+                    activeFilterCount > 0 && styles.filterBtnTextActive,
+                  ]}
+                >
                   {t('filters')}
                   {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
                 </Text>
@@ -195,7 +203,10 @@ export default function MarketScreen() {
               {isDesktop && (
                 <View style={styles.viewToggle}>
                   <TouchableOpacity
-                    style={[styles.viewToggleBtn, viewMode === 'list' && styles.viewToggleBtnActive]}
+                    style={[
+                      styles.viewToggleBtn,
+                      viewMode === 'list' && styles.viewToggleBtnActive,
+                    ]}
                     onPress={() => setViewMode('list')}
                   >
                     <MaterialCommunityIcons
@@ -205,7 +216,10 @@ export default function MarketScreen() {
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={[styles.viewToggleBtn, viewMode === 'grid' && styles.viewToggleBtnActive]}
+                    style={[
+                      styles.viewToggleBtn,
+                      viewMode === 'grid' && styles.viewToggleBtnActive,
+                    ]}
                     onPress={() => setViewMode('grid')}
                   >
                     <MaterialCommunityIcons
@@ -226,7 +240,13 @@ export default function MarketScreen() {
               <Text style={styles.statsText}>
                 {`${filteredItems.length} ${t('items_label').toLowerCase()}`}
               </Text>
-              <TouchableOpacity onPress={() => { setFilters(DEFAULT_FILTERS); setSelectedItems([]); setDisplayCount(INITIAL_COUNT); }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setFilters(DEFAULT_FILTERS);
+                  setSelectedItems([]);
+                  setDisplayCount(INITIAL_COUNT);
+                }}
+              >
                 <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
               </TouchableOpacity>
             </View>
@@ -264,10 +284,16 @@ export default function MarketScreen() {
           bounces={false}
           ListEmptyComponent={
             <View style={styles.empty}>
-              <MaterialCommunityIcons name="package-variant-closed" size={52} color={colors.textMuted} />
+              <MaterialCommunityIcons
+                name="package-variant-closed"
+                size={52}
+                color={colors.textMuted}
+              />
               <Text style={styles.emptyTitle}>{t('no_results')}</Text>
               <Text style={styles.emptyText}>
-                {selectedItems.length > 0 ? selectedItems.map(n => `"${n}"`).join(', ') : t('clear_filters')}
+                {selectedItems.length > 0
+                  ? selectedItems.map((n) => `"${n}"`).join(', ')
+                  : t('clear_filters')}
               </Text>
             </View>
           }
@@ -279,7 +305,9 @@ export default function MarketScreen() {
                   style={styles.loadMoreGrad}
                 >
                   <MaterialCommunityIcons name="chevron-down" size={16} color={colors.gold} />
-                  <Text style={styles.loadMoreText}>{t('load_more')} ({filteredItems.length - displayCount})</Text>
+                  <Text style={styles.loadMoreText}>
+                    {t('load_more')} ({filteredItems.length - displayCount})
+                  </Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : null

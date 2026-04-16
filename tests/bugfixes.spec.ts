@@ -136,7 +136,7 @@ test.describe('Market fetch — dedupe by id', () => {
     // Override with a payload containing id=1 twice.
     const dupPayload = [marketValues[0], marketValues[0], ...marketValues.slice(1, 5)];
     await page.route('**/api/tibia/market_values**', (route) =>
-      route.fulfill({ json: dupPayload })
+      route.fulfill({ json: dupPayload }),
     );
 
     await page.goto('/');
@@ -154,7 +154,7 @@ test.describe('Market fetch — dedupe by id', () => {
 
     // No duplicate-key React warning
     const dupKeyErrors = consoleErrors.filter((e) =>
-      e.includes('Encountered two children with the same key')
+      e.includes('Encountered two children with the same key'),
     );
     expect(dupKeyErrors).toEqual([]);
   });
@@ -246,7 +246,7 @@ test.describe('i18n — PL plural of "aktywny" on triggered pill', () => {
     await page.evaluate(() => localStorage.setItem('tibia_language_v1', 'pl'));
     await page.evaluate(
       (a) => localStorage.setItem('tibia_watchlist_v2', JSON.stringify([a])),
-      alertBelowMarket
+      alertBelowMarket,
     );
     await page.goto('/watchlist');
     // Badge zawiera "1 aktywny" — nie "1 aktywnych".
@@ -270,7 +270,7 @@ test.describe('i18n — PL plural of "aktywny" on triggered pill', () => {
     }));
     await page.evaluate(
       (list) => localStorage.setItem('tibia_watchlist_v2', JSON.stringify(list)),
-      alerts
+      alerts,
     );
     await page.goto('/watchlist');
     // At minimum some will trigger; regardless of exact number, pill uses "aktywnych" for 5+.

@@ -37,9 +37,9 @@ test.describe('World select screen', () => {
     await openWorldSelect(page);
     // Antica and Belobra are battleye_protected: true
     // eye icons should be present — count should be >= 2
-    const eyeIcons = page.locator('[data-testid="battleye-icon"]').or(
-      page.locator('text=Antica').locator('..').locator('xpath=.//*[name()="svg"]')
-    );
+    const _eyeIcons = page
+      .locator('[data-testid="battleye-icon"]')
+      .or(page.locator('text=Antica').locator('..').locator('xpath=.//*[name()="svg"]'));
     await page.screenshot({ path: 'tests/screenshots/world-select-battleye.png' });
   });
 

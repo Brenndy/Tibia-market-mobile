@@ -1,12 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { ITEM_LIST } from '../data/itemList';
@@ -21,18 +14,23 @@ interface ItemSearchBarProps {
   placeholder?: string;
 }
 
-export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholder }: ItemSearchBarProps) {
+export function ItemSearchBar({
+  selectedItems,
+  onSelectedItemsChange,
+  placeholder,
+}: ItemSearchBarProps) {
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
   const blurTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { t } = useTranslation();
 
-  const suggestions = query.length >= 2
-    ? ITEM_LIST
-        .filter((i) => i.n.toLowerCase().includes(query.toLowerCase()) && !selectedItems.includes(i.n))
-        .slice(0, MAX_SUGGESTIONS)
-    : [];
+  const suggestions =
+    query.length >= 2
+      ? ITEM_LIST.filter(
+          (i) => i.n.toLowerCase().includes(query.toLowerCase()) && !selectedItems.includes(i.n),
+        ).slice(0, MAX_SUGGESTIONS)
+      : [];
 
   const handleFocus = useCallback(() => {
     if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
@@ -43,24 +41,33 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
     blurTimerRef.current = setTimeout(() => setFocused(false), 200);
   }, []);
 
-  const handleSelect = useCallback((name: string) => {
-    if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
-    onSelectedItemsChange([...selectedItems, name]);
-    setQuery('');
-    setFocused(true);
-    setTimeout(() => inputRef.current?.focus(), 0);
-  }, [selectedItems, onSelectedItemsChange]);
+  const handleSelect = useCallback(
+    (name: string) => {
+      if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
+      onSelectedItemsChange([...selectedItems, name]);
+      setQuery('');
+      setFocused(true);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    },
+    [selectedItems, onSelectedItemsChange],
+  );
 
-  const handleRemove = useCallback((name: string) => {
-    onSelectedItemsChange(selectedItems.filter((n) => n !== name));
-  }, [selectedItems, onSelectedItemsChange]);
+  const handleRemove = useCallback(
+    (name: string) => {
+      onSelectedItemsChange(selectedItems.filter((n) => n !== name));
+    },
+    [selectedItems, onSelectedItemsChange],
+  );
 
   // Backspace on empty input removes last chip
-  const handleKeyPress = useCallback(({ nativeEvent }: { nativeEvent: { key: string } }) => {
-    if (nativeEvent.key === 'Backspace' && query === '' && selectedItems.length > 0) {
-      onSelectedItemsChange(selectedItems.slice(0, -1));
-    }
-  }, [query, selectedItems, onSelectedItemsChange]);
+  const handleKeyPress = useCallback(
+    ({ nativeEvent }: { nativeEvent: { key: string } }) => {
+      if (nativeEvent.key === 'Backspace' && query === '' && selectedItems.length > 0) {
+        onSelectedItemsChange(selectedItems.slice(0, -1));
+      }
+    },
+    [query, selectedItems, onSelectedItemsChange],
+  );
 
   const showDropdown = focused && query.length >= 2 && suggestions.length > 0;
 
@@ -83,8 +90,13 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
         >
           {selectedItems.map((name) => (
             <View key={name} style={styles.chip}>
-              <Text style={styles.chipText} numberOfLines={1}>{toTitleCase(name)}</Text>
-              <TouchableOpacity onPress={() => handleRemove(name)} hitSlop={{ top: 6, bottom: 6, left: 4, right: 4 }}>
+              <Text style={styles.chipText} numberOfLines={1}>
+                {toTitleCase(name)}
+              </Text>
+              <TouchableOpacity
+                onPress={() => handleRemove(name)}
+                hitSlop={{ top: 6, bottom: 6, left: 4, right: 4 }}
+              >
                 <MaterialCommunityIcons name="close" size={12} color={colors.gold} />
               </TouchableOpacity>
             </View>
@@ -107,7 +119,10 @@ export function ItemSearchBar({ selectedItems, onSelectedItemsChange, placeholde
 
         {(query.length > 0 || selectedItems.length > 0) && (
           <TouchableOpacity
-            onPress={() => { setQuery(''); onSelectedItemsChange([]); }}
+            onPress={() => {
+              setQuery('');
+              onSelectedItemsChange([]);
+            }}
             style={styles.clear}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >

@@ -12,19 +12,19 @@ export async function setSelectedWorld(page: Page, world: string) {
 export async function seedFavorites(
   page: Page,
   items: string[] | Record<string, string[]>,
-  world = 'Antica'
+  world = 'Antica',
 ) {
   const payload = Array.isArray(items) ? { [world]: items } : items;
   await page.evaluate(
     (list) => localStorage.setItem('tibia_favorites_v2', JSON.stringify(list)),
-    payload
+    payload,
   );
 }
 
 export async function seedWatchlist(page: Page, alerts: object[]) {
   await page.evaluate(
     (list) => localStorage.setItem('tibia_watchlist_v2', JSON.stringify(list)),
-    alerts
+    alerts,
   );
 }
 
@@ -62,7 +62,7 @@ export const ALERT_ANTICA_DEMON_LEGS_TRIGGERED = {
   itemName: 'demon legs',
   wikiName: 'Demon_Legs',
   world: 'Antica',
-  buyAlert: 999999,  // above current buy_offer 800000 → triggered
+  buyAlert: 999999, // above current buy_offer 800000 → triggered
   sellAlert: null,
   addedAt: '2026-04-08T10:00:00Z',
 };
@@ -72,6 +72,6 @@ export const ALERT_BELOBRA_MAGIC_SWORD = {
   wikiName: 'Magic_Sword',
   world: 'Belobra',
   buyAlert: null,
-  sellAlert: 40000,  // below current sell_offer 52000 → triggered
+  sellAlert: 40000, // below current sell_offer 52000 → triggered
   addedAt: '2026-04-08T10:00:00Z',
 };

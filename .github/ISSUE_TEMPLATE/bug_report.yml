@@ -1,0 +1,71 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please fill in as much detail as you can.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+      placeholder: |
+        I tapped the bell icon on an item with an empty input and the modal closed silently.
+        I expected the Save button to be disabled.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the app on web
+        2. Navigate to any item
+        3. Tap the bell icon
+        4. Click Watch without typing anything
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Web (desktop)
+        - Web (mobile)
+        - iOS (Expo Go)
+        - iOS (standalone)
+        - Android (Expo Go)
+        - Android (standalone)
+    validations:
+      required: true
+
+  - type: input
+    id: expo-version
+    attributes:
+      label: Expo SDK version
+      placeholder: '54'
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App version / commit
+      placeholder: 'v1.2.3 or commit hash'
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / screen recording
+      description: Drag and drop images here or paste a path from a failing Playwright run.
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors
+      description: Browser devtools console or Metro bundler output, if any.
+      render: shell

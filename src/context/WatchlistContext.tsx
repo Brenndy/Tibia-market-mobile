@@ -12,8 +12,8 @@ export interface WatchAlert {
   itemName: string;
   wikiName: string;
   world: string;
-  buyAlert: number | null;   // trigger when buy_offer <= buyAlert
-  sellAlert: number | null;  // trigger when sell_offer >= sellAlert
+  buyAlert: number | null; // trigger when buy_offer <= buyAlert
+  sellAlert: number | null; // trigger when sell_offer >= sellAlert
   addedAt: string;
 }
 
@@ -21,7 +21,12 @@ interface WatchlistContextType {
   watchlist: WatchAlert[];
   addToWatchlist: (item: Omit<WatchAlert, 'addedAt'>) => void;
   removeFromWatchlist: (itemName: string, world: string) => void;
-  updateAlert: (itemName: string, world: string, buyAlert: number | null, sellAlert: number | null) => void;
+  updateAlert: (
+    itemName: string,
+    world: string,
+    buyAlert: number | null,
+    sellAlert: number | null,
+  ) => void;
   isWatched: (itemName: string, world: string) => boolean;
   getAlert: (itemName: string, world: string) => WatchAlert | undefined;
 }
@@ -59,14 +64,12 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
 
   const addToWatchlist = useCallback((item: Omit<WatchAlert, 'addedAt'>) => {
     setWatchlist((prev) => {
-      const exists = prev.find(
-        (w) => w.itemName === item.itemName && w.world === item.world
-      );
+      const exists = prev.find((w) => w.itemName === item.itemName && w.world === item.world);
       if (exists) {
         return prev.map((w) =>
           w.itemName === item.itemName && w.world === item.world
             ? { ...w, buyAlert: item.buyAlert, sellAlert: item.sellAlert }
-            : w
+            : w,
         );
       }
       return [...prev, { ...item, addedAt: new Date().toISOString() }];
@@ -74,34 +77,30 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const removeFromWatchlist = useCallback((itemName: string, world: string) => {
-    setWatchlist((prev) =>
-      prev.filter((w) => !(w.itemName === itemName && w.world === world))
-    );
+    setWatchlist((prev) => prev.filter((w) => !(w.itemName === itemName && w.world === world)));
   }, []);
 
   const updateAlert = useCallback(
     (itemName: string, world: string, buyAlert: number | null, sellAlert: number | null) => {
       setWatchlist((prev) =>
         prev.map((w) =>
-          w.itemName === itemName && w.world === world
-            ? { ...w, buyAlert, sellAlert }
-            : w
-        )
+          w.itemName === itemName && w.world === world ? { ...w, buyAlert, sellAlert } : w,
+        ),
       );
     },
-    []
+    [],
   );
 
   const isWatched = useCallback(
     (itemName: string, world: string) =>
       watchlist.some((w) => w.itemName === itemName && w.world === world),
-    [watchlist]
+    [watchlist],
   );
 
   const getAlert = useCallback(
     (itemName: string, world: string) =>
       watchlist.find((w) => w.itemName === itemName && w.world === world),
-    [watchlist]
+    [watchlist],
   );
 
   return (
@@ -120,7 +119,7 @@ export function useWatchlist() {
 export function isAlertTriggered(
   alert: WatchAlert,
   buyOffer: number | null,
-  sellOffer: number | null
+  sellOffer: number | null,
 ): { buy: boolean; sell: boolean } {
   return {
     buy: alert.buyAlert != null && buyOffer != null && buyOffer <= alert.buyAlert,

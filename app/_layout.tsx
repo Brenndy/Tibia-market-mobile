@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, Platform } from 'react-native';
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
@@ -53,11 +54,13 @@ function AppNavigator() {
 export default function RootLayout() {
   useEffect(() => {
     if (Platform.OS === 'web') return;
-    import('@/src/services/notifications').then(({ requestNotificationPermissions, registerBackgroundPriceCheck }) => {
-      requestNotificationPermissions().then((granted) => {
-        if (granted) registerBackgroundPriceCheck();
-      });
-    });
+    import('@/src/services/notifications').then(
+      ({ requestNotificationPermissions, registerBackgroundPriceCheck }) => {
+        requestNotificationPermissions().then((granted) => {
+          if (granted) registerBackgroundPriceCheck();
+        });
+      },
+    );
   }, []);
 
   return (
@@ -67,6 +70,7 @@ export default function RootLayout() {
           <WorldProvider>
             <WatchlistProvider>
               <StatusBar style="light" backgroundColor={colors.background} />
+              {Platform.OS === 'web' && <Analytics />}
               <AppNavigator />
             </WatchlistProvider>
           </WorldProvider>

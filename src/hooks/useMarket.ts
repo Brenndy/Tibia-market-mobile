@@ -10,29 +10,21 @@ import {
 
 // One fetch per world. staleTime=10min (no refetch while fresh), cacheTime=30min (stays in memory).
 export function useMarketBoard(world: string) {
-  return useQuery(
-    ['marketBoard', world],
-    () => fetchMarketBoard(world),
-    {
-      enabled: !!world,
-      keepPreviousData: true,
-      staleTime: 10 * 60_000,
-      cacheTime: 30 * 60_000,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-    }
-  );
+  return useQuery(['marketBoard', world], () => fetchMarketBoard(world), {
+    enabled: !!world,
+    keepPreviousData: true,
+    staleTime: 10 * 60_000,
+    cacheTime: 30 * 60_000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 }
 
 export function useItemStats(world: string, itemName: string) {
-  return useQuery(
-    ['itemStats', world, itemName],
-    () => fetchItemStats(world, itemName),
-    {
-      enabled: !!world && !!itemName,
-      staleTime: 60_000,
-    }
-  );
+  return useQuery(['itemStats', world, itemName], () => fetchItemStats(world, itemName), {
+    enabled: !!world && !!itemName,
+    staleTime: 60_000,
+  });
 }
 
 export function useItemHistory(world: string, itemName: string, days = 30) {
@@ -42,7 +34,7 @@ export function useItemHistory(world: string, itemName: string, days = 30) {
     {
       enabled: !!world && !!itemName,
       staleTime: 60_000,
-    }
+    },
   );
 }
 
@@ -61,12 +53,8 @@ export function useCategories() {
 }
 
 export function useItemOffers(world: string, itemName: string) {
-  return useQuery(
-    ['itemOffers', world, itemName],
-    () => fetchItemOffers(world, itemName),
-    {
-      enabled: !!world && !!itemName,
-      staleTime: 30_000,
-    }
-  );
+  return useQuery(['itemOffers', world, itemName], () => fetchItemOffers(world, itemName), {
+    enabled: !!world && !!itemName,
+    staleTime: 30_000,
+  });
 }

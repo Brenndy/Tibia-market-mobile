@@ -29,7 +29,9 @@ test.describe('Statistics screen', () => {
   test('shows ranked items list', async ({ page }) => {
     await goToStatistics(page);
     // Most traded by default — Great Mana Potion has month_sold=8000, Mana Potion=15000
-    await expect(page.getByText('Mana Potion').or(page.getByText('Great Mana Potion')).first()).toBeVisible();
+    await expect(
+      page.getByText('Mana Potion').or(page.getByText('Great Mana Potion')).first(),
+    ).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/statistics-ranking.png' });
   });
 
@@ -55,7 +57,7 @@ test.describe('Statistics screen', () => {
     await page.getByText('Most expensive (buy)').click();
     // Boots of Haste has buy_offer=3,500,000 — highest in fixtures
     await expect(
-      page.getByText('Boots Of Haste').or(page.getByText('Boots of Haste'))
+      page.getByText('Boots Of Haste').or(page.getByText('Boots of Haste')),
     ).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/statistics-most-expensive.png' });
   });

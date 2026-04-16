@@ -5,7 +5,6 @@ import {
   setSelectedWorld,
   seedFavorites,
   seedWatchlist,
-  getLocalStorage,
   setLanguageEn,
   ALERT_ANTICA_DEMON_LEGS,
   ALERT_ANTICA_DEMON_LEGS_TRIGGERED,
@@ -87,13 +86,16 @@ test.describe('Watchlist — with alerts', () => {
     await goToWatchlist(page);
     await expect(page.getByText('Demon Legs')).toBeVisible();
     // Click edit (pencil) button
-    await page.locator('[accessibilityLabel="Edit alert"]').or(
-      page.getByRole('button').filter({ has: page.locator('[class*="pencil"]') })
-    ).first().click().catch(async () => {
-      // Fallback: find the edit button by icon name area
-      const buttons = page.getByRole('button');
-      await buttons.last().click();
-    });
+    await page
+      .locator('[accessibilityLabel="Edit alert"]')
+      .or(page.getByRole('button').filter({ has: page.locator('[class*="pencil"]') }))
+      .first()
+      .click()
+      .catch(async () => {
+        // Fallback: find the edit button by icon name area
+        const buttons = page.getByRole('button');
+        await buttons.last().click();
+      });
     await page.screenshot({ path: 'tests/screenshots/watchlist-edit-modal.png' });
   });
 

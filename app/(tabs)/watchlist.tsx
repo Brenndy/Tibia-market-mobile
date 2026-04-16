@@ -1,12 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, useNavigation } from 'expo-router';
@@ -25,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Works for EN too because all three keys resolve to the same English word.
 function pluralKey(
   count: number,
-  keys: { one: 'active_label_one'; few: 'active_label_few'; many: 'active_label_many' }
+  keys: { one: 'active_label_one'; few: 'active_label_few'; many: 'active_label_many' },
 ) {
   const mod10 = count % 10;
   const mod100 = count % 100;
@@ -67,10 +60,7 @@ function WatchCard({
       activeOpacity={0.8}
     >
       {anyTriggered && (
-        <LinearGradient
-          colors={[colors.goldDim, 'transparent']}
-          style={styles.triggeredBg}
-        />
+        <LinearGradient colors={[colors.goldDim, 'transparent']} style={styles.triggeredBg} />
       )}
 
       <View style={styles.cardHeader}>
@@ -118,9 +108,7 @@ function WatchCard({
               </Text>
             </View>
           )}
-          {alert.buyAlert == null && (
-            <Text style={styles.noAlert}>{t('no_alert_set')}</Text>
-          )}
+          {alert.buyAlert == null && <Text style={styles.noAlert}>{t('no_alert_set')}</Text>}
         </View>
 
         <View style={styles.divV} />
@@ -143,9 +131,7 @@ function WatchCard({
               </Text>
             </View>
           )}
-          {alert.sellAlert == null && (
-            <Text style={styles.noAlert}>{t('no_alert_set')}</Text>
-          )}
+          {alert.sellAlert == null && <Text style={styles.noAlert}>{t('no_alert_set')}</Text>}
         </View>
 
         <View style={styles.divV} />
@@ -207,7 +193,11 @@ function WorldAlertsSection({
             toAdd.push(key);
           }
         }
-        if (alert.sellAlert != null && item.sell_offer != null && item.sell_offer >= alert.sellAlert) {
+        if (
+          alert.sellAlert != null &&
+          item.sell_offer != null &&
+          item.sell_offer >= alert.sellAlert
+        ) {
           const key = `${world}:${alert.itemName}:sell:${alert.sellAlert}`;
           if (!notifiedSet.has(key)) {
             await sendPriceAlert(alert.itemName, 'sell', item.sell_offer, alert.sellAlert);
@@ -244,7 +234,9 @@ function WorldAlertsSection({
         ) : triggeredCount > 0 ? (
           <View style={styles.triggeredPill}>
             <MaterialCommunityIcons name="bell-ring" size={11} color={colors.background} />
-            <Text style={styles.triggeredPillText}>{triggeredCount} {t(pluralActive(triggeredCount))}</Text>
+            <Text style={styles.triggeredPillText}>
+              {triggeredCount} {t(pluralActive(triggeredCount))}
+            </Text>
           </View>
         ) : (
           <View style={styles.okPill}>
@@ -295,7 +287,8 @@ function WorldFavoritesSection({
           <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
           <Text style={styles.worldHeaderName}>{world}</Text>
           <Text style={styles.worldHeaderCount}>
-            {favoriteNames.length} {favoriteNames.length === 1 ? t('favorite_singular') : t('favorites_plural')}
+            {favoriteNames.length}{' '}
+            {favoriteNames.length === 1 ? t('favorite_singular') : t('favorites_plural')}
           </Text>
         </View>
         {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}
@@ -336,7 +329,9 @@ export default function WatchlistScreen() {
   const filteredWorlds = worldFilter ? [worldFilter] : worlds;
 
   // Favorites grouped per world
-  const favWorlds = Object.keys(allFavorites).filter((w) => (allFavorites[w] ?? []).length > 0).sort();
+  const favWorlds = Object.keys(allFavorites)
+    .filter((w) => (allFavorites[w] ?? []).length > 0)
+    .sort();
   const filteredFavWorlds = favWorldFilter ? [favWorldFilter] : favWorlds;
   const totalFavs = favWorlds.reduce((sum, w) => sum + (allFavorites[w]?.length ?? 0), 0);
 
@@ -348,8 +343,14 @@ export default function WatchlistScreen() {
           style={[styles.switchTab, activeTab === 'alerts' && styles.switchTabActive]}
           onPress={() => setActiveTab('alerts')}
         >
-          <MaterialCommunityIcons name="bell" size={14} color={activeTab === 'alerts' ? colors.gold : colors.textMuted} />
-          <Text style={[styles.switchTabText, activeTab === 'alerts' && styles.switchTabTextActive]}>
+          <MaterialCommunityIcons
+            name="bell"
+            size={14}
+            color={activeTab === 'alerts' ? colors.gold : colors.textMuted}
+          />
+          <Text
+            style={[styles.switchTabText, activeTab === 'alerts' && styles.switchTabTextActive]}
+          >
             {t('tab_alerts')} {watchlist.length > 0 ? `(${watchlist.length})` : ''}
           </Text>
         </TouchableOpacity>
@@ -357,8 +358,14 @@ export default function WatchlistScreen() {
           style={[styles.switchTab, activeTab === 'favorites' && styles.switchTabActive]}
           onPress={() => setActiveTab('favorites')}
         >
-          <MaterialCommunityIcons name="star" size={14} color={activeTab === 'favorites' ? colors.gold : colors.textMuted} />
-          <Text style={[styles.switchTabText, activeTab === 'favorites' && styles.switchTabTextActive]}>
+          <MaterialCommunityIcons
+            name="star"
+            size={14}
+            color={activeTab === 'favorites' ? colors.gold : colors.textMuted}
+          />
+          <Text
+            style={[styles.switchTabText, activeTab === 'favorites' && styles.switchTabTextActive]}
+          >
             {t('tab_favorites')} {totalFavs > 0 ? `(${totalFavs})` : ''}
           </Text>
         </TouchableOpacity>
@@ -368,7 +375,11 @@ export default function WatchlistScreen() {
         <>
           {watchlist.length === 0 ? (
             <View style={styles.empty}>
-              <MaterialCommunityIcons name="bell-sleep-outline" size={72} color={colors.textMuted} />
+              <MaterialCommunityIcons
+                name="bell-sleep-outline"
+                size={72}
+                color={colors.textMuted}
+              />
               <Text style={styles.emptyTitle}>{t('no_alerts_title')}</Text>
               <Text style={styles.emptyDesc}>{t('no_alerts_desc')}</Text>
               <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
@@ -390,7 +401,12 @@ export default function WatchlistScreen() {
                     style={[styles.filterTab, worldFilter === null && styles.filterTabActive]}
                     onPress={() => setWorldFilter(null)}
                   >
-                    <Text style={[styles.filterTabText, worldFilter === null && styles.filterTabTextActive]}>
+                    <Text
+                      style={[
+                        styles.filterTabText,
+                        worldFilter === null && styles.filterTabTextActive,
+                      ]}
+                    >
                       {t('all_worlds')} ({watchlist.length})
                     </Text>
                   </TouchableOpacity>
@@ -402,8 +418,17 @@ export default function WatchlistScreen() {
                         style={[styles.filterTab, worldFilter === w && styles.filterTabActive]}
                         onPress={() => setWorldFilter(w)}
                       >
-                        <MaterialCommunityIcons name="earth" size={11} color={worldFilter === w ? colors.gold : colors.textMuted} />
-                        <Text style={[styles.filterTabText, worldFilter === w && styles.filterTabTextActive]}>
+                        <MaterialCommunityIcons
+                          name="earth"
+                          size={11}
+                          color={worldFilter === w ? colors.gold : colors.textMuted}
+                        />
+                        <Text
+                          style={[
+                            styles.filterTabText,
+                            worldFilter === w && styles.filterTabTextActive,
+                          ]}
+                        >
                           {w} ({count})
                         </Text>
                       </TouchableOpacity>
@@ -411,7 +436,11 @@ export default function WatchlistScreen() {
                   })}
                 </ScrollView>
               )}
-              <ScrollView ref={scrollRef} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+              <ScrollView
+                ref={scrollRef}
+                contentContainerStyle={styles.content}
+                showsVerticalScrollIndicator={false}
+              >
                 {filteredWorlds.map((world) => (
                   <WorldAlertsSection
                     key={world}
@@ -449,7 +478,12 @@ export default function WatchlistScreen() {
                     style={[styles.filterTab, favWorldFilter === null && styles.filterTabActive]}
                     onPress={() => setFavWorldFilter(null)}
                   >
-                    <Text style={[styles.filterTabText, favWorldFilter === null && styles.filterTabTextActive]}>
+                    <Text
+                      style={[
+                        styles.filterTabText,
+                        favWorldFilter === null && styles.filterTabTextActive,
+                      ]}
+                    >
                       {t('all_worlds')} ({totalFavs})
                     </Text>
                   </TouchableOpacity>
@@ -461,8 +495,17 @@ export default function WatchlistScreen() {
                         style={[styles.filterTab, favWorldFilter === w && styles.filterTabActive]}
                         onPress={() => setFavWorldFilter(w)}
                       >
-                        <MaterialCommunityIcons name="earth" size={11} color={favWorldFilter === w ? colors.gold : colors.textMuted} />
-                        <Text style={[styles.filterTabText, favWorldFilter === w && styles.filterTabTextActive]}>
+                        <MaterialCommunityIcons
+                          name="earth"
+                          size={11}
+                          color={favWorldFilter === w ? colors.gold : colors.textMuted}
+                        />
+                        <Text
+                          style={[
+                            styles.filterTabText,
+                            favWorldFilter === w && styles.filterTabTextActive,
+                          ]}
+                        >
                           {w} ({count})
                         </Text>
                       </TouchableOpacity>
@@ -470,7 +513,10 @@ export default function WatchlistScreen() {
                   })}
                 </ScrollView>
               )}
-              <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+              <ScrollView
+                contentContainerStyle={styles.content}
+                showsVerticalScrollIndicator={false}
+              >
                 {filteredFavWorlds.map((world) => (
                   <WorldFavoritesSection
                     key={world}

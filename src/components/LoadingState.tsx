@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
+import { View, StyleSheet, Animated, Easing } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import { useTranslation } from '../context/LanguageContext';
@@ -19,13 +19,23 @@ export function GoldSpinner({ size = 56 }: { size?: number }) {
         duration: 1200,
         easing: Easing.linear,
         useNativeDriver: false,
-      })
+      }),
     );
     const pulseAnim = Animated.loop(
       Animated.sequence([
-        Animated.timing(pulse, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-        Animated.timing(pulse, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-      ])
+        Animated.timing(pulse, {
+          toValue: 1,
+          duration: 900,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: false,
+        }),
+        Animated.timing(pulse, {
+          toValue: 0,
+          duration: 900,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: false,
+        }),
+      ]),
     );
     spinAnim.start();
     pulseAnim.start();
@@ -82,7 +92,7 @@ export function LoadingState({ message }: LoadingStateProps) {
       Animated.sequence([
         Animated.timing(dots, { toValue: 1, duration: 600, useNativeDriver: false }),
         Animated.timing(dots, { toValue: 0, duration: 600, useNativeDriver: false }),
-      ])
+      ]),
     );
     anim.start();
     return () => anim.stop();
@@ -91,7 +101,12 @@ export function LoadingState({ message }: LoadingStateProps) {
   return (
     <View style={styles.container}>
       <GoldSpinner size={64} />
-      <Animated.Text style={[styles.text, { opacity: dots.interpolate({ inputRange: [0, 1], outputRange: [0.55, 1] }) }]}>
+      <Animated.Text
+        style={[
+          styles.text,
+          { opacity: dots.interpolate({ inputRange: [0, 1], outputRange: [0.55, 1] }) },
+        ]}
+      >
         {message ?? t('loading')}
       </Animated.Text>
     </View>

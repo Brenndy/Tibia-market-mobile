@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { mockAllApis } from './helpers/mock-api';
-import { clearStorage, setSelectedWorld, seedFavorites, getLocalStorage, setLanguageEn } from './helpers/storage';
+import { clearStorage, setSelectedWorld, getLocalStorage, setLanguageEn } from './helpers/storage';
 
 test.beforeEach(async ({ page }) => {
   await mockAllApis(page);
@@ -92,7 +92,9 @@ test.describe('Market screen — sort picker', () => {
     await page.getByRole('button', { name: 'Name' }).click();
     await page.screenshot({ path: 'tests/screenshots/market-sort-name.png' });
     // Boots of Haste should appear before Dragon Scale Mail alphabetically
-    await expect(page.getByText('Boots Of Haste').or(page.getByText('Boots of Haste'))).toBeVisible();
+    await expect(
+      page.getByText('Boots Of Haste').or(page.getByText('Boots of Haste')),
+    ).toBeVisible();
   });
 });
 

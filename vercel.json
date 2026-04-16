@@ -3,8 +3,26 @@
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
-    { "source": "/api/tibia/:path*", "destination": "https://api.tibiamarket.top:8001/:path*" },
-    { "source": "/api/wiki/:path*", "destination": "https://tibiawiki.dev/api/:path*" },
+    {
+      "source": "/api/tibia/item_metadata",
+      "destination": "https://api.tibiamarket.top:8001/item_metadata"
+    },
+    {
+      "source": "/api/tibia/market_values",
+      "destination": "https://api.tibiamarket.top:8001/market_values"
+    },
+    {
+      "source": "/api/tibia/world_data",
+      "destination": "https://api.tibiamarket.top:8001/world_data"
+    },
+    {
+      "source": "/api/tibia/item_history",
+      "destination": "https://api.tibiamarket.top:8001/item_history"
+    },
+    {
+      "source": "/api/tibia/market_board",
+      "destination": "https://api.tibiamarket.top:8001/market_board"
+    },
     { "source": "/((?!api/).*)", "destination": "/" }
   ]
 }

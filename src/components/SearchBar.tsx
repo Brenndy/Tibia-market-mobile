@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 
@@ -14,11 +9,7 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({
-  value,
-  onChangeText,
-  placeholder = 'Search...',
-}: SearchBarProps) {
+export function SearchBar({ value, onChangeText, placeholder = 'Search...' }: SearchBarProps) {
   return (
     <View style={styles.container}>
       <MaterialCommunityIcons

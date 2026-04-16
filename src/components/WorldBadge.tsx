@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { colors } from '../theme/colors';
@@ -10,10 +10,7 @@ export function WorldBadge() {
   const router = useRouter();
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => router.push('/world-select')}
-    >
+    <TouchableOpacity style={styles.container} onPress={() => router.push('/world-select')}>
       <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
       <Text style={styles.text}>{selectedWorld}</Text>
       <MaterialCommunityIcons name="chevron-down" size={14} color={colors.textSecondary} />

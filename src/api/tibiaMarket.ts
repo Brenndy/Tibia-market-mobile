@@ -1,24 +1,9 @@
 import axios from 'axios';
-import { Platform } from 'react-native';
 import vocationsData from '../data/vocations.json';
-
-// Web production: relative Vercel rewrite (/api/tibia → api.tibiamarket.top)
-// Native & web dev: Vercel proxy (avoids direct API rate limits from dev IP)
-// Set EXPO_PUBLIC_API_PROXY_URL in your .env to point to your own Vercel deployment.
-// NOTE: React Native sets global.window = global, so typeof window check alone is unreliable.
-// Also guard typeof window for SSR/static rendering where window is undefined entirely.
-const IS_PRODUCTION_WEB =
-  Platform.OS === 'web' &&
-  typeof window !== 'undefined' &&
-  window.location?.hostname !== 'localhost';
-
-const PROXY_URL =
-  process.env.EXPO_PUBLIC_API_PROXY_URL ?? 'https://tibia-market-mobile.vercel.app';
-
-const BASE_URL = IS_PRODUCTION_WEB ? '/api/tibia' : `${PROXY_URL}/api/tibia`;
+import { getApiBaseUrl, getItemImageProxyUrl } from './config';
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: getApiBaseUrl(),
   timeout: 15000,
 });
 
@@ -131,8 +116,8 @@ interface RawMetadata {
   wiki_name: string;
   category: string | null;
   tier: number | null;
-  npc_sell: Array<{ name: string; location: string; price: number; currency_object_type_id: number }>;
-  npc_buy: Array<{ name: string; location: string; price: number; currency_object_type_id: number }>;
+  npc_sell: { name: string; location: string; price: number; currency_object_type_id: number }[];
+  npc_buy: { name: string; location: string; price: number; currency_object_type_id: number }[];
 }
 
 interface RawMarketValue {
@@ -174,18 +159,30 @@ interface TibiaDataWorldsResponse {
 
 // ─── Metadata cache ───────────────────────────────────────────────────────────
 
+// TTL before we refetch metadata. New items added to the game won't appear
+// until the cache expires; keep this long enough to avoid chatter on mobile
+// but short enough that a long-running web tab picks up new items within an
+// hour of them going live.
+const METADATA_TTL_MS = 60 * 60 * 1000; // 1 hour
+
 let metaByName: Map<string, RawMetadata> | null = null;
 let metaById: Map<number, RawMetadata> | null = null;
+let metaCacheTime = 0;
 
 async function getMetadata() {
-  if (metaByName && metaById) return { metaByName, metaById };
+  const fresh = metaByName && metaById && Date.now() - metaCacheTime < METADATA_TTL_MS;
+  if (fresh && metaByName && metaById) return { metaByName, metaById };
+
   const { data } = await api.get<RawMetadata[]>('/item_metadata');
-  metaByName = new Map();
-  metaById = new Map();
+  const byName = new Map<string, RawMetadata>();
+  const byId = new Map<number, RawMetadata>();
   for (const item of data) {
-    metaByName.set(item.name.toLowerCase(), item);
-    metaById.set(item.id, item);
+    byName.set(item.name.toLowerCase(), item);
+    byId.set(item.id, item);
   }
+  metaByName = byName;
+  metaById = byId;
+  metaCacheTime = Date.now();
   return { metaByName, metaById };
 }
 
@@ -262,8 +259,8 @@ export type Vocation = 'knight' | 'paladin' | 'sorcerer' | 'druid';
 export interface FilterSortOptions {
   sort_field?: SortField;
   sort_order?: 'asc' | 'desc';
-  selectedItemNames?: string[];  // filter to exact item names (multi-select)
-  name?: string;                 // substring search fallback
+  selectedItemNames?: string[]; // filter to exact item names (multi-select)
+  name?: string; // substring search fallback
   categories?: string[];
   minBuyPrice?: number;
   maxBuyPrice?: number;
@@ -329,7 +326,10 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
 
   if (rawField === 'margin') {
     result = result
-      .map((i) => ({ ...i, _margin: i.sell_offer != null && i.buy_offer != null ? i.sell_offer - i.buy_offer : null }))
+      .map((i) => ({
+        ...i,
+        _margin: i.sell_offer != null && i.buy_offer != null ? i.sell_offer - i.buy_offer : null,
+      }))
       .sort((a: any, b: any) => {
         const av = a._margin ?? -Infinity;
         const bv = b._margin ?? -Infinity;
@@ -364,10 +364,7 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
   return result;
 }
 
-export async function fetchItemStats(
-  world: string,
-  itemName: string
-): Promise<ItemStats> {
+export async function fetchItemStats(world: string, itemName: string): Promise<ItemStats> {
   const { metaByName } = await getMetadata();
   const meta = metaByName.get(itemName.toLowerCase());
   if (!meta) throw new Error(`Item not found: ${itemName}`);
@@ -385,8 +382,12 @@ export async function fetchItemStats(
     name: meta.name,
     wiki_name: meta.wiki_name,
     world,
-    npc_sell: npcSellRaw.filter((e) => e.currency_object_type_id === 0).map((e) => ({ name: e.name, location: e.location, price: e.price })),
-    npc_buy: npcBuyRaw.filter((e) => e.currency_object_type_id === 0).map((e) => ({ name: e.name, location: e.location, price: e.price })),
+    npc_sell: npcSellRaw
+      .filter((e) => e.currency_object_type_id === 0)
+      .map((e) => ({ name: e.name, location: e.location, price: e.price })),
+    npc_buy: npcBuyRaw
+      .filter((e) => e.currency_object_type_id === 0)
+      .map((e) => ({ name: e.name, location: e.location, price: e.price })),
     buy_offer: nullIfNegative(v.buy_offer),
     sell_offer: nullIfNegative(v.sell_offer),
     month_average_buy: nullIfNegative(v.month_average_buy),
@@ -406,7 +407,7 @@ export async function fetchItemStats(
 export async function fetchItemHistory(
   world: string,
   itemName: string,
-  days = 30
+  days = 30,
 ): Promise<ItemHistory[]> {
   const { metaByName } = await getMetadata();
   const meta = metaByName.get(itemName.toLowerCase());
@@ -500,7 +501,7 @@ export function formatDate(dateStr: string): string {
 
 export async function fetchItemOffers(
   world: string,
-  itemName: string
+  itemName: string,
 ): Promise<ItemOfferBook | null> {
   const { metaByName } = await getMetadata();
   const meta = metaByName.get(itemName.toLowerCase());
@@ -509,8 +510,8 @@ export async function fetchItemOffers(
   try {
     const { data } = await api.get<{
       id: number;
-      sellers: Array<{ name: string; amount: number; price: number; time: number }>;
-      buyers: Array<{ name: string; amount: number; price: number; time: number }>;
+      sellers: { name: string; amount: number; price: number; time: number }[];
+      buyers: { name: string; amount: number; price: number; time: number }[];
       update_time: number;
     }>('/market_board', {
       params: { server: world, item_id: meta.id },
@@ -529,8 +530,5 @@ export async function fetchItemOffers(
 export function getItemImageUrl(wikiName: string): string {
   if (!wikiName) return '';
   const encoded = wikiName.replace(/ /g, '_');
-  if (IS_PRODUCTION_WEB) {
-    return `/api/item-image?name=${encodeURIComponent(encoded)}`;
-  }
-  return `${PROXY_URL}/api/item-image?name=${encodeURIComponent(encoded)}`;
+  return getItemImageProxyUrl(encoded);
 }

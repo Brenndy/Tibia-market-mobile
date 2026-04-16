@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { View, Animated, StyleSheet, Easing } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../theme/colors';
@@ -15,11 +15,19 @@ function ensureSweep() {
       duration: 1400,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: false,
-    })
+    }),
   ).start();
 }
 
-function SkeletonBox({ width, height, style }: { width: number | string; height: number; style?: any }) {
+function SkeletonBox({
+  width,
+  height,
+  style,
+}: {
+  width: number | string;
+  height: number;
+  style?: any;
+}) {
   useEffect(() => {
     ensureSweep();
   }, []);
@@ -32,7 +40,13 @@ function SkeletonBox({ width, height, style }: { width: number | string; height:
   return (
     <View
       style={[
-        { width, height, borderRadius: 6, backgroundColor: colors.surfaceElevated, overflow: 'hidden' },
+        {
+          width,
+          height,
+          borderRadius: 6,
+          backgroundColor: colors.surfaceElevated,
+          overflow: 'hidden',
+        },
         style,
       ]}
     >
@@ -46,7 +60,13 @@ function SkeletonBox({ width, height, style }: { width: number | string; height:
         }}
       >
         <LinearGradient
-          colors={['transparent', 'rgba(212,175,55,0.14)', 'rgba(212,175,55,0.28)', 'rgba(212,175,55,0.14)', 'transparent']}
+          colors={[
+            'transparent',
+            'rgba(212,175,55,0.14)',
+            'rgba(212,175,55,0.28)',
+            'rgba(212,175,55,0.14)',
+            'transparent',
+          ]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
           style={{ flex: 1 }}

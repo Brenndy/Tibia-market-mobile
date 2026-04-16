@@ -1,0 +1,12 @@
+node_modules
+.expo
+dist
+ios
+android
+web-build
+playwright-report
+test-results
+tests/screenshots
+tests/fixtures
+package-lock.json
+*.md

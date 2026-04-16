@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+} from 'react';
 import { pl, en, TranslationKey } from '../i18n';
 import { storage } from '../utils/storage';
 
@@ -36,10 +43,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     storage.setItem(LANG_KEY, lang);
   }, []);
 
-  const t = useCallback(
-    (key: TranslationKey): string => translations[language][key],
-    [language]
-  );
+  const t = useCallback((key: TranslationKey): string => translations[language][key], [language]);
 
   if (!hydrated) return null;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useTranslation, Language } from '../context/LanguageContext';
+import { useTranslation } from '../context/LanguageContext';
 import { colors } from '../theme/colors';
 
 export function LanguageToggle() {

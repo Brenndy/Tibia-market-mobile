@@ -24,17 +24,19 @@ function WatchBellIcon({ color, size }: { color: string; size: number }) {
     <View>
       <MaterialCommunityIcons name="bell" size={size} color={color} />
       {triggered && (
-        <View style={{
-          position: 'absolute',
-          top: -2,
-          right: -4,
-          width: 8,
-          height: 8,
-          borderRadius: 4,
-          backgroundColor: colors.gold,
-          borderWidth: 1,
-          borderColor: colors.tabBar,
-        }} />
+        <View
+          style={{
+            position: 'absolute',
+            top: -2,
+            right: -4,
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            backgroundColor: colors.gold,
+            borderWidth: 1,
+            borderColor: colors.tabBar,
+          }}
+        />
       )}
     </View>
   );

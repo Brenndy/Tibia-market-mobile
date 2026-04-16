@@ -26,8 +26,6 @@
       "output": "single"
     },
     "scheme": "tibiamarket",
-    "plugins": [
-      "expo-router"
-    ]
+    "plugins": ["expo-router"]
   }
 }

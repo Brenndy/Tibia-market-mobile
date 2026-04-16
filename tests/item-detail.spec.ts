@@ -51,7 +51,9 @@ test.describe('Item detail — Demon Legs', () => {
 
   test('switching to OFFERS tab shows offer data', async ({ page }) => {
     await page.getByText('OFFERS').first().click();
-    await expect(page.getByText('Active offers').or(page.getByText('No active offers'))).toBeVisible();
+    await expect(
+      page.getByText('Active offers').or(page.getByText('No active offers')),
+    ).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/item-detail-offers.png' });
   });
 
@@ -68,17 +70,17 @@ test.describe('Item detail — Demon Legs', () => {
 
   test('star button toggles favorite', async ({ page }) => {
     // Click star in header
-    const starBtn = page.getByRole('button').filter({ hasText: '' }).last();
+    const _starBtn = page.getByRole('button').filter({ hasText: '' }).last();
     await page.screenshot({ path: 'tests/screenshots/item-detail-before-star.png' });
   });
 
   test('favoriting from detail persists to localStorage', async ({ page }) => {
     // find and click star icon (there are two: bell + star in header)
     const buttons = page.getByRole('button');
-    const count = await buttons.count();
+    const _count = await buttons.count();
     // Last header button should be star
     await buttons.last().click();
-    const stored = await getLocalStorage(page, 'tibia_favorites_v1');
+    const _stored = await getLocalStorage(page, 'tibia_favorites_v1');
     // If star was toggled, favorites should contain the item or not (depending on initial state)
     await page.screenshot({ path: 'tests/screenshots/item-detail-star-persist.png' });
   });
@@ -89,9 +91,7 @@ test.describe('Item detail — Demon Legs', () => {
     const count = await buttons.count();
     if (count >= 2) {
       await buttons.nth(count - 2).click();
-      await expect(
-        page.getByText('Buy alert').or(page.getByText('Sell alert'))
-      ).toBeVisible();
+      await expect(page.getByText('Buy alert').or(page.getByText('Sell alert'))).toBeVisible();
       await page.screenshot({ path: 'tests/screenshots/item-detail-alert-modal.png' });
     }
   });

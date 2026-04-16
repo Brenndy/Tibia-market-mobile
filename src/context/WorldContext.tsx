@@ -37,16 +37,17 @@ export function WorldProvider({ children }: { children: ReactNode }) {
 
   // Load from storage on mount
   useEffect(() => {
-    Promise.all([
-      storage.getItem(WORLD_KEY),
-      storage.getItem(FAVORITES_KEY),
-    ]).then(([world, favs]) => {
-      if (world) setSelectedWorldState(world);
-      if (favs) {
-        try { setAllFavorites(JSON.parse(favs)); } catch {}
-      }
-      setHydrated(true);
-    });
+    Promise.all([storage.getItem(WORLD_KEY), storage.getItem(FAVORITES_KEY)]).then(
+      ([world, favs]) => {
+        if (world) setSelectedWorldState(world);
+        if (favs) {
+          try {
+            setAllFavorites(JSON.parse(favs));
+          } catch {}
+        }
+        setHydrated(true);
+      },
+    );
   }, []);
 
   // Persist world selection
@@ -77,7 +78,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
 
   const isFavorite = useCallback(
     (itemName: string, world: string) => (allFavorites[world] ?? []).includes(itemName),
-    [allFavorites]
+    [allFavorites],
   );
 
   // Expose only the selected world's favorites for convenience
@@ -85,7 +86,14 @@ export function WorldProvider({ children }: { children: ReactNode }) {
 
   return (
     <WorldContext.Provider
-      value={{ selectedWorld, setSelectedWorld, favorites, allFavorites, toggleFavorite, isFavorite }}
+      value={{
+        selectedWorld,
+        setSelectedWorld,
+        favorites,
+        allFavorites,
+        toggleFavorite,
+        isFavorite,
+      }}
     >
       {children}
     </WorldContext.Provider>

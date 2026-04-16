@@ -3,6 +3,7 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getProxyUrl } from '../api/config';
 
 const BACKGROUND_TASK = 'tibia-price-check';
 const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
@@ -34,7 +35,6 @@ if (Platform.OS === 'android') {
 // ─── Permission request ───────────────────────────────────────────────────────
 
 export async function requestNotificationPermissions(): Promise<boolean> {
-
   const { status: existing } = await Notifications.getPermissionsAsync();
   if (existing === 'granted') return true;
 
@@ -48,14 +48,13 @@ export async function sendPriceAlert(
   itemName: string,
   side: 'buy' | 'sell',
   currentPrice: number,
-  targetPrice: number
+  targetPrice: number,
 ): Promise<void> {
-  const title = side === 'buy'
-    ? `📉 ${itemName} – buy alert`
-    : `📈 ${itemName} – sell alert`;
-  const body = side === 'buy'
-    ? `Buy price dropped to ${formatGoldSimple(currentPrice)} gp (target ≤ ${formatGoldSimple(targetPrice)} gp)`
-    : `Sell price rose to ${formatGoldSimple(currentPrice)} gp (target ≥ ${formatGoldSimple(targetPrice)} gp)`;
+  const title = side === 'buy' ? `📉 ${itemName} – buy alert` : `📈 ${itemName} – sell alert`;
+  const body =
+    side === 'buy'
+      ? `Buy price dropped to ${formatGoldSimple(currentPrice)} gp (target ≤ ${formatGoldSimple(targetPrice)} gp)`
+      : `Sell price rose to ${formatGoldSimple(currentPrice)} gp (target ≥ ${formatGoldSimple(targetPrice)} gp)`;
 
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -102,12 +101,12 @@ export async function checkWatchlistPrices(): Promise<void> {
   try {
     const raw = await AsyncStorage.getItem(WATCHLIST_KEY);
     if (!raw) return;
-    const watchlist: Array<{
+    const watchlist: {
       itemName: string;
       world: string;
       buyAlert: number | null;
       sellAlert: number | null;
-    }> = JSON.parse(raw);
+    }[] = JSON.parse(raw);
     if (!watchlist.length) return;
 
     // Group by world to minimize API calls
@@ -116,11 +115,11 @@ export async function checkWatchlistPrices(): Promise<void> {
     for (const world of worlds) {
       const worldAlerts = watchlist.filter((w) => w.world === world);
 
-      const proxyUrl = process.env.EXPO_PUBLIC_API_PROXY_URL ?? 'https://tibia-market-mobile.vercel.app';
-      let marketData: Array<{ name: string; buy_offer: number | null; sell_offer: number | null }> = [];
+      const proxyUrl = getProxyUrl();
+      let marketData: { name: string; buy_offer: number | null; sell_offer: number | null }[] = [];
       try {
         const resp = await fetch(
-          `${proxyUrl}/api/tibia/market_values?server=${encodeURIComponent(world)}&limit=10000`
+          `${proxyUrl}/api/tibia/market_values?server=${encodeURIComponent(world)}&limit=10000`,
         );
         if (!resp.ok) continue;
 
@@ -129,14 +128,16 @@ export async function checkWatchlistPrices(): Promise<void> {
           resp.json(),
           fetch(`${proxyUrl}/api/tibia/item_metadata`),
         ]);
-        const meta: Array<{ id: number; name: string }> = await metaResp.json();
+        const meta: { id: number; name: string }[] = await metaResp.json();
         const metaById = new Map(meta.map((m) => [m.id, m.name]));
 
-        marketData = (values as Array<{ id: number; buy_offer: number; sell_offer: number }>).map((v) => ({
-          name: (metaById.get(v.id) ?? '').toLowerCase(),
-          buy_offer: v.buy_offer < 0 ? null : v.buy_offer,
-          sell_offer: v.sell_offer < 0 ? null : v.sell_offer,
-        }));
+        marketData = (values as { id: number; buy_offer: number; sell_offer: number }[]).map(
+          (v) => ({
+            name: (metaById.get(v.id) ?? '').toLowerCase(),
+            buy_offer: v.buy_offer < 0 ? null : v.buy_offer,
+            sell_offer: v.sell_offer < 0 ? null : v.sell_offer,
+          }),
+        );
       } catch {
         continue;
       }
@@ -159,7 +160,11 @@ export async function checkWatchlistPrices(): Promise<void> {
         }
 
         // Sell alert: trigger when sell_offer >= sellAlert
-        if (alert.sellAlert != null && item.sell_offer != null && item.sell_offer >= alert.sellAlert) {
+        if (
+          alert.sellAlert != null &&
+          item.sell_offer != null &&
+          item.sell_offer >= alert.sellAlert
+        ) {
           const key = `${world}:${alert.itemName}:sell:${alert.sellAlert}`;
           if (!notifiedSet.has(key)) {
             await sendPriceAlert(alert.itemName, 'sell', item.sell_offer, alert.sellAlert);

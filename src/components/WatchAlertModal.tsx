@@ -97,16 +97,20 @@ export function WatchAlertModal({
                 <ItemImage wikiName={wikiName} size={36} />
               </View>
               <View>
-                <Text style={styles.headerName} numberOfLines={1}>{toTitleCase(itemName)}</Text>
+                <Text style={styles.headerName} numberOfLines={1}>
+                  {toTitleCase(itemName)}
+                </Text>
                 <View style={styles.headerMeta}>
                   <View style={styles.worldBadge}>
                     <MaterialCommunityIcons name="earth" size={10} color={colors.gold} />
                     <Text style={styles.worldBadgeText}>{world}</Text>
                   </View>
                   <Text style={styles.headerSub}>
-                    {t('buy_prefix')} <Text style={{ color: colors.buy }}>{formatGold(currentBuy)}</Text>
+                    {t('buy_prefix')}{' '}
+                    <Text style={{ color: colors.buy }}>{formatGold(currentBuy)}</Text>
                     {'  '}
-                    {t('sell_prefix')} <Text style={{ color: colors.sell }}>{formatGold(currentSell)}</Text>
+                    {t('sell_prefix')}{' '}
+                    <Text style={{ color: colors.sell }}>{formatGold(currentSell)}</Text>
                   </Text>
                 </View>
               </View>
@@ -116,13 +120,14 @@ export function WatchAlertModal({
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={styles.body} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={styles.body}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
             {/* Buy alert */}
             <View style={styles.alertBlock}>
-              <LinearGradient
-                colors={[colors.buyDim, 'transparent']}
-                style={styles.alertGrad}
-              >
+              <LinearGradient colors={[colors.buyDim, 'transparent']} style={styles.alertGrad}>
                 <View style={styles.alertHeader}>
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.buy} />
                   <Text style={[styles.alertTitle, { color: colors.buy }]}>{t('buy_alert')}</Text>
@@ -156,10 +161,7 @@ export function WatchAlertModal({
 
             {/* Sell alert */}
             <View style={styles.alertBlock}>
-              <LinearGradient
-                colors={[colors.sellDim, 'transparent']}
-                style={styles.alertGrad}
-              >
+              <LinearGradient colors={[colors.sellDim, 'transparent']} style={styles.alertGrad}>
                 <View style={styles.alertHeader}>
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.sell} />
                   <Text style={[styles.alertTitle, { color: colors.sell }]}>{t('sell_alert')}</Text>
@@ -195,7 +197,13 @@ export function WatchAlertModal({
           {/* Footer */}
           <View style={styles.footer}>
             {isEditing && (
-              <TouchableOpacity style={styles.removeBtn} onPress={() => { onRemove(); onClose(); }}>
+              <TouchableOpacity
+                style={styles.removeBtn}
+                onPress={() => {
+                  onRemove();
+                  onClose();
+                }}
+              >
                 <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.sell} />
               </TouchableOpacity>
             )}

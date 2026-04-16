@@ -1,11 +1,5 @@
 import React, { memo, useState } from 'react';
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -32,9 +26,7 @@ function PriceTrend({ current, average }: { current: number | null; average: num
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 3 }}>
       <MaterialCommunityIcons name={icon as any} size={11} color={color} />
-      <Text style={{ color, fontSize: 10, fontWeight: '600' }}>
-        {Math.abs(diff).toFixed(1)}%
-      </Text>
+      <Text style={{ color, fontSize: 10, fontWeight: '600' }}>{Math.abs(diff).toFixed(1)}%</Text>
     </View>
   );
 }
@@ -66,212 +58,250 @@ export const MarketItemCard = memo(function MarketItemCard({
   const dealQuality = getDealQuality(item);
 
   const margin =
-    item.sell_offer != null && item.buy_offer != null
-      ? item.sell_offer - item.buy_offer
-      : null;
+    item.sell_offer != null && item.buy_offer != null ? item.sell_offer - item.buy_offer : null;
 
   const marginPct =
     margin != null && item.buy_offer != null && item.buy_offer > 0
       ? (margin / item.buy_offer) * 100
       : null;
 
-  const marginBarWidth =
-    marginPct != null ? Math.min(marginPct / 30, 1) : 0;
+  const marginBarWidth = marginPct != null ? Math.min(marginPct / 30, 1) : 0;
 
   const dealColor =
-    dealQuality === 'premium' ? colors.gold :
-    dealQuality === 'good' ? colors.buy :
-    'transparent';
+    dealQuality === 'premium' ? colors.gold : dealQuality === 'good' ? colors.buy : 'transparent';
 
   return (
     <>
-    <TouchableOpacity
-      style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
-      onPress={() => {
-        if (onPress) {
-          onPress();
-        } else {
-          router.push({
-            pathname: '/item/[name]',
-            params: { name: item.name, world },
-          });
-        }
-      }}
-      activeOpacity={0.8}
-    >
-      {/* Deal quality accent strip */}
-      {dealQuality !== 'none' && (
-        <View style={[styles.dealStrip, { backgroundColor: dealColor }]} />
-      )}
-
-      {/* Top row: image + name + category + star */}
-      <View style={[styles.topRow, dealQuality !== 'none' && styles.topRowWithStrip]}>
-        <View style={styles.imgWrap}>
-          <ItemImage wikiName={item.wiki_name} size={42} />
-        </View>
-        <View style={styles.titleCol}>
-          <Text style={styles.name} numberOfLines={1}>{toTitleCase(item.name)}</Text>
-          <View style={styles.badgeRow}>
-            {item.category && (
-              <View style={styles.catBadge}>
-                <Text style={styles.catText}>{item.category}</Text>
-              </View>
-            )}
-            {dealQuality === 'premium' && (
-              <View style={[styles.dealBadge, { backgroundColor: colors.goldDim, borderColor: colors.gold + '80' }]}>
-                <MaterialCommunityIcons name="fire" size={9} color={colors.gold} />
-                <Text style={[styles.dealBadgeText, { color: colors.gold }]}>{t('deal_premium')}</Text>
-              </View>
-            )}
-            {dealQuality === 'good' && (
-              <View style={[styles.dealBadge, { backgroundColor: colors.buyDim, borderColor: colors.buyBorder }]}>
-                <MaterialCommunityIcons name="check-circle" size={9} color={colors.buy} />
-                <Text style={[styles.dealBadgeText, { color: colors.buy }]}>{t('deal_good')}</Text>
-              </View>
-            )}
-          </View>
-        </View>
-        <View style={styles.actionBtns}>
-          <TouchableOpacity
-            onPress={(e: any) => {
-              e?.stopPropagation?.();
-              e?.preventDefault?.();
-              setWatchModalVisible(true);
-            }}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            style={styles.bellBtn}
-          >
-            <MaterialCommunityIcons
-              name={watched ? 'bell' : 'bell-outline'}
-              size={18}
-              color={watched ? colors.gold : colors.textMuted}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={(e: any) => {
-              e?.stopPropagation?.();
-              e?.preventDefault?.();
-              toggleFavorite(item.name, world);
-            }}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            style={styles.starBtn}
-          >
-            <MaterialCommunityIcons
-              name={favorite ? 'star' : 'star-outline'}
-              size={18}
-              color={favorite ? colors.gold : colors.textMuted}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Divider */}
-      <View style={styles.dividerH} />
-
-      {/* Price row */}
-      <View style={styles.pricesRow}>
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('buy')}</Text>
-          <Text style={[styles.priceValue, { color: colors.buy, fontSize: narrow ? 14 : 16 }]}>
-            {formatGold(item.buy_offer)}
-          </Text>
-          {!narrow && <Text style={styles.avgLabel}>{t('avg_prefix')} {formatGold(item.month_average_buy)}</Text>}
-          <PriceTrend current={item.buy_offer} average={item.month_average_buy} />
-        </View>
-
-        <View style={styles.dividerV} />
-
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('sell')}</Text>
-          <Text style={[styles.priceValue, { color: colors.sell, fontSize: narrow ? 14 : 16 }]}>
-            {formatGold(item.sell_offer)}
-          </Text>
-          {!narrow && <Text style={styles.avgLabel}>{t('avg_prefix')} {formatGold(item.month_average_sell)}</Text>}
-          <PriceTrend current={item.sell_offer} average={item.month_average_sell} />
-        </View>
-
-        <View style={styles.dividerV} />
-
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('volume_monthly')}</Text>
-          <Text style={[styles.priceValue, { fontSize: narrow ? 14 : 16 }]}>
-            {item.month_sold != null ? item.month_sold.toLocaleString() : '—'}
-          </Text>
-          <Text style={styles.avgLabel}>{t('units')}</Text>
-        </View>
-      </View>
-
-      {/* Active offers */}
-      {((item.buy_offers ?? 0) > 0 || (item.sell_offers ?? 0) > 0) && (
-        <View style={styles.activityRow}>
-          <Text style={styles.activityHeader}>{t('offers')}</Text>
-          <View style={styles.activityPills}>
-            {(item.buy_offers ?? 0) > 0 && (
-              <View style={[styles.activityPill, styles.activityPillBuy]}>
-                <Text style={styles.activityPillLabel}>{t('buy')}</Text>
-                <Text style={styles.activityPillValueBuy}>
-                  {(item.buy_offers as number).toLocaleString()}
-                </Text>
-              </View>
-            )}
-            {(item.sell_offers ?? 0) > 0 && (
-              <View style={[styles.activityPill, styles.activityPillSell]}>
-                <Text style={styles.activityPillLabel}>{t('sell')}</Text>
-                <Text style={styles.activityPillValueSell}>
-                  {(item.sell_offers as number).toLocaleString()}
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
-      )}
-
-      {/* Margin bar */}
-      {margin != null && margin > 0 && (
-        <View style={styles.marginRow}>
-          <Text style={styles.marginLabel}>{t('margin')}</Text>
-          <Text style={styles.marginValue}>{formatGold(margin)}</Text>
-          {marginPct != null && (
-            <Text style={[styles.marginPct, marginPct >= 15 ? { color: colors.gold } : marginPct >= 7 ? { color: colors.buy } : {}]}>
-              {marginPct.toFixed(1)}%
-            </Text>
-          )}
-          <View style={styles.barWrap}>
-            <View style={styles.barTrack}>
-              <LinearGradient
-                colors={marginPct != null && marginPct >= 15 ? [colors.goldDark, colors.gold] : [colors.buy, colors.buy + 'aa']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={[styles.barFill, { width: `${Math.round(marginBarWidth * 100)}%` }]}
-              />
-            </View>
-          </View>
-        </View>
-      )}
-    </TouchableOpacity>
-
-    {watchModalVisible && (
-      <WatchAlertModal
-        visible={watchModalVisible}
-        itemName={item.name}
-        wikiName={item.wiki_name}
-        world={world}
-        currentBuy={item.buy_offer}
-        currentSell={item.sell_offer}
-        initialBuyAlert={existingAlert?.buyAlert ?? null}
-        initialSellAlert={existingAlert?.sellAlert ?? null}
-        isEditing={watched}
-        onSave={(buy, sell) => {
-          if (buy == null && sell == null) {
-            removeFromWatchlist(item.name, world);
+      <TouchableOpacity
+        style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
+        onPress={() => {
+          if (onPress) {
+            onPress();
           } else {
-            addToWatchlist({ itemName: item.name, wikiName: item.wiki_name, world, buyAlert: buy, sellAlert: sell });
+            router.push({
+              pathname: '/item/[name]',
+              params: { name: item.name, world },
+            });
           }
         }}
-        onRemove={() => removeFromWatchlist(item.name, world)}
-        onClose={() => setWatchModalVisible(false)}
-      />
-    )}
+        activeOpacity={0.8}
+      >
+        {/* Deal quality accent strip */}
+        {dealQuality !== 'none' && (
+          <View style={[styles.dealStrip, { backgroundColor: dealColor }]} />
+        )}
+
+        {/* Top row: image + name + category + star */}
+        <View style={[styles.topRow, dealQuality !== 'none' && styles.topRowWithStrip]}>
+          <View style={styles.imgWrap}>
+            <ItemImage wikiName={item.wiki_name} size={42} />
+          </View>
+          <View style={styles.titleCol}>
+            <Text style={styles.name} numberOfLines={1}>
+              {toTitleCase(item.name)}
+            </Text>
+            <View style={styles.badgeRow}>
+              {item.category && (
+                <View style={styles.catBadge}>
+                  <Text style={styles.catText}>{item.category}</Text>
+                </View>
+              )}
+              {dealQuality === 'premium' && (
+                <View
+                  style={[
+                    styles.dealBadge,
+                    { backgroundColor: colors.goldDim, borderColor: colors.gold + '80' },
+                  ]}
+                >
+                  <MaterialCommunityIcons name="fire" size={9} color={colors.gold} />
+                  <Text style={[styles.dealBadgeText, { color: colors.gold }]}>
+                    {t('deal_premium')}
+                  </Text>
+                </View>
+              )}
+              {dealQuality === 'good' && (
+                <View
+                  style={[
+                    styles.dealBadge,
+                    { backgroundColor: colors.buyDim, borderColor: colors.buyBorder },
+                  ]}
+                >
+                  <MaterialCommunityIcons name="check-circle" size={9} color={colors.buy} />
+                  <Text style={[styles.dealBadgeText, { color: colors.buy }]}>
+                    {t('deal_good')}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </View>
+          <View style={styles.actionBtns}>
+            <TouchableOpacity
+              onPress={(e: any) => {
+                e?.stopPropagation?.();
+                e?.preventDefault?.();
+                setWatchModalVisible(true);
+              }}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              style={styles.bellBtn}
+            >
+              <MaterialCommunityIcons
+                name={watched ? 'bell' : 'bell-outline'}
+                size={18}
+                color={watched ? colors.gold : colors.textMuted}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(e: any) => {
+                e?.stopPropagation?.();
+                e?.preventDefault?.();
+                toggleFavorite(item.name, world);
+              }}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              style={styles.starBtn}
+            >
+              <MaterialCommunityIcons
+                name={favorite ? 'star' : 'star-outline'}
+                size={18}
+                color={favorite ? colors.gold : colors.textMuted}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Divider */}
+        <View style={styles.dividerH} />
+
+        {/* Price row */}
+        <View style={styles.pricesRow}>
+          <View style={styles.priceBlock}>
+            <Text style={styles.priceLabel}>{t('buy')}</Text>
+            <Text style={[styles.priceValue, { color: colors.buy, fontSize: narrow ? 14 : 16 }]}>
+              {formatGold(item.buy_offer)}
+            </Text>
+            {!narrow && (
+              <Text style={styles.avgLabel}>
+                {t('avg_prefix')} {formatGold(item.month_average_buy)}
+              </Text>
+            )}
+            <PriceTrend current={item.buy_offer} average={item.month_average_buy} />
+          </View>
+
+          <View style={styles.dividerV} />
+
+          <View style={styles.priceBlock}>
+            <Text style={styles.priceLabel}>{t('sell')}</Text>
+            <Text style={[styles.priceValue, { color: colors.sell, fontSize: narrow ? 14 : 16 }]}>
+              {formatGold(item.sell_offer)}
+            </Text>
+            {!narrow && (
+              <Text style={styles.avgLabel}>
+                {t('avg_prefix')} {formatGold(item.month_average_sell)}
+              </Text>
+            )}
+            <PriceTrend current={item.sell_offer} average={item.month_average_sell} />
+          </View>
+
+          <View style={styles.dividerV} />
+
+          <View style={styles.priceBlock}>
+            <Text style={styles.priceLabel}>{t('volume_monthly')}</Text>
+            <Text style={[styles.priceValue, { fontSize: narrow ? 14 : 16 }]}>
+              {item.month_sold != null ? item.month_sold.toLocaleString() : '—'}
+            </Text>
+            <Text style={styles.avgLabel}>{t('units')}</Text>
+          </View>
+        </View>
+
+        {/* Active offers */}
+        {((item.buy_offers ?? 0) > 0 || (item.sell_offers ?? 0) > 0) && (
+          <View style={styles.activityRow}>
+            <Text style={styles.activityHeader}>{t('offers')}</Text>
+            <View style={styles.activityPills}>
+              {(item.buy_offers ?? 0) > 0 && (
+                <View style={[styles.activityPill, styles.activityPillBuy]}>
+                  <Text style={styles.activityPillLabel}>{t('buy')}</Text>
+                  <Text style={styles.activityPillValueBuy}>
+                    {(item.buy_offers as number).toLocaleString()}
+                  </Text>
+                </View>
+              )}
+              {(item.sell_offers ?? 0) > 0 && (
+                <View style={[styles.activityPill, styles.activityPillSell]}>
+                  <Text style={styles.activityPillLabel}>{t('sell')}</Text>
+                  <Text style={styles.activityPillValueSell}>
+                    {(item.sell_offers as number).toLocaleString()}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </View>
+        )}
+
+        {/* Margin bar */}
+        {margin != null && margin > 0 && (
+          <View style={styles.marginRow}>
+            <Text style={styles.marginLabel}>{t('margin')}</Text>
+            <Text style={styles.marginValue}>{formatGold(margin)}</Text>
+            {marginPct != null && (
+              <Text
+                style={[
+                  styles.marginPct,
+                  marginPct >= 15
+                    ? { color: colors.gold }
+                    : marginPct >= 7
+                      ? { color: colors.buy }
+                      : {},
+                ]}
+              >
+                {marginPct.toFixed(1)}%
+              </Text>
+            )}
+            <View style={styles.barWrap}>
+              <View style={styles.barTrack}>
+                <LinearGradient
+                  colors={
+                    marginPct != null && marginPct >= 15
+                      ? [colors.goldDark, colors.gold]
+                      : [colors.buy, colors.buy + 'aa']
+                  }
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={[styles.barFill, { width: `${Math.round(marginBarWidth * 100)}%` }]}
+                />
+              </View>
+            </View>
+          </View>
+        )}
+      </TouchableOpacity>
+
+      {watchModalVisible && (
+        <WatchAlertModal
+          visible={watchModalVisible}
+          itemName={item.name}
+          wikiName={item.wiki_name}
+          world={world}
+          currentBuy={item.buy_offer}
+          currentSell={item.sell_offer}
+          initialBuyAlert={existingAlert?.buyAlert ?? null}
+          initialSellAlert={existingAlert?.sellAlert ?? null}
+          isEditing={watched}
+          onSave={(buy, sell) => {
+            if (buy == null && sell == null) {
+              removeFromWatchlist(item.name, world);
+            } else {
+              addToWatchlist({
+                itemName: item.name,
+                wikiName: item.wiki_name,
+                world,
+                buyAlert: buy,
+                sellAlert: sell,
+              });
+            }
+          }}
+          onRemove={() => removeFromWatchlist(item.name, world)}
+          onClose={() => setWatchModalVisible(false)}
+        />
+      )}
     </>
   );
 });

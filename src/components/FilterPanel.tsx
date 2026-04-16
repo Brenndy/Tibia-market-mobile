@@ -90,7 +90,14 @@ function NumInput({
 
 const inputStyles = StyleSheet.create({
   wrap: { flex: 1 },
-  label: { color: colors.textMuted, fontSize: 10, fontWeight: '700', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 6 },
+  label: {
+    color: colors.textMuted,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    marginBottom: 6,
+  },
   input: {
     backgroundColor: colors.inputBg,
     borderWidth: 1,
@@ -125,210 +132,226 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
   };
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="slide"
-      onShow={handleOpen}
-    >
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <View style={styles.backdrop}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
-        <SafeAreaView style={styles.sheet}>
-          {/* Handle */}
-          <View style={styles.handle} />
+    <Modal visible={visible} transparent animationType="slide" onShow={handleOpen}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.backdrop}>
+          <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
+          <SafeAreaView style={styles.sheet}>
+            {/* Handle */}
+            <View style={styles.handle} />
 
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <MaterialCommunityIcons name="tune-vertical-variant" size={20} color={colors.gold} />
-              <Text style={styles.title}>{t('advanced_filters')}</Text>
+            {/* Header */}
+            <View style={styles.header}>
+              <View style={styles.headerLeft}>
+                <MaterialCommunityIcons
+                  name="tune-vertical-variant"
+                  size={20}
+                  color={colors.gold}
+                />
+                <Text style={styles.title}>{t('advanced_filters')}</Text>
+              </View>
+              <TouchableOpacity onPress={reset} style={styles.resetBtn}>
+                <MaterialCommunityIcons name="restore" size={13} color={colors.sell} />
+                <Text style={styles.resetText}>{t('reset')}</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={reset} style={styles.resetBtn}>
-              <MaterialCommunityIcons name="restore" size={13} color={colors.sell} />
-              <Text style={styles.resetText}>{t('reset')}</Text>
-            </TouchableOpacity>
-          </View>
 
-          <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            {/* Yasir — highlighted toggle card */}
-            <TouchableOpacity
-              style={[styles.yasirCard, local.yasirOnly && styles.yasirCardActive]}
-              onPress={() => setLocal((p) => ({ ...p, yasirOnly: !p.yasirOnly }))}
-              activeOpacity={0.8}
+            <ScrollView
+              style={styles.scroll}
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
             >
-              <View style={styles.yasirIcon}>
-                <MaterialCommunityIcons name="storefront-outline" size={20} color={local.yasirOnly ? colors.gold : colors.textSecondary} />
+              {/* Yasir — highlighted toggle card */}
+              <TouchableOpacity
+                style={[styles.yasirCard, local.yasirOnly && styles.yasirCardActive]}
+                onPress={() => setLocal((p) => ({ ...p, yasirOnly: !p.yasirOnly }))}
+                activeOpacity={0.8}
+              >
+                <View style={styles.yasirIcon}>
+                  <MaterialCommunityIcons
+                    name="storefront-outline"
+                    size={20}
+                    color={local.yasirOnly ? colors.gold : colors.textSecondary}
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.yasirTitle, local.yasirOnly && { color: colors.gold }]}>
+                    {t('filter_yasir')}
+                  </Text>
+                  <Text style={styles.yasirSub}>{t('quick_filters')}</Text>
+                </View>
+                <View style={[styles.toggle, local.yasirOnly && styles.toggleOn]}>
+                  <View style={[styles.toggleKnob, local.yasirOnly && styles.toggleKnobOn]} />
+                </View>
+              </TouchableOpacity>
+
+              {/* Vocation filter */}
+              <View style={styles.sectionHead}>
+                <MaterialCommunityIcons name="shield-sword" size={14} color={colors.gold} />
+                <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
               </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.yasirTitle, local.yasirOnly && { color: colors.gold }]}>
-                  {t('filter_yasir')}
-                </Text>
-                <Text style={styles.yasirSub}>{t('quick_filters')}</Text>
+              <View style={styles.vocationGrid}>
+                {(['knight', 'paladin', 'sorcerer', 'druid'] as Vocation[]).map((voc) => {
+                  const active = local.vocations.includes(voc);
+                  const icons: Record<Vocation, keyof typeof MaterialCommunityIcons.glyphMap> = {
+                    knight: 'sword-cross',
+                    paladin: 'bow-arrow',
+                    sorcerer: 'auto-fix',
+                    druid: 'leaf',
+                  };
+                  return (
+                    <TouchableOpacity
+                      key={voc}
+                      style={[styles.vocChip, active && styles.vocChipActive]}
+                      onPress={() =>
+                        setLocal((p) => ({
+                          ...p,
+                          vocations: active
+                            ? p.vocations.filter((v) => v !== voc)
+                            : [...p.vocations, voc],
+                        }))
+                      }
+                      activeOpacity={0.8}
+                    >
+                      <MaterialCommunityIcons
+                        name={icons[voc]}
+                        size={18}
+                        color={active ? colors.gold : colors.textSecondary}
+                      />
+                      <Text style={[styles.vocChipText, active && styles.vocChipTextActive]}>
+                        {t(`voc_${voc}` as 'voc_knight')}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
-              <View style={[styles.toggle, local.yasirOnly && styles.toggleOn]}>
-                <View style={[styles.toggleKnob, local.yasirOnly && styles.toggleKnobOn]} />
+
+              {/* Categories */}
+              <View style={styles.sectionHead}>
+                <MaterialCommunityIcons name="tag-multiple-outline" size={14} color={colors.gold} />
+                <Text style={styles.sectionLabel}>{t('category')}</Text>
+                {local.categories.length > 0 && (
+                  <Text style={styles.sectionCount}>{local.categories.length}</Text>
+                )}
               </View>
-            </TouchableOpacity>
+              <View style={styles.categoryGrid}>
+                {(allCategories ?? []).map((cat) => {
+                  const active = local.categories.includes(cat);
+                  return (
+                    <TouchableOpacity
+                      key={cat}
+                      style={[styles.catChip, active && styles.catChipActive]}
+                      onPress={() => toggleCategory(cat)}
+                      activeOpacity={0.8}
+                    >
+                      {active && (
+                        <MaterialCommunityIcons name="check" size={12} color={colors.gold} />
+                      )}
+                      <Text style={[styles.catChipText, active && styles.catChipTextActive]}>
+                        {cat}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
 
-            {/* Vocation filter */}
-            <View style={styles.sectionHead}>
-              <MaterialCommunityIcons name="shield-sword" size={14} color={colors.gold} />
-              <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
-            </View>
-            <View style={styles.vocationGrid}>
-              {(['knight', 'paladin', 'sorcerer', 'druid'] as Vocation[]).map((voc) => {
-                const active = local.vocations.includes(voc);
-                const icons: Record<Vocation, keyof typeof MaterialCommunityIcons.glyphMap> = {
-                  knight: 'sword-cross',
-                  paladin: 'bow-arrow',
-                  sorcerer: 'auto-fix',
-                  druid: 'leaf',
-                };
-                return (
-                  <TouchableOpacity
-                    key={voc}
-                    style={[styles.vocChip, active && styles.vocChipActive]}
-                    onPress={() => setLocal((p) => ({
-                      ...p,
-                      vocations: active
-                        ? p.vocations.filter((v) => v !== voc)
-                        : [...p.vocations, voc],
-                    }))}
-                    activeOpacity={0.8}
-                  >
-                    <MaterialCommunityIcons
-                      name={icons[voc]}
-                      size={18}
-                      color={active ? colors.gold : colors.textSecondary}
-                    />
-                    <Text style={[styles.vocChipText, active && styles.vocChipTextActive]}>
-                      {t((`voc_${voc}`) as 'voc_knight')}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-
-            {/* Categories */}
-            <View style={styles.sectionHead}>
-              <MaterialCommunityIcons name="tag-multiple-outline" size={14} color={colors.gold} />
-              <Text style={styles.sectionLabel}>{t('category')}</Text>
-              {local.categories.length > 0 && (
-                <Text style={styles.sectionCount}>{local.categories.length}</Text>
-              )}
-            </View>
-            <View style={styles.categoryGrid}>
-              {(allCategories ?? []).map((cat) => {
-                const active = local.categories.includes(cat);
-                return (
-                  <TouchableOpacity
-                    key={cat}
-                    style={[styles.catChip, active && styles.catChipActive]}
-                    onPress={() => toggleCategory(cat)}
-                    activeOpacity={0.8}
-                  >
-                    {active && (
-                      <MaterialCommunityIcons name="check" size={12} color={colors.gold} />
-                    )}
-                    <Text style={[styles.catChipText, active && styles.catChipTextActive]}>
-                      {cat}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-
-            {/* Price row — buy + sell side by side */}
-            <View style={styles.sectionHead}>
-              <MaterialCommunityIcons name="cash-multiple" size={14} color={colors.gold} />
-              <Text style={styles.sectionLabel}>{t('buy_price_range')}</Text>
-            </View>
-            <View style={styles.row}>
-              <NumInput
-                label={t('min_label')}
-                value={local.minBuyPrice}
-                onChange={(v) => setLocal((p) => ({ ...p, minBuyPrice: v }))}
-                placeholder="0"
-              />
-              <View style={styles.rangeSep}><Text style={styles.rangeSepText}>–</Text></View>
-              <NumInput
-                label={t('max_label')}
-                value={local.maxBuyPrice}
-                onChange={(v) => setLocal((p) => ({ ...p, maxBuyPrice: v }))}
-                placeholder="∞"
-              />
-            </View>
-
-            <View style={styles.sectionHead}>
-              <MaterialCommunityIcons name="cash-plus" size={14} color={colors.gold} />
-              <Text style={styles.sectionLabel}>{t('sell_price_range')}</Text>
-            </View>
-            <View style={styles.row}>
-              <NumInput
-                label={t('min_label')}
-                value={local.minSellPrice}
-                onChange={(v) => setLocal((p) => ({ ...p, minSellPrice: v }))}
-                placeholder="0"
-              />
-              <View style={styles.rangeSep}><Text style={styles.rangeSepText}>–</Text></View>
-              <NumInput
-                label={t('max_label')}
-                value={local.maxSellPrice}
-                onChange={(v) => setLocal((p) => ({ ...p, maxSellPrice: v }))}
-                placeholder="∞"
-              />
-            </View>
-
-            {/* Volume + Margin side by side on wide, stacked on narrow */}
-            <View style={styles.twoCol}>
-              <View style={styles.colHalf}>
-                <View style={styles.sectionHead}>
-                  <MaterialCommunityIcons name="chart-bar" size={14} color={colors.gold} />
-                  <Text style={styles.sectionLabel}>{t('min_volume_monthly')}</Text>
+              {/* Price row — buy + sell side by side */}
+              <View style={styles.sectionHead}>
+                <MaterialCommunityIcons name="cash-multiple" size={14} color={colors.gold} />
+                <Text style={styles.sectionLabel}>{t('buy_price_range')}</Text>
+              </View>
+              <View style={styles.row}>
+                <NumInput
+                  label={t('min_label')}
+                  value={local.minBuyPrice}
+                  onChange={(v) => setLocal((p) => ({ ...p, minBuyPrice: v }))}
+                  placeholder="0"
+                />
+                <View style={styles.rangeSep}>
+                  <Text style={styles.rangeSepText}>–</Text>
                 </View>
                 <NumInput
-                  label={t('min_volume_label')}
-                  value={local.minVolume}
-                  onChange={(v) => setLocal((p) => ({ ...p, minVolume: v }))}
-                  placeholder={t('placeholder_volume')}
+                  label={t('max_label')}
+                  value={local.maxBuyPrice}
+                  onChange={(v) => setLocal((p) => ({ ...p, maxBuyPrice: v }))}
+                  placeholder="∞"
                 />
               </View>
-              <View style={styles.colHalf}>
-                <View style={styles.sectionHead}>
-                  <MaterialCommunityIcons name="trending-up" size={14} color={colors.gold} />
-                  <Text style={styles.sectionLabel}>{t('min_margin_gp')}</Text>
+
+              <View style={styles.sectionHead}>
+                <MaterialCommunityIcons name="cash-plus" size={14} color={colors.gold} />
+                <Text style={styles.sectionLabel}>{t('sell_price_range')}</Text>
+              </View>
+              <View style={styles.row}>
+                <NumInput
+                  label={t('min_label')}
+                  value={local.minSellPrice}
+                  onChange={(v) => setLocal((p) => ({ ...p, minSellPrice: v }))}
+                  placeholder="0"
+                />
+                <View style={styles.rangeSep}>
+                  <Text style={styles.rangeSepText}>–</Text>
                 </View>
                 <NumInput
-                  label={t('min_margin_label')}
-                  value={local.minMargin}
-                  onChange={(v) => setLocal((p) => ({ ...p, minMargin: v }))}
-                  placeholder={t('placeholder_margin')}
+                  label={t('max_label')}
+                  value={local.maxSellPrice}
+                  onChange={(v) => setLocal((p) => ({ ...p, maxSellPrice: v }))}
+                  placeholder="∞"
                 />
               </View>
+
+              {/* Volume + Margin side by side on wide, stacked on narrow */}
+              <View style={styles.twoCol}>
+                <View style={styles.colHalf}>
+                  <View style={styles.sectionHead}>
+                    <MaterialCommunityIcons name="chart-bar" size={14} color={colors.gold} />
+                    <Text style={styles.sectionLabel}>{t('min_volume_monthly')}</Text>
+                  </View>
+                  <NumInput
+                    label={t('min_volume_label')}
+                    value={local.minVolume}
+                    onChange={(v) => setLocal((p) => ({ ...p, minVolume: v }))}
+                    placeholder={t('placeholder_volume')}
+                  />
+                </View>
+                <View style={styles.colHalf}>
+                  <View style={styles.sectionHead}>
+                    <MaterialCommunityIcons name="trending-up" size={14} color={colors.gold} />
+                    <Text style={styles.sectionLabel}>{t('min_margin_gp')}</Text>
+                  </View>
+                  <NumInput
+                    label={t('min_margin_label')}
+                    value={local.minMargin}
+                    onChange={(v) => setLocal((p) => ({ ...p, minMargin: v }))}
+                    placeholder={t('placeholder_margin')}
+                  />
+                </View>
+              </View>
+
+              <View style={{ height: 20 }} />
+            </ScrollView>
+
+            {/* Apply */}
+            <View style={styles.footer}>
+              <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
+                <Text style={styles.cancelText}>{t('cancel')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.applyBtn}
+                onPress={() => {
+                  onApply(local);
+                  onClose();
+                }}
+              >
+                <MaterialCommunityIcons name="check" size={18} color={colors.background} />
+                <Text style={styles.applyText}>{t('apply_filters')}</Text>
+              </TouchableOpacity>
             </View>
-
-            <View style={{ height: 20 }} />
-          </ScrollView>
-
-          {/* Apply */}
-          <View style={styles.footer}>
-            <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
-              <Text style={styles.cancelText}>{t('cancel')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.applyBtn}
-              onPress={() => {
-                onApply(local);
-                onClose();
-              }}
-            >
-              <MaterialCommunityIcons name="check" size={18} color={colors.background} />
-              <Text style={styles.applyText}>{t('apply_filters')}</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </View>
+          </SafeAreaView>
+        </View>
       </KeyboardAvoidingView>
     </Modal>
   );

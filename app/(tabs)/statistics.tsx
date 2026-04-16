@@ -1,11 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, useNavigation } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
@@ -19,7 +13,11 @@ import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/a
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
 
-const RANK_OPTION_KEYS: { key: 'most_sold' | 'most_bought' | 'most_expensive_buy' | 'most_expensive_sell'; value: RankType; icon: string }[] = [
+const RANK_OPTION_KEYS: {
+  key: 'most_sold' | 'most_bought' | 'most_expensive_buy' | 'most_expensive_sell';
+  value: RankType;
+  icon: string;
+}[] = [
   { key: 'most_sold', value: 'month_sold', icon: 'trending-up' },
   { key: 'most_bought', value: 'month_bought', icon: 'cart' },
   { key: 'most_expensive_buy', value: 'buy_offer', icon: 'currency-usd' },
@@ -27,7 +25,6 @@ const RANK_OPTION_KEYS: { key: 'most_sold' | 'most_bought' | 'most_expensive_buy
 ];
 
 const PODIUM_COLORS = [colors.gold, '#9ca3af', '#cd7f32'] as const;
-const PODIUM_BG = ['#2a2410', '#1e1f20', '#231a10'] as const;
 
 function RankCard({
   item,
@@ -51,13 +48,16 @@ function RankCard({
   return (
     <TouchableOpacity
       style={[styles.rankCard, rank === 1 && styles.rankCardFirst]}
-      onPress={() =>
-        router.push({ pathname: '/item/[name]', params: { name: item.name, world } })
-      }
+      onPress={() => router.push({ pathname: '/item/[name]', params: { name: item.name, world } })}
       activeOpacity={0.75}
     >
       {/* Rank badge */}
-      <View style={[styles.rankBadge, { borderColor: podiumColor + '50', backgroundColor: podiumColor + '18' }]}>
+      <View
+        style={[
+          styles.rankBadge,
+          { borderColor: podiumColor + '50', backgroundColor: podiumColor + '18' },
+        ]}
+      >
         <Text style={[styles.rankNum, { color: podiumColor }]}>{rank}</Text>
       </View>
 
@@ -72,7 +72,9 @@ function RankCard({
           {toTitleCase(item.name)}
         </Text>
         {item.category && (
-          <Text style={styles.rankCategory} numberOfLines={1}>{item.category}</Text>
+          <Text style={styles.rankCategory} numberOfLines={1}>
+            {item.category}
+          </Text>
         )}
       </View>
 
@@ -83,60 +85,6 @@ function RankCard({
           : formatGold(value as number | null)}
       </Text>
     </TouchableOpacity>
-  );
-}
-
-// Horizontal bar chart — easier to read item names
-function HorizontalBarChart({
-  items,
-  field,
-  units,
-}: {
-  items: MarketItem[];
-  field: RankType;
-  units: string;
-}) {
-  const isPrice = field === 'buy_offer' || field === 'sell_offer';
-  const values = items.map((i) => {
-    const v = i[field];
-    return typeof v === 'number' ? v : 0;
-  });
-  const maxVal = Math.max(...values, 1);
-
-  return (
-    <View style={styles.hBarContainer}>
-      {items.map((item, idx) => {
-        const val = values[idx];
-        const pct = val / maxVal;
-        const podiumColor = idx < 3 ? PODIUM_COLORS[idx] : colors.gold;
-        const label = isPrice ? formatGold(val) : `${val.toLocaleString()} ${units}`;
-
-        return (
-          <View key={item.name} style={styles.hBarRow}>
-            {/* Rank + image */}
-            <View style={styles.hBarLeft}>
-              <Text style={[styles.hBarRank, { color: idx < 3 ? podiumColor : colors.textMuted }]}>
-                {idx + 1}
-              </Text>
-              <View style={styles.hBarImg}>
-                <ItemImage wikiName={item.wiki_name} size={24} />
-              </View>
-              <Text style={styles.hBarName} numberOfLines={1}>
-                {toTitleCase(item.name).split(' ')[0]}
-              </Text>
-            </View>
-            {/* Bar */}
-            <View style={styles.hBarTrack}>
-              <View style={[styles.hBarFill, { width: `${Math.max(pct * 100, 3)}%` as any, backgroundColor: podiumColor + (idx === 0 ? 'ff' : 'bb') }]} />
-            </View>
-            {/* Value */}
-            <Text style={[styles.hBarVal, { color: idx === 0 ? colors.gold : colors.textSecondary }]}>
-              {label}
-            </Text>
-          </View>
-        );
-      })}
-    </View>
   );
 }
 
@@ -160,9 +108,12 @@ export default function StatisticsScreen() {
 
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
-  const rankedItems = useMemo(() =>
-    rawData ? filterAndSortItems(rawData.items, { sort_field: activeRank, sort_order: 'desc' }) : [],
-    [rawData, activeRank]
+  const rankedItems = useMemo(
+    () =>
+      rawData
+        ? filterAndSortItems(rawData.items, { sort_field: activeRank, sort_order: 'desc' })
+        : [],
+    [rawData, activeRank],
   );
 
   const data = rawData ? { ...rawData, items: rankedItems } : undefined;
@@ -201,10 +152,7 @@ export default function StatisticsScreen() {
               color={activeRank === opt.value ? colors.gold : colors.textMuted}
             />
             <Text
-              style={[
-                styles.rankTabText,
-                activeRank === opt.value && styles.rankTabTextActive,
-              ]}
+              style={[styles.rankTabText, activeRank === opt.value && styles.rankTabTextActive]}
             >
               {opt.label}
             </Text>
@@ -232,13 +180,13 @@ export default function StatisticsScreen() {
       {/* Summary stats */}
       {data && (
         <View style={styles.summaryCard}>
-          <Text style={styles.listTitle}>{t('summary')} {selectedWorld}</Text>
+          <Text style={styles.listTitle}>
+            {t('summary')} {selectedWorld}
+          </Text>
           <View style={styles.summaryGrid}>
             <View style={styles.summaryItem}>
               <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
-              <Text style={styles.summaryValue}>
-                {data.items.length.toLocaleString()}
-              </Text>
+              <Text style={styles.summaryValue}>{data.items.length.toLocaleString()}</Text>
               <Text style={styles.summaryLabel}>{t('items_label')}</Text>
             </View>
             <View style={styles.summaryItem}>
