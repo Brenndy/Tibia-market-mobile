@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tibiatrader.com/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/" />
@@ -12,20 +12,29 @@
   </url>
   <url>
     <loc>https://tibiatrader.com/watchlist</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/watchlist" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/watchlist?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/watchlist" />
   </url>
   <url>
     <loc>https://tibiatrader.com/statistics</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/statistics" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/statistics?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/statistics" />
   </url>
   <url>
     <loc>https://tibiatrader.com/world-select</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/world-select" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/world-select?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/world-select" />
   </url>
 </urlset>
