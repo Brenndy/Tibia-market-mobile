@@ -15,6 +15,9 @@ interface WorldContextType {
   allFavorites: Record<string, string[]>;
   toggleFavorite: (itemName: string, world: string) => void;
   isFavorite: (itemName: string, world: string) => boolean;
+  favoriteWorlds: string[];
+  toggleFavoriteWorld: (worldName: string) => void;
+  isFavoriteWorld: (worldName: string) => boolean;
 }
 
 const WorldContext = createContext<WorldContextType>({
@@ -24,30 +27,43 @@ const WorldContext = createContext<WorldContextType>({
   allFavorites: {},
   toggleFavorite: () => {},
   isFavorite: () => false,
+  favoriteWorlds: [],
+  toggleFavoriteWorld: () => {},
+  isFavoriteWorld: () => false,
 });
 
 const WORLD_KEY = 'tibia_selected_world_v1';
 // v2 uses per-world structure: Record<string, string[]>
 const FAVORITES_KEY = 'tibia_favorites_v2';
+const FAVORITE_WORLDS_KEY = 'tibia_favorite_worlds_v1';
 
 export function WorldProvider({ children }: { children: ReactNode }) {
   const [selectedWorld, setSelectedWorldState] = useState('Antica');
   const [allFavorites, setAllFavorites] = useState<Record<string, string[]>>({});
+  const [favoriteWorlds, setFavoriteWorlds] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   // Load from storage on mount
   useEffect(() => {
-    Promise.all([storage.getItem(WORLD_KEY), storage.getItem(FAVORITES_KEY)]).then(
-      ([world, favs]) => {
-        if (world) setSelectedWorldState(world);
-        if (favs) {
-          try {
-            setAllFavorites(JSON.parse(favs));
-          } catch {}
-        }
-        setHydrated(true);
-      },
-    );
+    Promise.all([
+      storage.getItem(WORLD_KEY),
+      storage.getItem(FAVORITES_KEY),
+      storage.getItem(FAVORITE_WORLDS_KEY),
+    ]).then(([world, favs, favWorlds]) => {
+      if (world) setSelectedWorldState(world);
+      if (favs) {
+        try {
+          setAllFavorites(JSON.parse(favs));
+        } catch {}
+      }
+      if (favWorlds) {
+        try {
+          const parsed = JSON.parse(favWorlds);
+          if (Array.isArray(parsed)) setFavoriteWorlds(parsed);
+        } catch {}
+      }
+      setHydrated(true);
+    });
   }, []);
 
   // Persist world selection
@@ -61,6 +77,12 @@ export function WorldProvider({ children }: { children: ReactNode }) {
     if (!hydrated) return;
     storage.setItem(FAVORITES_KEY, JSON.stringify(allFavorites));
   }, [allFavorites, hydrated]);
+
+  // Persist favorite worlds
+  useEffect(() => {
+    if (!hydrated) return;
+    storage.setItem(FAVORITE_WORLDS_KEY, JSON.stringify(favoriteWorlds));
+  }, [favoriteWorlds, hydrated]);
 
   const setSelectedWorld = useCallback((world: string) => {
     setSelectedWorldState(world);
@@ -81,6 +103,17 @@ export function WorldProvider({ children }: { children: ReactNode }) {
     [allFavorites],
   );
 
+  const toggleFavoriteWorld = useCallback((worldName: string) => {
+    setFavoriteWorlds((prev) =>
+      prev.includes(worldName) ? prev.filter((w) => w !== worldName) : [...prev, worldName],
+    );
+  }, []);
+
+  const isFavoriteWorld = useCallback(
+    (worldName: string) => favoriteWorlds.includes(worldName),
+    [favoriteWorlds],
+  );
+
   // Expose only the selected world's favorites for convenience
   const favorites = allFavorites[selectedWorld] ?? [];
 
@@ -93,6 +126,9 @@ export function WorldProvider({ children }: { children: ReactNode }) {
         allFavorites,
         toggleFavorite,
         isFavorite,
+        favoriteWorlds,
+        toggleFavoriteWorld,
+        isFavoriteWorld,
       }}
     >
       {children}

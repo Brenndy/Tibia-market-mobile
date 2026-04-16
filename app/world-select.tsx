@@ -41,11 +41,15 @@ const PVP_LABELS: Record<string, string> = {
 function WorldRow({
   world,
   isSelected,
+  isFavorite,
   onPress,
+  onToggleFavorite,
 }: {
   world: World;
   isSelected: boolean;
+  isFavorite: boolean;
   onPress: () => void;
+  onToggleFavorite: () => void;
 }) {
   const pvpColor = PVP_COLORS[world.pvp_type] ?? colors.textMuted;
   const pvpLabel = PVP_LABELS[world.pvp_type] ?? world.pvp_type;
@@ -57,6 +61,21 @@ function WorldRow({
       onPress={onPress}
       activeOpacity={0.7}
     >
+      <TouchableOpacity
+        testID={`world-star-${world.name}`}
+        onPress={(e) => {
+          e.stopPropagation?.();
+          onToggleFavorite();
+        }}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        style={styles.starBtn}
+      >
+        <MaterialCommunityIcons
+          name={isFavorite ? 'star' : 'star-outline'}
+          size={20}
+          color={isFavorite ? colors.gold : colors.textMuted}
+        />
+      </TouchableOpacity>
       <View style={styles.rowLeft}>
         <Text style={[styles.worldName, isSelected && styles.worldNameSelected]}>{world.name}</Text>
         {relTime ? <Text style={styles.updateTime}>{relTime}</Text> : null}
@@ -72,14 +91,20 @@ function WorldRow({
 
 export default function WorldSelectScreen() {
   const router = useRouter();
-  const { selectedWorld, setSelectedWorld } = useWorld();
+  const { selectedWorld, setSelectedWorld, isFavoriteWorld, toggleFavoriteWorld } = useWorld();
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data: worlds, isLoading } = useWorlds();
 
+  // Sort: favorite worlds first (alphabetically), then the rest (alphabetically).
   const filtered = worlds
     ?.filter((w) => w.name.toLowerCase().includes(search.toLowerCase()))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => {
+      const favA = isFavoriteWorld(a.name);
+      const favB = isFavoriteWorld(b.name);
+      if (favA !== favB) return favA ? -1 : 1;
+      return a.name.localeCompare(b.name);
+    });
 
   const handleSelect = (world: World) => {
     setSelectedWorld(world.name);
@@ -109,11 +134,14 @@ export default function WorldSelectScreen() {
           <WorldRow
             world={item}
             isSelected={item.name === selectedWorld}
+            isFavorite={isFavoriteWorld(item.name)}
             onPress={() => handleSelect(item)}
+            onToggleFavorite={() => toggleFavoriteWorld(item.name)}
           />
         )}
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        extraData={selectedWorld + '|' + (worlds ?? []).length}
       />
     </View>
   );
@@ -146,6 +174,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: colors.surface,
+    gap: 10,
+  },
+  starBtn: {
+    padding: 2,
   },
   rowSelected: {
     backgroundColor: colors.surfaceElevated,

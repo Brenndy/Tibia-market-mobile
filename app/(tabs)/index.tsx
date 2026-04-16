@@ -51,7 +51,9 @@ export default function MarketScreen() {
   const activeFilterCount = countActiveFilters(filters);
   const { width } = useWindowDimensions();
   const isDesktop = width >= DESKTOP_BREAKPOINT;
-  const [viewMode, setViewModeState] = useState<ViewMode>('list');
+  // Default: grid on desktop (more info at a glance), list on mobile (full-width cards).
+  // Overridden by user preference stored in localStorage on first load.
+  const [viewMode, setViewModeState] = useState<ViewMode>(isDesktop ? 'grid' : 'list');
   const numColumns = isDesktop && viewMode === 'grid' ? (width >= 1400 ? 3 : 2) : 1;
 
   useEffect(() => {
