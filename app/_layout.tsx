@@ -8,6 +8,7 @@ import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
 import { colors } from '@/src/theme/colors';
+import { Analytics } from '@vercel/analytics/react';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,6 +69,7 @@ export default function RootLayout() {
             <WatchlistProvider>
               <StatusBar style="light" backgroundColor={colors.background} />
               <AppNavigator />
+              {Platform.OS === 'web' && <Analytics />}
             </WatchlistProvider>
           </WorldProvider>
         </LanguageProvider>
