@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
-import { useWatchlist } from '../context/WatchlistContext';
+import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useTranslation } from '../context/LanguageContext';
 import { ItemImage } from './ItemImage';
 import { WatchAlertModal } from './WatchAlertModal';
@@ -57,6 +57,10 @@ export const MarketItemCard = memo(function MarketItemCard({
   const favorite = isFavorite(item.name, world);
   const watched = isWatched(item.name, world);
   const existingAlert = getAlert(item.name, world);
+  const triggered = existingAlert
+    ? isAlertTriggered(existingAlert, item.buy_offer, item.sell_offer)
+    : { buy: false, sell: false };
+  const alertFiring = triggered.buy || triggered.sell;
   const dealQuality = getDealQuality(item);
 
   const margin =
@@ -153,10 +157,14 @@ export const MarketItemCard = memo(function MarketItemCard({
                 setWatchModalVisible(true);
               }}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              style={styles.bellBtn}
+              style={[
+                styles.bellBtn,
+                watched && styles.bellBtnActive,
+                alertFiring && styles.bellBtnTriggered,
+              ]}
             >
               <MaterialCommunityIcons
-                name={watched ? 'bell' : 'bell-outline'}
+                name={alertFiring ? 'bell-ring' : watched ? 'bell' : 'bell-outline'}
                 size={18}
                 color={watched ? colors.gold : colors.textMuted}
               />
@@ -411,7 +419,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   bellBtn: {
-    padding: 2,
+    padding: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  bellBtnActive: {
+    backgroundColor: colors.goldDim,
+    borderColor: colors.gold + '40',
+  },
+  bellBtnTriggered: {
+    backgroundColor: colors.goldDim,
+    borderColor: colors.gold,
   },
   starBtn: {
     padding: 2,
