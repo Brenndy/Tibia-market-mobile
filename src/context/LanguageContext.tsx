@@ -2,9 +2,9 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
   ReactNode,
   useCallback,
+  useEffect,
 } from 'react';
 import { Platform } from 'react-native';
 import { pl, en, TranslationKey } from '../i18n';
@@ -18,18 +18,13 @@ const LANG_KEY = 'tibia_language_v1';
 
 // Allow ?lang=en|pl on web to override stored preference. Used for ad
 // landing pages (e.g. Polish Meta campaign → ?lang=pl, English AdWords
-// → ?lang=en). Falls back to browser Accept-Language on first visit.
+// → ?lang=en). Default is always English — no browser-language auto-detect,
+// so international visitors with a Polish browser still land on EN.
 function readUrlLang(): Language | null {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return null;
   const param = new URLSearchParams(window.location.search).get('lang');
   if (param === 'en' || param === 'pl') return param;
   return null;
-}
-
-function readBrowserLang(): Language {
-  if (Platform.OS !== 'web' || typeof navigator === 'undefined') return 'en';
-  const nav = navigator.language?.toLowerCase() ?? '';
-  return nav.startsWith('pl') ? 'pl' : 'en';
 }
 
 interface LanguageContextType {
@@ -49,8 +44,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    // Priority: URL param > stored preference > browser locale > 'pl' default.
-    // URL param also persists to storage so return visitors stay in that language.
+    // Priority: URL param > stored preference > 'en' default. No browser
+    // auto-detect — we want international visitors on EN by default.
+    // URL param also persists so return visitors stay in that language.
     const urlLang = readUrlLang();
     if (urlLang) {
       setLanguageState(urlLang);
@@ -61,8 +57,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     storage.getItem(LANG_KEY).then((stored) => {
       if (stored === 'en' || stored === 'pl') {
         setLanguageState(stored);
-      } else {
-        setLanguageState(readBrowserLang());
       }
       setHydrated(true);
     });
