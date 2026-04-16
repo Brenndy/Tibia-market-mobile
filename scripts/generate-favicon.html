@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 512px;
+        height: 512px;
+        background: transparent;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+      }
+      .coin {
+        width: 512px;
+        height: 512px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      /* Outer ring — polished gold bezel */
+      .ring {
+        position: absolute;
+        inset: 16px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 35% 30%, #fff6d4 0%, #f3d877 20%, #d4af37 50%, #8a6b1f 100%);
+        box-shadow:
+          0 20px 40px rgba(212, 175, 55, 0.45),
+          inset 0 -20px 40px rgba(58, 40, 10, 0.45),
+          inset 0 20px 40px rgba(255, 246, 212, 0.3);
+      }
+      /* Inner medallion — darker, contrast for crown */
+      .medallion {
+        position: absolute;
+        inset: 64px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 35% 30%, #3b2e12 0%, #221908 60%, #100b02 100%);
+        box-shadow:
+          inset 0 0 0 4px rgba(212, 175, 55, 0.6),
+          inset 0 10px 30px rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      /* Crown glyph */
+      .crown {
+        font-size: 280px;
+        line-height: 1;
+        color: #f3d877;
+        text-shadow:
+          0 0 30px rgba(243, 216, 119, 0.7),
+          0 4px 12px rgba(0, 0, 0, 0.5);
+        margin-top: -10px;
+      }
+      /* Subtle specular highlight on bezel */
+      .shine {
+        position: absolute;
+        inset: 16px;
+        border-radius: 50%;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.6) 0%,
+          rgba(255, 255, 255, 0.2) 25%,
+          transparent 40%,
+          transparent 100%
+        );
+        mix-blend-mode: overlay;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="coin">
+      <div class="ring"></div>
+      <div class="shine"></div>
+      <div class="medallion">
+        <div class="crown">♛</div>
+      </div>
+    </div>
+  </body>
+</html>
