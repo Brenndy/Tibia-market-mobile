@@ -17,6 +17,7 @@ import { colors } from '../theme/colors';
 import { formatGold, toTitleCase } from '../api/tibiaMarket';
 import { ItemImage } from './ItemImage';
 import { useTranslation } from '../context/LanguageContext';
+import { useToast } from '../context/ToastContext';
 
 interface WatchAlertModalProps {
   visible: boolean;
@@ -50,6 +51,7 @@ export function WatchAlertModal({
   const [buyAlert, setBuyAlert] = useState(initialBuyAlert?.toString() ?? '');
   const [sellAlert, setSellAlert] = useState(initialSellAlert?.toString() ?? '');
   const { t } = useTranslation();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (visible) {
@@ -78,8 +80,33 @@ export function WatchAlertModal({
   const handleSave = () => {
     if (!canSave) return;
     onSave(parsedBuy, parsedSell);
+    const parts: string[] = [];
+    if (parsedBuy != null && parsedBuy > 0) parts.push(`${t('buy')} ≤ ${formatGold(parsedBuy)}`);
+    if (parsedSell != null && parsedSell > 0) parts.push(`${t('sell')} ≥ ${formatGold(parsedSell)}`);
+    showToast(`${t('toast_alert_saved')}: ${parts.join(' · ')}`, 'success');
     onClose();
   };
+
+  const handleRemove = () => {
+    onRemove();
+    showToast(t('toast_alert_removed'), 'info');
+    onClose();
+  };
+
+  // Suggestion chips: tap to pre-fill input with a computed threshold.
+  // Buy side uses discounts (below current), sell side uses markups (above current).
+  const buySuggestions: { label: string; value: number }[] = [];
+  if (currentBuy != null && currentBuy > 0) {
+    buySuggestions.push({ label: '−5%', value: Math.round(currentBuy * 0.95) });
+    buySuggestions.push({ label: '−10%', value: Math.round(currentBuy * 0.9) });
+    buySuggestions.push({ label: '−15%', value: Math.round(currentBuy * 0.85) });
+  }
+  const sellSuggestions: { label: string; value: number }[] = [];
+  if (currentSell != null && currentSell > 0) {
+    sellSuggestions.push({ label: '+5%', value: Math.round(currentSell * 1.05) });
+    sellSuggestions.push({ label: '+10%', value: Math.round(currentSell * 1.1) });
+    sellSuggestions.push({ label: '+15%', value: Math.round(currentSell * 1.15) });
+  }
 
   return (
     <Modal visible={visible} transparent animationType="slide">
@@ -149,6 +176,23 @@ export function WatchAlertModal({
                   />
                   <Text style={styles.inputUnit}>gp</Text>
                 </View>
+                {buySuggestions.length > 0 && (
+                  <View style={styles.suggestRow}>
+                    <Text style={styles.suggestLabel}>{t('suggest_label')}</Text>
+                    {buySuggestions.map((s) => (
+                      <TouchableOpacity
+                        key={s.label}
+                        style={[styles.chip, styles.chipBuy]}
+                        onPress={() => setBuyAlert(String(s.value))}
+                        testID={`buy-chip-${s.label}`}
+                      >
+                        <Text style={[styles.chipText, { color: colors.buy }]}>
+                          {s.label} <Text style={styles.chipValue}>({formatGold(s.value)})</Text>
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
                 {currentBuy != null && buyAlert.trim() && Number(buyAlert) > 0 && (
                   <Text style={styles.alertHint}>
                     {currentBuy <= Number(buyAlert)
@@ -183,6 +227,23 @@ export function WatchAlertModal({
                   />
                   <Text style={styles.inputUnit}>gp</Text>
                 </View>
+                {sellSuggestions.length > 0 && (
+                  <View style={styles.suggestRow}>
+                    <Text style={styles.suggestLabel}>{t('suggest_label')}</Text>
+                    {sellSuggestions.map((s) => (
+                      <TouchableOpacity
+                        key={s.label}
+                        style={[styles.chip, styles.chipSell]}
+                        onPress={() => setSellAlert(String(s.value))}
+                        testID={`sell-chip-${s.label}`}
+                      >
+                        <Text style={[styles.chipText, { color: colors.sell }]}>
+                          {s.label} <Text style={styles.chipValue}>({formatGold(s.value)})</Text>
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
                 {currentSell != null && sellAlert.trim() && Number(sellAlert) > 0 && (
                   <Text style={styles.alertHint}>
                     {currentSell >= Number(sellAlert)
@@ -197,13 +258,7 @@ export function WatchAlertModal({
           {/* Footer */}
           <View style={styles.footer}>
             {isEditing && (
-              <TouchableOpacity
-                style={styles.removeBtn}
-                onPress={() => {
-                  onRemove();
-                  onClose();
-                }}
-              >
+              <TouchableOpacity style={styles.removeBtn} onPress={handleRemove}>
                 <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.sell} />
               </TouchableOpacity>
             )}
@@ -358,6 +413,43 @@ const styles = StyleSheet.create({
   alertHint: {
     color: colors.textMuted,
     fontSize: 12,
+  },
+  suggestRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 2,
+  },
+  suggestLabel: {
+    color: colors.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+    textTransform: 'uppercase',
+    marginRight: 2,
+  },
+  chip: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  chipBuy: {
+    borderColor: colors.buyBorder,
+    backgroundColor: colors.buyDim,
+  },
+  chipSell: {
+    borderColor: colors.sellBorder,
+    backgroundColor: colors.sellDim,
+  },
+  chipText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  chipValue: {
+    color: colors.textMuted,
+    fontWeight: '600',
   },
   footer: {
     flexDirection: 'row',

@@ -72,6 +72,9 @@ export const en: Record<TranslationKey, string> = {
   alert_active: '🟢 Alert is now active!',
   price_must_drop: 'Price must drop by',
   price_must_rise: 'Price must rise by',
+  suggest_label: 'Quick:',
+  toast_alert_saved: 'Alert saved',
+  toast_alert_removed: 'Alert removed',
 
   // Statistics
   loading_stats: 'Loading statistics...',
