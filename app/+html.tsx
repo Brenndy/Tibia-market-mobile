@@ -7,20 +7,23 @@ import { type PropsWithChildren } from 'react';
 
 export default function Root({ children }: PropsWithChildren) {
   const siteUrl = 'https://tibiatrader.com';
-  const title = 'TibiaTrader — Live Tibia market prices, margins & price alerts';
-  const description =
-    'Live Tibia market prices across every world. Spot flip margins, set price alerts, track volume history — free, fast, mobile-friendly.';
   const ogImageAlt =
     'TibiaTrader — live Tibia market prices, margins and price alerts on web and mobile';
   const ogImage = `${siteUrl}/og-image.png`;
+  // Per-route <title>, <meta name="description">, canonical and og:title/
+  // description/url are injected by RouteSEO (src/components/SEOHead.tsx)
+  // which runs inside _layout.tsx and reads usePathname(). This document
+  // intentionally omits those fields so Helmet output wins on every route.
 
+  const defaultDescription =
+    'Live Tibia market prices across every world. Spot flip margins, set price alerts, track volume history — free, fast, mobile-friendly.';
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'TibiaTrader',
     alternateName: 'Tibia Trader',
     url: siteUrl,
-    description,
+    description: defaultDescription,
     applicationCategory: 'GameApplication',
     operatingSystem: 'Web, iOS, Android',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -50,8 +53,11 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0a0e1a" />
 
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <link rel="preconnect" href="https://static.tibia.com" />
+        <link rel="dns-prefetch" href="https://static.tibia.com" />
+        <link rel="preconnect" href="https://api.tibiadata.com" />
+        <link rel="dns-prefetch" href="https://api.tibiadata.com" />
+
         <meta
           name="keywords"
           content="tibia, tibia market, tibia prices, tibia trading, tibia flip, tibia margin, tibia watchlist, tibia alerts, tibia item prices, tibia gold, mmorpg trading"
@@ -62,16 +68,12 @@ export default function Root({ children }: PropsWithChildren) {
           name="google-site-verification"
           content="mj9399_G5dxBGNUMluwHzCC6qVxofwHXGfZuoq2Ajes"
         />
-        <link rel="canonical" href={siteUrl} />
         <link rel="alternate" hrefLang="en" href={siteUrl} />
         <link rel="alternate" hrefLang="pl" href={`${siteUrl}/?lang=pl`} />
         <link rel="alternate" hrefLang="x-default" href={siteUrl} />
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TibiaTrader" />
-        <meta property="og:url" content={siteUrl} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -80,9 +82,6 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:locale:alternate" content="pl_PL" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={siteUrl} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:image:alt" content={ogImageAlt} />
 
