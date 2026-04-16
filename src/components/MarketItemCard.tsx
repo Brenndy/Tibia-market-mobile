@@ -15,6 +15,7 @@ interface MarketItemCardProps {
   item: MarketItem;
   world: string;
   onPress?: () => void;
+  stretch?: boolean;
 }
 
 function PriceTrend({ current, average }: { current: number | null; average: number | null }) {
@@ -44,6 +45,7 @@ export const MarketItemCard = memo(function MarketItemCard({
   item,
   world,
   onPress,
+  stretch,
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
@@ -73,7 +75,11 @@ export const MarketItemCard = memo(function MarketItemCard({
   return (
     <>
       <TouchableOpacity
-        style={[styles.card, dealQuality !== 'none' && { borderColor: dealColor + '60' }]}
+        style={[
+          styles.card,
+          dealQuality !== 'none' && { borderColor: dealColor + '60' },
+          stretch && { flex: 1 },
+        ]}
         onPress={() => {
           if (onPress) {
             onPress();

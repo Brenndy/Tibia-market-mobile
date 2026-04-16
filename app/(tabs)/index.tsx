@@ -273,6 +273,7 @@ export default function MarketScreen() {
                 item={item}
                 world={selectedWorld}
                 onPress={numColumns > 1 ? () => setModalItemName(item.name) : undefined}
+                stretch={numColumns > 1}
               />
             </View>
           )}
@@ -413,6 +414,7 @@ const styles = StyleSheet.create({
   },
   gridRow: {
     gap: 0,
+    alignItems: 'stretch',
   },
   gridItem: {
     flex: 1,
