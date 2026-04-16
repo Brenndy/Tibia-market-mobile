@@ -9,9 +9,12 @@ test.beforeEach(async ({ page }) => {
   await setSelectedWorld(page, 'Antica');
   await setLanguageEn(page);
   await page.reload();
-  // Navigate to Demon Legs detail
-  await expect(page.getByText('Demon Legs').first()).toBeVisible();
-  await page.getByText('Demon Legs').first().click();
+  // Navigate to Demon Legs detail. Desktop now defaults to grid view so
+  // Demon Legs may render below the fold — scroll it in before clicking.
+  const demonLegs = page.getByText('Demon Legs').first();
+  await demonLegs.scrollIntoViewIfNeeded();
+  await expect(demonLegs).toBeVisible();
+  await demonLegs.click();
   await expect(page).toHaveURL(/item/);
 });
 

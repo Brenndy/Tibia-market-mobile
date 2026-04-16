@@ -2,6 +2,8 @@
   "buildCommand": "npx expo export --platform web",
   "outputDirectory": "dist",
   "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/api/tibia/item_metadata",
@@ -23,6 +25,6 @@
       "source": "/api/tibia/market_board",
       "destination": "https://api.tibiamarket.top:8001/market_board"
     },
-    { "source": "/((?!api/).*)", "destination": "/" }
+    { "source": "/item/:name", "destination": "/item/[name]" }
   ]
 }

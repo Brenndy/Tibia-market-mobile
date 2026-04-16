@@ -17,6 +17,12 @@ const IS_PRODUCTION_WEB =
   typeof window !== 'undefined' &&
   window.location?.hostname !== 'localhost';
 
+// Static export (expo export) runs module code in Node at build time.
+// Platform.OS === 'web' but window is undefined — treat like production web
+// so getApiBaseUrl returns the relative path without throwing. No fetches
+// happen during prerender anyway; React Query only runs after mount.
+const IS_WEB_SSR = Platform.OS === 'web' && typeof window === 'undefined';
+
 /**
  * Absolute URL of the API proxy (Vercel deployment). Required in native + web
  * dev. Missing env var is a configuration error — throw loudly so forks know
@@ -38,12 +44,12 @@ export function getProxyUrl(): string {
  * rewrites handle it), absolute elsewhere.
  */
 export function getApiBaseUrl(): string {
-  if (IS_PRODUCTION_WEB) return '/api/tibia';
+  if (IS_PRODUCTION_WEB || IS_WEB_SSR) return '/api/tibia';
   return `${getProxyUrl()}/api/tibia`;
 }
 
 /** Build a URL for the Vercel item-image proxy endpoint. */
 export function getItemImageProxyUrl(encodedName: string): string {
   const path = `/api/item-image?name=${encodeURIComponent(encodedName)}`;
-  return IS_PRODUCTION_WEB ? path : `${getProxyUrl()}${path}`;
+  return IS_PRODUCTION_WEB || IS_WEB_SSR ? path : `${getProxyUrl()}${path}`;
 }

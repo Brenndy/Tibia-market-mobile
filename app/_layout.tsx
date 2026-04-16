@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -10,6 +10,26 @@ import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
 import { colors } from '@/src/theme/colors';
+
+// Normalize dynamic routes so Vercel Speed Insights aggregates per route
+// template (e.g. /item/rope + /item/lobster → /item/[name]) instead of
+// recording each URL separately.
+function normalizeRoute(pathname: string | null): string | null {
+  if (!pathname) return null;
+  if (pathname.startsWith('/item/')) return '/item/[name]';
+  return pathname;
+}
+
+function WebAnalytics() {
+  const pathname = usePathname();
+  const route = normalizeRoute(pathname);
+  return (
+    <>
+      <Analytics />
+      <SpeedInsights route={route} />
+    </>
+  );
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,12 +91,7 @@ export default function RootLayout() {
           <WorldProvider>
             <WatchlistProvider>
               <StatusBar style="light" backgroundColor={colors.background} />
-              {Platform.OS === 'web' && (
-                <>
-                  <Analytics />
-                  <SpeedInsights />
-                </>
-              )}
+              {Platform.OS === 'web' && <WebAnalytics />}
               <AppNavigator />
             </WatchlistProvider>
           </WorldProvider>
