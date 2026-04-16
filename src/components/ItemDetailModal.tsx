@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   sheet: {
     maxHeight: '92%',
+    minHeight: 320,
     backgroundColor: colors.surface,
     borderRadius: 18,
     overflow: 'hidden',

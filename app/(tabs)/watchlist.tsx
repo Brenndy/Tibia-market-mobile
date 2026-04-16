@@ -81,6 +81,7 @@ function WatchCard({
           ) : null}
         </View>
         <TouchableOpacity
+          testID="edit-alert"
           style={styles.editBtn}
           onPress={() => onEdit(alert)}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}

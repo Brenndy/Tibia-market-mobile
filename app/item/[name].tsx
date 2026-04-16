@@ -436,14 +436,22 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
       ),
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 12 }}>
-          <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={{ padding: 4 }}>
+          <TouchableOpacity
+            testID="detail-bell"
+            onPress={() => setWatchModalOpen(true)}
+            style={{ padding: 4 }}
+          >
             <MaterialCommunityIcons
               name={watched ? 'bell' : 'bell-outline'}
               size={22}
               color={watched ? colors.gold : colors.textSecondary}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleFavorite(name, world)} style={{ padding: 4 }}>
+          <TouchableOpacity
+            testID="detail-star"
+            onPress={() => toggleFavorite(name, world)}
+            style={{ padding: 4 }}
+          >
             <MaterialCommunityIcons
               name={favorite ? 'star' : 'star-outline'}
               size={22}
@@ -513,7 +521,11 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
           <Text style={styles.modalHeaderTitle} numberOfLines={1}>
             {toTitleCase(name)}
           </Text>
-          <TouchableOpacity onPress={() => setWatchModalOpen(true)} style={styles.modalHeaderBtn}>
+          <TouchableOpacity
+            testID="detail-bell"
+            onPress={() => setWatchModalOpen(true)}
+            style={styles.modalHeaderBtn}
+          >
             <MaterialCommunityIcons
               name={watched ? 'bell' : 'bell-outline'}
               size={20}
@@ -521,6 +533,7 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
             />
           </TouchableOpacity>
           <TouchableOpacity
+            testID="detail-star"
             onPress={() => toggleFavorite(name, world)}
             style={styles.modalHeaderBtn}
           >

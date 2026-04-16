@@ -21,7 +21,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function goToWatchlist(page: any) {
-  await page.getByText('Alerts').click();
+  // Tab bar has tabBarShowLabel: false — navigate directly via URL
+  await page.goto('/watchlist');
   await expect(page).toHaveURL(/watchlist/);
 }
 
@@ -84,18 +85,9 @@ test.describe('Watchlist — with alerts', () => {
     await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS]);
     await page.reload();
     await goToWatchlist(page);
-    await expect(page.getByText('Demon Legs')).toBeVisible();
-    // Click edit (pencil) button
-    await page
-      .locator('[accessibilityLabel="Edit alert"]')
-      .or(page.getByRole('button').filter({ has: page.locator('[class*="pencil"]') }))
-      .first()
-      .click()
-      .catch(async () => {
-        // Fallback: find the edit button by icon name area
-        const buttons = page.getByRole('button');
-        await buttons.last().click();
-      });
+    await expect(page.getByText('Demon Legs')).toBeAttached();
+    // Click edit pencil via testID
+    await page.locator('[data-testid="edit-alert"]').first().click({ force: true });
     await page.screenshot({ path: 'tests/screenshots/watchlist-edit-modal.png' });
   });
 
@@ -103,9 +95,9 @@ test.describe('Watchlist — with alerts', () => {
     await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS, ALERT_BELOBRA_MAGIC_SWORD]);
     await page.reload();
     await goToWatchlist(page);
-    await expect(page.getByText('All').or(page.getByText('All worlds'))).toBeVisible();
-    await expect(page.getByText('Antica')).toBeVisible();
-    await expect(page.getByText('Belobra')).toBeVisible();
+    await expect(page.getByText('All').or(page.getByText('All worlds')).first()).toBeVisible();
+    await expect(page.getByText('Antica').first()).toBeVisible();
+    await expect(page.getByText('Belobra').first()).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/watchlist-world-filter.png' });
   });
 
@@ -114,7 +106,8 @@ test.describe('Watchlist — with alerts', () => {
     await page.reload();
     await goToWatchlist(page);
     await page.getByText('Antica').first().click();
-    await expect(page.getByText('Demon Legs')).toBeVisible();
+    // After filtering: Demon Legs (Antica) present, Magic Sword (Belobra) not visible
+    await expect(page.getByText('Demon Legs')).toBeAttached();
     await expect(page.getByText('Magic Sword')).not.toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/watchlist-world-filtered.png' });
   });

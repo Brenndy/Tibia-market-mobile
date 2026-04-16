@@ -136,6 +136,7 @@ export const MarketItemCard = memo(function MarketItemCard({
           </View>
           <View style={styles.actionBtns}>
             <TouchableOpacity
+              testID={`bell-${item.name}`}
               onPress={(e: any) => {
                 e?.stopPropagation?.();
                 e?.preventDefault?.();
@@ -151,6 +152,7 @@ export const MarketItemCard = memo(function MarketItemCard({
               />
             </TouchableOpacity>
             <TouchableOpacity
+              testID={`star-${item.name}`}
               onPress={(e: any) => {
                 e?.stopPropagation?.();
                 e?.preventDefault?.();

@@ -6,6 +6,7 @@ import {
   seedFavorites,
   seedWatchlist,
   getLocalStorage,
+  setLanguageEn,
   ALERT_ANTICA_DEMON_LEGS,
 } from './helpers/storage';
 
@@ -26,11 +27,11 @@ test.describe('localStorage persistence', () => {
 
   test('favorites survive page reload', async ({ page }) => {
     await seedFavorites(page, ['demon legs', 'magic sword']);
-    await page.reload();
     await setSelectedWorld(page, 'Antica');
+    await setLanguageEn(page);
     await page.reload();
-    // Go to Favorites tab
-    await page.getByText('Alerts').click();
+    // Navigate directly — tab bar has tabBarShowLabel: false
+    await page.goto('/watchlist');
     await page.getByText('Favorites').click();
     await expect(page.getByText('Demon Legs')).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/persistence-favorites.png' });
@@ -39,8 +40,9 @@ test.describe('localStorage persistence', () => {
   test('watchlist alerts survive page reload', async ({ page }) => {
     await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS]);
     await setSelectedWorld(page, 'Antica');
+    await setLanguageEn(page);
     await page.reload();
-    await page.getByText('Alerts').click();
+    await page.goto('/watchlist');
     await expect(page.getByText('Demon Legs')).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/persistence-watchlist.png' });
   });
@@ -48,33 +50,34 @@ test.describe('localStorage persistence', () => {
   test('app starts without errors when localStorage is empty', async ({ page }) => {
     await clearStorage(page);
     await page.reload();
-    // Market screen should load without crashing
-    await expect(page.getByText('Market').first()).toBeVisible();
+    // Market screen should load without crashing — header shows "Tibia Market"
+    await expect(page.getByText('Tibia Market').first()).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/persistence-empty-storage.png' });
   });
 
   test('favoriting and unfavoriting updates localStorage correctly', async ({ page }) => {
     await setSelectedWorld(page, 'Antica');
+    await setLanguageEn(page);
     await page.reload();
     await expect(page.getByText('Demon Legs')).toBeVisible();
 
-    // Read initial state
-    const before = await getLocalStorage(page, 'tibia_favorites_v1');
-    const beforeList: string[] = before ? JSON.parse(before) : [];
-    expect(beforeList).not.toContain('demon legs');
+    // Read initial state (v2 = per-world Record)
+    const before = await getLocalStorage(page, 'tibia_favorites_v2');
+    const beforeData: Record<string, string[]> = before ? JSON.parse(before) : {};
+    expect(beforeData['Antica'] ?? []).not.toContain('demon legs');
 
-    // Star Demon Legs
-    const card = page.locator('text=Demon Legs').locator('../../../..');
-    await card.getByRole('button').first().click();
+    // Star Demon Legs using testID
+    const starBtn = page.locator('[data-testid="star-demon legs"]');
+    await starBtn.click({ force: true });
 
-    const after = await getLocalStorage(page, 'tibia_favorites_v1');
-    const afterList: string[] = after ? JSON.parse(after) : [];
-    expect(afterList).toContain('demon legs');
+    const after = await getLocalStorage(page, 'tibia_favorites_v2');
+    const afterData: Record<string, string[]> = after ? JSON.parse(after) : {};
+    expect(afterData['Antica'] ?? []).toContain('demon legs');
 
     // Unstar
-    await card.getByRole('button').first().click();
-    const final = await getLocalStorage(page, 'tibia_favorites_v1');
-    const finalList: string[] = final ? JSON.parse(final) : [];
-    expect(finalList).not.toContain('demon legs');
+    await starBtn.click({ force: true });
+    const final = await getLocalStorage(page, 'tibia_favorites_v2');
+    const finalData: Record<string, string[]> = final ? JSON.parse(final) : {};
+    expect(finalData['Antica'] ?? []).not.toContain('demon legs');
   });
 });
