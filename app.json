@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Tibia Market",
-    "slug": "tibia-market-mobile",
+    "name": "TibiaTrader",
+    "slug": "tibia-trader",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,21 +11,21 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.tibiamarket.mobile"
+      "bundleIdentifier": "com.tibiatrader.mobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0a0e1a"
       },
-      "package": "com.tibiamarket.mobile"
+      "package": "com.tibiatrader.mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
       "output": "single"
     },
-    "scheme": "tibiamarket",
+    "scheme": "tibiatrader",
     "plugins": ["expo-router"]
   }
 }

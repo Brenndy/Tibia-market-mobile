@@ -1,4 +1,4 @@
-# Contributing to Tibia Market Mobile
+# Contributing to TibiaTrader
 
 Thanks for your interest in contributing! This project is an Expo + React Native app with a Playwright E2E suite. Everything runs from `npm`.
 

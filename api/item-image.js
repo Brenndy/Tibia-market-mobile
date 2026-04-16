@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       `&prop=imageinfo&iiprop=url&format=json&origin=*`;
 
     const apiResp = await fetch(apiUrl, {
-      headers: { 'User-Agent': 'TibiaMarketApp/1.0' },
+      headers: { 'User-Agent': 'TibiaTraderApp/1.0' },
     });
 
     if (!apiResp.ok) {

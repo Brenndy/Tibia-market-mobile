@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in Tibia Market Mobile, please **do not** open a public GitHub issue. Instead, report it privately so we can fix it before it's publicly disclosed.
+If you discover a security vulnerability in TibiaTrader, please **do not** open a public GitHub issue. Instead, report it privately so we can fix it before it's publicly disclosed.
 
 **How to report**:
 

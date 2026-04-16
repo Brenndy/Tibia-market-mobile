@@ -1,12 +1,13 @@
 {
-  "name": "tibia-market-mobile",
+  "name": "tibia-trader",
   "version": "1.0.0",
-  "description": "Cross-platform mobile app for browsing Tibia market data — prices, margins, alerts, and statistics.",
+  "description": "TibiaTrader — cross-platform Tibia market companion app. Browse prices, spot margins, set alerts, and track statistics across every world.",
+  "homepage": "https://tibiatrader.com",
   "author": "Brenndy",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Brenndy/tibia-market-mobile"
+    "url": "https://github.com/Brenndy/Tibia-market-mobile"
   },
   "main": "expo-router/entry",
   "scripts": {

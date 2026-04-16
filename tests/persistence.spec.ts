@@ -50,8 +50,8 @@ test.describe('localStorage persistence', () => {
   test('app starts without errors when localStorage is empty', async ({ page }) => {
     await clearStorage(page);
     await page.reload();
-    // Market screen should load without crashing — header shows "Tibia Market"
-    await expect(page.getByText('Tibia Market').first()).toBeVisible();
+    // Market screen should load without crashing — header shows "TibiaTrader"
+    await expect(page.getByText('TibiaTrader').first()).toBeVisible();
     await page.screenshot({ path: 'tests/screenshots/persistence-empty-storage.png' });
   });
 

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow internal API routes from indexing (data endpoints, not pages).
+Disallow: /api/
+
+Sitemap: https://tibiatrader.com/sitemap.xml

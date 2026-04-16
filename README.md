@@ -1,6 +1,9 @@
-# Tibia Market Mobile
+# TibiaTrader
 
-A cross-platform mobile app for browsing the Tibia in-game market — prices, margins, alerts, and statistics. Built with Expo and React Native, powered by [api.tibiamarket.top](https://api.tibiamarket.top/docs).
+[![Live at tibiatrader.com](https://img.shields.io/badge/live-tibiatrader.com-d4af37?style=flat-square)](https://tibiatrader.com)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+
+Live **[tibiatrader.com](https://tibiatrader.com)** — a cross-platform companion app for the Tibia in-game market. Browse prices, spot flip margins, set alerts, and track statistics across every world. Built with Expo and React Native, powered by [api.tibiamarket.top](https://api.tibiamarket.top/docs).
 
 ## Features
 

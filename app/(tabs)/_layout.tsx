@@ -97,12 +97,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tibia Market',
+          title: 'TibiaTrader',
           tabBarLabel: t('tab_market'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="store" size={size} color={color} />
           ),
-          headerTitle: () => <ClickableTitle title="Tibia Market" />,
+          headerTitle: () => <ClickableTitle title="TibiaTrader" />,
         }}
       />
       <Tabs.Screen
