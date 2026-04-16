@@ -59,6 +59,10 @@ export default function Root({ children }: PropsWithChildren) {
         />
         <meta name="author" content="Brenndy" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta
+          name="google-site-verification"
+          content="mj9399_G5dxBGNUMluwHzCC6qVxofwHXGfZuoq2Ajes"
+        />
         <link rel="canonical" href={siteUrl} />
 
         <meta property="og:type" content="website" />
