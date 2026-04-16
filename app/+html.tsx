@@ -63,6 +63,9 @@ export default function Root({ children }: PropsWithChildren) {
           content="mj9399_G5dxBGNUMluwHzCC6qVxofwHXGfZuoq2Ajes"
         />
         <link rel="canonical" href={siteUrl} />
+        <link rel="alternate" hrefLang="pl" href={siteUrl} />
+        <link rel="alternate" hrefLang="en" href={`${siteUrl}/?lang=en`} />
+        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TibiaTrader" />
