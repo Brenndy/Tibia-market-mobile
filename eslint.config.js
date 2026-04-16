@@ -38,7 +38,7 @@ module.exports = [
   },
   {
     // Node / build scripts + Vercel serverless functions — Node globals
-    files: ['*.config.{js,cjs}', '*.config.*.{js,cjs}', 'api/**/*.js'],
+    files: ['*.config.{js,cjs}', '*.config.*.{js,cjs}', 'api/**/*.js', 'scripts/**/*.js'],
     languageOptions: {
       globals: {
         module: 'readonly',
