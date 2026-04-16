@@ -67,6 +67,10 @@ export const MarketItemCard = memo(function MarketItemCard({
       ? (margin / item.buy_offer) * 100
       : null;
 
+  // Visual bar saturates at 30% margin; outlier cap at 500% for the numeric label
+  // so "449900%" spam offers don't make the bar or label look broken.
+  const MARGIN_DISPLAY_CAP = 500;
+  const marginIsOutlier = marginPct != null && marginPct >= MARGIN_DISPLAY_CAP;
   const marginBarWidth = marginPct != null ? Math.min(marginPct / 30, 1) : 0;
 
   const dealColor =
@@ -254,23 +258,27 @@ export const MarketItemCard = memo(function MarketItemCard({
               <Text
                 style={[
                   styles.marginPct,
-                  marginPct >= 15
-                    ? { color: colors.gold }
-                    : marginPct >= 7
-                      ? { color: colors.buy }
-                      : {},
+                  marginIsOutlier
+                    ? { color: colors.textMuted }
+                    : marginPct >= 15
+                      ? { color: colors.gold }
+                      : marginPct >= 7
+                        ? { color: colors.buy }
+                        : {},
                 ]}
               >
-                {marginPct.toFixed(1)}%
+                {marginIsOutlier ? `${MARGIN_DISPLAY_CAP}%+` : `${marginPct.toFixed(1)}%`}
               </Text>
             )}
             <View style={styles.barWrap}>
               <View style={styles.barTrack}>
                 <LinearGradient
                   colors={
-                    marginPct != null && marginPct >= 15
-                      ? [colors.goldDark, colors.gold]
-                      : [colors.buy, colors.buy + 'aa']
+                    marginIsOutlier
+                      ? [colors.textMuted + '60', colors.textMuted + '60']
+                      : marginPct != null && marginPct >= 15
+                        ? [colors.goldDark, colors.gold]
+                        : [colors.buy, colors.buy + 'aa']
                   }
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
