@@ -11,7 +11,7 @@ async function main() {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     viewport: { width: 1200, height: 630 },
-    deviceScaleFactor: 2, // Retina-crisp
+    deviceScaleFactor: 1, // OG standard is 1200x630 — 2x bloats file to 1.9MB
   });
   const page = await context.newPage();
   await page.goto('file://' + htmlPath, { waitUntil: 'networkidle' });

@@ -9,7 +9,9 @@ export default function Root({ children }: PropsWithChildren) {
   const siteUrl = 'https://tibiatrader.com';
   const title = 'TibiaTrader — Live Tibia market prices, margins & price alerts';
   const description =
-    'TibiaTrader is the fastest way to browse the Tibia in-game market. Live buy/sell prices across every world, spot flip margins, set price alerts, and track volume history.';
+    'Live Tibia market prices across every world. Spot flip margins, set price alerts, track volume history — free, fast, mobile-friendly.';
+  const ogImageAlt =
+    'TibiaTrader — live Tibia market prices, margins and price alerts on web and mobile';
   const ogImage = `${siteUrl}/og-image.png`;
 
   const jsonLd = {
@@ -41,14 +43,11 @@ export default function Root({ children }: PropsWithChildren) {
     '@media (prefers-color-scheme: dark) { html, body { background-color: #0a0e1a; } }';
 
   return (
-    <html lang="en">
+    <html lang="pl">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0a0e1a" />
 
         <title>{title}</title>
@@ -73,14 +72,16 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:locale:alternate" content="pl_PL" />
+        <meta property="og:image:alt" content={ogImageAlt} />
+        <meta property="og:locale" content="pl_PL" />
+        <meta property="og:locale:alternate" content="en_US" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={siteUrl} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={ogImageAlt} />
 
         <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png" />
