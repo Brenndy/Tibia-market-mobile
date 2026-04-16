@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, Platform } from 'react-native';
 import { useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
@@ -70,7 +71,12 @@ export default function RootLayout() {
           <WorldProvider>
             <WatchlistProvider>
               <StatusBar style="light" backgroundColor={colors.background} />
-              {Platform.OS === 'web' && <Analytics />}
+              {Platform.OS === 'web' && (
+                <>
+                  <Analytics />
+                  <SpeedInsights />
+                </>
+              )}
               <AppNavigator />
             </WatchlistProvider>
           </WorldProvider>

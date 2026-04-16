@@ -42,6 +42,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "axios": "^1.15.0",
     "expo": "~54.0.0",
     "expo-background-fetch": "~14.0.9",
