@@ -27,7 +27,7 @@ function readUrlLang(): Language | null {
 }
 
 function readBrowserLang(): Language {
-  if (Platform.OS !== 'web' || typeof navigator === 'undefined') return 'pl';
+  if (Platform.OS !== 'web' || typeof navigator === 'undefined') return 'en';
   const nav = navigator.language?.toLowerCase() ?? '';
   return nav.startsWith('pl') ? 'pl' : 'en';
 }
@@ -39,13 +39,13 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: 'pl',
+  language: 'en',
   setLanguage: () => {},
-  t: (key) => pl[key],
+  t: (key) => en[key],
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('pl');
+  const [language, setLanguageState] = useState<Language>('en');
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {

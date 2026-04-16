@@ -43,7 +43,7 @@ export default function Root({ children }: PropsWithChildren) {
     '@media (prefers-color-scheme: dark) { html, body { background-color: #0a0e1a; } }';
 
   return (
-    <html lang="pl">
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -63,8 +63,8 @@ export default function Root({ children }: PropsWithChildren) {
           content="mj9399_G5dxBGNUMluwHzCC6qVxofwHXGfZuoq2Ajes"
         />
         <link rel="canonical" href={siteUrl} />
-        <link rel="alternate" hrefLang="pl" href={siteUrl} />
-        <link rel="alternate" hrefLang="en" href={`${siteUrl}/?lang=en`} />
+        <link rel="alternate" hrefLang="en" href={siteUrl} />
+        <link rel="alternate" hrefLang="pl" href={`${siteUrl}/?lang=pl`} />
         <link rel="alternate" hrefLang="x-default" href={siteUrl} />
 
         <meta property="og:type" content="website" />
@@ -76,8 +76,8 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={ogImageAlt} />
-        <meta property="og:locale" content="pl_PL" />
-        <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale:alternate" content="pl_PL" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={siteUrl} />
