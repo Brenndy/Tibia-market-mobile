@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { colors } from '../theme/colors';
@@ -58,19 +58,12 @@ export function DesktopSidebar() {
       href: '/statistics',
       match: (p) => p.startsWith('/statistics'),
     },
-    {
-      key: 'world',
-      icon: 'earth',
-      label: t('select_world_title'),
-      href: '/world-select',
-      match: (p) => p.startsWith('/world-select'),
-    },
   ];
 
   return (
     <View style={styles.sidebar}>
       <TouchableOpacity onPress={() => router.navigate('/')} style={styles.brand}>
-        <MaterialCommunityIcons name="diamond-stone" size={22} color={colors.gold} />
+        <Image source={require('../../assets/favicon.png')} style={styles.brandLogo} />
         <Text style={styles.brandText}>TibiaTrader</Text>
       </TouchableOpacity>
 
@@ -128,6 +121,11 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 6,
     paddingVertical: 6,
+  },
+  brandLogo: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
   },
   brandText: {
     color: colors.textPrimary,
