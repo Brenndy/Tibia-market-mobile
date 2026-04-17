@@ -171,3 +171,35 @@ test.describe('Market screen — navigation', () => {
     await expect(page).toHaveURL(/item/);
   });
 });
+
+test.describe('Market screen — desktop table rows', () => {
+  test.skip(
+    ({ viewport }) => !viewport || viewport.width < 900,
+    'desktop-only: table view renders above 900px breakpoint',
+  );
+
+  test.beforeEach(async ({ page }) => {
+    await page.evaluate(() => localStorage.setItem('tibia_view_mode_v1', 'list'));
+    await page.reload();
+    await expect(page.getByText('Demon Legs')).toBeVisible();
+  });
+
+  test('renders table header columns', async ({ page }) => {
+    await expect(page.getByText('ITEMS', { exact: false }).first()).toBeVisible();
+    await expect(page.getByText('VOL/MO.').first()).toBeVisible();
+    await expect(page.getByText('OFFERS', { exact: false }).first()).toBeVisible();
+    await expect(page.getByText('MARGIN', { exact: false }).first()).toBeVisible();
+  });
+
+  test('row exposes row-star and row-bell testIDs for each item', async ({ page }) => {
+    await expect(page.locator('[data-testid="row-star-demon legs"]')).toBeVisible();
+    await expect(page.locator('[data-testid="row-bell-demon legs"]')).toBeVisible();
+  });
+
+  test('row star toggles favorite and persists', async ({ page }) => {
+    const starBtn = page.locator('[data-testid="row-star-demon legs"]');
+    await starBtn.click({ force: true });
+    const stored = await getLocalStorage(page, 'tibia_favorites_v2');
+    expect(stored).toContain('demon legs');
+  });
+});

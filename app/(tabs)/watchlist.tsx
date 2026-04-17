@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, useNavigation } from 'expo-router';
@@ -13,6 +21,8 @@ import { ItemImage } from '@/src/components/ItemImage';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const DESKTOP_BREAKPOINT = 900;
 
 // Polish plural picker: 1 → one, 2–4 (excl. teens) → few, rest → many.
 // Works for EN too because all three keys resolve to the same English word.
@@ -28,6 +38,38 @@ function pluralKey(
 }
 const pluralActive = (n: number) =>
   pluralKey(n, { one: 'active_label_one', few: 'active_label_few', many: 'active_label_many' });
+
+// Maps current vs threshold to a 0..1 fill showing how close the alert is.
+// Full = triggered. 0 = price is more than 20% away from threshold.
+function alertProgress(
+  currentBuy: number | null,
+  currentSell: number | null,
+  alert: WatchAlert,
+): { buy: number; sell: number; anyTriggered: boolean } {
+  const WINDOW = 0.2;
+  let buy = 0;
+  let sell = 0;
+  let anyTriggered = false;
+  if (alert.buyAlert != null && currentBuy != null && currentBuy > 0) {
+    if (currentBuy <= alert.buyAlert) {
+      buy = 1;
+      anyTriggered = true;
+    } else {
+      const over = (currentBuy - alert.buyAlert) / alert.buyAlert;
+      buy = Math.max(0, 1 - over / WINDOW);
+    }
+  }
+  if (alert.sellAlert != null && currentSell != null && currentSell > 0) {
+    if (currentSell >= alert.sellAlert) {
+      sell = 1;
+      anyTriggered = true;
+    } else {
+      const under = (alert.sellAlert - currentSell) / alert.sellAlert;
+      sell = Math.max(0, 1 - under / WINDOW);
+    }
+  }
+  return { buy, sell, anyTriggered };
+}
 
 // ─── WatchCard ────────────────────────────────────────────────────────────────
 
@@ -47,6 +89,7 @@ function WatchCard({
   const sellOffer = marketItem?.sell_offer ?? null;
   const triggered = isAlertTriggered(alert, buyOffer, sellOffer);
   const anyTriggered = triggered.buy || triggered.sell;
+  const progress = alertProgress(buyOffer, sellOffer, alert);
 
   return (
     <TouchableOpacity
@@ -146,6 +189,36 @@ function WatchCard({
           <Text style={styles.volUnit}>{t('units')}</Text>
         </View>
       </View>
+      {(alert.buyAlert != null || alert.sellAlert != null) && marketItem && (
+        <View style={styles.progressRow}>
+          {alert.buyAlert != null && (
+            <View style={styles.progressTrack}>
+              <View
+                style={[
+                  styles.progressFill,
+                  {
+                    width: `${Math.round(progress.buy * 100)}%`,
+                    backgroundColor: triggered.buy ? colors.gold : colors.buy,
+                  },
+                ]}
+              />
+            </View>
+          )}
+          {alert.sellAlert != null && (
+            <View style={styles.progressTrack}>
+              <View
+                style={[
+                  styles.progressFill,
+                  {
+                    width: `${Math.round(progress.sell * 100)}%`,
+                    backgroundColor: triggered.sell ? colors.gold : colors.sell,
+                  },
+                ]}
+              />
+            </View>
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
@@ -158,10 +231,12 @@ function WorldAlertsSection({
   world,
   alerts,
   onEdit,
+  isDesktop,
 }: {
   world: string;
   alerts: WatchAlert[];
   onEdit: (alert: WatchAlert) => void;
+  isDesktop: boolean;
 }) {
   const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
@@ -247,22 +322,24 @@ function WorldAlertsSection({
         )}
       </View>
 
-      {[...alerts]
-        .sort((a, b) => {
-          const aItem = getItem(a.itemName);
-          const bItem = getItem(b.itemName);
-          const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
-          const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
-          return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
-        })
-        .map((alert) => (
-          <WatchCard
-            key={`${alert.world}-${alert.itemName}`}
-            alert={alert}
-            marketItem={getItem(alert.itemName)}
-            onEdit={onEdit}
-          />
-        ))}
+      <View style={isDesktop ? styles.sectionGrid : { gap: 8 }}>
+        {[...alerts]
+          .sort((a, b) => {
+            const aItem = getItem(a.itemName);
+            const bItem = getItem(b.itemName);
+            const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
+            const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
+            return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
+          })
+          .map((alert) => (
+            <View
+              key={`${alert.world}-${alert.itemName}`}
+              style={isDesktop ? styles.gridCardDesktop : undefined}
+            >
+              <WatchCard alert={alert} marketItem={getItem(alert.itemName)} onEdit={onEdit} />
+            </View>
+          ))}
+      </View>
     </View>
   );
 }
@@ -272,9 +349,11 @@ function WorldAlertsSection({
 function WorldFavoritesSection({
   world,
   favoriteNames,
+  isDesktop,
 }: {
   world: string;
   favoriteNames: string[];
+  isDesktop: boolean;
 }) {
   const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
@@ -294,9 +373,16 @@ function WorldFavoritesSection({
         </View>
         {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}
       </View>
-      {items.map((item) => (
-        <MarketItemCard key={`${world}-${item.name}`} item={item} world={world} />
-      ))}
+      <View style={isDesktop ? styles.sectionGrid : undefined}>
+        {items.map((item) => (
+          <View
+            key={`${world}-${item.name}`}
+            style={isDesktop ? styles.gridCardDesktop : undefined}
+          >
+            <MarketItemCard item={item} world={world} />
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
@@ -314,6 +400,8 @@ export default function WatchlistScreen() {
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
   const [favWorldFilter, setFavWorldFilter] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'alerts' | 'favorites'>('alerts');
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= DESKTOP_BREAKPOINT;
 
   useEffect(() => {
     const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
@@ -448,6 +536,7 @@ export default function WatchlistScreen() {
                     world={world}
                     alerts={filteredAlerts.filter((a) => a.world === world)}
                     onEdit={setEditingAlert}
+                    isDesktop={isDesktop}
                   />
                 ))}
               </ScrollView>
@@ -523,6 +612,7 @@ export default function WatchlistScreen() {
                     key={world}
                     world={world}
                     favoriteNames={allFavorites[world] ?? []}
+                    isDesktop={isDesktop}
                   />
                 ))}
               </ScrollView>
@@ -635,7 +725,14 @@ const styles = StyleSheet.create({
     color: colors.gold,
   },
 
-  content: { padding: 12, gap: 16, paddingBottom: 80 },
+  content: {
+    padding: 12,
+    gap: 16,
+    paddingBottom: 80,
+    width: '100%',
+    maxWidth: 1280,
+    alignSelf: 'center',
+  },
 
   worldSection: { gap: 8 },
   worldHeader: {
@@ -755,6 +852,37 @@ const styles = StyleSheet.create({
   noAlert: { color: colors.textMuted, fontSize: 10, fontStyle: 'italic' },
   volUnit: { color: colors.textMuted, fontSize: 10 },
   divV: { width: 1, backgroundColor: colors.border, marginVertical: 8 },
+  progressRow: {
+    flexDirection: 'row',
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: colors.divider,
+  },
+  progressTrack: {
+    flex: 1,
+    height: 4,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 2,
+  },
+  sectionGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  gridCardDesktop: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    minWidth: 380,
+    maxWidth: '50%',
+  },
 
   empty: {
     flex: 1,

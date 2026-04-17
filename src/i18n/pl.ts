@@ -70,6 +70,9 @@ export const pl = {
   alert_active: '🟢 Alert jest teraz aktywny!',
   price_must_drop: 'Cena musi spaść o',
   price_must_rise: 'Cena musi wzrosnąć o',
+  suggest_label: 'Szybkie:',
+  toast_alert_saved: 'Alert zapisany',
+  toast_alert_removed: 'Alert usunięty',
 
   // Statistics
   loading_stats: 'Ładowanie statystyk...',
