@@ -80,9 +80,7 @@ test.describe('SEO — SSR body content (Soft 404 guard)', () => {
       if (html === null) return false;
       return !hasH1(html, new RegExp(name.replace(/\s/g, '\\s*'), 'i'));
     });
-    const anyBuilt = POPULAR_ITEMS.some(
-      (n) => readIfExported(`item/${n}.html`) !== null,
-    );
+    const anyBuilt = POPULAR_ITEMS.some((n) => readIfExported(`item/${n}.html`) !== null);
     test.skip(!anyBuilt, 'dist/ not built');
     expect(missing, `items missing matching h1: ${missing.join(', ')}`).toEqual([]);
   });

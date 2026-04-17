@@ -89,8 +89,8 @@ function HomeContent({ locale }: { locale: Locale }) {
     <>
       <h1>TibiaTrader — live Tibia market prices</h1>
       <p>
-        Free Tibia market tracker. Live buy and sell offers across every world, flip margins,
-        price alerts and 90-day volume history. No signup required, mobile-friendly.
+        Free Tibia market tracker. Live buy and sell offers across every world, flip margins, price
+        alerts and 90-day volume history. No signup required, mobile-friendly.
       </p>
       <nav>
         <ul>
@@ -236,8 +236,8 @@ function ItemTemplateContent({ locale }: { locale: Locale }) {
       <>
         <h1>Ceny przedmiotów Tibii</h1>
         <p>
-          Wyszukaj dowolny przedmiot, aby zobaczyć aktualne oferty kupna i sprzedaży, marżę flipa
-          i historię cen na każdym świecie.
+          Wyszukaj dowolny przedmiot, aby zobaczyć aktualne oferty kupna i sprzedaży, marżę flipa i
+          historię cen na każdym świecie.
         </p>
         <PopularItemsList locale={locale} />
       </>
@@ -247,8 +247,8 @@ function ItemTemplateContent({ locale }: { locale: Locale }) {
     <>
       <h1>Tibia item prices</h1>
       <p>
-        Look up any Tibia item to see live buy and sell offers, flip margin and price history
-        across every world.
+        Look up any Tibia item to see live buy and sell offers, flip margin and price history across
+        every world.
       </p>
       <PopularItemsList locale={locale} />
     </>
