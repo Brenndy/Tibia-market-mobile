@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { colors } from '../theme/colors';
@@ -33,16 +33,34 @@ export function DesktopSidebar() {
   const { selectedWorld } = useWorld();
   const { data } = useMarketBoard(selectedWorld);
   const [collapsed, setCollapsed] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+  const widthAnim = useRef(new Animated.Value(WIDTH_EXPANDED)).current;
 
   useEffect(() => {
     let mounted = true;
     storage.getItem(COLLAPSED_KEY).then((v) => {
-      if (mounted && v === '1') setCollapsed(true);
+      if (!mounted) return;
+      const isCollapsed = v === '1';
+      if (isCollapsed) {
+        setCollapsed(true);
+        widthAnim.setValue(WIDTH_COLLAPSED);
+      }
+      setHydrated(true);
     });
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [widthAnim]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    Animated.timing(widthAnim, {
+      toValue: collapsed ? WIDTH_COLLAPSED : WIDTH_EXPANDED,
+      duration: 220,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false,
+    }).start();
+  }, [collapsed, hydrated, widthAnim]);
 
   const toggle = () => {
     setCollapsed((prev) => {
@@ -87,7 +105,9 @@ export function DesktopSidebar() {
   const cycleLanguage = () => setLanguage(language === 'pl' ? 'en' : 'pl');
 
   return (
-    <View style={[styles.sidebar, collapsed && styles.sidebarCollapsed]}>
+    <Animated.View
+      style={[styles.sidebar, collapsed && styles.sidebarCollapsed, { width: widthAnim }]}
+    >
       <View style={[styles.brandRow, collapsed && styles.brandRowCollapsed]}>
         <TouchableOpacity
           onPress={() => router.navigate('/')}
@@ -186,7 +206,7 @@ export function DesktopSidebar() {
           </>
         )}
       </View>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -194,16 +214,15 @@ export const SIDEBAR_WIDTH = WIDTH_EXPANDED;
 
 const styles = StyleSheet.create({
   sidebar: {
-    width: WIDTH_EXPANDED,
     backgroundColor: colors.surface,
     borderRightWidth: 1,
     borderRightColor: colors.border,
     paddingVertical: 20,
     paddingHorizontal: 14,
     gap: 20,
+    overflow: 'hidden',
   },
   sidebarCollapsed: {
-    width: WIDTH_COLLAPSED,
     paddingHorizontal: 8,
     alignItems: 'center',
   },
