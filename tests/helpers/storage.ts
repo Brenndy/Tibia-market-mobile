@@ -75,3 +75,27 @@ export const ALERT_BELOBRA_MAGIC_SWORD = {
   sellAlert: 40000, // below current sell_offer 52000 → triggered
   addedAt: '2026-04-08T10:00:00Z',
 };
+
+// User's "buy soulbleeder cheap" scenario mapped to test item:
+// sell_offer is 950000; alert fires when sell drops ≤ 1_000_000.
+export const ALERT_ANTICA_DEMON_LEGS_SELL_BELOW = {
+  itemName: 'demon legs',
+  wikiName: 'Demon_Legs',
+  world: 'Antica',
+  buyAlert: null,
+  sellAlert: 1000000,
+  sellAlertCondition: 'below' as const,
+  addedAt: '2026-04-17T10:00:00Z',
+};
+
+// Flipper scenario: fire when buy offers rise above threshold.
+// buy_offer is 800000; alert fires when buy ≥ 700000.
+export const ALERT_ANTICA_DEMON_LEGS_BUY_ABOVE = {
+  itemName: 'demon legs',
+  wikiName: 'Demon_Legs',
+  world: 'Antica',
+  buyAlert: 700000,
+  sellAlert: null,
+  buyAlertCondition: 'above' as const,
+  addedAt: '2026-04-17T10:00:00Z',
+};

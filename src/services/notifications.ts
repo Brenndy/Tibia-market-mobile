@@ -4,6 +4,13 @@ import * as TaskManager from 'expo-task-manager';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getProxyUrl } from '../api/config';
+import {
+  AlertCondition,
+  WatchAlert,
+  getBuyCondition,
+  getSellCondition,
+  isAlertTriggered,
+} from '../context/WatchlistContext';
 
 const BACKGROUND_TASK = 'tibia-price-check';
 const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
@@ -47,20 +54,23 @@ export async function requestNotificationPermissions(): Promise<boolean> {
 export async function sendPriceAlert(
   itemName: string,
   side: 'buy' | 'sell',
+  direction: AlertCondition,
   currentPrice: number,
   targetPrice: number,
 ): Promise<void> {
-  const title = side === 'buy' ? `📉 ${itemName} – buy alert` : `📈 ${itemName} – sell alert`;
-  const body =
-    side === 'buy'
-      ? `Buy price dropped to ${formatGoldSimple(currentPrice)} gp (target ≤ ${formatGoldSimple(targetPrice)} gp)`
-      : `Sell price rose to ${formatGoldSimple(currentPrice)} gp (target ≥ ${formatGoldSimple(targetPrice)} gp)`;
+  const arrow = direction === 'below' ? '📉' : '📈';
+  const sideLabel = side === 'buy' ? 'buy alert' : 'sell alert';
+  const title = `${arrow} ${itemName} – ${sideLabel}`;
+  const priceLabel = side === 'buy' ? 'Buy price' : 'Sell price';
+  const movement = direction === 'below' ? 'dropped to' : 'rose to';
+  const op = direction === 'below' ? '≤' : '≥';
+  const body = `${priceLabel} ${movement} ${formatGoldSimple(currentPrice)} gp (target ${op} ${formatGoldSimple(targetPrice)} gp)`;
 
   await Notifications.scheduleNotificationAsync({
     content: {
       title,
       body,
-      data: { itemName, side },
+      data: { itemName, side, direction },
       ...(Platform.OS === 'android' ? { channelId: 'price-alerts' } : {}),
     },
     trigger: null, // immediate
@@ -101,12 +111,7 @@ export async function checkWatchlistPrices(): Promise<void> {
   try {
     const raw = await AsyncStorage.getItem(WATCHLIST_KEY);
     if (!raw) return;
-    const watchlist: {
-      itemName: string;
-      world: string;
-      buyAlert: number | null;
-      sellAlert: number | null;
-    }[] = JSON.parse(raw);
+    const watchlist: WatchAlert[] = JSON.parse(raw);
     if (!watchlist.length) return;
 
     // Group by world to minimize API calls
@@ -149,25 +154,22 @@ export async function checkWatchlistPrices(): Promise<void> {
         if (!item) continue;
 
         const notifiedSet = await getNotifiedSet();
+        const fired = isAlertTriggered(alert, item.buy_offer, item.sell_offer);
 
-        // Buy alert: trigger when buy_offer <= buyAlert
-        if (alert.buyAlert != null && item.buy_offer != null && item.buy_offer <= alert.buyAlert) {
-          const key = `${world}:${alert.itemName}:buy:${alert.buyAlert}`;
+        if (fired.buy && alert.buyAlert != null && item.buy_offer != null) {
+          const dir = getBuyCondition(alert);
+          const key = `${world}:${alert.itemName}:buy:${dir}:${alert.buyAlert}`;
           if (!notifiedSet.has(key)) {
-            await sendPriceAlert(alert.itemName, 'buy', item.buy_offer, alert.buyAlert);
+            await sendPriceAlert(alert.itemName, 'buy', dir, item.buy_offer, alert.buyAlert);
             await markNotified(key);
           }
         }
 
-        // Sell alert: trigger when sell_offer >= sellAlert
-        if (
-          alert.sellAlert != null &&
-          item.sell_offer != null &&
-          item.sell_offer >= alert.sellAlert
-        ) {
-          const key = `${world}:${alert.itemName}:sell:${alert.sellAlert}`;
+        if (fired.sell && alert.sellAlert != null && item.sell_offer != null) {
+          const dir = getSellCondition(alert);
+          const key = `${world}:${alert.itemName}:sell:${dir}:${alert.sellAlert}`;
           if (!notifiedSet.has(key)) {
-            await sendPriceAlert(alert.itemName, 'sell', item.sell_offer, alert.sellAlert);
+            await sendPriceAlert(alert.itemName, 'sell', dir, item.sell_offer, alert.sellAlert);
             await markNotified(key);
           }
         }

@@ -8,12 +8,22 @@ import React, {
 } from 'react';
 import { storage } from '../utils/storage';
 
+export type AlertCondition = 'above' | 'below';
+
+// Back-compat defaults: pre-direction alerts were hard-coded as
+// buy → below (waiting for a cheap buy offer), sell → above (waiting for
+// someone to overpay on the sell side). Honour that when the field is missing.
+export const DEFAULT_BUY_CONDITION: AlertCondition = 'below';
+export const DEFAULT_SELL_CONDITION: AlertCondition = 'above';
+
 export interface WatchAlert {
   itemName: string;
   wikiName: string;
   world: string;
-  buyAlert: number | null; // trigger when buy_offer <= buyAlert
-  sellAlert: number | null; // trigger when sell_offer >= sellAlert
+  buyAlert: number | null;
+  sellAlert: number | null;
+  buyAlertCondition?: AlertCondition;
+  sellAlertCondition?: AlertCondition;
   addedAt: string;
 }
 
@@ -26,6 +36,8 @@ interface WatchlistContextType {
     world: string,
     buyAlert: number | null,
     sellAlert: number | null,
+    buyAlertCondition?: AlertCondition,
+    sellAlertCondition?: AlertCondition,
   ) => void;
   isWatched: (itemName: string, world: string) => boolean;
   getAlert: (itemName: string, world: string) => WatchAlert | undefined;
@@ -68,7 +80,13 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
       if (exists) {
         return prev.map((w) =>
           w.itemName === item.itemName && w.world === item.world
-            ? { ...w, buyAlert: item.buyAlert, sellAlert: item.sellAlert }
+            ? {
+                ...w,
+                buyAlert: item.buyAlert,
+                sellAlert: item.sellAlert,
+                buyAlertCondition: item.buyAlertCondition,
+                sellAlertCondition: item.sellAlertCondition,
+              }
             : w,
         );
       }
@@ -81,10 +99,19 @@ export function WatchlistProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateAlert = useCallback(
-    (itemName: string, world: string, buyAlert: number | null, sellAlert: number | null) => {
+    (
+      itemName: string,
+      world: string,
+      buyAlert: number | null,
+      sellAlert: number | null,
+      buyAlertCondition?: AlertCondition,
+      sellAlertCondition?: AlertCondition,
+    ) => {
       setWatchlist((prev) =>
         prev.map((w) =>
-          w.itemName === itemName && w.world === world ? { ...w, buyAlert, sellAlert } : w,
+          w.itemName === itemName && w.world === world
+            ? { ...w, buyAlert, sellAlert, buyAlertCondition, sellAlertCondition }
+            : w,
         ),
       );
     },
@@ -116,13 +143,35 @@ export function useWatchlist() {
   return useContext(WatchlistContext);
 }
 
+export function getBuyCondition(alert: WatchAlert): AlertCondition {
+  return alert.buyAlertCondition ?? DEFAULT_BUY_CONDITION;
+}
+
+export function getSellCondition(alert: WatchAlert): AlertCondition {
+  return alert.sellAlertCondition ?? DEFAULT_SELL_CONDITION;
+}
+
+export function matchesCondition(
+  offer: number,
+  threshold: number,
+  condition: AlertCondition,
+): boolean {
+  return condition === 'below' ? offer <= threshold : offer >= threshold;
+}
+
 export function isAlertTriggered(
   alert: WatchAlert,
   buyOffer: number | null,
   sellOffer: number | null,
 ): { buy: boolean; sell: boolean } {
   return {
-    buy: alert.buyAlert != null && buyOffer != null && buyOffer <= alert.buyAlert,
-    sell: alert.sellAlert != null && sellOffer != null && sellOffer >= alert.sellAlert,
+    buy:
+      alert.buyAlert != null &&
+      buyOffer != null &&
+      matchesCondition(buyOffer, alert.buyAlert, getBuyCondition(alert)),
+    sell:
+      alert.sellAlert != null &&
+      sellOffer != null &&
+      matchesCondition(sellOffer, alert.sellAlert, getSellCondition(alert)),
   };
 }
