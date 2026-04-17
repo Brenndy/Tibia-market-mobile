@@ -9,6 +9,7 @@ import { useWorld } from '../context/WorldContext';
 import { useMarketBoard } from '../hooks/useMarket';
 import { WorldBadge } from './WorldBadge';
 import { LanguageToggle } from './LanguageToggle';
+import { GitHubStars } from './GitHubStars';
 import { storage } from '../utils/storage';
 
 const COLLAPSED_KEY = 'tibia_sidebar_collapsed_v1';
@@ -198,11 +199,13 @@ export function DesktopSidebar() {
             >
               <Text style={styles.langBadge}>{language.toUpperCase()}</Text>
             </TouchableOpacity>
+            <GitHubStars collapsed />
           </>
         ) : (
           <>
             <WorldBadge />
             <LanguageToggle />
+            <GitHubStars />
           </>
         )}
       </View>
