@@ -116,7 +116,10 @@ function metaForPath(
     const rawName = decodeURIComponent(itemMatch[1]);
     const isTemplate = rawName === '[name]';
     const byLocale = isTemplate ? ITEM_TEMPLATE_META : itemMeta(toTitleCase(rawName));
-    return { meta: byLocale[locale], canonical: `${SITE_URL}${path}` };
+    // usePathname returns the decoded form (spaces, not %20). Re-encode the
+    // item segment so the canonical URL is a valid absolute URL Google can crawl.
+    const canonicalPath = isTemplate ? path : `/item/${encodeURIComponent(rawName)}`;
+    return { meta: byLocale[locale], canonical: `${SITE_URL}${canonicalPath}` };
   }
   const normalized = path.replace(/\?.*$/, '').replace(/#.*$/, '');
   const byLocale = STATIC_ROUTES[normalized] ?? HOMEPAGE_META;
