@@ -980,8 +980,10 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
           currentSell={stats.sell_offer}
           initialBuyAlert={watchAlert?.buyAlert ?? null}
           initialSellAlert={watchAlert?.sellAlert ?? null}
+          initialBuyAlertCondition={watchAlert?.buyAlertCondition}
+          initialSellAlertCondition={watchAlert?.sellAlertCondition}
           isEditing={watched}
-          onSave={(buy, sell) => {
+          onSave={(buy, sell, buyCond, sellCond) => {
             if (buy == null && sell == null) {
               removeFromWatchlist(name, world);
             } else {
@@ -991,6 +993,8 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
                 world,
                 buyAlert: buy,
                 sellAlert: sell,
+                buyAlertCondition: buyCond,
+                sellAlertCondition: sellCond,
               });
             }
           }}

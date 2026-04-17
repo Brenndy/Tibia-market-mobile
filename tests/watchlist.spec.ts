@@ -9,6 +9,8 @@ import {
   ALERT_ANTICA_DEMON_LEGS,
   ALERT_ANTICA_DEMON_LEGS_TRIGGERED,
   ALERT_BELOBRA_MAGIC_SWORD,
+  ALERT_ANTICA_DEMON_LEGS_SELL_BELOW,
+  ALERT_ANTICA_DEMON_LEGS_BUY_ABOVE,
 } from './helpers/storage';
 
 test.beforeEach(async ({ page }) => {
@@ -118,6 +120,40 @@ test.describe('Watchlist — with alerts', () => {
     await goToWatchlist(page);
     await page.getByText('Demon Legs').first().click();
     await expect(page).toHaveURL(/item/);
+  });
+});
+
+test.describe('Watchlist — direction toggle', () => {
+  test('sell-below alert shows ≤ symbol and DEAL badge when triggered', async ({ page }) => {
+    await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS_SELL_BELOW]);
+    await page.reload();
+    await goToWatchlist(page);
+    await expect(page.getByText('Demon Legs')).toBeVisible();
+    await expect(page.getByText(/≤/).first()).toBeVisible();
+    await expect(page.getByText('DEAL').or(page.getByText('Deal'))).toBeVisible();
+    await page.screenshot({ path: 'tests/screenshots/watchlist-sell-below.png' });
+  });
+
+  test('buy-above alert shows ≥ symbol and DEAL badge when triggered', async ({ page }) => {
+    await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS_BUY_ABOVE]);
+    await page.reload();
+    await goToWatchlist(page);
+    await expect(page.getByText('Demon Legs')).toBeVisible();
+    await expect(page.getByText(/≥/).first()).toBeVisible();
+    await expect(page.getByText('DEAL').or(page.getByText('Deal'))).toBeVisible();
+    await page.screenshot({ path: 'tests/screenshots/watchlist-buy-above.png' });
+  });
+
+  test('edit modal exposes direction segments for both sides', async ({ page }) => {
+    await seedWatchlist(page, [ALERT_ANTICA_DEMON_LEGS]);
+    await page.reload();
+    await goToWatchlist(page);
+    await page.locator('[data-testid="edit-alert"]').first().click({ force: true });
+    await expect(page.locator('[data-testid="buy-dir-below"]')).toBeVisible();
+    await expect(page.locator('[data-testid="buy-dir-above"]')).toBeVisible();
+    await expect(page.locator('[data-testid="sell-dir-below"]')).toBeVisible();
+    await expect(page.locator('[data-testid="sell-dir-above"]')).toBeVisible();
+    await page.screenshot({ path: 'tests/screenshots/watchlist-modal-toggle.png' });
   });
 });
 
