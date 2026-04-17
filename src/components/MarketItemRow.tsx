@@ -35,7 +35,6 @@ function TrendChip({ current, average }: { current: number | null; average: numb
 export const MarketItemRow = memo(function MarketItemRow({ item, world, onPress }: Props) {
   const { toggleFavorite, isFavorite } = useWorld();
   const { isWatched, addToWatchlist, removeFromWatchlist, getAlert } = useWatchlist();
-  const { t } = useTranslation();
   const [watchModalVisible, setWatchModalVisible] = useState(false);
   const favorite = isFavorite(item.name, world);
   const watched = isWatched(item.name, world);

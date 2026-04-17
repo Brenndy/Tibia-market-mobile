@@ -40,7 +40,7 @@ export function DesktopSidebar() {
       icon: 'store',
       label: t('tab_market'),
       href: '/',
-      match: (p) => p === '/' || p === '/index' || p.startsWith('/item/'),
+      match: (p) => p === '/' || p === '/index',
     },
     {
       key: 'alerts',
