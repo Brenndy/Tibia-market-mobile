@@ -198,6 +198,8 @@ export default function RouteSEO() {
   // URL is the self-referencing canonical (prevents Google from treating the
   // PL landing as a duplicate of the EN root).
   const canonicalWithLang = locale === 'pl' ? `${canonical}?lang=pl` : canonical;
+  const hrefEn = canonical;
+  const hrefPl = `${canonical}?lang=pl`;
   const ogLocale = locale === 'pl' ? 'pl_PL' : 'en_US';
   const crumbs = breadcrumbsForPath(pathname, locale);
   return (
@@ -206,6 +208,9 @@ export default function RouteSEO() {
       <title>{meta.title}</title>
       <meta name="description" content={meta.description} />
       <link rel="canonical" href={canonicalWithLang} />
+      <link rel="alternate" hrefLang="en" href={hrefEn} />
+      <link rel="alternate" hrefLang="pl" href={hrefPl} />
+      <link rel="alternate" hrefLang="x-default" href={hrefEn} />
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
       <meta property="og:url" content={canonicalWithLang} />
