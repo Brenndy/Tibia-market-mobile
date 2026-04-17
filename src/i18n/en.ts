@@ -174,4 +174,8 @@ export const en: Record<TranslationKey, string> = {
   worlds_count_one: 'world',
   worlds_count_few: 'worlds',
   worlds_count_many: 'worlds',
+
+  // Sidebar
+  sidebar_collapse: 'Collapse menu',
+  sidebar_expand: 'Expand menu',
 };
