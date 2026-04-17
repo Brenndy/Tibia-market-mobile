@@ -182,4 +182,6 @@ export const en: Record<TranslationKey, string> = {
   // Sidebar
   sidebar_collapse: 'Collapse menu',
   sidebar_expand: 'Expand menu',
+  github_star_cta: 'Star on GitHub',
+  github_stars_label: 'View project on GitHub',
 };
