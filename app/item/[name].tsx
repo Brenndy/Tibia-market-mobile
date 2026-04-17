@@ -15,6 +15,7 @@ import Svg, {
   Rect,
 } from 'react-native-svg';
 import { useItemStats, useItemHistory, useItemOffers } from '@/src/hooks/useMarket';
+import { POPULAR_ITEMS } from '@/src/data/popularItems';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
 import { ItemImage } from '@/src/components/ItemImage';
@@ -1005,6 +1006,14 @@ export default function ItemDetailScreen() {
   const { name, world: paramWorld } = useLocalSearchParams<{ name: string; world: string }>();
   const { selectedWorld } = useWorld();
   return <ItemDetailBody name={name} world={paramWorld ?? selectedWorld} />;
+}
+
+// Pre-render a static HTML page for each popular item at build time so Google
+// can crawl them without executing JS. Consumed by expo-router's static export.
+// Non-pre-rendered item names still work as client-side routes — they just
+// don't have their own static HTML entry point.
+export async function generateStaticParams(): Promise<{ name: string }[]> {
+  return POPULAR_ITEMS.map((name) => ({ name }));
 }
 
 const styles = StyleSheet.create({
