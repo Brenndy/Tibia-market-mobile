@@ -82,7 +82,8 @@ export function WatchAlertModal({
     onSave(parsedBuy, parsedSell);
     const parts: string[] = [];
     if (parsedBuy != null && parsedBuy > 0) parts.push(`${t('buy')} ≤ ${formatGold(parsedBuy)}`);
-    if (parsedSell != null && parsedSell > 0) parts.push(`${t('sell')} ≥ ${formatGold(parsedSell)}`);
+    if (parsedSell != null && parsedSell > 0)
+      parts.push(`${t('sell')} ≥ ${formatGold(parsedSell)}`);
     showToast(`${t('toast_alert_saved')}: ${parts.join(' · ')}`, 'success');
     onClose();
   };
