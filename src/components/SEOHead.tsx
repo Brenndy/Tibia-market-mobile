@@ -136,6 +136,59 @@ function resolveLocale(langParam: string | string[] | undefined): Locale {
   return value === 'pl' ? 'pl' : 'en';
 }
 
+type Crumb = { name: string; url: string };
+
+const CRUMB_LABELS: Record<string, Record<Locale, string>> = {
+  home: { en: 'Home', pl: 'Strona główna' },
+  watchlist: { en: 'Watchlist', pl: 'Obserwowane' },
+  statistics: { en: 'Statistics', pl: 'Statystyki' },
+  worldSelect: { en: 'Select World', pl: 'Wybierz świat' },
+  market: { en: 'Market', pl: 'Rynek' },
+};
+
+// Build the breadcrumb trail for the current route. Homepage returns an empty
+// list — BreadcrumbList with a single "Home" entry is useless to Google and
+// rejected by Rich Results Test.
+function breadcrumbsForPath(pathname: string | null, locale: Locale): Crumb[] {
+  const path = pathname || '/';
+  const normalized = path.replace(/\?.*$/, '').replace(/#.*$/, '').replace('/(tabs)', '') || '/';
+  const home: Crumb = { name: CRUMB_LABELS.home[locale], url: `${SITE_URL}/` };
+
+  const itemMatch = path.match(/^\/item\/([^/?#]+)/);
+  if (itemMatch) {
+    const rawName = decodeURIComponent(itemMatch[1]);
+    if (rawName === '[name]') return [];
+    return [
+      home,
+      { name: CRUMB_LABELS.market[locale], url: `${SITE_URL}/` },
+      { name: toTitleCase(rawName), url: `${SITE_URL}/item/${encodeURIComponent(rawName)}` },
+    ];
+  }
+  if (normalized === '/watchlist') {
+    return [home, { name: CRUMB_LABELS.watchlist[locale], url: `${SITE_URL}/watchlist` }];
+  }
+  if (normalized === '/statistics') {
+    return [home, { name: CRUMB_LABELS.statistics[locale], url: `${SITE_URL}/statistics` }];
+  }
+  if (normalized === '/world-select') {
+    return [home, { name: CRUMB_LABELS.worldSelect[locale], url: `${SITE_URL}/world-select` }];
+  }
+  return [];
+}
+
+function breadcrumbJsonLd(crumbs: Crumb[]): string {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  });
+}
+
 export default function RouteSEO() {
   const pathname = usePathname();
   const params = useGlobalSearchParams<{ lang?: string }>();
@@ -146,6 +199,7 @@ export default function RouteSEO() {
   // PL landing as a duplicate of the EN root).
   const canonicalWithLang = locale === 'pl' ? `${canonical}?lang=pl` : canonical;
   const ogLocale = locale === 'pl' ? 'pl_PL' : 'en_US';
+  const crumbs = breadcrumbsForPath(pathname, locale);
   return (
     <Helmet>
       <html lang={locale} />
@@ -158,6 +212,7 @@ export default function RouteSEO() {
       <meta property="og:locale" content={ogLocale} />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
+      {crumbs.length > 0 && <script type="application/ld+json">{breadcrumbJsonLd(crumbs)}</script>}
     </Helmet>
   );
 }

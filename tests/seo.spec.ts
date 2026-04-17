@@ -164,3 +164,53 @@ test.describe('SEO — Polish (?lang=pl) landings', () => {
     expect(await helmetAttr(page, 'meta[property="og:locale"]', 'content')).toBe('en_US');
   });
 });
+
+test.describe('SEO — BreadcrumbList JSON-LD', () => {
+  async function breadcrumbJson(page: Page): Promise<{
+    '@type': string;
+    itemListElement: { position: number; name: string; item: string }[];
+  } | null> {
+    // Helmet emits the script with data-rh="true"; +html.tsx has its own
+    // WebApplication JSON-LD without that attribute, so the selector below
+    // picks only the route-driven BreadcrumbList.
+    const handle = page.locator('script[type="application/ld+json"][data-rh="true"]');
+    const count = await handle.count();
+    if (count === 0) return null;
+    const text = await handle.first().textContent();
+    return text ? JSON.parse(text) : null;
+  }
+
+  test('homepage has no BreadcrumbList (single-crumb is useless)', async ({ page }) => {
+    await page.goto('/');
+    await waitForHelmet(page);
+    expect(await breadcrumbJson(page)).toBeNull();
+  });
+
+  test('watchlist emits Home → Watchlist breadcrumbs', async ({ page }) => {
+    await page.goto('/watchlist');
+    await waitForHelmet(page);
+    const data = await breadcrumbJson(page);
+    expect(data?.['@type']).toBe('BreadcrumbList');
+    expect(data?.itemListElement).toHaveLength(2);
+    expect(data?.itemListElement[0].name).toBe('Home');
+    expect(data?.itemListElement[1].name).toBe('Watchlist');
+    expect(data?.itemListElement[1].item).toBe('https://tibiatrader.com/watchlist');
+  });
+
+  test('item page emits Home → Market → Item breadcrumbs', async ({ page }) => {
+    await page.goto('/item/demon%20legs');
+    await waitForHelmet(page);
+    const data = await breadcrumbJson(page);
+    expect(data?.itemListElement).toHaveLength(3);
+    expect(data?.itemListElement[2].name).toBe('Demon Legs');
+    expect(data?.itemListElement[2].item).toBe('https://tibiatrader.com/item/demon%20legs');
+  });
+
+  test('Polish landing emits Polish breadcrumb labels', async ({ page }) => {
+    await page.goto('/watchlist?lang=pl');
+    await waitForHelmet(page);
+    const data = await breadcrumbJson(page);
+    expect(data?.itemListElement[0].name).toBe('Strona główna');
+    expect(data?.itemListElement[1].name).toBe('Obserwowane');
+  });
+});
