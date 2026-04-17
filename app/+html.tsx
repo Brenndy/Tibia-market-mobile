@@ -78,8 +78,9 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={ogImageAlt} />
-        <meta property="og:locale" content="en_US" />
+        {/* og:locale is emitted per-route by RouteSEO (en_US or pl_PL based on ?lang). */}
         <meta property="og:locale:alternate" content="pl_PL" />
+        <meta property="og:locale:alternate" content="en_US" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={ogImage} />
