@@ -172,6 +172,10 @@ export const pl = {
   worlds_count_one: 'świat',
   worlds_count_few: 'światy',
   worlds_count_many: 'światów',
+
+  // Sidebar
+  sidebar_collapse: 'Zwiń menu',
+  sidebar_expand: 'Rozwiń menu',
 } as const;
 
 export type TranslationKey = keyof typeof pl;
