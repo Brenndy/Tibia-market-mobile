@@ -58,19 +58,13 @@ export default function Root({ children }: PropsWithChildren) {
         <link rel="preconnect" href="https://api.tibiadata.com" />
         <link rel="dns-prefetch" href="https://api.tibiadata.com" />
 
-        <meta
-          name="keywords"
-          content="tibia, tibia market, tibia prices, tibia trading, tibia flip, tibia margin, tibia watchlist, tibia alerts, tibia item prices, tibia gold, mmorpg trading"
-        />
         <meta name="author" content="Brenndy" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta
           name="google-site-verification"
           content="mj9399_G5dxBGNUMluwHzCC6qVxofwHXGfZuoq2Ajes"
         />
-        <link rel="alternate" hrefLang="en" href={siteUrl} />
-        <link rel="alternate" hrefLang="pl" href={`${siteUrl}/?lang=pl`} />
-        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
+        {/* hreflang links are emitted per-route by RouteSEO (src/components/SEOHead.tsx). */}
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TibiaTrader" />

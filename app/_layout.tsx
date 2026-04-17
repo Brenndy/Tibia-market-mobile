@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import RouteSEO from '@/src/components/SEOHead';
+import SEOContent from '@/src/components/SEOContent';
 import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
@@ -89,6 +90,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={styles.root}>
       {Platform.OS === 'web' && <RouteSEO />}
+      {Platform.OS === 'web' && <SEOContent />}
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <WorldProvider>

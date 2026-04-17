@@ -49,10 +49,11 @@ This means **any `<Helmet>` / `<Head>` placed inside a screen does NOT end up in
 
 | File                                | What                                                                                    |
 | ----------------------------------- | --------------------------------------------------------------------------------------- |
-| `src/components/SEOHead.tsx`        | `RouteSEO` — per-route `<title>`, description, canonical, og:title/description/url     |
+| `src/components/SEOHead.tsx`        | `RouteSEO` — per-route `<title>`, description, canonical, hreflang en/pl/x-default,     |
+|                                     | og:title/description/url/locale, BreadcrumbList JSON-LD                                 |
 | `app/_layout.tsx`                   | mounts `<RouteSEO />` once (web only: `Platform.OS === 'web'`)                          |
-| `app/+html.tsx`                     | **global** tags: keywords, author, robots, hreflang, og:type/site_name/image+alt,       |
-|                                     | twitter:card/image, icon/manifest, JSON-LD WebApplication                               |
+| `app/+html.tsx`                     | **global** tags: author, robots, og:type/site_name/image+alt, twitter:card/image,       |
+|                                     | icon/manifest, JSON-LD WebApplication                                                   |
 | `public/sitemap.xml`                | all public routes + `hreflang` PL/EN                                                    |
 | `public/robots.txt`                 | sitemap pointer + allow all                                                             |
 
@@ -63,7 +64,7 @@ This means **any `<Helmet>` / `<Head>` placed inside a screen does NOT end up in
 - ALWAYS import Helmet from `expo-router/vendor/react-helmet-async/lib` (never from `expo-router/head` — it gates on `useIsFocused()`).
 - For dynamic routes (`/item/[name]`) the static export produces a single template with the literal `[name]` — give it a sensible generic title; the real item name is only rendered after client hydration.
 - Canonical URLs must never include the `(tabs)` group (`/(tabs)/watchlist` → canonical `/watchlist`).
-- `hreflang` always paired `en` + `pl` + `x-default`.
+- `hreflang` always paired `en` + `pl` + `x-default`, and must point at the **current** route's EN/PL URL pair (NOT at the homepage). Each subpage self-references its own language variants — do not hard-code hreflang in `+html.tsx`.
 
 ### 3.4 Checklist for a new page
 
