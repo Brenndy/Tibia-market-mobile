@@ -180,6 +180,8 @@ export const pl = {
   // Sidebar
   sidebar_collapse: 'Zwiń menu',
   sidebar_expand: 'Rozwiń menu',
+  github_star_cta: 'Oceń na GitHubie',
+  github_stars_label: 'Zobacz projekt na GitHubie',
 } as const;
 
 export type TranslationKey = keyof typeof pl;
