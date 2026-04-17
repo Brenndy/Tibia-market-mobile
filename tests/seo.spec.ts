@@ -165,6 +165,48 @@ test.describe('SEO — Polish (?lang=pl) landings', () => {
   });
 });
 
+test.describe('SEO — hreflang alternates', () => {
+  async function hreflangHref(page: Page, lang: string): Promise<string> {
+    const sel = `link[rel="alternate"][hreflang="${lang}"][data-rh="true"]`;
+    await page.waitForSelector(sel, { state: 'attached', timeout: 15_000 });
+    return (await page.locator(sel).getAttribute('href')) ?? '';
+  }
+
+  test('homepage emits self-referencing hreflang pair', async ({ page }) => {
+    await page.goto('/');
+    await waitForHelmet(page);
+    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/');
+    expect(await hreflangHref(page, 'pl')).toBe('https://tibiatrader.com/?lang=pl');
+    expect(await hreflangHref(page, 'x-default')).toBe('https://tibiatrader.com/');
+  });
+
+  test('subpage hreflang points at the same subpage, not homepage', async ({ page }) => {
+    await page.goto('/watchlist');
+    await waitForHelmet(page);
+    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/watchlist');
+    expect(await hreflangHref(page, 'pl')).toBe('https://tibiatrader.com/watchlist?lang=pl');
+    expect(await hreflangHref(page, 'x-default')).toBe('https://tibiatrader.com/watchlist');
+  });
+
+  test('item page hreflang preserves the item slug', async ({ page }) => {
+    await page.goto('/item/demon%20legs');
+    await waitForHelmet(page);
+    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/item/demon%20legs');
+    expect(await hreflangHref(page, 'pl')).toBe(
+      'https://tibiatrader.com/item/demon%20legs?lang=pl',
+    );
+  });
+
+  test('Polish landing still points hreflang=en at the EN URL (no self-ref to PL)', async ({
+    page,
+  }) => {
+    await page.goto('/watchlist?lang=pl');
+    await waitForHelmet(page);
+    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/watchlist');
+    expect(await hreflangHref(page, 'pl')).toBe('https://tibiatrader.com/watchlist?lang=pl');
+  });
+});
+
 test.describe('SEO — BreadcrumbList JSON-LD', () => {
   async function breadcrumbJson(page: Page): Promise<{
     '@type': string;
