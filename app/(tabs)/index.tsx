@@ -14,6 +14,7 @@ import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
+import { MarketItemRow, MarketRowHeader } from '@/src/components/MarketItemRow';
 import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { GoldSpinner } from '@/src/components/LoadingState';
@@ -55,6 +56,8 @@ export default function MarketScreen() {
   // Overridden by user preference stored in localStorage on first load.
   const [viewMode, setViewModeState] = useState<ViewMode>(isDesktop ? 'grid' : 'list');
   const numColumns = isDesktop && viewMode === 'grid' ? (width >= 1400 ? 3 : 2) : 1;
+  // Desktop + list = compact table rows instead of full-width cards.
+  const useTableRows = isDesktop && viewMode === 'list';
 
   useEffect(() => {
     storage.getItem(VIEW_MODE_KEY).then((v) => {
@@ -264,22 +267,35 @@ export default function MarketScreen() {
       ) : (
         <Animated.FlatList
           ref={listRef}
-          key={`grid-${numColumns}`}
+          key={`grid-${numColumns}-${useTableRows ? 'rows' : 'cards'}`}
           data={filteredItems.slice(0, displayCount)}
           keyExtractor={(item) => item.name}
           numColumns={numColumns}
           columnWrapperStyle={numColumns > 1 ? styles.gridRow : undefined}
-          renderItem={({ item }) => (
-            <View style={numColumns > 1 ? styles.gridItem : undefined}>
-              <MarketItemCard
+          renderItem={({ item }) =>
+            useTableRows ? (
+              <MarketItemRow
                 item={item}
                 world={selectedWorld}
-                onPress={numColumns > 1 ? () => setModalItemName(item.name) : undefined}
-                stretch={numColumns > 1}
+                onPress={() => setModalItemName(item.name)}
               />
-            </View>
-          )}
-          contentContainerStyle={[styles.list, { paddingTop: HEADER_HEIGHT + 12 }]}
+            ) : (
+              <View style={numColumns > 1 ? styles.gridItem : undefined}>
+                <MarketItemCard
+                  item={item}
+                  world={selectedWorld}
+                  onPress={numColumns > 1 ? () => setModalItemName(item.name) : undefined}
+                  stretch={numColumns > 1}
+                />
+              </View>
+            )
+          }
+          ListHeaderComponent={useTableRows ? <MarketRowHeader /> : null}
+          stickyHeaderIndices={useTableRows ? [0] : undefined}
+          contentContainerStyle={[
+            useTableRows ? styles.listTable : styles.list,
+            { paddingTop: HEADER_HEIGHT + 12 },
+          ]}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.3}
           onScroll={handleScroll}
@@ -443,6 +459,12 @@ const styles = StyleSheet.create({
   list: {
     paddingVertical: 6,
     paddingBottom: 80,
+  },
+  listTable: {
+    paddingBottom: 80,
+    width: '100%',
+    maxWidth: 1280,
+    alignSelf: 'center',
   },
   empty: {
     alignItems: 'center',

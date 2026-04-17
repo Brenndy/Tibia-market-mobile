@@ -10,6 +10,7 @@ import RouteSEO from '@/src/components/SEOHead';
 import { WorldProvider } from '@/src/context/WorldContext';
 import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
+import { ToastProvider } from '@/src/context/ToastContext';
 import { colors } from '@/src/theme/colors';
 
 // Normalize dynamic routes so Vercel Speed Insights aggregates per route
@@ -92,9 +93,11 @@ export default function RootLayout() {
         <LanguageProvider>
           <WorldProvider>
             <WatchlistProvider>
-              <StatusBar style="light" backgroundColor={colors.background} />
-              {Platform.OS === 'web' && <WebAnalytics />}
-              <AppNavigator />
+              <ToastProvider>
+                <StatusBar style="light" backgroundColor={colors.background} />
+                {Platform.OS === 'web' && <WebAnalytics />}
+                <AppNavigator />
+              </ToastProvider>
             </WatchlistProvider>
           </WorldProvider>
         </LanguageProvider>

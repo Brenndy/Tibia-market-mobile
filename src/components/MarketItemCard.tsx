@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
 import { colors } from '../theme/colors';
 import { useWorld } from '../context/WorldContext';
-import { useWatchlist } from '../context/WatchlistContext';
+import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useTranslation } from '../context/LanguageContext';
 import { ItemImage } from './ItemImage';
 import { WatchAlertModal } from './WatchAlertModal';
@@ -57,6 +57,10 @@ export const MarketItemCard = memo(function MarketItemCard({
   const favorite = isFavorite(item.name, world);
   const watched = isWatched(item.name, world);
   const existingAlert = getAlert(item.name, world);
+  const triggered = existingAlert
+    ? isAlertTriggered(existingAlert, item.buy_offer, item.sell_offer)
+    : { buy: false, sell: false };
+  const alertFiring = triggered.buy || triggered.sell;
   const dealQuality = getDealQuality(item);
 
   const margin =
@@ -67,6 +71,10 @@ export const MarketItemCard = memo(function MarketItemCard({
       ? (margin / item.buy_offer) * 100
       : null;
 
+  // Visual bar saturates at 30% margin; outlier cap at 500% for the numeric label
+  // so "449900%" spam offers don't make the bar or label look broken.
+  const MARGIN_DISPLAY_CAP = 500;
+  const marginIsOutlier = marginPct != null && marginPct >= MARGIN_DISPLAY_CAP;
   const marginBarWidth = marginPct != null ? Math.min(marginPct / 30, 1) : 0;
 
   const dealColor =
@@ -149,10 +157,14 @@ export const MarketItemCard = memo(function MarketItemCard({
                 setWatchModalVisible(true);
               }}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              style={styles.bellBtn}
+              style={[
+                styles.bellBtn,
+                watched && styles.bellBtnActive,
+                alertFiring && styles.bellBtnTriggered,
+              ]}
             >
               <MaterialCommunityIcons
-                name={watched ? 'bell' : 'bell-outline'}
+                name={alertFiring ? 'bell-ring' : watched ? 'bell' : 'bell-outline'}
                 size={18}
                 color={watched ? colors.gold : colors.textMuted}
               />
@@ -254,23 +266,27 @@ export const MarketItemCard = memo(function MarketItemCard({
               <Text
                 style={[
                   styles.marginPct,
-                  marginPct >= 15
-                    ? { color: colors.gold }
-                    : marginPct >= 7
-                      ? { color: colors.buy }
-                      : {},
+                  marginIsOutlier
+                    ? { color: colors.textMuted }
+                    : marginPct >= 15
+                      ? { color: colors.gold }
+                      : marginPct >= 7
+                        ? { color: colors.buy }
+                        : {},
                 ]}
               >
-                {marginPct.toFixed(1)}%
+                {marginIsOutlier ? `${MARGIN_DISPLAY_CAP}%+` : `${marginPct.toFixed(1)}%`}
               </Text>
             )}
             <View style={styles.barWrap}>
               <View style={styles.barTrack}>
                 <LinearGradient
                   colors={
-                    marginPct != null && marginPct >= 15
-                      ? [colors.goldDark, colors.gold]
-                      : [colors.buy, colors.buy + 'aa']
+                    marginIsOutlier
+                      ? [colors.textMuted + '60', colors.textMuted + '60']
+                      : marginPct != null && marginPct >= 15
+                        ? [colors.goldDark, colors.gold]
+                        : [colors.buy, colors.buy + 'aa']
                   }
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
@@ -403,7 +419,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   bellBtn: {
-    padding: 2,
+    padding: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  bellBtnActive: {
+    backgroundColor: colors.goldDim,
+    borderColor: colors.gold + '40',
+  },
+  bellBtnTriggered: {
+    backgroundColor: colors.goldDim,
+    borderColor: colors.gold,
   },
   starBtn: {
     padding: 2,

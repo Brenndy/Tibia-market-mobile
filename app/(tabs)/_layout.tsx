@@ -1,5 +1,5 @@
 import { Tabs, useRouter } from 'expo-router';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@/src/theme/colors';
 import { useWatchlist, isAlertTriggered } from '@/src/context/WatchlistContext';
@@ -8,6 +8,9 @@ import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { WorldBadge } from '@/src/components/WorldBadge';
 import { LanguageToggle } from '@/src/components/LanguageToggle';
+import { DesktopSidebar } from '@/src/components/DesktopSidebar';
+
+const DESKTOP_BREAKPOINT = 900;
 
 function WatchBellIcon({ color, size }: { color: string; size: number }) {
   const { watchlist } = useWatchlist();
@@ -73,16 +76,20 @@ function ClickableTitle({ title }: { title: string }) {
 
 export default function TabLayout() {
   const { t } = useTranslation();
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= DESKTOP_BREAKPOINT;
 
-  return (
+  const tabs = (
     <Tabs
       screenOptions={{
-        tabBarStyle: {
-          backgroundColor: colors.tabBar,
-          borderTopColor: colors.border,
-          borderTopWidth: 1,
-          paddingTop: 6,
-        },
+        tabBarStyle: isDesktop
+          ? { display: 'none' }
+          : {
+              backgroundColor: colors.tabBar,
+              borderTopColor: colors.border,
+              borderTopWidth: 1,
+              paddingTop: 6,
+            },
         tabBarActiveTintColor: colors.tabActive,
         tabBarInactiveTintColor: colors.tabInactive,
         tabBarShowLabel: false,
@@ -90,6 +97,7 @@ export default function TabLayout() {
         headerTintColor: colors.gold,
         headerTitleStyle: { color: colors.textPrimary, fontWeight: '700' },
         headerShadowVisible: false,
+        headerShown: !isDesktop,
         headerRight: () => <HeaderRightDefault />,
         headerLeft: () => <HeaderLeftDefault />,
       }}
@@ -127,4 +135,15 @@ export default function TabLayout() {
       />
     </Tabs>
   );
+
+  if (isDesktop) {
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', backgroundColor: colors.background }}>
+        <DesktopSidebar />
+        <View style={{ flex: 1 }}>{tabs}</View>
+      </View>
+    );
+  }
+
+  return tabs;
 }
