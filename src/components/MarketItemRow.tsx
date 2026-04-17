@@ -200,8 +200,10 @@ export const MarketItemRow = memo(function MarketItemRow({ item, world, onPress 
           currentSell={item.sell_offer}
           initialBuyAlert={existingAlert?.buyAlert ?? null}
           initialSellAlert={existingAlert?.sellAlert ?? null}
+          initialBuyAlertCondition={existingAlert?.buyAlertCondition}
+          initialSellAlertCondition={existingAlert?.sellAlertCondition}
           isEditing={watched}
-          onSave={(buy, sell) => {
+          onSave={(buy, sell, buyCond, sellCond) => {
             if (buy == null && sell == null) {
               removeFromWatchlist(item.name, world);
             } else {
@@ -211,6 +213,8 @@ export const MarketItemRow = memo(function MarketItemRow({ item, world, onPress 
                 world,
                 buyAlert: buy,
                 sellAlert: sell,
+                buyAlertCondition: buyCond,
+                sellAlertCondition: sellCond,
               });
             }
           }}

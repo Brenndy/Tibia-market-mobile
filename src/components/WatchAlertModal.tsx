@@ -18,6 +18,11 @@ import { formatGold, toTitleCase } from '../api/tibiaMarket';
 import { ItemImage } from './ItemImage';
 import { useTranslation } from '../context/LanguageContext';
 import { useToast } from '../context/ToastContext';
+import {
+  AlertCondition,
+  DEFAULT_BUY_CONDITION,
+  DEFAULT_SELL_CONDITION,
+} from '../context/WatchlistContext';
 
 interface WatchAlertModalProps {
   visible: boolean;
@@ -28,7 +33,14 @@ interface WatchAlertModalProps {
   currentSell: number | null;
   initialBuyAlert: number | null;
   initialSellAlert: number | null;
-  onSave: (buyAlert: number | null, sellAlert: number | null) => void;
+  initialBuyAlertCondition?: AlertCondition;
+  initialSellAlertCondition?: AlertCondition;
+  onSave: (
+    buyAlert: number | null,
+    sellAlert: number | null,
+    buyAlertCondition: AlertCondition,
+    sellAlertCondition: AlertCondition,
+  ) => void;
   onRemove: () => void;
   onClose: () => void;
   isEditing: boolean;
@@ -43,6 +55,8 @@ export function WatchAlertModal({
   currentSell,
   initialBuyAlert,
   initialSellAlert,
+  initialBuyAlertCondition,
+  initialSellAlertCondition,
   onSave,
   onRemove,
   onClose,
@@ -50,6 +64,12 @@ export function WatchAlertModal({
 }: WatchAlertModalProps) {
   const [buyAlert, setBuyAlert] = useState(initialBuyAlert?.toString() ?? '');
   const [sellAlert, setSellAlert] = useState(initialSellAlert?.toString() ?? '');
+  const [buyCond, setBuyCond] = useState<AlertCondition>(
+    initialBuyAlertCondition ?? DEFAULT_BUY_CONDITION,
+  );
+  const [sellCond, setSellCond] = useState<AlertCondition>(
+    initialSellAlertCondition ?? DEFAULT_SELL_CONDITION,
+  );
   const { t } = useTranslation();
   const { showToast } = useToast();
 
@@ -57,8 +77,16 @@ export function WatchAlertModal({
     if (visible) {
       setBuyAlert(initialBuyAlert?.toString() ?? '');
       setSellAlert(initialSellAlert?.toString() ?? '');
+      setBuyCond(initialBuyAlertCondition ?? DEFAULT_BUY_CONDITION);
+      setSellCond(initialSellAlertCondition ?? DEFAULT_SELL_CONDITION);
     }
-  }, [visible, initialBuyAlert, initialSellAlert]);
+  }, [
+    visible,
+    initialBuyAlert,
+    initialSellAlert,
+    initialBuyAlertCondition,
+    initialSellAlertCondition,
+  ]);
 
   const parseGold = (raw: string): number | null => {
     const s = raw.trim().toLowerCase();
@@ -73,17 +101,18 @@ export function WatchAlertModal({
 
   const parsedBuy = parseGold(buyAlert);
   const parsedSell = parseGold(sellAlert);
-  // Save is valid when at least one threshold is a positive number.
-  // When editing (both cleared) treat it as implicit remove.
   const canSave = (parsedBuy != null && parsedBuy > 0) || (parsedSell != null && parsedSell > 0);
+
+  const opSymbol = (cond: AlertCondition) => (cond === 'below' ? '≤' : '≥');
 
   const handleSave = () => {
     if (!canSave) return;
-    onSave(parsedBuy, parsedSell);
+    onSave(parsedBuy, parsedSell, buyCond, sellCond);
     const parts: string[] = [];
-    if (parsedBuy != null && parsedBuy > 0) parts.push(`${t('buy')} ≤ ${formatGold(parsedBuy)}`);
+    if (parsedBuy != null && parsedBuy > 0)
+      parts.push(`${t('buy')} ${opSymbol(buyCond)} ${formatGold(parsedBuy)}`);
     if (parsedSell != null && parsedSell > 0)
-      parts.push(`${t('sell')} ≥ ${formatGold(parsedSell)}`);
+      parts.push(`${t('sell')} ${opSymbol(sellCond)} ${formatGold(parsedSell)}`);
     showToast(`${t('toast_alert_saved')}: ${parts.join(' · ')}`, 'success');
     onClose();
   };
@@ -94,20 +123,86 @@ export function WatchAlertModal({
     onClose();
   };
 
-  // Suggestion chips: tap to pre-fill input with a computed threshold.
-  // Buy side uses discounts (below current), sell side uses markups (above current).
+  // Chip suggestions flip with direction: below → discounts, above → markups.
   const buySuggestions: { label: string; value: number }[] = [];
   if (currentBuy != null && currentBuy > 0) {
-    buySuggestions.push({ label: '−5%', value: Math.round(currentBuy * 0.95) });
-    buySuggestions.push({ label: '−10%', value: Math.round(currentBuy * 0.9) });
-    buySuggestions.push({ label: '−15%', value: Math.round(currentBuy * 0.85) });
+    if (buyCond === 'below') {
+      buySuggestions.push({ label: '−5%', value: Math.round(currentBuy * 0.95) });
+      buySuggestions.push({ label: '−10%', value: Math.round(currentBuy * 0.9) });
+      buySuggestions.push({ label: '−15%', value: Math.round(currentBuy * 0.85) });
+    } else {
+      buySuggestions.push({ label: '+5%', value: Math.round(currentBuy * 1.05) });
+      buySuggestions.push({ label: '+10%', value: Math.round(currentBuy * 1.1) });
+      buySuggestions.push({ label: '+15%', value: Math.round(currentBuy * 1.15) });
+    }
   }
   const sellSuggestions: { label: string; value: number }[] = [];
   if (currentSell != null && currentSell > 0) {
-    sellSuggestions.push({ label: '+5%', value: Math.round(currentSell * 1.05) });
-    sellSuggestions.push({ label: '+10%', value: Math.round(currentSell * 1.1) });
-    sellSuggestions.push({ label: '+15%', value: Math.round(currentSell * 1.15) });
+    if (sellCond === 'above') {
+      sellSuggestions.push({ label: '+5%', value: Math.round(currentSell * 1.05) });
+      sellSuggestions.push({ label: '+10%', value: Math.round(currentSell * 1.1) });
+      sellSuggestions.push({ label: '+15%', value: Math.round(currentSell * 1.15) });
+    } else {
+      sellSuggestions.push({ label: '−5%', value: Math.round(currentSell * 0.95) });
+      sellSuggestions.push({ label: '−10%', value: Math.round(currentSell * 0.9) });
+      sellSuggestions.push({ label: '−15%', value: Math.round(currentSell * 0.85) });
+    }
   }
+
+  const buyHint = (() => {
+    if (currentBuy == null || !buyAlert.trim() || !(parsedBuy != null && parsedBuy > 0))
+      return null;
+    const triggered = buyCond === 'below' ? currentBuy <= parsedBuy : currentBuy >= parsedBuy;
+    if (triggered) return t('alert_active');
+    return buyCond === 'below'
+      ? `${t('price_must_drop')} ${formatGold(currentBuy - parsedBuy)} gp`
+      : `${t('price_must_rise')} ${formatGold(parsedBuy - currentBuy)} gp`;
+  })();
+
+  const sellHint = (() => {
+    if (currentSell == null || !sellAlert.trim() || !(parsedSell != null && parsedSell > 0))
+      return null;
+    const triggered = sellCond === 'above' ? currentSell >= parsedSell : currentSell <= parsedSell;
+    if (triggered) return t('alert_active');
+    return sellCond === 'above'
+      ? `${t('price_must_rise')} ${formatGold(parsedSell - currentSell)} gp`
+      : `${t('price_must_drop')} ${formatGold(currentSell - parsedSell)} gp`;
+  })();
+
+  const DirectionToggle = ({
+    value,
+    onChange,
+    tint,
+    tintBorder,
+    tintDim,
+    sideTestId,
+  }: {
+    value: AlertCondition;
+    onChange: (v: AlertCondition) => void;
+    tint: string;
+    tintBorder: string;
+    tintDim: string;
+    sideTestId: 'buy' | 'sell';
+  }) => (
+    <View style={styles.segRow}>
+      {(['below', 'above'] as const).map((dir) => {
+        const active = value === dir;
+        return (
+          <TouchableOpacity
+            key={dir}
+            onPress={() => onChange(dir)}
+            style={[styles.segBtn, active && { backgroundColor: tintDim, borderColor: tintBorder }]}
+            testID={`${sideTestId}-dir-${dir}`}
+            accessibilityState={{ selected: active }}
+          >
+            <Text style={[styles.segText, active && { color: tint, fontWeight: '700' }]}>
+              {t(dir === 'below' ? 'alert_direction_below' : 'alert_direction_above')}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
 
   return (
     <Modal visible={visible} transparent animationType="slide">
@@ -160,9 +255,19 @@ export function WatchAlertModal({
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.buy} />
                   <Text style={[styles.alertTitle, { color: colors.buy }]}>{t('buy_alert')}</Text>
                 </View>
+                <DirectionToggle
+                  value={buyCond}
+                  onChange={setBuyCond}
+                  tint={colors.buy}
+                  tintBorder={colors.buyBorder}
+                  tintDim={colors.buyDim}
+                  sideTestId="buy"
+                />
                 <Text style={styles.alertDesc}>
-                  {t('buy_alert_desc')}{' '}
-                  <Text style={{ color: colors.buy, fontWeight: '700' }}>{t('below_value')}</Text>
+                  {t(buyCond === 'below' ? 'buy_alert_desc_below' : 'buy_alert_desc_above')}{' '}
+                  <Text style={{ color: colors.buy, fontWeight: '700' }}>
+                    {t(buyCond === 'below' ? 'below_value' : 'above_value')}
+                  </Text>
                 </Text>
                 <View style={styles.inputRow}>
                   <TextInput
@@ -194,13 +299,7 @@ export function WatchAlertModal({
                     ))}
                   </View>
                 )}
-                {currentBuy != null && buyAlert.trim() && Number(buyAlert) > 0 && (
-                  <Text style={styles.alertHint}>
-                    {currentBuy <= Number(buyAlert)
-                      ? t('alert_active')
-                      : `${t('price_must_drop')} ${formatGold(currentBuy - Number(buyAlert))} gp`}
-                  </Text>
-                )}
+                {buyHint && <Text style={styles.alertHint}>{buyHint}</Text>}
               </LinearGradient>
             </View>
 
@@ -211,9 +310,19 @@ export function WatchAlertModal({
                   <MaterialCommunityIcons name="bell-ring" size={16} color={colors.sell} />
                   <Text style={[styles.alertTitle, { color: colors.sell }]}>{t('sell_alert')}</Text>
                 </View>
+                <DirectionToggle
+                  value={sellCond}
+                  onChange={setSellCond}
+                  tint={colors.sell}
+                  tintBorder={colors.sellBorder}
+                  tintDim={colors.sellDim}
+                  sideTestId="sell"
+                />
                 <Text style={styles.alertDesc}>
-                  {t('sell_alert_desc')}{' '}
-                  <Text style={{ color: colors.sell, fontWeight: '700' }}>{t('above_value')}</Text>
+                  {t(sellCond === 'below' ? 'sell_alert_desc_below' : 'sell_alert_desc_above')}{' '}
+                  <Text style={{ color: colors.sell, fontWeight: '700' }}>
+                    {t(sellCond === 'below' ? 'below_value' : 'above_value')}
+                  </Text>
                 </Text>
                 <View style={styles.inputRow}>
                   <TextInput
@@ -245,13 +354,7 @@ export function WatchAlertModal({
                     ))}
                   </View>
                 )}
-                {currentSell != null && sellAlert.trim() && Number(sellAlert) > 0 && (
-                  <Text style={styles.alertHint}>
-                    {currentSell >= Number(sellAlert)
-                      ? t('alert_active')
-                      : `${t('price_must_rise')} ${formatGold(Number(sellAlert) - currentSell)} gp`}
-                  </Text>
-                )}
+                {sellHint && <Text style={styles.alertHint}>{sellHint}</Text>}
               </LinearGradient>
             </View>
           </ScrollView>
@@ -386,6 +489,28 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontSize: 12,
     lineHeight: 18,
+  },
+  segRow: {
+    flexDirection: 'row',
+    gap: 6,
+    backgroundColor: colors.inputBg,
+    padding: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+  },
+  segBtn: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    alignItems: 'center',
+  },
+  segText: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: '600',
   },
   inputRow: {
     flexDirection: 'row',

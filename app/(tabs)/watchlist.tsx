@@ -11,7 +11,13 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, useNavigation } from 'expo-router';
-import { useWatchlist, isAlertTriggered, WatchAlert } from '@/src/context/WatchlistContext';
+import {
+  useWatchlist,
+  isAlertTriggered,
+  getBuyCondition,
+  getSellCondition,
+  WatchAlert,
+} from '@/src/context/WatchlistContext';
 import { useWorld } from '@/src/context/WorldContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { useTranslation } from '@/src/context/LanguageContext';
@@ -51,21 +57,33 @@ function alertProgress(
   let sell = 0;
   let anyTriggered = false;
   if (alert.buyAlert != null && currentBuy != null && currentBuy > 0) {
-    if (currentBuy <= alert.buyAlert) {
+    const cond = getBuyCondition(alert);
+    const triggered =
+      cond === 'below' ? currentBuy <= alert.buyAlert : currentBuy >= alert.buyAlert;
+    if (triggered) {
       buy = 1;
       anyTriggered = true;
     } else {
-      const over = (currentBuy - alert.buyAlert) / alert.buyAlert;
-      buy = Math.max(0, 1 - over / WINDOW);
+      const dist =
+        cond === 'below'
+          ? (currentBuy - alert.buyAlert) / alert.buyAlert
+          : (alert.buyAlert - currentBuy) / alert.buyAlert;
+      buy = Math.max(0, 1 - dist / WINDOW);
     }
   }
   if (alert.sellAlert != null && currentSell != null && currentSell > 0) {
-    if (currentSell >= alert.sellAlert) {
+    const cond = getSellCondition(alert);
+    const triggered =
+      cond === 'above' ? currentSell >= alert.sellAlert : currentSell <= alert.sellAlert;
+    if (triggered) {
       sell = 1;
       anyTriggered = true;
     } else {
-      const under = (alert.sellAlert - currentSell) / alert.sellAlert;
-      sell = Math.max(0, 1 - under / WINDOW);
+      const dist =
+        cond === 'above'
+          ? (alert.sellAlert - currentSell) / alert.sellAlert
+          : (currentSell - alert.sellAlert) / alert.sellAlert;
+      sell = Math.max(0, 1 - dist / WINDOW);
     }
   }
   return { buy, sell, anyTriggered };
@@ -148,7 +166,7 @@ function WatchCard({
                 color={triggered.buy ? colors.buy : colors.textMuted}
               />
               <Text style={[styles.thresh, triggered.buy && { color: colors.buy }]}>
-                ≤ {formatGold(alert.buyAlert)}
+                {getBuyCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.buyAlert)}
               </Text>
             </View>
           )}
@@ -171,7 +189,7 @@ function WatchCard({
                 color={triggered.sell ? colors.sell : colors.textMuted}
               />
               <Text style={[styles.thresh, triggered.sell && { color: colors.sell }]}>
-                ≥ {formatGold(alert.sellAlert)}
+                {getSellCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.sellAlert)}
               </Text>
             </View>
           )}
@@ -262,21 +280,23 @@ function WorldAlertsSection({
         const item = data.items.find((i) => i.name === alert.itemName);
         if (!item) continue;
 
-        if (alert.buyAlert != null && item.buy_offer != null && item.buy_offer <= alert.buyAlert) {
-          const key = `${world}:${alert.itemName}:buy:${alert.buyAlert}`;
+        const buyOffer = item.buy_offer ?? null;
+        const sellOffer = item.sell_offer ?? null;
+        const fired = isAlertTriggered(alert, buyOffer, sellOffer);
+
+        if (fired.buy && alert.buyAlert != null && buyOffer != null) {
+          const dir = getBuyCondition(alert);
+          const key = `${world}:${alert.itemName}:buy:${dir}:${alert.buyAlert}`;
           if (!notifiedSet.has(key)) {
-            await sendPriceAlert(alert.itemName, 'buy', item.buy_offer, alert.buyAlert);
+            await sendPriceAlert(alert.itemName, 'buy', dir, buyOffer, alert.buyAlert);
             toAdd.push(key);
           }
         }
-        if (
-          alert.sellAlert != null &&
-          item.sell_offer != null &&
-          item.sell_offer >= alert.sellAlert
-        ) {
-          const key = `${world}:${alert.itemName}:sell:${alert.sellAlert}`;
+        if (fired.sell && alert.sellAlert != null && sellOffer != null) {
+          const dir = getSellCondition(alert);
+          const key = `${world}:${alert.itemName}:sell:${dir}:${alert.sellAlert}`;
           if (!notifiedSet.has(key)) {
-            await sendPriceAlert(alert.itemName, 'sell', item.sell_offer, alert.sellAlert);
+            await sendPriceAlert(alert.itemName, 'sell', dir, sellOffer, alert.sellAlert);
             toAdd.push(key);
           }
         }
@@ -631,12 +651,14 @@ export default function WatchlistScreen() {
           currentSell={null}
           initialBuyAlert={editingAlert.buyAlert}
           initialSellAlert={editingAlert.sellAlert}
+          initialBuyAlertCondition={editingAlert.buyAlertCondition}
+          initialSellAlertCondition={editingAlert.sellAlertCondition}
           isEditing={true}
-          onSave={(buy, sell) => {
+          onSave={(buy, sell, buyCond, sellCond) => {
             if (buy == null && sell == null) {
               removeFromWatchlist(editingAlert.itemName, editingAlert.world);
             } else {
-              updateAlert(editingAlert.itemName, editingAlert.world, buy, sell);
+              updateAlert(editingAlert.itemName, editingAlert.world, buy, sell, buyCond, sellCond);
             }
           }}
           onRemove={() => removeFromWatchlist(editingAlert.itemName, editingAlert.world)}
