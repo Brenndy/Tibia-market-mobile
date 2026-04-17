@@ -123,3 +123,44 @@ test.describe('SEO — per-route head tags', () => {
     expect(await helmetAttr(page, 'meta[property="og:url"]', 'content')).toBe(cUrl);
   });
 });
+
+test.describe('SEO — Polish (?lang=pl) landings', () => {
+  test('homepage with ?lang=pl has Polish title and self-referencing canonical', async ({
+    page,
+  }) => {
+    await page.goto('/?lang=pl');
+    await waitForHelmet(page);
+
+    // Polish homepage title contains "Ceny" (Prices) — a Polish-only word that
+    // wouldn't appear in any EN variant.
+    await expect(page).toHaveTitle(/Ceny/, { timeout: 10_000 });
+    await expect(page).toHaveTitle(/TibiaTrader/);
+
+    const d = await helmetAttr(page, 'meta[name="description"]', 'content');
+    expect(d).toMatch(/Przeglądaj|Tibii/);
+
+    // Canonical for PL landing self-references with the lang param so Google
+    // treats it as a distinct URL from the EN root.
+    expect(await helmetAttr(page, 'link[rel="canonical"]', 'href')).toBe(
+      'https://tibiatrader.com/?lang=pl',
+    );
+
+    expect(await helmetAttr(page, 'meta[property="og:locale"]', 'content')).toBe('pl_PL');
+  });
+
+  test('watchlist with ?lang=pl has Polish title', async ({ page }) => {
+    await page.goto('/watchlist?lang=pl');
+    await waitForHelmet(page);
+
+    await expect(page).toHaveTitle(/Obserwowane|Alerty/, { timeout: 10_000 });
+    expect(await helmetAttr(page, 'link[rel="canonical"]', 'href')).toBe(
+      'https://tibiatrader.com/watchlist?lang=pl',
+    );
+  });
+
+  test('EN default (no lang param) emits og:locale=en_US', async ({ page }) => {
+    await page.goto('/');
+    await waitForHelmet(page);
+    expect(await helmetAttr(page, 'meta[property="og:locale"]', 'content')).toBe('en_US');
+  });
+});

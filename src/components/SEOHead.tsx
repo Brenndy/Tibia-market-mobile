@@ -5,51 +5,107 @@
 // there. We read the current pathname and emit Helmet tags based on a
 // centralized route metadata map. See renderStaticContent.js — HelmetProvider
 // is already wired by expo-router; Helmet children hook into the same context.
-import { usePathname } from 'expo-router';
+import { useGlobalSearchParams, usePathname } from 'expo-router';
 import { Helmet } from 'expo-router/vendor/react-helmet-async/lib';
 import { toTitleCase } from '@/src/api/tibiaMarket';
 
 type RouteMeta = { title: string; description: string };
+type Locale = 'en' | 'pl';
 
 const SITE_URL = 'https://tibiatrader.com';
 
-const HOMEPAGE_META: RouteMeta = {
-  title: 'TibiaTrader — Live Tibia market prices, margins & price alerts',
-  description:
-    'Browse the Tibia in-game market: live buy/sell prices across every world, flip margins, price alerts and volume history. Free, fast, mobile-friendly.',
+const HOMEPAGE_META: Record<Locale, RouteMeta> = {
+  en: {
+    title: 'TibiaTrader — Live Tibia market prices, margins & price alerts',
+    description:
+      'Browse the Tibia in-game market: live buy/sell prices across every world, flip margins, price alerts and volume history. Free, fast, mobile-friendly.',
+  },
+  pl: {
+    title: 'TibiaTrader — Ceny przedmiotów Tibii, marże i alerty cenowe',
+    description:
+      'Przeglądaj rynek Tibii: aktualne ceny kupna i sprzedaży na każdym świecie, marże flipów, alerty cenowe i historia wolumenów. Darmowe, szybkie, mobile-friendly.',
+  },
 };
 
-const STATIC_ROUTES: Record<string, RouteMeta> = {
-  '/': HOMEPAGE_META,
-  '/(tabs)': HOMEPAGE_META,
-  '/watchlist': {
+const WATCHLIST_META: Record<Locale, RouteMeta> = {
+  en: {
     title: 'Watchlist — Tibia price alerts | TibiaTrader',
     description:
       'Set buy and sell price alerts for Tibia items. Get notified when prices hit your target on any world — free, fast, mobile-friendly.',
   },
-  '/(tabs)/watchlist': {
-    title: 'Watchlist — Tibia price alerts | TibiaTrader',
+  pl: {
+    title: 'Obserwowane — Alerty cenowe Tibii | TibiaTrader',
     description:
-      'Set buy and sell price alerts for Tibia items. Get notified when prices hit your target on any world — free, fast, mobile-friendly.',
+      'Ustaw alerty cen kupna i sprzedaży dla przedmiotów w Tibii. Otrzymaj powiadomienie, gdy cena osiągnie Twój próg na dowolnym świecie.',
   },
-  '/statistics': {
+};
+
+const STATISTICS_META: Record<Locale, RouteMeta> = {
+  en: {
     title: 'Market Statistics — Tibia trading insights | TibiaTrader',
     description:
       'Tibia market stats: top movers, most-traded items, biggest margins and monthly volume across every world. Live data, updated hourly.',
   },
-  '/(tabs)/statistics': {
-    title: 'Market Statistics — Tibia trading insights | TibiaTrader',
+  pl: {
+    title: 'Statystyki rynku — Analiza handlu w Tibii | TibiaTrader',
     description:
-      'Tibia market stats: top movers, most-traded items, biggest margins and monthly volume across every world. Live data, updated hourly.',
+      'Statystyki rynku Tibii: największe wzrosty i spadki, najczęściej handlowane przedmioty, największe marże i wolumen miesięczny. Aktualizacja co godzinę.',
   },
-  '/world-select': {
+};
+
+const WORLD_SELECT_META: Record<Locale, RouteMeta> = {
+  en: {
     title: 'Select Tibia World — TibiaTrader',
     description:
       'Pick your Tibia world to see live market prices, margins and trends. Every Open PvP, Optional PvP and Hardcore world supported.',
   },
+  pl: {
+    title: 'Wybierz świat Tibii — TibiaTrader',
+    description:
+      'Wybierz swój świat Tibii, aby zobaczyć aktualne ceny, marże i trendy rynkowe. Wszystkie światy Open PvP, Optional PvP i Hardcore.',
+  },
 };
 
-function metaForPath(pathname: string | null): { meta: RouteMeta; canonical: string } {
+const ITEM_TEMPLATE_META: Record<Locale, RouteMeta> = {
+  en: {
+    title: 'Tibia item prices, margins & history | TibiaTrader',
+    description:
+      'Look up any Tibia item: live buy and sell offers, flip margin, monthly volume and 90-day price history across every world.',
+  },
+  pl: {
+    title: 'Ceny, marże i historia przedmiotów Tibii | TibiaTrader',
+    description:
+      'Sprawdź dowolny przedmiot Tibii: aktualne oferty kupna i sprzedaży, marżę flipa, wolumen miesięczny i 90-dniową historię cen na każdym świecie.',
+  },
+};
+
+const STATIC_ROUTES: Record<string, Record<Locale, RouteMeta>> = {
+  '/': HOMEPAGE_META,
+  '/(tabs)': HOMEPAGE_META,
+  '/watchlist': WATCHLIST_META,
+  '/(tabs)/watchlist': WATCHLIST_META,
+  '/statistics': STATISTICS_META,
+  '/(tabs)/statistics': STATISTICS_META,
+  '/world-select': WORLD_SELECT_META,
+};
+
+function itemMeta(itemTitle: string): Record<Locale, RouteMeta> {
+  return {
+    en: {
+      title: `${itemTitle} — live Tibia price, margin & history | TibiaTrader`,
+      description: `Live ${itemTitle} market price on Tibia: buy and sell offers, flip margin, monthly volume and 90-day price history across every world.`,
+    },
+    pl: {
+      title: `${itemTitle} — cena, marża i historia w Tibii | TibiaTrader`,
+      description: `Aktualna cena ${itemTitle} na rynku Tibii: oferty kupna i sprzedaży, marża flipa, wolumen miesięczny i 90-dniowa historia cen na każdym świecie.`,
+    },
+  };
+}
+
+function metaForPath(
+  pathname: string | null,
+  locale: Locale,
+): { meta: RouteMeta; canonical: string } {
   const path = pathname || '/';
   // /item/<name> is the dynamic route; decode the URL segment into a readable
   // title. For the literal "[name]" template rendered during static export,
@@ -59,40 +115,44 @@ function metaForPath(pathname: string | null): { meta: RouteMeta; canonical: str
   if (itemMatch) {
     const rawName = decodeURIComponent(itemMatch[1]);
     const isTemplate = rawName === '[name]';
-    const itemTitle = isTemplate ? 'Items' : toTitleCase(rawName);
-    return {
-      meta: isTemplate
-        ? {
-            title: 'Tibia item prices, margins & history | TibiaTrader',
-            description:
-              'Look up any Tibia item: live buy and sell offers, flip margin, monthly volume and 90-day price history across every world.',
-          }
-        : {
-            title: `${itemTitle} — live Tibia price, margin & history | TibiaTrader`,
-            description: `Live ${itemTitle} market price on Tibia: buy and sell offers, flip margin, monthly volume and 90-day price history across every world.`,
-          },
-      canonical: `${SITE_URL}${path}`,
-    };
+    const byLocale = isTemplate ? ITEM_TEMPLATE_META : itemMeta(toTitleCase(rawName));
+    return { meta: byLocale[locale], canonical: `${SITE_URL}${path}` };
   }
   const normalized = path.replace(/\?.*$/, '').replace(/#.*$/, '');
-  const meta = STATIC_ROUTES[normalized] ?? HOMEPAGE_META;
+  const byLocale = STATIC_ROUTES[normalized] ?? HOMEPAGE_META;
   // Strip the (tabs) group from the canonical URL — it's an Expo Router
   // routing artifact, not a real path segment users should see.
   const canonicalPath = normalized.replace('/(tabs)', '') || '/';
-  return { meta, canonical: `${SITE_URL}${canonicalPath}` };
+  return { meta: byLocale[locale], canonical: `${SITE_URL}${canonicalPath}` };
+}
+
+function resolveLocale(langParam: string | string[] | undefined): Locale {
+  // ?lang=pl is the only Polish signal. During SSR the hook returns {} so we
+  // default to EN — matches the app's hard-EN default, no browser autodetect.
+  const value = Array.isArray(langParam) ? langParam[0] : langParam;
+  return value === 'pl' ? 'pl' : 'en';
 }
 
 export default function RouteSEO() {
   const pathname = usePathname();
-  const { meta, canonical } = metaForPath(pathname);
+  const params = useGlobalSearchParams<{ lang?: string }>();
+  const locale = resolveLocale(params.lang);
+  const { meta, canonical } = metaForPath(pathname, locale);
+  // When ?lang=pl is present, append it to canonical + og:url so the bilingual
+  // URL is the self-referencing canonical (prevents Google from treating the
+  // PL landing as a duplicate of the EN root).
+  const canonicalWithLang = locale === 'pl' ? `${canonical}?lang=pl` : canonical;
+  const ogLocale = locale === 'pl' ? 'pl_PL' : 'en_US';
   return (
     <Helmet>
+      <html lang={locale} />
       <title>{meta.title}</title>
       <meta name="description" content={meta.description} />
-      <link rel="canonical" href={canonical} />
+      <link rel="canonical" href={canonicalWithLang} />
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
-      <meta property="og:url" content={canonical} />
+      <meta property="og:url" content={canonicalWithLang} />
+      <meta property="og:locale" content={ogLocale} />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
     </Helmet>
