@@ -1,6 +1,6 @@
 import { Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, Platform } from 'react-native';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ import { WatchlistProvider } from '@/src/context/WatchlistContext';
 import { LanguageProvider, useTranslation } from '@/src/context/LanguageContext';
 import { ToastProvider } from '@/src/context/ToastContext';
 import { colors } from '@/src/theme/colors';
+import { loadStaticFilterData } from '@/src/data/lazyLoaders';
 
 // Normalize dynamic routes so Vercel Speed Insights aggregates per route
 // template (e.g. /item/rope + /item/lobster → /item/[name]) instead of
@@ -43,6 +44,17 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Fires on first mount, caches forever. Data is versioned with the app build;
+// no reason to refetch. Other screens read the same key with useQuery and hit
+// the cache instead of issuing a second fetch.
+function StaticDataPreloader() {
+  useQuery(['static-filter-data'], loadStaticFilterData, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  return null;
+}
 
 function AppNavigator() {
   const { t } = useTranslation();
@@ -92,6 +104,7 @@ export default function RootLayout() {
       {Platform.OS === 'web' && <RouteSEO />}
       {Platform.OS === 'web' && <SEOContent />}
       <QueryClientProvider client={queryClient}>
+        <StaticDataPreloader />
         <LanguageProvider>
           <WorldProvider>
             <WatchlistProvider>

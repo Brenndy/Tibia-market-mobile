@@ -4,27 +4,16 @@
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "rewrites": [{ "source": "/item/:name", "destination": "/item/[name]" }],
+  "headers": [
     {
-      "source": "/api/tibia/item_metadata",
-      "destination": "https://api.tibiamarket.top:8001/item_metadata"
-    },
-    {
-      "source": "/api/tibia/market_values",
-      "destination": "https://api.tibiamarket.top:8001/market_values"
-    },
-    {
-      "source": "/api/tibia/world_data",
-      "destination": "https://api.tibiamarket.top:8001/world_data"
-    },
-    {
-      "source": "/api/tibia/item_history",
-      "destination": "https://api.tibiamarket.top:8001/item_history"
-    },
-    {
-      "source": "/api/tibia/market_board",
-      "destination": "https://api.tibiamarket.top:8001/market_board"
-    },
-    { "source": "/item/:name", "destination": "/item/[name]" }
+      "source": "/data/:file*.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
   ]
 }

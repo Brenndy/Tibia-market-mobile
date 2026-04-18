@@ -3,9 +3,11 @@ import { View, StyleSheet, Text, TouchableOpacity, Animated, Platform } from 're
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
+import { useQuery } from 'react-query';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
+import { loadStaticFilterData } from '@/src/data/lazyLoaders';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { MarketItemRow, MarketRowHeader } from '@/src/components/MarketItemRow';
 import { useResponsiveColumns, WIDE_DESKTOP_BREAKPOINT } from '@/src/hooks/useResponsiveColumns';
@@ -89,7 +91,8 @@ export default function MarketScreen() {
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
   const TOP_BAR_H = 116;
-  const HEADER_HEIGHT = TOP_BAR_H;
+  const STATS_ROW_H = 28;
+  const HEADER_HEIGHT = TOP_BAR_H + (activeFilterCount > 0 ? STATS_ROW_H : 0);
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -114,24 +117,33 @@ export default function MarketScreen() {
     extrapolate: 'clamp',
   });
 
+  const { data: staticData } = useQuery(['static-filter-data'], loadStaticFilterData, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
   const filteredItems = useMemo(() => {
     if (!rawData) return [];
-    return filterAndSortItems(rawData.items, {
-      sort_field: sortField,
-      sort_order: sortOrder,
-      selectedItemNames: selectedItems.length > 0 ? selectedItems : undefined,
-      categories: filters.categories.length > 0 ? filters.categories : undefined,
-      minBuyPrice: filters.minBuyPrice ? Number(filters.minBuyPrice) : undefined,
-      maxBuyPrice: filters.maxBuyPrice ? Number(filters.maxBuyPrice) : undefined,
-      minSellPrice: filters.minSellPrice ? Number(filters.minSellPrice) : undefined,
-      maxSellPrice: filters.maxSellPrice ? Number(filters.maxSellPrice) : undefined,
-      minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
-      minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
-      yasirOnly: filters.yasirOnly || undefined,
-      deliveryOnly: filters.deliveryOnly || undefined,
-      vocations: filters.vocations.length > 0 ? filters.vocations : undefined,
-    });
-  }, [rawData, sortField, sortOrder, selectedItems, filters]);
+    return filterAndSortItems(
+      rawData.items,
+      {
+        sort_field: sortField,
+        sort_order: sortOrder,
+        selectedItemNames: selectedItems.length > 0 ? selectedItems : undefined,
+        categories: filters.categories.length > 0 ? filters.categories : undefined,
+        minBuyPrice: filters.minBuyPrice ? Number(filters.minBuyPrice) : undefined,
+        maxBuyPrice: filters.maxBuyPrice ? Number(filters.maxBuyPrice) : undefined,
+        minSellPrice: filters.minSellPrice ? Number(filters.minSellPrice) : undefined,
+        maxSellPrice: filters.maxSellPrice ? Number(filters.maxSellPrice) : undefined,
+        minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
+        minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
+        yasirOnly: filters.yasirOnly || undefined,
+        deliveryOnly: filters.deliveryOnly || undefined,
+        vocations: filters.vocations.length > 0 ? filters.vocations : undefined,
+      },
+      staticData,
+    );
+  }, [rawData, sortField, sortOrder, selectedItems, filters, staticData]);
 
   const handleSortChange = useCallback(
     (field: SortField, order: 'asc' | 'desc') => {
