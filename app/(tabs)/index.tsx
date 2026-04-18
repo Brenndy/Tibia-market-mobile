@@ -269,7 +269,7 @@ export default function MarketScreen() {
           ref={listRef}
           key={`grid-${numColumns}-${useTableRows ? 'rows' : 'cards'}`}
           data={filteredItems.slice(0, displayCount)}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => String(item.id)}
           numColumns={numColumns}
           columnWrapperStyle={numColumns > 1 ? styles.gridRow : undefined}
           renderItem={({ item }) =>

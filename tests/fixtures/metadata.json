@@ -19,5 +19,7 @@
   { "id": 17, "name": "demon shield", "wiki_name": "Demon_Shield", "category": "Shields", "tier": null, "npc_sell": [], "npc_buy": [] },
   { "id": 18, "name": "molten plate", "wiki_name": "Molten_Plate", "category": "Armors", "tier": null, "npc_sell": [], "npc_buy": [] },
   { "id": 19, "name": "spirit cloak", "wiki_name": "Spirit_Cloak", "category": "Legs", "tier": null, "npc_sell": [], "npc_buy": [] },
-  { "id": 20, "name": "thunder hammer", "wiki_name": "Thunder_Hammer", "category": "Clubs", "tier": null, "npc_sell": [], "npc_buy": [] }
+  { "id": 20, "name": "thunder hammer", "wiki_name": "Thunder_Hammer", "category": "Clubs", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 21, "name": "empty potion flask", "wiki_name": "Empty_Potion_Flask", "category": "Potions", "tier": null, "npc_sell": [], "npc_buy": [] },
+  { "id": 22, "name": "empty potion flask", "wiki_name": "Empty_Potion_Flask", "category": "Potions", "tier": null, "npc_sell": [], "npc_buy": [] }
 ]

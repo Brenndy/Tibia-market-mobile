@@ -16,6 +16,7 @@ export interface NpcEntry {
 }
 
 export interface MarketItem {
+  id: number;
   name: string;
   wiki_name: string;
   buy_offer: number | null;
@@ -229,6 +230,7 @@ export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
       .filter((e) => e.currency_object_type_id === 0)
       .map((e) => ({ name: e.name, location: e.location, price: e.price }));
     return {
+      id: v.id,
       name: meta?.name ?? String(v.id),
       wiki_name: meta?.wiki_name ?? '',
       category: meta?.category ?? null,
