@@ -71,6 +71,7 @@ function AppNavigator() {
           presentation: 'modal',
         }}
       />
+      <Stack.Screen name="privacy" options={{ title: t('privacy_title') }} />
     </Stack>
   );
 }

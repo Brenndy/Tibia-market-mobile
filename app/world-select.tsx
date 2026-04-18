@@ -142,6 +142,16 @@ export default function WorldSelectScreen() {
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         extraData={selectedWorld + '|' + (worlds ?? []).length}
+        ListFooterComponent={
+          <TouchableOpacity
+            style={styles.footerLink}
+            onPress={() => router.push('/privacy')}
+            accessibilityRole="link"
+          >
+            <MaterialCommunityIcons name="shield-lock-outline" size={14} color={colors.textMuted} />
+            <Text style={styles.footerLinkText}>{t('privacy_link')}</Text>
+          </TouchableOpacity>
+        }
       />
     </View>
   );
@@ -166,6 +176,19 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 20,
+  },
+  footerLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+  },
+  footerLinkText: {
+    color: colors.textMuted,
+    fontSize: 12,
+    textDecorationLine: 'underline',
   },
   row: {
     flexDirection: 'row',

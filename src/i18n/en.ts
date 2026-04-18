@@ -133,6 +133,8 @@ export const en: Record<TranslationKey, string> = {
   item_detail_title: 'Item details',
   back_market: 'Market',
   select_world_title: 'Select world',
+  privacy_title: 'Privacy',
+  privacy_link: 'Privacy policy',
   load_more: 'Load more',
   no_results: 'No results',
   clear_filters: 'Clear filters',

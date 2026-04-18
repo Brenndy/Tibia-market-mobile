@@ -131,6 +131,8 @@ export const pl = {
   item_detail_title: 'Szczegóły przedmiotu',
   back_market: 'Market',
   select_world_title: 'Wybierz świat',
+  privacy_title: 'Prywatność',
+  privacy_link: 'Polityka prywatności',
   load_more: 'Załaduj więcej',
   no_results: 'Brak wyników',
   clear_filters: 'Wyczyść filtry',
