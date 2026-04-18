@@ -1,5 +1,12 @@
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, useWindowDimensions } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+  Platform,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -16,6 +23,7 @@ interface MarketItemCardProps {
   world: string;
   onPress?: () => void;
   stretch?: boolean;
+  footerSlot?: React.ReactNode;
 }
 
 function PriceTrend({ current, average }: { current: number | null; average: number | null }) {
@@ -46,6 +54,7 @@ export const MarketItemCard = memo(function MarketItemCard({
   world,
   onPress,
   stretch,
+  footerSlot,
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
@@ -53,7 +62,12 @@ export const MarketItemCard = memo(function MarketItemCard({
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const [watchModalVisible, setWatchModalVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const narrow = width < 400;
+  const isWeb = Platform.OS === 'web';
+  const hoverProps = isWeb
+    ? { onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }
+    : {};
   const favorite = isFavorite(item.name, world);
   const watched = isWatched(item.name, world);
   const existingAlert = getAlert(item.name, world);
@@ -83,9 +97,26 @@ export const MarketItemCard = memo(function MarketItemCard({
   return (
     <>
       <TouchableOpacity
+        {...(hoverProps as any)}
         style={[
           styles.card,
           dealQuality !== 'none' && { borderColor: dealColor + '60' },
+          alertFiring && { borderColor: colors.gold },
+          hovered && !alertFiring && { borderColor: colors.gold + 'aa' },
+          hovered &&
+            ({
+              transform: [{ translateY: -1 }],
+              shadowColor: colors.gold,
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.25,
+              shadowRadius: 14,
+            } as any),
+          isWeb &&
+            ({
+              transitionProperty: 'border-color, transform, box-shadow',
+              transitionDuration: '180ms',
+              transitionTimingFunction: 'ease-out',
+            } as any),
           stretch && { flex: 1 },
         ]}
         onPress={() => {
@@ -296,6 +327,8 @@ export const MarketItemCard = memo(function MarketItemCard({
             </View>
           </View>
         )}
+
+        {footerSlot}
       </TouchableOpacity>
 
       {watchModalVisible && (

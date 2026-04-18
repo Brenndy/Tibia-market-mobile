@@ -5,18 +5,24 @@ import { useRouter, useNavigation } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
+import { useResponsiveColumns } from '@/src/hooks/useResponsiveColumns';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
-import { ItemImage } from '@/src/components/ItemImage';
+import { ItemDetailModal } from '@/src/components/ItemDetailModal';
+import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
+import { RankBadge } from '@/src/components/ui/RankBadge';
+import { ItemImageBox } from '@/src/components/ui/ItemImageBox';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/api/tibiaMarket';
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
 
+type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
+
 const RANK_OPTION_KEYS: {
   key: 'most_sold' | 'most_bought' | 'most_expensive_buy' | 'most_expensive_sell';
   value: RankType;
-  icon: string;
+  icon: IconName;
 }[] = [
   { key: 'most_sold', value: 'month_sold', icon: 'trending-up' },
   { key: 'most_bought', value: 'month_bought', icon: 'cart' },
@@ -24,49 +30,36 @@ const RANK_OPTION_KEYS: {
   { key: 'most_expensive_sell', value: 'sell_offer', icon: 'tag' },
 ];
 
-const PODIUM_COLORS = [colors.gold, '#9ca3af', '#cd7f32'] as const;
-
 function RankCard({
   item,
   rank,
   field,
   world,
   units,
+  onOpenModal,
 }: {
   item: MarketItem;
   rank: number;
   field: RankType;
   world: string;
   units: string;
+  onOpenModal?: (name: string) => void;
 }) {
   const router = useRouter();
   const value = item[field];
-
-  const isPodium = rank <= 3;
-  const podiumColor = isPodium ? PODIUM_COLORS[rank - 1] : colors.textMuted;
+  const handlePress = () => {
+    if (onOpenModal) onOpenModal(item.name);
+    else router.push({ pathname: '/item/[name]', params: { name: item.name, world } });
+  };
 
   return (
     <TouchableOpacity
       style={[styles.rankCard, rank === 1 && styles.rankCardFirst]}
-      onPress={() => router.push({ pathname: '/item/[name]', params: { name: item.name, world } })}
+      onPress={handlePress}
       activeOpacity={0.75}
     >
-      {/* Rank badge */}
-      <View
-        style={[
-          styles.rankBadge,
-          { borderColor: podiumColor + '50', backgroundColor: podiumColor + '18' },
-        ]}
-      >
-        <Text style={[styles.rankNum, { color: podiumColor }]}>{rank}</Text>
-      </View>
-
-      {/* Item image */}
-      <View style={styles.rankImgWrap}>
-        <ItemImage wikiName={item.wiki_name} size={36} />
-      </View>
-
-      {/* Name + category */}
+      <RankBadge rank={rank} />
+      <ItemImageBox wikiName={item.wiki_name} size={36} boxSize={40} />
       <View style={styles.rankInfo}>
         <Text style={styles.rankName} numberOfLines={1}>
           {toTitleCase(item.name)}
@@ -77,8 +70,6 @@ function RankCard({
           </Text>
         )}
       </View>
-
-      {/* Value */}
       <Text style={[styles.rankValue, rank === 1 && { color: colors.gold }]}>
         {field === 'month_sold' || field === 'month_bought'
           ? `${(value ?? 0).toLocaleString()} ${units}`
@@ -94,9 +85,11 @@ export default function StatisticsScreen() {
   const navigation = useNavigation();
   const scrollRef = useRef<ScrollView>(null);
   const [activeRank, setActiveRank] = useState<RankType>('month_sold');
+  const [modalItemName, setModalItemName] = useState<string | null>(null);
+  const { isDesktop } = useResponsiveColumns();
 
   useEffect(() => {
-    const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
+    const unsubscribe = navigation.getParent()?.addListener('tabPress' as never, () => {
       if (navigation.isFocused()) {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
@@ -104,7 +97,11 @@ export default function StatisticsScreen() {
     return () => unsubscribe?.();
   }, [navigation]);
 
-  const RANK_OPTIONS = RANK_OPTION_KEYS.map((o) => ({ ...o, label: t(o.key) }));
+  const rankFilters: FilterPill<RankType>[] = RANK_OPTION_KEYS.map((o) => ({
+    value: o.value,
+    label: t(o.key),
+    icon: o.icon,
+  }));
 
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
@@ -119,166 +116,90 @@ export default function StatisticsScreen() {
   const data = rawData ? { ...rawData, items: rankedItems } : undefined;
   const top15 = rankedItems.slice(0, 15);
 
-  if (isLoading) {
-    return <LoadingState message={t('loading_stats')} />;
-  }
+  if (isLoading) return <LoadingState message={t('loading_stats')} />;
+  if (isError) return <ErrorState onRetry={refetch} />;
 
-  if (isError) {
-    return <ErrorState onRetry={refetch} />;
-  }
+  const activeLabel = rankFilters.find((f) => f.value === activeRank)?.label ?? t('ranking');
 
   return (
-    <ScrollView
-      ref={scrollRef}
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* Rank type selector */}
+    <>
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.rankSelector}
+        ref={scrollRef}
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
       >
-        {RANK_OPTIONS.map((opt) => (
-          <TouchableOpacity
-            key={opt.value}
-            style={[styles.rankTab, activeRank === opt.value && styles.rankTabActive]}
-            onPress={() => setActiveRank(opt.value)}
-          >
-            <MaterialCommunityIcons
-              name={opt.icon as any}
-              size={14}
-              color={activeRank === opt.value ? colors.gold : colors.textMuted}
+        <FilterPillBar<RankType> items={rankFilters} active={activeRank} onChange={setActiveRank} />
+
+        <View style={styles.listCard}>
+          <Text style={styles.listTitle}>{activeLabel}</Text>
+          {top15.map((item, idx) => (
+            <RankCard
+              key={item.id}
+              item={item}
+              rank={idx + 1}
+              field={activeRank}
+              world={selectedWorld}
+              units={t('units')}
+              onOpenModal={isDesktop ? setModalItemName : undefined}
             />
-            <Text
-              style={[styles.rankTabText, activeRank === opt.value && styles.rankTabTextActive]}
-            >
-              {opt.label}
+          ))}
+        </View>
+
+        {data && (
+          <View style={styles.summaryCard}>
+            <Text style={styles.listTitle}>
+              {t('summary')} {selectedWorld}
             </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-      {/* Top 15 list */}
-      <View style={styles.listCard}>
-        <Text style={styles.listTitle}>
-          {RANK_OPTIONS.find((o) => o.value === activeRank)?.label ?? t('ranking')}
-        </Text>
-        {top15.map((item, idx) => (
-          <RankCard
-            key={item.id}
-            item={item}
-            rank={idx + 1}
-            field={activeRank}
-            world={selectedWorld}
-            units={t('units')}
-          />
-        ))}
-      </View>
-
-      {/* Summary stats */}
-      {data && (
-        <View style={styles.summaryCard}>
-          <Text style={styles.listTitle}>
-            {t('summary')} {selectedWorld}
-          </Text>
-          <View style={styles.summaryGrid}>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
-              <Text style={styles.summaryValue}>{data.items.length.toLocaleString()}</Text>
-              <Text style={styles.summaryLabel}>{t('items_label')}</Text>
-            </View>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="trending-up" size={24} color={colors.buy} />
-              <Text style={styles.summaryValue}>
-                {formatGold(data.items[0]?.buy_offer ?? null)}
-              </Text>
-              <Text style={styles.summaryLabel}>{t('highest_buy_price')}</Text>
-            </View>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="update" size={24} color={colors.textSecondary} />
-              <Text style={styles.summaryValue}>
-                {data.last_update
-                  ? new Date(data.last_update).toLocaleTimeString(undefined, {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })
-                  : '—'}
-              </Text>
-              <Text style={styles.summaryLabel}>{t('last_update')}</Text>
+            <View style={styles.summaryGrid}>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
+                <Text style={styles.summaryValue}>{data.items.length.toLocaleString()}</Text>
+                <Text style={styles.summaryLabel}>{t('items_label')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="trending-up" size={24} color={colors.buy} />
+                <Text style={styles.summaryValue}>
+                  {formatGold(data.items[0]?.buy_offer ?? null)}
+                </Text>
+                <Text style={styles.summaryLabel}>{t('highest_buy_price')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="update" size={24} color={colors.textSecondary} />
+                <Text style={styles.summaryValue}>
+                  {data.last_update
+                    ? new Date(data.last_update).toLocaleTimeString(undefined, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })
+                    : '—'}
+                </Text>
+                <Text style={styles.summaryLabel}>{t('last_update')}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      )}
-    </ScrollView>
+        )}
+      </ScrollView>
+      <ItemDetailModal
+        name={modalItemName}
+        world={selectedWorld}
+        onClose={() => setModalItemName(null)}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    padding: 16,
-    paddingBottom: 80,
-    gap: 16,
-  },
-  rankSelector: {
-    gap: 8,
-    paddingVertical: 2,
-  },
-  rankTab: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    backgroundColor: colors.card,
-  },
-  rankTabActive: {
-    borderColor: colors.gold,
-    backgroundColor: colors.surfaceElevated,
-  },
-  rankTabText: {
-    color: colors.textMuted,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  rankTabTextActive: {
-    color: colors.gold,
-  },
-  chartCard: {
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 14,
-    padding: 16,
-  },
-  chartTitle: {
-    color: colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 12,
-  },
+  container: { flex: 1, backgroundColor: colors.background },
+  content: { padding: 16, paddingBottom: 80, gap: 16 },
   listCard: {
     backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.cardBorder,
     borderRadius: 14,
     padding: 16,
-    gap: 0,
   },
-  listTitle: {
-    color: colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 12,
-  },
+  listTitle: { color: colors.textPrimary, fontSize: 16, fontWeight: '700', marginBottom: 12 },
   rankCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -295,103 +216,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     marginBottom: 2,
   },
-  rankBadge: {
-    width: 26,
-    height: 26,
-    borderRadius: 7,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  rankNum: {
-    fontSize: 12,
-    fontWeight: '800',
-  },
-  rankImgWrap: {
-    width: 40,
-    height: 40,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  rankInfo: {
-    flex: 1,
-  },
-  rankName: {
-    color: colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  rankCategory: {
-    color: colors.textMuted,
-    fontSize: 11,
-    marginTop: 2,
-  },
-  rankValue: {
-    color: colors.textSecondary,
-    fontSize: 13,
-    fontWeight: '700',
-    flexShrink: 0,
-  },
-  // Horizontal bar chart
-  hBarContainer: {
-    gap: 10,
-  },
-  hBarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  hBarLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    width: 100,
-  },
-  hBarRank: {
-    fontSize: 11,
-    fontWeight: '800',
-    width: 16,
-    textAlign: 'center',
-  },
-  hBarImg: {
-    width: 28,
-    height: 28,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  hBarName: {
-    color: colors.textSecondary,
-    fontSize: 11,
-    fontWeight: '600',
-    flex: 1,
-  },
-  hBarTrack: {
-    flex: 1,
-    height: 8,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  hBarFill: {
-    height: '100%',
-    borderRadius: 4,
-  },
-  hBarVal: {
-    fontSize: 11,
-    fontWeight: '700',
-    width: 72,
-    textAlign: 'right',
-  },
+  rankInfo: { flex: 1 },
+  rankName: { color: colors.textPrimary, fontSize: 14, fontWeight: '600' },
+  rankCategory: { color: colors.textMuted, fontSize: 11, marginTop: 2 },
+  rankValue: { color: colors.textSecondary, fontSize: 13, fontWeight: '700', flexShrink: 0 },
   summaryCard: {
     backgroundColor: colors.card,
     borderWidth: 1,
@@ -399,26 +227,13 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 16,
   },
-  summaryGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    gap: 8,
-  },
-  summaryItem: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 6,
-  },
+  summaryGrid: { flexDirection: 'row', justifyContent: 'space-around', gap: 8 },
+  summaryItem: { flex: 1, alignItems: 'center', gap: 6 },
   summaryValue: {
     color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
   },
-  summaryLabel: {
-    color: colors.textMuted,
-    fontSize: 9,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
+  summaryLabel: { color: colors.textMuted, fontSize: 9, fontWeight: '600', textAlign: 'center' },
 });

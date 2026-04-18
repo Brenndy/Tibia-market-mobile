@@ -1,15 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  useWindowDimensions,
-} from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { View, Text, ScrollView, StyleSheet, Platform } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
 import {
   useWatchlist,
@@ -19,227 +9,24 @@ import {
   WatchAlert,
 } from '@/src/context/WatchlistContext';
 import { useWorld } from '@/src/context/WorldContext';
-import { useMarketBoard } from '@/src/hooks/useMarket';
+import { useMarketBoards } from '@/src/hooks/useMarket';
+import { useResponsiveColumns } from '@/src/hooks/useResponsiveColumns';
 import { useTranslation } from '@/src/context/LanguageContext';
-import { WatchAlertModal } from '@/src/components/WatchAlertModal';
-import { MarketItemCard } from '@/src/components/MarketItemCard';
-import { ItemImage } from '@/src/components/ItemImage';
+import { ItemDetailModal } from '@/src/components/ItemDetailModal';
+import { MarketItemGrid, MarketItemGridItem } from '@/src/components/MarketItemGrid';
+import { WorldSectionHeader } from '@/src/components/WorldSectionHeader';
+import { EmptyState } from '@/src/components/EmptyState';
+import { TabSwitcher } from '@/src/components/TabSwitcher';
+import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
+import { AlertThresholdFooter } from '@/src/components/AlertThresholdFooter';
+import { Pill } from '@/src/components/ui/Pill';
 import { colors } from '@/src/theme/colors';
-import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
+import { MarketBoard, MarketItem } from '@/src/api/tibiaMarket';
+import { pluralKey } from '@/src/utils/plural';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DESKTOP_BREAKPOINT = 900;
-
-// Polish plural picker: 1 → one, 2–4 (excl. teens) → few, rest → many.
-// Works for EN too because all three keys resolve to the same English word.
-function pluralKey(
-  count: number,
-  keys: { one: 'active_label_one'; few: 'active_label_few'; many: 'active_label_many' },
-) {
-  const mod10 = count % 10;
-  const mod100 = count % 100;
-  if (count === 1) return keys.one;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return keys.few;
-  return keys.many;
-}
 const pluralActive = (n: number) =>
   pluralKey(n, { one: 'active_label_one', few: 'active_label_few', many: 'active_label_many' });
-
-// Maps current vs threshold to a 0..1 fill showing how close the alert is.
-// Full = triggered. 0 = price is more than 20% away from threshold.
-function alertProgress(
-  currentBuy: number | null,
-  currentSell: number | null,
-  alert: WatchAlert,
-): { buy: number; sell: number; anyTriggered: boolean } {
-  const WINDOW = 0.2;
-  let buy = 0;
-  let sell = 0;
-  let anyTriggered = false;
-  if (alert.buyAlert != null && currentBuy != null && currentBuy > 0) {
-    const cond = getBuyCondition(alert);
-    const triggered =
-      cond === 'below' ? currentBuy <= alert.buyAlert : currentBuy >= alert.buyAlert;
-    if (triggered) {
-      buy = 1;
-      anyTriggered = true;
-    } else {
-      const dist =
-        cond === 'below'
-          ? (currentBuy - alert.buyAlert) / alert.buyAlert
-          : (alert.buyAlert - currentBuy) / alert.buyAlert;
-      buy = Math.max(0, 1 - dist / WINDOW);
-    }
-  }
-  if (alert.sellAlert != null && currentSell != null && currentSell > 0) {
-    const cond = getSellCondition(alert);
-    const triggered =
-      cond === 'above' ? currentSell >= alert.sellAlert : currentSell <= alert.sellAlert;
-    if (triggered) {
-      sell = 1;
-      anyTriggered = true;
-    } else {
-      const dist =
-        cond === 'above'
-          ? (alert.sellAlert - currentSell) / alert.sellAlert
-          : (currentSell - alert.sellAlert) / alert.sellAlert;
-      sell = Math.max(0, 1 - dist / WINDOW);
-    }
-  }
-  return { buy, sell, anyTriggered };
-}
-
-// ─── WatchCard ────────────────────────────────────────────────────────────────
-
-function WatchCard({
-  alert,
-  marketItem,
-  onEdit,
-}: {
-  alert: WatchAlert;
-  marketItem: MarketItem | undefined;
-  onEdit: (alert: WatchAlert) => void;
-}) {
-  const router = useRouter();
-  const { t } = useTranslation();
-
-  const buyOffer = marketItem?.buy_offer ?? null;
-  const sellOffer = marketItem?.sell_offer ?? null;
-  const triggered = isAlertTriggered(alert, buyOffer, sellOffer);
-  const anyTriggered = triggered.buy || triggered.sell;
-  const progress = alertProgress(buyOffer, sellOffer, alert);
-
-  return (
-    <TouchableOpacity
-      style={[styles.card, anyTriggered && styles.cardTriggered]}
-      onPress={() =>
-        router.push({
-          pathname: '/item/[name]',
-          params: { name: alert.itemName, world: alert.world },
-        })
-      }
-      activeOpacity={0.8}
-    >
-      {anyTriggered && (
-        <LinearGradient colors={[colors.goldDim, 'transparent']} style={styles.triggeredBg} />
-      )}
-
-      <View style={styles.cardHeader}>
-        <View style={styles.imgWrap}>
-          <ItemImage wikiName={alert.wikiName} size={38} />
-        </View>
-        <View style={styles.nameCol}>
-          <Text style={styles.itemName} numberOfLines={1}>
-            {toTitleCase(alert.itemName)}
-          </Text>
-          {anyTriggered ? (
-            <View style={styles.alertBadge}>
-              <MaterialCommunityIcons name="bell-ring" size={10} color={colors.gold} />
-              <Text style={styles.alertBadgeText}>{t('opportunity')}</Text>
-            </View>
-          ) : marketItem == null ? (
-            <Text style={styles.loadingText}>{t('loading_ellipsis')}</Text>
-          ) : null}
-        </View>
-        <TouchableOpacity
-          testID="edit-alert"
-          style={styles.editBtn}
-          onPress={() => onEdit(alert)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <MaterialCommunityIcons name="pencil-outline" size={16} color={colors.textMuted} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.priceRow}>
-        {/* Buy side */}
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('buy')}</Text>
-          <Text style={[styles.priceVal, { color: colors.buy }]}>
-            {marketItem ? formatGold(buyOffer) : '…'}
-          </Text>
-          {alert.buyAlert != null && (
-            <View style={styles.threshRow}>
-              <MaterialCommunityIcons
-                name={triggered.buy ? 'bell-ring' : 'bell-outline'}
-                size={11}
-                color={triggered.buy ? colors.buy : colors.textMuted}
-              />
-              <Text style={[styles.thresh, triggered.buy && { color: colors.buy }]}>
-                {getBuyCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.buyAlert)}
-              </Text>
-            </View>
-          )}
-          {alert.buyAlert == null && <Text style={styles.noAlert}>{t('no_alert_set')}</Text>}
-        </View>
-
-        <View style={styles.divV} />
-
-        {/* Sell side */}
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('sell')}</Text>
-          <Text style={[styles.priceVal, { color: colors.sell }]}>
-            {marketItem ? formatGold(sellOffer) : '…'}
-          </Text>
-          {alert.sellAlert != null && (
-            <View style={styles.threshRow}>
-              <MaterialCommunityIcons
-                name={triggered.sell ? 'bell-ring' : 'bell-outline'}
-                size={11}
-                color={triggered.sell ? colors.sell : colors.textMuted}
-              />
-              <Text style={[styles.thresh, triggered.sell && { color: colors.sell }]}>
-                {getSellCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.sellAlert)}
-              </Text>
-            </View>
-          )}
-          {alert.sellAlert == null && <Text style={styles.noAlert}>{t('no_alert_set')}</Text>}
-        </View>
-
-        <View style={styles.divV} />
-
-        {/* Volume */}
-        <View style={styles.priceBlock}>
-          <Text style={styles.priceLabel}>{t('volume_monthly')}</Text>
-          <Text style={styles.priceVal}>
-            {marketItem?.month_sold?.toLocaleString() ?? (marketItem ? '—' : '…')}
-          </Text>
-          <Text style={styles.volUnit}>{t('units')}</Text>
-        </View>
-      </View>
-      {(alert.buyAlert != null || alert.sellAlert != null) && marketItem && (
-        <View style={styles.progressRow}>
-          {alert.buyAlert != null && (
-            <View style={styles.progressTrack}>
-              <View
-                style={[
-                  styles.progressFill,
-                  {
-                    width: `${Math.round(progress.buy * 100)}%`,
-                    backgroundColor: triggered.buy ? colors.gold : colors.buy,
-                  },
-                ]}
-              />
-            </View>
-          )}
-          {alert.sellAlert != null && (
-            <View style={styles.progressTrack}>
-              <View
-                style={[
-                  styles.progressFill,
-                  {
-                    width: `${Math.round(progress.sell * 100)}%`,
-                    backgroundColor: triggered.sell ? colors.gold : colors.sell,
-                  },
-                ]}
-              />
-            </View>
-          )}
-        </View>
-      )}
-    </TouchableOpacity>
-  );
-}
 
 // ─── WorldAlertsSection ───────────────────────────────────────────────────────
 
@@ -248,24 +35,29 @@ const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
 function WorldAlertsSection({
   world,
   alerts,
-  onEdit,
-  isDesktop,
+  visibleItems,
+  board,
+  isLoading,
+  numColumns,
+  onItemPress,
 }: {
   world: string;
   alerts: WatchAlert[];
-  onEdit: (alert: WatchAlert) => void;
-  isDesktop: boolean;
+  visibleItems: MarketItem[];
+  board: MarketBoard | undefined;
+  isLoading: boolean;
+  numColumns: number;
+  onItemPress?: (name: string, world: string) => void;
 }) {
-  const { data, isLoading } = useMarketBoard(world);
+  const isGrid = numColumns > 1;
   const { t } = useTranslation();
   const checkedRef = useRef<string>('');
 
-  const getItem = (name: string) => data?.items.find((i) => i.name === name);
+  const alertByName = new Map(alerts.map((a) => [a.itemName, a]));
 
-  // Check alerts whenever fresh data arrives and send notifications
   useEffect(() => {
-    if (!data) return;
-    const dataKey = data.last_update + alerts.length;
+    if (!board) return;
+    const dataKey = board.last_update + alerts.length;
     if (checkedRef.current === dataKey) return;
     checkedRef.current = dataKey;
 
@@ -277,9 +69,8 @@ function WorldAlertsSection({
       const toAdd: string[] = [];
 
       for (const alert of alerts) {
-        const item = data.items.find((i) => i.name === alert.itemName);
+        const item = board.items.find((i) => i.name === alert.itemName);
         if (!item) continue;
-
         const buyOffer = item.buy_offer ?? null;
         const sellOffer = item.sell_offer ?? null;
         const fired = isAlertTriggered(alert, buyOffer, sellOffer);
@@ -307,58 +98,64 @@ function WorldAlertsSection({
         await AsyncStorage.setItem(NOTIFIED_KEY, JSON.stringify(updated));
       }
     })();
-  }, [data, alerts, world]);
+  }, [board, alerts, world]);
 
-  const triggeredCount = alerts.filter((a) => {
-    const item = getItem(a.itemName);
-    const tr = isAlertTriggered(a, item?.buy_offer ?? null, item?.sell_offer ?? null);
+  const triggeredCount = visibleItems.filter((item) => {
+    const alert = alertByName.get(item.name)!;
+    const tr = isAlertTriggered(alert, item.buy_offer ?? null, item.sell_offer ?? null);
     return tr.buy || tr.sell;
   }).length;
 
+  const right = isLoading ? (
+    <Text style={styles.worldLoading}>{t('syncing')}</Text>
+  ) : triggeredCount > 0 ? (
+    <Pill
+      label={`${triggeredCount} ${t(pluralActive(triggeredCount))}`}
+      tone="triggered"
+      icon="bell-ring"
+    />
+  ) : (
+    <Pill label="OK" tone="ok" icon="check-circle-outline" />
+  );
+
+  const sortedItems = [...visibleItems].sort((a, b) => {
+    const aAlert = alertByName.get(a.name)!;
+    const bAlert = alertByName.get(b.name)!;
+    const aT = isAlertTriggered(aAlert, a.buy_offer ?? null, a.sell_offer ?? null);
+    const bT = isAlertTriggered(bAlert, b.buy_offer ?? null, b.sell_offer ?? null);
+    return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
+  });
+
+  if (visibleItems.length === 0) return null;
+
   return (
     <View style={styles.worldSection}>
-      <View style={styles.worldHeader}>
-        <View style={styles.worldHeaderLeft}>
-          <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
-          <Text style={styles.worldHeaderName}>{world}</Text>
-          <Text style={styles.worldHeaderCount}>
-            {alerts.length} {alerts.length === 1 ? t('alert_singular') : t('alerts_plural')}
-          </Text>
-        </View>
-        {isLoading ? (
-          <Text style={styles.worldLoading}>{t('syncing')}</Text>
-        ) : triggeredCount > 0 ? (
-          <View style={styles.triggeredPill}>
-            <MaterialCommunityIcons name="bell-ring" size={11} color={colors.background} />
-            <Text style={styles.triggeredPillText}>
-              {triggeredCount} {t(pluralActive(triggeredCount))}
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.okPill}>
-            <MaterialCommunityIcons name="check-circle-outline" size={11} color={colors.buy} />
-            <Text style={styles.okPillText}>OK</Text>
-          </View>
-        )}
-      </View>
-
-      <View style={isDesktop ? styles.sectionGrid : { gap: 8 }}>
-        {[...alerts]
-          .sort((a, b) => {
-            const aItem = getItem(a.itemName);
-            const bItem = getItem(b.itemName);
-            const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
-            const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
-            return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
-          })
-          .map((alert) => (
-            <View
-              key={`${alert.world}-${alert.itemName}`}
-              style={isDesktop ? styles.gridCardDesktop : undefined}
-            >
-              <WatchCard alert={alert} marketItem={getItem(alert.itemName)} onEdit={onEdit} />
-            </View>
-          ))}
+      <WorldSectionHeader
+        world={world}
+        count={visibleItems.length}
+        countLabel={visibleItems.length === 1 ? t('alert_singular') : t('alerts_plural')}
+        right={right}
+      />
+      <View style={isGrid ? styles.grid : styles.list}>
+        {sortedItems.map((item) => {
+          const alert = alertByName.get(item.name)!;
+          return (
+            <MarketItemGridItem
+              key={`${world}-${item.name}`}
+              item={item}
+              world={world}
+              numColumns={numColumns}
+              onPress={isGrid && onItemPress ? () => onItemPress(item.name, world) : undefined}
+              footerSlot={
+                <AlertThresholdFooter
+                  alert={alert}
+                  currentBuy={item.buy_offer ?? null}
+                  currentSell={item.sell_offer ?? null}
+                />
+              }
+            />
+          );
+        })}
       </View>
     </View>
   );
@@ -368,63 +165,59 @@ function WorldAlertsSection({
 
 function WorldFavoritesSection({
   world,
-  favoriteNames,
-  isDesktop,
+  visibleItems,
+  isLoading,
+  numColumns,
+  onItemPress,
 }: {
   world: string;
-  favoriteNames: string[];
-  isDesktop: boolean;
+  visibleItems: MarketItem[];
+  isLoading: boolean;
+  numColumns: number;
+  onItemPress?: (name: string) => void;
 }) {
-  const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
 
-  const items = (data?.items ?? []).filter((i) => favoriteNames.includes(i.name));
+  if (visibleItems.length === 0) return null;
 
   return (
     <View style={styles.worldSection}>
-      <View style={styles.worldHeader}>
-        <View style={styles.worldHeaderLeft}>
-          <MaterialCommunityIcons name="earth" size={14} color={colors.gold} />
-          <Text style={styles.worldHeaderName}>{world}</Text>
-          <Text style={styles.worldHeaderCount}>
-            {favoriteNames.length}{' '}
-            {favoriteNames.length === 1 ? t('favorite_singular') : t('favorites_plural')}
-          </Text>
-        </View>
-        {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}
-      </View>
-      <View style={isDesktop ? styles.sectionGrid : undefined}>
-        {items.map((item) => (
-          <View
-            key={`${world}-${item.name}`}
-            style={isDesktop ? styles.gridCardDesktop : undefined}
-          >
-            <MarketItemCard item={item} world={world} />
-          </View>
-        ))}
-      </View>
+      <WorldSectionHeader
+        world={world}
+        count={visibleItems.length}
+        countLabel={visibleItems.length === 1 ? t('favorite_singular') : t('favorites_plural')}
+        right={isLoading ? <Text style={styles.worldLoading}>{t('syncing')}</Text> : null}
+      />
+      <MarketItemGrid
+        items={visibleItems}
+        world={world}
+        numColumns={numColumns}
+        onItemPress={onItemPress}
+      />
     </View>
   );
 }
 
 // ─── WatchlistScreen ──────────────────────────────────────────────────────────
 
+type WatchTab = 'alerts' | 'favorites';
+
 export default function WatchlistScreen() {
-  const { watchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const { watchlist } = useWatchlist();
   const { allFavorites } = useWorld();
   const { t } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
   const scrollRef = useRef<ScrollView>(null);
-  const [editingAlert, setEditingAlert] = useState<WatchAlert | null>(null);
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
   const [favWorldFilter, setFavWorldFilter] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'alerts' | 'favorites'>('alerts');
-  const { width } = useWindowDimensions();
-  const isDesktop = width >= DESKTOP_BREAKPOINT;
+  const [activeTab, setActiveTab] = useState<WatchTab>('alerts');
+  const [modalItemName, setModalItemName] = useState<string | null>(null);
+  const [modalItemWorld, setModalItemWorld] = useState<string | null>(null);
+  const { numColumns, isDesktop } = useResponsiveColumns();
 
   useEffect(() => {
-    const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
+    const unsubscribe = navigation.getParent()?.addListener('tabPress' as never, () => {
       if (navigation.isFocused()) {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
@@ -432,320 +225,206 @@ export default function WatchlistScreen() {
     return () => unsubscribe?.();
   }, [navigation]);
 
-  // Unique worlds in watchlist (sorted alphabetically)
-  const worlds = [...new Set(watchlist.map((a) => a.world))].sort();
-  const filteredAlerts = worldFilter ? watchlist.filter((a) => a.world === worldFilter) : watchlist;
-  const filteredWorlds = worldFilter ? [worldFilter] : worlds;
+  const alertWorlds = useMemo(
+    () => [...new Set(watchlist.map((a) => a.world))].sort(),
+    [watchlist],
+  );
+  const favWorlds = useMemo(
+    () =>
+      Object.keys(allFavorites)
+        .filter((w) => (allFavorites[w] ?? []).length > 0)
+        .sort(),
+    [allFavorites],
+  );
+  const allWorlds = useMemo(
+    () => [...new Set([...alertWorlds, ...favWorlds])],
+    [alertWorlds, favWorlds],
+  );
 
-  // Favorites grouped per world
-  const favWorlds = Object.keys(allFavorites)
-    .filter((w) => (allFavorites[w] ?? []).length > 0)
-    .sort();
+  const { boardByWorld, loadingByWorld } = useMarketBoards(allWorlds);
+
+  // Per-world visible items for alerts (item present in the board AND has an alert)
+  const visibleAlertItemsByWorld = useMemo(() => {
+    const m = new Map<string, MarketItem[]>();
+    alertWorlds.forEach((world) => {
+      const board = boardByWorld.get(world);
+      if (!board) {
+        m.set(world, []);
+        return;
+      }
+      const alertNames = new Set(watchlist.filter((a) => a.world === world).map((a) => a.itemName));
+      m.set(
+        world,
+        board.items.filter((i) => alertNames.has(i.name)),
+      );
+    });
+    return m;
+  }, [alertWorlds, boardByWorld, watchlist]);
+
+  const visibleFavItemsByWorld = useMemo(() => {
+    const m = new Map<string, MarketItem[]>();
+    favWorlds.forEach((world) => {
+      const board = boardByWorld.get(world);
+      if (!board) {
+        m.set(world, []);
+        return;
+      }
+      const favNames = new Set(allFavorites[world] ?? []);
+      m.set(
+        world,
+        board.items.filter((i) => favNames.has(i.name)),
+      );
+    });
+    return m;
+  }, [favWorlds, boardByWorld, allFavorites]);
+
+  const anyBoardLoading = [...loadingByWorld.values()].some(Boolean);
+  const totalVisibleAlerts = [...visibleAlertItemsByWorld.values()].reduce(
+    (sum, arr) => sum + arr.length,
+    0,
+  );
+  const totalVisibleFavs = [...visibleFavItemsByWorld.values()].reduce(
+    (sum, arr) => sum + arr.length,
+    0,
+  );
+  // Fall back to configured counts while boards load so the tab badge does not
+  // flicker 0 → N on first paint.
+  const alertBadge =
+    anyBoardLoading && totalVisibleAlerts === 0 ? watchlist.length : totalVisibleAlerts;
+  const configuredFavs = favWorlds.reduce((s, w) => s + (allFavorites[w]?.length ?? 0), 0);
+  const favBadge = anyBoardLoading && totalVisibleFavs === 0 ? configuredFavs : totalVisibleFavs;
+
+  const filteredAlertWorlds = worldFilter ? [worldFilter] : alertWorlds;
   const filteredFavWorlds = favWorldFilter ? [favWorldFilter] : favWorlds;
-  const totalFavs = favWorlds.reduce((sum, w) => sum + (allFavorites[w]?.length ?? 0), 0);
+
+  const alertFilters: FilterPill<string | null>[] = [
+    { value: null, label: t('all_worlds'), count: alertBadge },
+    ...alertWorlds.map((w) => ({
+      value: w,
+      label: w,
+      icon: 'earth' as const,
+      count: (visibleAlertItemsByWorld.get(w) ?? []).length,
+    })),
+  ];
+
+  const favFilters: FilterPill<string | null>[] = [
+    { value: null, label: t('all_worlds'), count: favBadge },
+    ...favWorlds.map((w) => ({
+      value: w,
+      label: w,
+      icon: 'earth' as const,
+      count: (visibleFavItemsByWorld.get(w) ?? []).length,
+    })),
+  ];
+
+  const openItemModal = (name: string, world: string) => {
+    setModalItemWorld(world);
+    setModalItemName(name);
+  };
 
   return (
     <View style={styles.container}>
-      {/* Tab switcher */}
-      <View style={styles.tabSwitcher}>
-        <TouchableOpacity
-          style={[styles.switchTab, activeTab === 'alerts' && styles.switchTabActive]}
-          onPress={() => setActiveTab('alerts')}
-        >
-          <MaterialCommunityIcons
-            name="bell"
-            size={14}
-            color={activeTab === 'alerts' ? colors.gold : colors.textMuted}
-          />
-          <Text
-            style={[styles.switchTabText, activeTab === 'alerts' && styles.switchTabTextActive]}
-          >
-            {t('tab_alerts')} {watchlist.length > 0 ? `(${watchlist.length})` : ''}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.switchTab, activeTab === 'favorites' && styles.switchTabActive]}
-          onPress={() => setActiveTab('favorites')}
-        >
-          <MaterialCommunityIcons
-            name="star"
-            size={14}
-            color={activeTab === 'favorites' ? colors.gold : colors.textMuted}
-          />
-          <Text
-            style={[styles.switchTabText, activeTab === 'favorites' && styles.switchTabTextActive]}
-          >
-            {t('tab_favorites')} {totalFavs > 0 ? `(${totalFavs})` : ''}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <TabSwitcher<WatchTab>
+        active={activeTab}
+        onChange={setActiveTab}
+        items={[
+          {
+            value: 'alerts',
+            label: t('tab_alerts'),
+            icon: 'bell',
+            badge: alertBadge > 0 ? alertBadge : null,
+          },
+          {
+            value: 'favorites',
+            label: t('tab_favorites'),
+            icon: 'star',
+            badge: favBadge > 0 ? favBadge : null,
+          },
+        ]}
+      />
 
       {activeTab === 'alerts' ? (
-        <>
-          {watchlist.length === 0 ? (
-            <View style={styles.empty}>
-              <MaterialCommunityIcons
-                name="bell-sleep-outline"
-                size={72}
-                color={colors.textMuted}
+        watchlist.length === 0 ? (
+          <EmptyState
+            icon="bell-sleep-outline"
+            title={t('no_alerts_title')}
+            description={t('no_alerts_desc')}
+            cta={{ label: t('go_to_market'), icon: 'store', onPress: () => router.push('/') }}
+          />
+        ) : (
+          <>
+            {alertWorlds.length > 1 && (
+              <FilterPillBar<string | null>
+                items={alertFilters}
+                active={worldFilter}
+                onChange={setWorldFilter}
               />
-              <Text style={styles.emptyTitle}>{t('no_alerts_title')}</Text>
-              <Text style={styles.emptyDesc}>{t('no_alerts_desc')}</Text>
-              <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
-                <MaterialCommunityIcons name="store" size={16} color={colors.background} />
-                <Text style={styles.emptyBtnText}>{t('go_to_market')}</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <>
-              {/* World filter tabs */}
-              {worlds.length > 1 && (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.filterBar}
-                  style={styles.filterBarScroll}
-                >
-                  <TouchableOpacity
-                    style={[styles.filterTab, worldFilter === null && styles.filterTabActive]}
-                    onPress={() => setWorldFilter(null)}
-                  >
-                    <Text
-                      style={[
-                        styles.filterTabText,
-                        worldFilter === null && styles.filterTabTextActive,
-                      ]}
-                    >
-                      {t('all_worlds')} ({watchlist.length})
-                    </Text>
-                  </TouchableOpacity>
-                  {worlds.map((w) => {
-                    const count = watchlist.filter((a) => a.world === w).length;
-                    return (
-                      <TouchableOpacity
-                        key={w}
-                        style={[styles.filterTab, worldFilter === w && styles.filterTabActive]}
-                        onPress={() => setWorldFilter(w)}
-                      >
-                        <MaterialCommunityIcons
-                          name="earth"
-                          size={11}
-                          color={worldFilter === w ? colors.gold : colors.textMuted}
-                        />
-                        <Text
-                          style={[
-                            styles.filterTabText,
-                            worldFilter === w && styles.filterTabTextActive,
-                          ]}
-                        >
-                          {w} ({count})
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
-              )}
-              <ScrollView
-                ref={scrollRef}
-                contentContainerStyle={styles.content}
-                showsVerticalScrollIndicator={false}
-              >
-                {filteredWorlds.map((world) => (
-                  <WorldAlertsSection
-                    key={world}
-                    world={world}
-                    alerts={filteredAlerts.filter((a) => a.world === world)}
-                    onEdit={setEditingAlert}
-                    isDesktop={isDesktop}
-                  />
-                ))}
-              </ScrollView>
-            </>
-          )}
-        </>
+            )}
+            <ScrollView
+              ref={scrollRef}
+              contentContainerStyle={styles.content}
+              showsVerticalScrollIndicator={false}
+            >
+              {filteredAlertWorlds.map((world) => (
+                <WorldAlertsSection
+                  key={world}
+                  world={world}
+                  alerts={watchlist.filter((a) => a.world === world)}
+                  visibleItems={visibleAlertItemsByWorld.get(world) ?? []}
+                  board={boardByWorld.get(world)}
+                  isLoading={loadingByWorld.get(world) ?? false}
+                  numColumns={numColumns}
+                  onItemPress={isDesktop ? openItemModal : undefined}
+                />
+              ))}
+            </ScrollView>
+          </>
+        )
+      ) : configuredFavs === 0 ? (
+        <EmptyState
+          icon="star-outline"
+          title={t('no_favorites_title')}
+          description={t('no_favorites_desc')}
+          cta={{ label: t('go_to_market'), icon: 'store', onPress: () => router.push('/') }}
+        />
       ) : (
         <>
-          {totalFavs === 0 ? (
-            <View style={styles.empty}>
-              <MaterialCommunityIcons name="star-outline" size={72} color={colors.textMuted} />
-              <Text style={styles.emptyTitle}>{t('no_favorites_title')}</Text>
-              <Text style={styles.emptyDesc}>{t('no_favorites_desc')}</Text>
-              <TouchableOpacity style={styles.emptyBtn} onPress={() => router.push('/')}>
-                <MaterialCommunityIcons name="store" size={16} color={colors.background} />
-                <Text style={styles.emptyBtnText}>{t('go_to_market')}</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <>
-              {favWorlds.length > 1 && (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.filterBar}
-                  style={styles.filterBarScroll}
-                >
-                  <TouchableOpacity
-                    style={[styles.filterTab, favWorldFilter === null && styles.filterTabActive]}
-                    onPress={() => setFavWorldFilter(null)}
-                  >
-                    <Text
-                      style={[
-                        styles.filterTabText,
-                        favWorldFilter === null && styles.filterTabTextActive,
-                      ]}
-                    >
-                      {t('all_worlds')} ({totalFavs})
-                    </Text>
-                  </TouchableOpacity>
-                  {favWorlds.map((w) => {
-                    const count = (allFavorites[w] ?? []).length;
-                    return (
-                      <TouchableOpacity
-                        key={w}
-                        style={[styles.filterTab, favWorldFilter === w && styles.filterTabActive]}
-                        onPress={() => setFavWorldFilter(w)}
-                      >
-                        <MaterialCommunityIcons
-                          name="earth"
-                          size={11}
-                          color={favWorldFilter === w ? colors.gold : colors.textMuted}
-                        />
-                        <Text
-                          style={[
-                            styles.filterTabText,
-                            favWorldFilter === w && styles.filterTabTextActive,
-                          ]}
-                        >
-                          {w} ({count})
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
-              )}
-              <ScrollView
-                contentContainerStyle={styles.content}
-                showsVerticalScrollIndicator={false}
-              >
-                {filteredFavWorlds.map((world) => (
-                  <WorldFavoritesSection
-                    key={world}
-                    world={world}
-                    favoriteNames={allFavorites[world] ?? []}
-                    isDesktop={isDesktop}
-                  />
-                ))}
-              </ScrollView>
-            </>
+          {favWorlds.length > 1 && (
+            <FilterPillBar<string | null>
+              items={favFilters}
+              active={favWorldFilter}
+              onChange={setFavWorldFilter}
+            />
           )}
+          <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+            {filteredFavWorlds.map((world) => (
+              <WorldFavoritesSection
+                key={world}
+                world={world}
+                visibleItems={visibleFavItemsByWorld.get(world) ?? []}
+                isLoading={loadingByWorld.get(world) ?? false}
+                numColumns={numColumns}
+                onItemPress={isDesktop ? (name) => openItemModal(name, world) : undefined}
+              />
+            ))}
+          </ScrollView>
         </>
       )}
 
-      {editingAlert && (
-        <WatchAlertModal
-          visible={!!editingAlert}
-          itemName={editingAlert.itemName}
-          wikiName={editingAlert.wikiName}
-          world={editingAlert.world}
-          currentBuy={null}
-          currentSell={null}
-          initialBuyAlert={editingAlert.buyAlert}
-          initialSellAlert={editingAlert.sellAlert}
-          initialBuyAlertCondition={editingAlert.buyAlertCondition}
-          initialSellAlertCondition={editingAlert.sellAlertCondition}
-          isEditing={true}
-          onSave={(buy, sell, buyCond, sellCond) => {
-            if (buy == null && sell == null) {
-              removeFromWatchlist(editingAlert.itemName, editingAlert.world);
-            } else {
-              updateAlert(editingAlert.itemName, editingAlert.world, buy, sell, buyCond, sellCond);
-            }
-          }}
-          onRemove={() => removeFromWatchlist(editingAlert.itemName, editingAlert.world)}
-          onClose={() => setEditingAlert(null)}
-        />
-      )}
+      <ItemDetailModal
+        name={modalItemName}
+        world={modalItemWorld ?? ''}
+        onClose={() => {
+          setModalItemName(null);
+          setModalItemWorld(null);
+        }}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
-
-  tabSwitcher: {
-    flexDirection: 'row',
-    backgroundColor: colors.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  switchTab: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-  },
-  switchTabActive: {
-    borderBottomColor: colors.gold,
-  },
-  switchTabText: {
-    color: colors.textMuted,
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  switchTabTextActive: {
-    color: colors.gold,
-  },
-
-  statsBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    backgroundColor: colors.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  statsText: { color: colors.textMuted, fontSize: 11 },
-
-  filterBarScroll: {
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-  filterBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-  },
-  filterTab: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    backgroundColor: colors.card,
-  },
-  filterTabActive: {
-    borderColor: colors.gold,
-    backgroundColor: colors.goldDim,
-  },
-  filterTabText: {
-    color: colors.textMuted,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  filterTabTextActive: {
-    color: colors.gold,
-  },
 
   content: {
     padding: 12,
@@ -757,174 +436,8 @@ const styles = StyleSheet.create({
   },
 
   worldSection: { gap: 8 },
-  worldHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 4,
-    paddingBottom: 4,
-  },
-  worldHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  worldHeaderName: {
-    color: colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  worldHeaderCount: {
-    color: colors.textMuted,
-    fontSize: 11,
-  },
-  worldLoading: {
-    color: colors.textMuted,
-    fontSize: 11,
-    fontStyle: 'italic',
-  },
-  triggeredPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: colors.gold,
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 20,
-  },
-  triggeredPillText: { color: colors.background, fontSize: 11, fontWeight: '700' },
-  okPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: colors.buyDim,
-    borderWidth: 1,
-    borderColor: colors.buyBorder,
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 20,
-  },
-  okPillText: { color: colors.buy, fontSize: 11, fontWeight: '600' },
+  worldLoading: { color: colors.textMuted, fontSize: 11, fontStyle: 'italic' },
 
-  card: {
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 14,
-    overflow: 'hidden',
-  },
-  cardTriggered: { borderColor: colors.gold },
-  triggeredBg: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    gap: 10,
-  },
-  imgWrap: {
-    width: 42,
-    height: 42,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  nameCol: { flex: 1, gap: 4 },
-  itemName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
-  alertBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    alignSelf: 'flex-start',
-    backgroundColor: colors.goldDim,
-    borderWidth: 1,
-    borderColor: colors.gold,
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    borderRadius: 20,
-  },
-  alertBadgeText: { color: colors.gold, fontSize: 9, fontWeight: '800', letterSpacing: 0.5 },
-  loadingText: { color: colors.textMuted, fontSize: 11 },
-  editBtn: { padding: 4 },
-
-  priceRow: {
-    flexDirection: 'row',
-    borderTopWidth: 1,
-    borderTopColor: colors.divider,
-  },
-  priceBlock: { flex: 1, alignItems: 'center', paddingVertical: 10, gap: 3 },
-  priceLabel: {
-    color: colors.textMuted,
-    fontSize: 9,
-    fontWeight: '700',
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-  },
-  priceVal: { color: colors.textPrimary, fontSize: 15, fontWeight: '700' },
-  threshRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
-  thresh: { color: colors.textMuted, fontSize: 10, fontWeight: '600' },
-  noAlert: { color: colors.textMuted, fontSize: 10, fontStyle: 'italic' },
-  volUnit: { color: colors.textMuted, fontSize: 10 },
-  divV: { width: 1, backgroundColor: colors.border, marginVertical: 8 },
-  progressRow: {
-    flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderTopWidth: 1,
-    borderTopColor: colors.divider,
-  },
-  progressTrack: {
-    flex: 1,
-    height: 4,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 2,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 2,
-  },
-  sectionGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-  },
-  gridCardDesktop: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-    minWidth: 380,
-    maxWidth: '50%',
-  },
-
-  empty: {
-    flex: 1,
-    backgroundColor: colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 32,
-    gap: 16,
-  },
-  emptyTitle: { color: colors.textPrimary, fontSize: 20, fontWeight: '700' },
-  emptyDesc: { color: colors.textSecondary, fontSize: 14, textAlign: 'center', lineHeight: 20 },
-  emptyBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: colors.gold,
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 12,
-    marginTop: 8,
-  },
-  emptyBtnText: { color: colors.background, fontWeight: '700', fontSize: 15 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -6 },
+  list: { gap: 8 },
 });

@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MarketItem, formatGold, toTitleCase } from '../api/tibiaMarket';
@@ -36,6 +36,11 @@ export const MarketItemRow = memo(function MarketItemRow({ item, world, onPress 
   const { toggleFavorite, isFavorite } = useWorld();
   const { isWatched, addToWatchlist, removeFromWatchlist, getAlert } = useWatchlist();
   const [watchModalVisible, setWatchModalVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const isWeb = Platform.OS === 'web';
+  const hoverProps = isWeb
+    ? { onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }
+    : {};
   const favorite = isFavorite(item.name, world);
   const watched = isWatched(item.name, world);
   const existingAlert = getAlert(item.name, world);
@@ -56,9 +61,20 @@ export const MarketItemRow = memo(function MarketItemRow({ item, world, onPress 
   return (
     <>
       <TouchableOpacity
+        {...(hoverProps as any)}
         onPress={onPress}
         activeOpacity={0.75}
-        style={[styles.row, alertFiring && styles.rowTriggered]}
+        style={[
+          styles.row,
+          alertFiring && styles.rowTriggered,
+          hovered && styles.rowHovered,
+          isWeb &&
+            ({
+              transitionProperty: 'background-color, border-color, box-shadow',
+              transitionDuration: '150ms',
+              transitionTimingFunction: 'ease-out',
+            } as any),
+        ]}
       >
         {/* Icon + name + category */}
         <View style={styles.nameCell}>
@@ -279,13 +295,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     backgroundColor: colors.card,
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderColor: 'transparent',
     borderBottomColor: colors.divider,
     gap: 12,
     minHeight: 60,
   },
   rowTriggered: {
     backgroundColor: colors.goldDim + '40',
+  },
+  rowHovered: {
+    backgroundColor: colors.surfaceElevated,
+    borderColor: colors.gold + 'aa',
+    borderRadius: 8,
+    shadowColor: colors.gold,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
   },
   nameCell: {
     flex: 2.4,

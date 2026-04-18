@@ -27,6 +27,7 @@ export interface FilterState {
   minVolume: string;
   minMargin: string;
   yasirOnly: boolean;
+  deliveryOnly: boolean;
   vocations: Vocation[];
 }
 
@@ -39,6 +40,7 @@ export const DEFAULT_FILTERS: FilterState = {
   minVolume: '',
   minMargin: '',
   yasirOnly: false,
+  deliveryOnly: false,
   vocations: [],
 };
 
@@ -50,6 +52,7 @@ export function countActiveFilters(f: FilterState): number {
   if (f.minVolume) n++;
   if (f.minMargin) n++;
   if (f.yasirOnly) n++;
+  if (f.deliveryOnly) n++;
   if (f.vocations.length > 0) n++;
   return n;
 }
@@ -188,19 +191,44 @@ export function FilterPanel({ visible, filters, onApply, onClose }: FilterPanelP
                 </View>
               </TouchableOpacity>
 
+              {/* Delivery tasks */}
+              <TouchableOpacity
+                style={[styles.yasirCard, local.deliveryOnly && styles.yasirCardActive]}
+                onPress={() => setLocal((p) => ({ ...p, deliveryOnly: !p.deliveryOnly }))}
+                activeOpacity={0.8}
+              >
+                <View style={styles.yasirIcon}>
+                  <MaterialCommunityIcons
+                    name="truck-fast-outline"
+                    size={20}
+                    color={local.deliveryOnly ? colors.gold : colors.textSecondary}
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.yasirTitle, local.deliveryOnly && { color: colors.gold }]}>
+                    {t('filter_delivery')}
+                  </Text>
+                  <Text style={styles.yasirSub}>{t('filter_delivery_sub')}</Text>
+                </View>
+                <View style={[styles.toggle, local.deliveryOnly && styles.toggleOn]}>
+                  <View style={[styles.toggleKnob, local.deliveryOnly && styles.toggleKnobOn]} />
+                </View>
+              </TouchableOpacity>
+
               {/* Vocation filter */}
               <View style={styles.sectionHead}>
                 <MaterialCommunityIcons name="shield-sword" size={14} color={colors.gold} />
                 <Text style={styles.sectionLabel}>{t('vocation_filter')}</Text>
               </View>
               <View style={styles.vocationGrid}>
-                {(['knight', 'paladin', 'sorcerer', 'druid'] as Vocation[]).map((voc) => {
+                {(['knight', 'paladin', 'sorcerer', 'druid', 'monk'] as Vocation[]).map((voc) => {
                   const active = local.vocations.includes(voc);
                   const icons: Record<Vocation, keyof typeof MaterialCommunityIcons.glyphMap> = {
                     knight: 'sword-cross',
                     paladin: 'bow-arrow',
                     sorcerer: 'auto-fix',
                     druid: 'leaf',
+                    monk: 'hand-front-right',
                   };
                   return (
                     <TouchableOpacity
@@ -512,7 +540,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    flexGrow: 1,
+    flexBasis: '48%',
+    flexGrow: 0,
+    flexShrink: 0,
     minWidth: 120,
     justifyContent: 'center',
     backgroundColor: colors.card,

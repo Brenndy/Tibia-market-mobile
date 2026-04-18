@@ -1,15 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Animated,
+  Easing,
+  Platform,
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { colors } from '../theme/colors';
 import { useTranslation } from '../context/LanguageContext';
 import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useWorld } from '../context/WorldContext';
-import { useMarketBoard } from '../hooks/useMarket';
+import { useMarketBoard, useWorlds } from '../hooks/useMarket';
 import { WorldBadge } from './WorldBadge';
 import { LanguageToggle } from './LanguageToggle';
 import { GitHubStars } from './GitHubStars';
+import { Tooltip } from './ui/Tooltip';
+import { timeAgo } from '../utils/timeAgo';
 import { storage } from '../utils/storage';
 
 const COLLAPSED_KEY = 'tibia_sidebar_collapsed_v1';
@@ -26,6 +37,68 @@ interface SidebarItem {
   badgeHot?: boolean;
 }
 
+const IS_WEB = Platform.OS === 'web';
+
+function SidebarNavItem({
+  item,
+  active,
+  collapsed,
+  onPress,
+}: {
+  item: SidebarItem;
+  active: boolean;
+  collapsed: boolean;
+  onPress: () => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const hoverProps = IS_WEB
+    ? { onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }
+    : {};
+  return (
+    <TouchableOpacity
+      {...(hoverProps as any)}
+      onPress={onPress}
+      style={[
+        styles.navItem,
+        collapsed && styles.navItemCollapsed,
+        active && styles.navItemActive,
+        hovered && !active && styles.navItemHover,
+        IS_WEB &&
+          ({
+            transitionProperty: 'background-color, border-color, box-shadow, transform',
+            transitionDuration: '160ms',
+            transitionTimingFunction: 'ease-out',
+          } as any),
+      ]}
+      activeOpacity={0.7}
+      accessibilityLabel={item.label}
+    >
+      <View style={styles.navIconWrap}>
+        <MaterialCommunityIcons
+          name={item.icon}
+          size={20}
+          color={active || hovered ? colors.gold : colors.textSecondary}
+        />
+        {collapsed && item.badgeCount != null && item.badgeCount > 0 && (
+          <View style={[styles.badgeDot, item.badgeHot && styles.badgeDotHot]} />
+        )}
+      </View>
+      {!collapsed && (
+        <Text style={[styles.navLabel, (active || hovered) && styles.navLabelActive]}>
+          {item.label}
+        </Text>
+      )}
+      {!collapsed && item.badgeCount != null && item.badgeCount > 0 && (
+        <View style={[styles.badge, item.badgeHot && styles.badgeHot]}>
+          <Text style={[styles.badgeText, item.badgeHot && styles.badgeTextHot]}>
+            {item.badgeCount}
+          </Text>
+        </View>
+      )}
+    </TouchableOpacity>
+  );
+}
+
 export function DesktopSidebar() {
   const router = useRouter();
   const pathname = usePathname() || '/';
@@ -33,6 +106,9 @@ export function DesktopSidebar() {
   const { watchlist } = useWatchlist();
   const { selectedWorld } = useWorld();
   const { data } = useMarketBoard(selectedWorld);
+  const { data: worlds } = useWorlds();
+  const currentWorld = worlds?.find((w) => w.name === selectedWorld);
+  const worldSync = currentWorld?.last_update ? timeAgo(currentWorld.last_update) : '';
   const [collapsed, setCollapsed] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const widthAnim = useRef(new Animated.Value(WIDTH_EXPANDED)).current;
@@ -145,39 +221,20 @@ export function DesktopSidebar() {
       <View style={styles.nav}>
         {items.map((item) => {
           const active = item.match(pathname);
-          return (
-            <TouchableOpacity
-              key={item.key}
+          const btn = (
+            <SidebarNavItem
+              item={item}
+              active={active}
+              collapsed={collapsed}
               onPress={() => router.navigate(item.href as any)}
-              style={[
-                styles.navItem,
-                collapsed && styles.navItemCollapsed,
-                active && styles.navItemActive,
-              ]}
-              activeOpacity={0.7}
-              accessibilityLabel={item.label}
-            >
-              <View style={styles.navIconWrap}>
-                <MaterialCommunityIcons
-                  name={item.icon}
-                  size={20}
-                  color={active ? colors.gold : colors.textSecondary}
-                />
-                {collapsed && item.badgeCount != null && item.badgeCount > 0 && (
-                  <View style={[styles.badgeDot, item.badgeHot && styles.badgeDotHot]} />
-                )}
-              </View>
-              {!collapsed && (
-                <Text style={[styles.navLabel, active && styles.navLabelActive]}>{item.label}</Text>
-              )}
-              {!collapsed && item.badgeCount != null && item.badgeCount > 0 && (
-                <View style={[styles.badge, item.badgeHot && styles.badgeHot]}>
-                  <Text style={[styles.badgeText, item.badgeHot && styles.badgeTextHot]}>
-                    {item.badgeCount}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
+            />
+          );
+          return collapsed ? (
+            <Tooltip key={item.key} label={item.label}>
+              {btn}
+            </Tooltip>
+          ) : (
+            <React.Fragment key={item.key}>{btn}</React.Fragment>
           );
         })}
       </View>
@@ -185,20 +242,24 @@ export function DesktopSidebar() {
       <View style={[styles.footer, collapsed && styles.footerCollapsed]}>
         {collapsed ? (
           <>
-            <TouchableOpacity
-              onPress={() => router.push('/world-select')}
-              style={styles.footerIconBtn}
-              accessibilityLabel={selectedWorld}
-            >
-              <MaterialCommunityIcons name="earth" size={18} color={colors.gold} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={cycleLanguage}
-              style={styles.footerIconBtn}
-              accessibilityLabel="Language"
-            >
-              <Text style={styles.langBadge}>{language.toUpperCase()}</Text>
-            </TouchableOpacity>
+            <Tooltip label={selectedWorld} sublabel={worldSync ? `Synced ${worldSync}` : undefined}>
+              <TouchableOpacity
+                onPress={() => router.push('/world-select')}
+                style={styles.footerIconBtn}
+                accessibilityLabel={selectedWorld}
+              >
+                <MaterialCommunityIcons name="earth" size={18} color={colors.gold} />
+              </TouchableOpacity>
+            </Tooltip>
+            <Tooltip label={language === 'pl' ? 'Język polski' : 'English'}>
+              <TouchableOpacity
+                onPress={cycleLanguage}
+                style={styles.footerIconBtn}
+                accessibilityLabel="Language"
+              >
+                <Text style={styles.langBadge}>{language.toUpperCase()}</Text>
+              </TouchableOpacity>
+            </Tooltip>
             <GitHubStars collapsed />
           </>
         ) : (
@@ -286,6 +347,14 @@ const styles = StyleSheet.create({
   navItemActive: {
     backgroundColor: colors.goldDim,
     borderColor: colors.gold + '40',
+  },
+  navItemHover: {
+    backgroundColor: colors.surfaceElevated,
+    borderColor: colors.gold + 'aa',
+    shadowColor: colors.gold,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
   },
   navIconWrap: {
     position: 'relative',
