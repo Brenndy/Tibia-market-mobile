@@ -1,4 +1,5 @@
-import { useQuery } from 'react-query';
+import { useMemo } from 'react';
+import { useQuery, useQueries } from 'react-query';
 import {
   fetchMarketBoard,
   fetchItemStats,
@@ -6,6 +7,7 @@ import {
   fetchWorlds,
   fetchCategories,
   fetchItemOffers,
+  MarketBoard,
 } from '../api/tibiaMarket';
 
 // One fetch per world. staleTime=10min (no refetch while fresh), cacheTime=30min (stays in memory).
@@ -18,6 +20,44 @@ export function useMarketBoard(world: string) {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+}
+
+// Fetches market boards for several worlds in parallel, sharing the single-world
+// cache. Returns a map world → board (undefined until loaded) plus a map of loading
+// flags so callers can tell "no data yet" from "item genuinely not on this world".
+export function useMarketBoards(worlds: string[]): {
+  boardByWorld: Map<string, MarketBoard | undefined>;
+  loadingByWorld: Map<string, boolean>;
+} {
+  const results = useQueries(
+    worlds.map((world) => ({
+      queryKey: ['marketBoard', world],
+      queryFn: () => fetchMarketBoard(world),
+      enabled: !!world,
+      keepPreviousData: true,
+      staleTime: 10 * 60_000,
+      cacheTime: 30 * 60_000,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    })),
+  );
+
+  // Stable Map identity so downstream useMemo deps don't retrigger every render.
+  // dataUpdatedAt bumps when react-query replaces data; isLoading captures pending state.
+  const sig =
+    worlds.join('|') +
+    '::' +
+    results.map((r) => `${r?.dataUpdatedAt ?? 0}:${r?.isLoading ? 1 : 0}`).join(',');
+  return useMemo(() => {
+    const boardByWorld = new Map<string, MarketBoard | undefined>();
+    const loadingByWorld = new Map<string, boolean>();
+    worlds.forEach((world, i) => {
+      const r = results[i];
+      boardByWorld.set(world, r?.data as MarketBoard | undefined);
+      loadingByWorld.set(world, !!r?.isLoading);
+    });
+    return { boardByWorld, loadingByWorld };
+  }, [sig]);
 }
 
 export function useItemStats(world: string, itemName: string) {

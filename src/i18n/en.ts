@@ -141,6 +141,8 @@ export const en: Record<TranslationKey, string> = {
   filters: 'Filters',
   quick_filters: 'Quick filters',
   filter_yasir: 'Yasir',
+  filter_delivery: 'Delivery task',
+  filter_delivery_sub: 'Items used in delivery quests',
   npc_buys_for: 'NPC buys for',
   npc_sells_for: 'NPC sells for',
   offer_date: 'Date',
@@ -149,6 +151,7 @@ export const en: Record<TranslationKey, string> = {
   voc_paladin: 'Paladin',
   voc_sorcerer: 'Sorcerer',
   voc_druid: 'Druid',
+  voc_monk: 'Monk',
 
   // Quick presets
   preset_hot: 'Hot',
