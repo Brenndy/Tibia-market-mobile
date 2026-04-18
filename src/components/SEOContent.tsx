@@ -479,27 +479,26 @@ function PrivacyContent({ locale }: { locale: Locale }) {
       <>
         <h1>Polityka prywatności TibiaTrader</h1>
         <p>
-          TibiaTrader to darmowe narzędzie do przeglądania cen rynkowych Tibii. Nie wymagamy
-          konta, nie zbieramy danych osobowych i nie używamy trackerów reklamowych. Żadne
-          dane o Tobie nie opuszczają Twojego urządzenia.
+          TibiaTrader to darmowe narzędzie do przeglądania cen rynkowych Tibii. Nie wymagamy konta,
+          nie zbieramy danych osobowych i nie używamy trackerów reklamowych. Żadne dane o Tobie nie
+          opuszczają Twojego urządzenia.
         </p>
         <h2>Co przechowujemy lokalnie</h2>
         <p>
-          Wybrany świat, ulubione przedmioty, alerty cenowe, język interfejsu i preferencje
-          widoku — wszystko w localStorage Twojej przeglądarki lub lokalnej pamięci aplikacji.
-          Możesz je w każdej chwili wyczyścić.
+          Wybrany świat, ulubione przedmioty, alerty cenowe, język interfejsu i preferencje widoku —
+          wszystko w localStorage Twojej przeglądarki lub lokalnej pamięci aplikacji. Możesz je w
+          każdej chwili wyczyścić.
         </p>
         <h2>Usługi zewnętrzne</h2>
         <p>
-          Aplikacja łączy się z api.tibiamarket.top (dane rynkowe), tibiadata.com (lista
-          światów), static.tibia.com (grafiki przedmiotów) oraz Vercel Analytics + Speed
-          Insights (anonimowe metryki, tylko web).
+          Aplikacja łączy się z api.tibiamarket.top (dane rynkowe), tibiadata.com (lista światów),
+          static.tibia.com (grafiki przedmiotów) oraz Vercel Analytics + Speed Insights (anonimowe
+          metryki, tylko web).
         </p>
         <h2>Brak powiązań z CipSoft</h2>
         <p>
-          TibiaTrader to narzędzie fanowskie. Nie jest powiązane z CipSoft GmbH, nie jest
-          przez tę firmę sponsorowane ani firmowane. „Tibia” jest znakiem towarowym CipSoft
-          GmbH.
+          TibiaTrader to narzędzie fanowskie. Nie jest powiązane z CipSoft GmbH, nie jest przez tę
+          firmę sponsorowane ani firmowane. „Tibia” jest znakiem towarowym CipSoft GmbH.
         </p>
       </>
     );
@@ -508,9 +507,9 @@ function PrivacyContent({ locale }: { locale: Locale }) {
     <>
       <h1>TibiaTrader Privacy Policy</h1>
       <p>
-        TibiaTrader is a free tool for browsing Tibia market prices. We do not require an
-        account, we do not collect personal data and we do not use advertising trackers. No
-        data about you leaves your device.
+        TibiaTrader is a free tool for browsing Tibia market prices. We do not require an account,
+        we do not collect personal data and we do not use advertising trackers. No data about you
+        leaves your device.
       </p>
       <h2>What we store locally</h2>
       <p>
@@ -521,8 +520,8 @@ function PrivacyContent({ locale }: { locale: Locale }) {
       <h2>Third-party services</h2>
       <p>
         The app connects to api.tibiamarket.top (market data), tibiadata.com (world list),
-        static.tibia.com (item artwork) and Vercel Analytics + Speed Insights (anonymous
-        metrics, web only).
+        static.tibia.com (item artwork) and Vercel Analytics + Speed Insights (anonymous metrics,
+        web only).
       </p>
       <h2>Not affiliated with CipSoft</h2>
       <p>

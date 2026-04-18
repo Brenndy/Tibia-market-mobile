@@ -46,8 +46,8 @@ function PrivacyEN() {
       </Text>
       <Text style={styles.liBold}>api.tibiamarket.top</Text>
       <Text style={styles.liSub}>
-        Read-only market data (item prices, volumes, history). We proxy these requests through
-        our own domain. The endpoint receives no personal data.
+        Read-only market data (item prices, volumes, history). We proxy these requests through our
+        own domain. The endpoint receives no personal data.
       </Text>
       <Text style={styles.liBold}>tibiadata.com</Text>
       <Text style={styles.liSub}>
@@ -59,8 +59,8 @@ function PrivacyEN() {
       </Text>
       <Text style={styles.liBold}>Vercel Analytics &amp; Speed Insights (web only)</Text>
       <Text style={styles.liSub}>
-        Anonymous page-view counts and Core Web Vitals measurements. No cookies, no fingerprint,
-        no cross-site tracking. See vercel.com/docs/analytics/privacy-policy.
+        Anonymous page-view counts and Core Web Vitals measurements. No cookies, no fingerprint, no
+        cross-site tracking. See vercel.com/docs/analytics/privacy-policy.
       </Text>
 
       <Text style={styles.h2}>4. Notifications (mobile app)</Text>
@@ -117,20 +117,22 @@ function PrivacyPL() {
 
       <Text style={styles.p}>
         TibiaTrader („my”, „Serwis”) to darmowe narzędzie pokazujące aktualne ceny rynkowe
-        przedmiotów w grze Tibia, marże oraz opcjonalne lokalne alerty cenowe. Nie wymagamy
-        konta i nie zbieramy danych osobowych na naszych serwerach. Ten dokument wyjaśnia
-        dokładnie, co się dzieje, gdy korzystasz z aplikacji lub strony tibiatrader.com.
+        przedmiotów w grze Tibia, marże oraz opcjonalne lokalne alerty cenowe. Nie wymagamy konta i
+        nie zbieramy danych osobowych na naszych serwerach. Ten dokument wyjaśnia dokładnie, co się
+        dzieje, gdy korzystasz z aplikacji lub strony tibiatrader.com.
       </Text>
 
       <Text style={styles.h2}>1. Dane przechowywane lokalnie na Twoim urządzeniu</Text>
       <Text style={styles.p}>
         Poniższe wartości zapisywane są w localStorage Twojej przeglądarki (wersja web) lub w
-        lokalnej pamięci aplikacji (mobile). Nigdy nie opuszczają Twojego urządzenia — my nie
-        mamy do nich dostępu.
+        lokalnej pamięci aplikacji (mobile). Nigdy nie opuszczają Twojego urządzenia — my nie mamy
+        do nich dostępu.
       </Text>
       <Text style={styles.li}>• Wybrany świat Tibii</Text>
       <Text style={styles.li}>• Ulubione przedmioty per świat</Text>
-      <Text style={styles.li}>• Lista alertów cenowych (nazwa przedmiotu, progi kupna/sprzedaży)</Text>
+      <Text style={styles.li}>
+        • Lista alertów cenowych (nazwa przedmiotu, progi kupna/sprzedaży)
+      </Text>
       <Text style={styles.li}>• Stan deduplikacji powiadomień o alertach</Text>
       <Text style={styles.li}>• Język interfejsu (EN / PL)</Text>
       <Text style={styles.li}>• Preferencja widoku listy/siatki (desktop)</Text>
@@ -147,18 +149,18 @@ function PrivacyPL() {
 
       <Text style={styles.h2}>3. Usługi zewnętrzne</Text>
       <Text style={styles.p}>
-        Serwis łączy się z następującymi podmiotami trzecimi. Działają one na podstawie
-        własnych polityk prywatności.
+        Serwis łączy się z następującymi podmiotami trzecimi. Działają one na podstawie własnych
+        polityk prywatności.
       </Text>
       <Text style={styles.liBold}>api.tibiamarket.top</Text>
       <Text style={styles.liSub}>
-        Dane rynkowe tylko do odczytu (ceny przedmiotów, wolumeny, historia). Zapytania
-        proxujemy przez własną domenę. Endpoint nie otrzymuje żadnych danych osobowych.
+        Dane rynkowe tylko do odczytu (ceny przedmiotów, wolumeny, historia). Zapytania proxujemy
+        przez własną domenę. Endpoint nie otrzymuje żadnych danych osobowych.
       </Text>
       <Text style={styles.liBold}>tibiadata.com</Text>
       <Text style={styles.liSub}>
-        Publiczna lista światów (nazwa, typ PvP, liczba online). Tylko odczyt, żadne dane
-        osobowe nie są wysyłane.
+        Publiczna lista światów (nazwa, typ PvP, liczba online). Tylko odczyt, żadne dane osobowe
+        nie są wysyłane.
       </Text>
       <Text style={styles.liBold}>static.tibia.com</Text>
       <Text style={styles.liSub}>
@@ -174,29 +176,29 @@ function PrivacyPL() {
       <Text style={styles.h2}>4. Powiadomienia (aplikacja mobilna)</Text>
       <Text style={styles.p}>
         Po włączeniu alertów cenowych aplikacja prosi o zgodę na lokalne powiadomienia push.
-        Porównania cen wykonywane są na Twoim urządzeniu za pomocą publicznego API rynku.
-        Żadna treść alertu nie jest wysyłana do nas ani do podmiotów trzecich.
+        Porównania cen wykonywane są na Twoim urządzeniu za pomocą publicznego API rynku. Żadna
+        treść alertu nie jest wysyłana do nas ani do podmiotów trzecich.
       </Text>
 
       <Text style={styles.h2}>5. Dzieci</Text>
       <Text style={styles.p}>
-        Serwis przeznaczony jest dla osób w wieku 13+. Nie zbieramy świadomie danych osobowych
-        od nikogo — dotyczy to również osób niepełnoletnich.
+        Serwis przeznaczony jest dla osób w wieku 13+. Nie zbieramy świadomie danych osobowych od
+        nikogo — dotyczy to również osób niepełnoletnich.
       </Text>
 
       <Text style={styles.h2}>6. Twoje prawa</Text>
       <Text style={styles.p}>
         Ponieważ nie przechowujemy danych osobowych na naszych serwerach, nie mamy niczego, co
-        moglibyśmy udostępnić, sprostować ani usunąć. Dane lokalne możesz w każdej chwili
-        wyczyścić odinstalowując aplikację lub czyszcząc pamięć strony w przeglądarce.
+        moglibyśmy udostępnić, sprostować ani usunąć. Dane lokalne możesz w każdej chwili wyczyścić
+        odinstalowując aplikację lub czyszcząc pamięć strony w przeglądarce.
       </Text>
 
       <Text style={styles.h2}>7. Brak powiązań z CipSoft</Text>
       <Text style={styles.p}>
-        TibiaTrader to narzędzie fanowskie tworzone przez społeczność. Nie jest powiązane z
-        CipSoft GmbH, nie jest przez tę firmę sponsorowane ani firmowane. „Tibia” jest znakiem
-        towarowym CipSoft GmbH. Wszystkie zasoby z gry (nazwy przedmiotów, grafiki) pozostają
-        własnością ich właścicieli.
+        TibiaTrader to narzędzie fanowskie tworzone przez społeczność. Nie jest powiązane z CipSoft
+        GmbH, nie jest przez tę firmę sponsorowane ani firmowane. „Tibia” jest znakiem towarowym
+        CipSoft GmbH. Wszystkie zasoby z gry (nazwy przedmiotów, grafiki) pozostają własnością ich
+        właścicieli.
       </Text>
 
       <Text style={styles.h2}>8. Zmiany w polityce</Text>
