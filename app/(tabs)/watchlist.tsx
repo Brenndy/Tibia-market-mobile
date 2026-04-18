@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { View, Text, ScrollView, StyleSheet, Platform } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
 import {
@@ -9,7 +9,7 @@ import {
   WatchAlert,
 } from '@/src/context/WatchlistContext';
 import { useWorld } from '@/src/context/WorldContext';
-import { useMarketBoard } from '@/src/hooks/useMarket';
+import { useMarketBoards } from '@/src/hooks/useMarket';
 import { useResponsiveColumns } from '@/src/hooks/useResponsiveColumns';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { ItemDetailModal } from '@/src/components/ItemDetailModal';
@@ -21,6 +21,7 @@ import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
 import { AlertThresholdFooter } from '@/src/components/AlertThresholdFooter';
 import { Pill } from '@/src/components/ui/Pill';
 import { colors } from '@/src/theme/colors';
+import { MarketBoard, MarketItem } from '@/src/api/tibiaMarket';
 import { pluralKey } from '@/src/utils/plural';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -34,25 +35,29 @@ const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
 function WorldAlertsSection({
   world,
   alerts,
+  visibleItems,
+  board,
+  isLoading,
   numColumns,
   onItemPress,
 }: {
   world: string;
   alerts: WatchAlert[];
+  visibleItems: MarketItem[];
+  board: MarketBoard | undefined;
+  isLoading: boolean;
   numColumns: number;
   onItemPress?: (name: string, world: string) => void;
 }) {
   const isGrid = numColumns > 1;
-  const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
   const checkedRef = useRef<string>('');
 
   const alertByName = new Map(alerts.map((a) => [a.itemName, a]));
-  const watchedItems = (data?.items ?? []).filter((i) => alertByName.has(i.name));
 
   useEffect(() => {
-    if (!data) return;
-    const dataKey = data.last_update + alerts.length;
+    if (!board) return;
+    const dataKey = board.last_update + alerts.length;
     if (checkedRef.current === dataKey) return;
     checkedRef.current = dataKey;
 
@@ -64,7 +69,7 @@ function WorldAlertsSection({
       const toAdd: string[] = [];
 
       for (const alert of alerts) {
-        const item = data.items.find((i) => i.name === alert.itemName);
+        const item = board.items.find((i) => i.name === alert.itemName);
         if (!item) continue;
         const buyOffer = item.buy_offer ?? null;
         const sellOffer = item.sell_offer ?? null;
@@ -93,9 +98,9 @@ function WorldAlertsSection({
         await AsyncStorage.setItem(NOTIFIED_KEY, JSON.stringify(updated));
       }
     })();
-  }, [data, alerts, world]);
+  }, [board, alerts, world]);
 
-  const triggeredCount = watchedItems.filter((item) => {
+  const triggeredCount = visibleItems.filter((item) => {
     const alert = alertByName.get(item.name)!;
     const tr = isAlertTriggered(alert, item.buy_offer ?? null, item.sell_offer ?? null);
     return tr.buy || tr.sell;
@@ -113,7 +118,7 @@ function WorldAlertsSection({
     <Pill label="OK" tone="ok" icon="check-circle-outline" />
   );
 
-  const sortedItems = [...watchedItems].sort((a, b) => {
+  const sortedItems = [...visibleItems].sort((a, b) => {
     const aAlert = alertByName.get(a.name)!;
     const bAlert = alertByName.get(b.name)!;
     const aT = isAlertTriggered(aAlert, a.buy_offer ?? null, a.sell_offer ?? null);
@@ -121,12 +126,14 @@ function WorldAlertsSection({
     return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
   });
 
+  if (visibleItems.length === 0) return null;
+
   return (
     <View style={styles.worldSection}>
       <WorldSectionHeader
         world={world}
-        count={alerts.length}
-        countLabel={alerts.length === 1 ? t('alert_singular') : t('alerts_plural')}
+        count={visibleItems.length}
+        countLabel={visibleItems.length === 1 ? t('alert_singular') : t('alerts_plural')}
         right={right}
       />
       <View style={isGrid ? styles.grid : styles.list}>
@@ -158,30 +165,31 @@ function WorldAlertsSection({
 
 function WorldFavoritesSection({
   world,
-  favoriteNames,
+  visibleItems,
+  isLoading,
   numColumns,
   onItemPress,
 }: {
   world: string;
-  favoriteNames: string[];
+  visibleItems: MarketItem[];
+  isLoading: boolean;
   numColumns: number;
   onItemPress?: (name: string) => void;
 }) {
-  const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
 
-  const items = (data?.items ?? []).filter((i) => favoriteNames.includes(i.name));
+  if (visibleItems.length === 0) return null;
 
   return (
     <View style={styles.worldSection}>
       <WorldSectionHeader
         world={world}
-        count={favoriteNames.length}
-        countLabel={favoriteNames.length === 1 ? t('favorite_singular') : t('favorites_plural')}
+        count={visibleItems.length}
+        countLabel={visibleItems.length === 1 ? t('favorite_singular') : t('favorites_plural')}
         right={isLoading ? <Text style={styles.worldLoading}>{t('syncing')}</Text> : null}
       />
       <MarketItemGrid
-        items={items}
+        items={visibleItems}
         world={world}
         numColumns={numColumns}
         onItemPress={onItemPress}
@@ -217,33 +225,95 @@ export default function WatchlistScreen() {
     return () => unsubscribe?.();
   }, [navigation]);
 
-  const worlds = [...new Set(watchlist.map((a) => a.world))].sort();
-  const filteredAlerts = worldFilter ? watchlist.filter((a) => a.world === worldFilter) : watchlist;
-  const filteredWorlds = worldFilter ? [worldFilter] : worlds;
+  const alertWorlds = useMemo(
+    () => [...new Set(watchlist.map((a) => a.world))].sort(),
+    [watchlist],
+  );
+  const favWorlds = useMemo(
+    () =>
+      Object.keys(allFavorites)
+        .filter((w) => (allFavorites[w] ?? []).length > 0)
+        .sort(),
+    [allFavorites],
+  );
+  const allWorlds = useMemo(
+    () => [...new Set([...alertWorlds, ...favWorlds])],
+    [alertWorlds, favWorlds],
+  );
 
-  const favWorlds = Object.keys(allFavorites)
-    .filter((w) => (allFavorites[w] ?? []).length > 0)
-    .sort();
+  const { boardByWorld, loadingByWorld } = useMarketBoards(allWorlds);
+
+  // Per-world visible items for alerts (item present in the board AND has an alert)
+  const visibleAlertItemsByWorld = useMemo(() => {
+    const m = new Map<string, MarketItem[]>();
+    alertWorlds.forEach((world) => {
+      const board = boardByWorld.get(world);
+      if (!board) {
+        m.set(world, []);
+        return;
+      }
+      const alertNames = new Set(watchlist.filter((a) => a.world === world).map((a) => a.itemName));
+      m.set(
+        world,
+        board.items.filter((i) => alertNames.has(i.name)),
+      );
+    });
+    return m;
+  }, [alertWorlds, boardByWorld, watchlist]);
+
+  const visibleFavItemsByWorld = useMemo(() => {
+    const m = new Map<string, MarketItem[]>();
+    favWorlds.forEach((world) => {
+      const board = boardByWorld.get(world);
+      if (!board) {
+        m.set(world, []);
+        return;
+      }
+      const favNames = new Set(allFavorites[world] ?? []);
+      m.set(
+        world,
+        board.items.filter((i) => favNames.has(i.name)),
+      );
+    });
+    return m;
+  }, [favWorlds, boardByWorld, allFavorites]);
+
+  const anyBoardLoading = [...loadingByWorld.values()].some(Boolean);
+  const totalVisibleAlerts = [...visibleAlertItemsByWorld.values()].reduce(
+    (sum, arr) => sum + arr.length,
+    0,
+  );
+  const totalVisibleFavs = [...visibleFavItemsByWorld.values()].reduce(
+    (sum, arr) => sum + arr.length,
+    0,
+  );
+  // Fall back to configured counts while boards load so the tab badge does not
+  // flicker 0 → N on first paint.
+  const alertBadge =
+    anyBoardLoading && totalVisibleAlerts === 0 ? watchlist.length : totalVisibleAlerts;
+  const configuredFavs = favWorlds.reduce((s, w) => s + (allFavorites[w]?.length ?? 0), 0);
+  const favBadge = anyBoardLoading && totalVisibleFavs === 0 ? configuredFavs : totalVisibleFavs;
+
+  const filteredAlertWorlds = worldFilter ? [worldFilter] : alertWorlds;
   const filteredFavWorlds = favWorldFilter ? [favWorldFilter] : favWorlds;
-  const totalFavs = favWorlds.reduce((sum, w) => sum + (allFavorites[w]?.length ?? 0), 0);
 
   const alertFilters: FilterPill<string | null>[] = [
-    { value: null, label: t('all_worlds'), count: watchlist.length },
-    ...worlds.map((w) => ({
+    { value: null, label: t('all_worlds'), count: alertBadge },
+    ...alertWorlds.map((w) => ({
       value: w,
       label: w,
       icon: 'earth' as const,
-      count: watchlist.filter((a) => a.world === w).length,
+      count: (visibleAlertItemsByWorld.get(w) ?? []).length,
     })),
   ];
 
   const favFilters: FilterPill<string | null>[] = [
-    { value: null, label: t('all_worlds'), count: totalFavs },
+    { value: null, label: t('all_worlds'), count: favBadge },
     ...favWorlds.map((w) => ({
       value: w,
       label: w,
       icon: 'earth' as const,
-      count: (allFavorites[w] ?? []).length,
+      count: (visibleFavItemsByWorld.get(w) ?? []).length,
     })),
   ];
 
@@ -262,13 +332,13 @@ export default function WatchlistScreen() {
             value: 'alerts',
             label: t('tab_alerts'),
             icon: 'bell',
-            badge: watchlist.length > 0 ? watchlist.length : null,
+            badge: alertBadge > 0 ? alertBadge : null,
           },
           {
             value: 'favorites',
             label: t('tab_favorites'),
             icon: 'star',
-            badge: totalFavs > 0 ? totalFavs : null,
+            badge: favBadge > 0 ? favBadge : null,
           },
         ]}
       />
@@ -283,7 +353,7 @@ export default function WatchlistScreen() {
           />
         ) : (
           <>
-            {worlds.length > 1 && (
+            {alertWorlds.length > 1 && (
               <FilterPillBar<string | null>
                 items={alertFilters}
                 active={worldFilter}
@@ -295,11 +365,14 @@ export default function WatchlistScreen() {
               contentContainerStyle={styles.content}
               showsVerticalScrollIndicator={false}
             >
-              {filteredWorlds.map((world) => (
+              {filteredAlertWorlds.map((world) => (
                 <WorldAlertsSection
                   key={world}
                   world={world}
-                  alerts={filteredAlerts.filter((a) => a.world === world)}
+                  alerts={watchlist.filter((a) => a.world === world)}
+                  visibleItems={visibleAlertItemsByWorld.get(world) ?? []}
+                  board={boardByWorld.get(world)}
+                  isLoading={loadingByWorld.get(world) ?? false}
                   numColumns={numColumns}
                   onItemPress={isDesktop ? openItemModal : undefined}
                 />
@@ -307,7 +380,7 @@ export default function WatchlistScreen() {
             </ScrollView>
           </>
         )
-      ) : totalFavs === 0 ? (
+      ) : configuredFavs === 0 ? (
         <EmptyState
           icon="star-outline"
           title={t('no_favorites_title')}
@@ -328,7 +401,8 @@ export default function WatchlistScreen() {
               <WorldFavoritesSection
                 key={world}
                 world={world}
-                favoriteNames={allFavorites[world] ?? []}
+                visibleItems={visibleFavItemsByWorld.get(world) ?? []}
+                isLoading={loadingByWorld.get(world) ?? false}
                 numColumns={numColumns}
                 onItemPress={isDesktop ? (name) => openItemModal(name, world) : undefined}
               />
