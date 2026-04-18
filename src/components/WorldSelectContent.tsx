@@ -3,21 +3,13 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useWorld } from '@/src/context/WorldContext';
 import { useTranslation } from '@/src/context/LanguageContext';
-import type { TranslationKey } from '@/src/i18n';
 import { useWorlds } from '@/src/hooks/useMarket';
 import { SearchBar } from '@/src/components/SearchBar';
 import { LoadingState } from '@/src/components/LoadingState';
 import { colors } from '@/src/theme/colors';
 import { World } from '@/src/api/tibiaMarket';
 import { timeAgo } from '@/src/utils/timeAgo';
-
-function pluralWorlds(count: number): TranslationKey {
-  const mod10 = count % 10;
-  const mod100 = count % 100;
-  if (count === 1) return 'worlds_count_one';
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'worlds_count_few';
-  return 'worlds_count_many';
-}
+import { pluralKey } from '@/src/utils/plural';
 
 const PVP_COLORS: Record<string, string> = {
   'Open PvP': colors.badgeOpen,
@@ -118,7 +110,14 @@ export function WorldSelectContent({ onSelected }: { onSelected?: () => void }) 
 
       {filtered && (
         <Text style={styles.count} testID="worlds-count">
-          {filtered.length} {t(pluralWorlds(filtered.length))}
+          {filtered.length}{' '}
+          {t(
+            pluralKey(filtered.length, {
+              one: 'worlds_count_one',
+              few: 'worlds_count_few',
+              many: 'worlds_count_many',
+            }),
+          )}
         </Text>
       )}
 

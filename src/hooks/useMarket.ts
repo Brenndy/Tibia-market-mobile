@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery, useQueries } from 'react-query';
 import {
   fetchMarketBoard,
@@ -40,14 +41,23 @@ export function useMarketBoards(worlds: string[]): {
       refetchOnReconnect: false,
     })),
   );
-  const boardByWorld = new Map<string, MarketBoard | undefined>();
-  const loadingByWorld = new Map<string, boolean>();
-  worlds.forEach((world, i) => {
-    const r = results[i];
-    boardByWorld.set(world, r?.data as MarketBoard | undefined);
-    loadingByWorld.set(world, !!r?.isLoading);
-  });
-  return { boardByWorld, loadingByWorld };
+
+  // Stable Map identity so downstream useMemo deps don't retrigger every render.
+  // dataUpdatedAt bumps when react-query replaces data; isLoading captures pending state.
+  const sig =
+    worlds.join('|') +
+    '::' +
+    results.map((r) => `${r?.dataUpdatedAt ?? 0}:${r?.isLoading ? 1 : 0}`).join(',');
+  return useMemo(() => {
+    const boardByWorld = new Map<string, MarketBoard | undefined>();
+    const loadingByWorld = new Map<string, boolean>();
+    worlds.forEach((world, i) => {
+      const r = results[i];
+      boardByWorld.set(world, r?.data as MarketBoard | undefined);
+      loadingByWorld.set(world, !!r?.isLoading);
+    });
+    return { boardByWorld, loadingByWorld };
+  }, [sig]);
 }
 
 export function useItemStats(world: string, itemName: string) {
