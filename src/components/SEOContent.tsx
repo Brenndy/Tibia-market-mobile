@@ -473,6 +473,67 @@ function ItemTemplateContent({ locale }: { locale: Locale }) {
   );
 }
 
+function PrivacyContent({ locale }: { locale: Locale }) {
+  if (locale === 'pl') {
+    return (
+      <>
+        <h1>Polityka prywatności TibiaTrader</h1>
+        <p>
+          TibiaTrader to darmowe narzędzie do przeglądania cen rynkowych Tibii. Nie wymagamy
+          konta, nie zbieramy danych osobowych i nie używamy trackerów reklamowych. Żadne
+          dane o Tobie nie opuszczają Twojego urządzenia.
+        </p>
+        <h2>Co przechowujemy lokalnie</h2>
+        <p>
+          Wybrany świat, ulubione przedmioty, alerty cenowe, język interfejsu i preferencje
+          widoku — wszystko w localStorage Twojej przeglądarki lub lokalnej pamięci aplikacji.
+          Możesz je w każdej chwili wyczyścić.
+        </p>
+        <h2>Usługi zewnętrzne</h2>
+        <p>
+          Aplikacja łączy się z api.tibiamarket.top (dane rynkowe), tibiadata.com (lista
+          światów), static.tibia.com (grafiki przedmiotów) oraz Vercel Analytics + Speed
+          Insights (anonimowe metryki, tylko web).
+        </p>
+        <h2>Brak powiązań z CipSoft</h2>
+        <p>
+          TibiaTrader to narzędzie fanowskie. Nie jest powiązane z CipSoft GmbH, nie jest
+          przez tę firmę sponsorowane ani firmowane. „Tibia” jest znakiem towarowym CipSoft
+          GmbH.
+        </p>
+      </>
+    );
+  }
+  return (
+    <>
+      <h1>TibiaTrader Privacy Policy</h1>
+      <p>
+        TibiaTrader is a free tool for browsing Tibia market prices. We do not require an
+        account, we do not collect personal data and we do not use advertising trackers. No
+        data about you leaves your device.
+      </p>
+      <h2>What we store locally</h2>
+      <p>
+        {
+          "Selected world, favorite items, price alerts, UI language and view preferences — all in your browser's localStorage or the app's local storage. You can clear them at any time."
+        }
+      </p>
+      <h2>Third-party services</h2>
+      <p>
+        The app connects to api.tibiamarket.top (market data), tibiadata.com (world list),
+        static.tibia.com (item artwork) and Vercel Analytics + Speed Insights (anonymous
+        metrics, web only).
+      </p>
+      <h2>Not affiliated with CipSoft</h2>
+      <p>
+        {
+          'TibiaTrader is a community fan tool. It is not affiliated with, endorsed by or sponsored by CipSoft GmbH. "Tibia" is a trademark of CipSoft GmbH.'
+        }
+      </p>
+    </>
+  );
+}
+
 function contentForPath(pathname: string | null, locale: Locale): React.ReactNode {
   const path = pathname || '/';
   const itemMatch = path.match(/^\/item\/([^/?#]+)/);
@@ -486,6 +547,7 @@ function contentForPath(pathname: string | null, locale: Locale): React.ReactNod
   if (normalized === '/watchlist') return <WatchlistContent locale={locale} />;
   if (normalized === '/statistics') return <StatisticsContent locale={locale} />;
   if (normalized === '/world-select') return <WorldSelectContent locale={locale} />;
+  if (normalized === '/privacy') return <PrivacyContent locale={locale} />;
   return null;
 }
 

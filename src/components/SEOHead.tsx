@@ -79,6 +79,19 @@ const ITEM_TEMPLATE_META: Record<Locale, RouteMeta> = {
   },
 };
 
+const PRIVACY_META: Record<Locale, RouteMeta> = {
+  en: {
+    title: 'Privacy Policy | TibiaTrader',
+    description:
+      'TibiaTrader privacy policy: no account, no tracking, no data leaves your device. Detailed list of what is stored locally and the third-party services the app connects to.',
+  },
+  pl: {
+    title: 'Polityka prywatności | TibiaTrader',
+    description:
+      'Polityka prywatności TibiaTrader: brak konta, brak trackingu, żadne dane nie opuszczają Twojego urządzenia. Szczegółowa lista danych lokalnych i usług zewnętrznych.',
+  },
+};
+
 const STATIC_ROUTES: Record<string, Record<Locale, RouteMeta>> = {
   '/': HOMEPAGE_META,
   '/(tabs)': HOMEPAGE_META,
@@ -87,6 +100,7 @@ const STATIC_ROUTES: Record<string, Record<Locale, RouteMeta>> = {
   '/statistics': STATISTICS_META,
   '/(tabs)/statistics': STATISTICS_META,
   '/world-select': WORLD_SELECT_META,
+  '/privacy': PRIVACY_META,
 };
 
 function itemMeta(itemTitle: string): Record<Locale, RouteMeta> {
@@ -144,6 +158,7 @@ const CRUMB_LABELS: Record<string, Record<Locale, string>> = {
   statistics: { en: 'Statistics', pl: 'Statystyki' },
   worldSelect: { en: 'Select World', pl: 'Wybierz świat' },
   market: { en: 'Market', pl: 'Rynek' },
+  privacy: { en: 'Privacy', pl: 'Prywatność' },
 };
 
 // Build the breadcrumb trail for the current route. Homepage returns an empty
@@ -172,6 +187,9 @@ function breadcrumbsForPath(pathname: string | null, locale: Locale): Crumb[] {
   }
   if (normalized === '/world-select') {
     return [home, { name: CRUMB_LABELS.worldSelect[locale], url: `${SITE_URL}/world-select` }];
+  }
+  if (normalized === '/privacy') {
+    return [home, { name: CRUMB_LABELS.privacy[locale], url: `${SITE_URL}/privacy` }];
   }
   return [];
 }
