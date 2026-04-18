@@ -33,10 +33,7 @@ export function Tooltip({
   };
 
   return (
-    <View
-      {...({ onMouseEnter: show, onMouseLeave: hide } as any)}
-      style={styles.wrap}
-    >
+    <View {...({ onMouseEnter: show, onMouseLeave: hide } as any)} style={styles.wrap}>
       {children}
       {visible && (
         <View
