@@ -54,7 +54,10 @@ export default async function handler(req, res) {
     const buffer = await imgResp.arrayBuffer();
 
     res.setHeader('Content-Type', contentType);
-    res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+    res.setHeader(
+      'Cache-Control',
+      'public, max-age=86400, s-maxage=2592000, stale-while-revalidate=31536000',
+    );
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200).send(Buffer.from(buffer));
   } catch (e) {
