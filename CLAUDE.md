@@ -221,8 +221,12 @@ Screenshots land in `tests/screenshots/`. Just hand Claude the path — it will 
 - `tibia_language_v1` — UI language (`'pl' | 'en'`)
 - `tibia_view_mode_v1` — list/grid view mode on desktop (`'list' | 'grid'`)
 - `tibia_favorite_worlds_v1` — favorite worlds (desktop sidebar)
+- `tibia_static_filter_data_v1` — web-only SWR cache of `/data/{vocations,monk-items,delivery-items}.json`
+- `tibia_item_list_v1` — web-only SWR cache of `/data/item-list.json` (~288 KB raw)
 
 When adding a new key: **always** version it (`_v1`, `_v2`) and add it here.
+
+Web-only SWR caches (`tibia_static_filter_data_v1`, `tibia_item_list_v1`) are seeded by `src/data/lazyLoaders.web.ts` — they hydrate the UI instantly on reload and refresh in the background.
 
 ---
 
