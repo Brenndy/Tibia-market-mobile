@@ -71,6 +71,38 @@ test.describe('Statistics screen', () => {
     await page.screenshot({ path: 'tests/screenshots/statistics-most-purchased.png' });
   });
 
+  test('duplicate-named items render distinctly and switch cleanly between rank tabs', async ({
+    page,
+  }) => {
+    // Fixture has two "empty potion flask" entries (ids 21 + 22) with different stats:
+    //   id 22 → top-volume (month_sold 99999)
+    //   id 21 → top-sell-price (sell_offer 9.999M)
+    // Regression: a React key collision (key={item.name}) let the list reuse one
+    // component for both, producing a stale "X pcs." ghost row after switching tabs.
+    const consoleErrors: string[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error' && /duplicate key|same key/i.test(msg.text())) {
+        consoleErrors.push(msg.text());
+      }
+    });
+
+    await goToStatistics(page);
+
+    const flasks = page.locator('text="Empty Potion Flask"');
+    await expect(flasks).toHaveCount(2);
+    await expect(page.getByText(/99,999 pcs\./)).toBeVisible();
+
+    await page.getByText('Most expensive (sell)').click();
+
+    // After switching, no volume-format ghost row should linger.
+    await expect(page.getByText(/99,999 pcs\./)).toHaveCount(0);
+    await expect(flasks).toHaveCount(2);
+    await page.screenshot({ path: 'tests/screenshots/statistics-duplicate-names.png' });
+
+    // Duplicate React keys leak a console error — if we see one, the fix regressed.
+    expect(consoleErrors, consoleErrors.join('\n')).toHaveLength(0);
+  });
+
   test('clicking ranked item navigates to detail', async ({ page }) => {
     await goToStatistics(page);
     // click the first ranked item

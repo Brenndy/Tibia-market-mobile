@@ -167,7 +167,7 @@ export default function StatisticsScreen() {
         </Text>
         {top15.map((item, idx) => (
           <RankCard
-            key={item.name}
+            key={item.id}
             item={item}
             rank={idx + 1}
             field={activeRank}
