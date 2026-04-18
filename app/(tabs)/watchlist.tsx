@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, ScrollView, StyleSheet, Platform } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
 import {
   useWatchlist,
@@ -14,205 +12,37 @@ import { useWorld } from '@/src/context/WorldContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { useResponsiveColumns } from '@/src/hooks/useResponsiveColumns';
 import { useTranslation } from '@/src/context/LanguageContext';
-import { WatchAlertModal } from '@/src/components/WatchAlertModal';
 import { ItemDetailModal } from '@/src/components/ItemDetailModal';
-import { MarketItemGrid } from '@/src/components/MarketItemGrid';
+import { MarketItemGrid, MarketItemGridItem } from '@/src/components/MarketItemGrid';
 import { WorldSectionHeader } from '@/src/components/WorldSectionHeader';
 import { EmptyState } from '@/src/components/EmptyState';
 import { TabSwitcher } from '@/src/components/TabSwitcher';
 import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
+import { AlertThresholdFooter } from '@/src/components/AlertThresholdFooter';
 import { Pill } from '@/src/components/ui/Pill';
 import { ItemImageBox } from '@/src/components/ui/ItemImageBox';
-import { ProgressBar } from '@/src/components/ui/ProgressBar';
-import { StatBlock } from '@/src/components/ui/StatBlock';
 import { colors } from '@/src/theme/colors';
-import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
+import { toTitleCase } from '@/src/api/tibiaMarket';
 import { pluralKey } from '@/src/utils/plural';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const pluralActive = (n: number) =>
   pluralKey(n, { one: 'active_label_one', few: 'active_label_few', many: 'active_label_many' });
 
-// Maps current vs threshold to a 0..1 fill showing how close the alert is.
-// Full = triggered. 0 = price is more than 20% away from threshold.
-function alertProgress(
-  currentBuy: number | null,
-  currentSell: number | null,
-  alert: WatchAlert,
-): { buy: number; sell: number; anyTriggered: boolean } {
-  const WINDOW = 0.2;
-  let buy = 0;
-  let sell = 0;
-  let anyTriggered = false;
-  if (alert.buyAlert != null && currentBuy != null && currentBuy > 0) {
-    const cond = getBuyCondition(alert);
-    const triggered =
-      cond === 'below' ? currentBuy <= alert.buyAlert : currentBuy >= alert.buyAlert;
-    if (triggered) {
-      buy = 1;
-      anyTriggered = true;
-    } else {
-      const dist =
-        cond === 'below'
-          ? (currentBuy - alert.buyAlert) / alert.buyAlert
-          : (alert.buyAlert - currentBuy) / alert.buyAlert;
-      buy = Math.max(0, 1 - dist / WINDOW);
-    }
-  }
-  if (alert.sellAlert != null && currentSell != null && currentSell > 0) {
-    const cond = getSellCondition(alert);
-    const triggered =
-      cond === 'above' ? currentSell >= alert.sellAlert : currentSell <= alert.sellAlert;
-    if (triggered) {
-      sell = 1;
-      anyTriggered = true;
-    } else {
-      const dist =
-        cond === 'above'
-          ? (alert.sellAlert - currentSell) / alert.sellAlert
-          : (currentSell - alert.sellAlert) / alert.sellAlert;
-      sell = Math.max(0, 1 - dist / WINDOW);
-    }
-  }
-  return { buy, sell, anyTriggered };
-}
-
-// ─── WatchCard ────────────────────────────────────────────────────────────────
-
-function WatchCard({
-  alert,
-  marketItem,
-  onEdit,
-  onOpenModal,
-}: {
-  alert: WatchAlert;
-  marketItem: MarketItem | undefined;
-  onEdit: (alert: WatchAlert) => void;
-  onOpenModal?: (name: string, world: string) => void;
-}) {
-  const router = useRouter();
+// Placeholder shown when the market board hasn't yet returned data for an
+// item the user is watching — keeps the alert visible and preserves layout.
+function AlertLoadingCard({ alert }: { alert: WatchAlert }) {
   const { t } = useTranslation();
-
-  const buyOffer = marketItem?.buy_offer ?? null;
-  const sellOffer = marketItem?.sell_offer ?? null;
-  const triggered = isAlertTriggered(alert, buyOffer, sellOffer);
-  const anyTriggered = triggered.buy || triggered.sell;
-  const progress = alertProgress(buyOffer, sellOffer, alert);
-
-  const handlePress = () => {
-    if (onOpenModal) {
-      onOpenModal(alert.itemName, alert.world);
-    } else {
-      router.push({
-        pathname: '/item/[name]',
-        params: { name: alert.itemName, world: alert.world },
-      });
-    }
-  };
-
   return (
-    <TouchableOpacity
-      style={[styles.card, anyTriggered && styles.cardTriggered]}
-      onPress={handlePress}
-      activeOpacity={0.8}
-    >
-      {anyTriggered && (
-        <LinearGradient colors={[colors.goldDim, 'transparent']} style={styles.triggeredBg} />
-      )}
-
-      <View style={styles.cardHeader}>
-        <ItemImageBox wikiName={alert.wikiName} size={38} boxSize={42} />
-        <View style={styles.nameCol}>
-          <Text style={styles.itemName} numberOfLines={1}>
-            {toTitleCase(alert.itemName)}
-          </Text>
-          {anyTriggered ? (
-            <Pill
-              label={t('opportunity')}
-              tone="gold"
-              icon="bell-ring"
-              style={styles.opportunityPill}
-            />
-          ) : marketItem == null ? (
-            <Text style={styles.loadingText}>{t('loading_ellipsis')}</Text>
-          ) : null}
-        </View>
-        <TouchableOpacity
-          testID="edit-alert"
-          style={styles.editBtn}
-          onPress={() => onEdit(alert)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <MaterialCommunityIcons name="pencil-outline" size={16} color={colors.textMuted} />
-        </TouchableOpacity>
+    <View style={styles.loadingCard}>
+      <ItemImageBox wikiName={alert.wikiName} size={42} />
+      <View style={styles.loadingCol}>
+        <Text style={styles.loadingName} numberOfLines={1}>
+          {toTitleCase(alert.itemName)}
+        </Text>
+        <Text style={styles.loadingText}>{t('loading_ellipsis')}</Text>
       </View>
-
-      <View style={styles.priceRow}>
-        <StatBlock
-          label={t('buy')}
-          value={marketItem ? formatGold(buyOffer) : '…'}
-          valueColor={colors.buy}
-          subtext={
-            alert.buyAlert != null ? (
-              <View style={styles.threshRow}>
-                <MaterialCommunityIcons
-                  name={triggered.buy ? 'bell-ring' : 'bell-outline'}
-                  size={11}
-                  color={triggered.buy ? colors.buy : colors.textMuted}
-                />
-                <Text style={[styles.thresh, triggered.buy && { color: colors.buy }]}>
-                  {getBuyCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.buyAlert)}
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.noAlert}>{t('no_alert_set')}</Text>
-            )
-          }
-        />
-        <View style={styles.divV} />
-        <StatBlock
-          label={t('sell')}
-          value={marketItem ? formatGold(sellOffer) : '…'}
-          valueColor={colors.sell}
-          subtext={
-            alert.sellAlert != null ? (
-              <View style={styles.threshRow}>
-                <MaterialCommunityIcons
-                  name={triggered.sell ? 'bell-ring' : 'bell-outline'}
-                  size={11}
-                  color={triggered.sell ? colors.sell : colors.textMuted}
-                />
-                <Text style={[styles.thresh, triggered.sell && { color: colors.sell }]}>
-                  {getSellCondition(alert) === 'below' ? '≤' : '≥'} {formatGold(alert.sellAlert)}
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.noAlert}>{t('no_alert_set')}</Text>
-            )
-          }
-        />
-        <View style={styles.divV} />
-        <StatBlock
-          label={t('volume_monthly')}
-          value={marketItem?.month_sold?.toLocaleString() ?? (marketItem ? '—' : '…')}
-          subtext={t('units')}
-        />
-      </View>
-
-      {(alert.buyAlert != null || alert.sellAlert != null) && marketItem && (
-        <View style={styles.progressRow}>
-          {alert.buyAlert != null && (
-            <ProgressBar progress={progress.buy} color={triggered.buy ? colors.gold : colors.buy} />
-          )}
-          {alert.sellAlert != null && (
-            <ProgressBar
-              progress={progress.sell}
-              color={triggered.sell ? colors.gold : colors.sell}
-            />
-          )}
-        </View>
-      )}
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -223,13 +53,11 @@ const NOTIFIED_KEY = 'tibia_notified_alerts_v1';
 function WorldAlertsSection({
   world,
   alerts,
-  onEdit,
   numColumns,
   onItemPress,
 }: {
   world: string;
   alerts: WatchAlert[];
-  onEdit: (alert: WatchAlert) => void;
   numColumns: number;
   onItemPress?: (name: string, world: string) => void;
 }) {
@@ -303,6 +131,14 @@ function WorldAlertsSection({
     <Pill label="OK" tone="ok" icon="check-circle-outline" />
   );
 
+  const sorted = [...alerts].sort((a, b) => {
+    const aItem = getItem(a.itemName);
+    const bItem = getItem(b.itemName);
+    const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
+    const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
+    return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
+  });
+
   return (
     <View style={styles.worldSection}>
       <WorldSectionHeader
@@ -312,27 +148,35 @@ function WorldAlertsSection({
         right={right}
       />
       <View style={isGrid ? styles.grid : styles.list}>
-        {[...alerts]
-          .sort((a, b) => {
-            const aItem = getItem(a.itemName);
-            const bItem = getItem(b.itemName);
-            const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
-            const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
-            return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
-          })
-          .map((alert) => (
-            <View
+        {sorted.map((alert) => {
+          const marketItem = getItem(alert.itemName);
+          if (!marketItem) {
+            return (
+              <View
+                key={`${alert.world}-${alert.itemName}`}
+                style={isGrid ? { flexBasis: `${100 / numColumns}%`, padding: 6 } : undefined}
+              >
+                <AlertLoadingCard alert={alert} />
+              </View>
+            );
+          }
+          return (
+            <MarketItemGridItem
               key={`${alert.world}-${alert.itemName}`}
-              style={isGrid ? { flexBasis: `${100 / numColumns}%`, padding: 6 } : undefined}
-            >
-              <WatchCard
-                alert={alert}
-                marketItem={getItem(alert.itemName)}
-                onEdit={onEdit}
-                onOpenModal={isGrid ? onItemPress : undefined}
-              />
-            </View>
-          ))}
+              item={marketItem}
+              world={world}
+              numColumns={numColumns}
+              onPress={isGrid && onItemPress ? () => onItemPress(alert.itemName, world) : undefined}
+              footerSlot={
+                <AlertThresholdFooter
+                  alert={alert}
+                  currentBuy={marketItem.buy_offer ?? null}
+                  currentSell={marketItem.sell_offer ?? null}
+                />
+              }
+            />
+          );
+        })}
       </View>
     </View>
   );
@@ -379,13 +223,12 @@ function WorldFavoritesSection({
 type WatchTab = 'alerts' | 'favorites';
 
 export default function WatchlistScreen() {
-  const { watchlist, removeFromWatchlist, updateAlert } = useWatchlist();
+  const { watchlist } = useWatchlist();
   const { allFavorites } = useWorld();
   const { t } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
   const scrollRef = useRef<ScrollView>(null);
-  const [editingAlert, setEditingAlert] = useState<WatchAlert | null>(null);
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
   const [favWorldFilter, setFavWorldFilter] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<WatchTab>('alerts');
@@ -485,7 +328,6 @@ export default function WatchlistScreen() {
                   key={world}
                   world={world}
                   alerts={filteredAlerts.filter((a) => a.world === world)}
-                  onEdit={setEditingAlert}
                   numColumns={numColumns}
                   onItemPress={isDesktop ? openItemModal : undefined}
                 />
@@ -523,31 +365,6 @@ export default function WatchlistScreen() {
         </>
       )}
 
-      {editingAlert && (
-        <WatchAlertModal
-          visible={!!editingAlert}
-          itemName={editingAlert.itemName}
-          wikiName={editingAlert.wikiName}
-          world={editingAlert.world}
-          currentBuy={null}
-          currentSell={null}
-          initialBuyAlert={editingAlert.buyAlert}
-          initialSellAlert={editingAlert.sellAlert}
-          initialBuyAlertCondition={editingAlert.buyAlertCondition}
-          initialSellAlertCondition={editingAlert.sellAlertCondition}
-          isEditing={true}
-          onSave={(buy, sell, buyCond, sellCond) => {
-            if (buy == null && sell == null) {
-              removeFromWatchlist(editingAlert.itemName, editingAlert.world);
-            } else {
-              updateAlert(editingAlert.itemName, editingAlert.world, buy, sell, buyCond, sellCond);
-            }
-          }}
-          onRemove={() => removeFromWatchlist(editingAlert.itemName, editingAlert.world)}
-          onClose={() => setEditingAlert(null)}
-        />
-      )}
-
       <ItemDetailModal
         name={modalItemName}
         world={modalItemWorld ?? ''}
@@ -578,34 +395,17 @@ const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -6 },
   list: { gap: 8 },
 
-  card: {
+  loadingCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.cardBorder,
     borderRadius: 14,
-    overflow: 'hidden',
+    padding: 14,
   },
-  cardTriggered: { borderColor: colors.gold },
-  triggeredBg: { position: 'absolute', top: 0, left: 0, right: 0, height: 80 },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', padding: 12, gap: 10 },
-  nameCol: { flex: 1, gap: 4 },
-  itemName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
-  opportunityPill: { alignSelf: 'flex-start' },
-  loadingText: { color: colors.textMuted, fontSize: 11 },
-  editBtn: { padding: 4 },
-
-  priceRow: { flexDirection: 'row', borderTopWidth: 1, borderTopColor: colors.divider },
-  threshRow: { flexDirection: 'row', alignItems: 'center', gap: 3 },
-  thresh: { color: colors.textMuted, fontSize: 10, fontWeight: '600' },
-  noAlert: { color: colors.textMuted, fontSize: 10, fontStyle: 'italic' },
-  divV: { width: 1, backgroundColor: colors.border, marginVertical: 8 },
-
-  progressRow: {
-    flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderTopWidth: 1,
-    borderTopColor: colors.divider,
-  },
+  loadingCol: { flex: 1, gap: 4 },
+  loadingName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
+  loadingText: { color: colors.textMuted, fontSize: 11, fontStyle: 'italic' },
 });

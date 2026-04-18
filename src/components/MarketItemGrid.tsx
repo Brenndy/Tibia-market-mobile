@@ -18,11 +18,13 @@ export function MarketItemGridItem({
   world,
   numColumns,
   onPress,
+  footerSlot,
 }: {
   item: MarketItem;
   world: string;
   numColumns: number;
   onPress?: () => void;
+  footerSlot?: React.ReactNode;
 }) {
   const isGrid = numColumns > 1;
   const flexBasis: DimensionValue | undefined = isGrid
@@ -30,7 +32,13 @@ export function MarketItemGridItem({
     : undefined;
   return (
     <View style={isGrid ? [styles.gridItem, { flexBasis }] : undefined}>
-      <MarketItemCard item={item} world={world} stretch={isGrid} onPress={onPress} />
+      <MarketItemCard
+        item={item}
+        world={world}
+        stretch={isGrid}
+        onPress={onPress}
+        footerSlot={footerSlot}
+      />
     </View>
   );
 }

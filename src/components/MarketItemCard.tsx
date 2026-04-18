@@ -16,6 +16,7 @@ interface MarketItemCardProps {
   world: string;
   onPress?: () => void;
   stretch?: boolean;
+  footerSlot?: React.ReactNode;
 }
 
 function PriceTrend({ current, average }: { current: number | null; average: number | null }) {
@@ -46,6 +47,7 @@ export const MarketItemCard = memo(function MarketItemCard({
   world,
   onPress,
   stretch,
+  footerSlot,
 }: MarketItemCardProps) {
   const router = useRouter();
   const { toggleFavorite, isFavorite } = useWorld();
@@ -86,6 +88,7 @@ export const MarketItemCard = memo(function MarketItemCard({
         style={[
           styles.card,
           dealQuality !== 'none' && { borderColor: dealColor + '60' },
+          alertFiring && { borderColor: colors.gold },
           stretch && { flex: 1 },
         ]}
         onPress={() => {
@@ -296,6 +299,8 @@ export const MarketItemCard = memo(function MarketItemCard({
             </View>
           </View>
         )}
+
+        {footerSlot}
       </TouchableOpacity>
 
       {watchModalVisible && (
