@@ -1,12 +1,5 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Animated,
-  useWindowDimensions,
-} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Animated } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
@@ -15,6 +8,7 @@ import { useTranslation } from '@/src/context/LanguageContext';
 import { useMarketBoard } from '@/src/hooks/useMarket';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
 import { MarketItemRow, MarketRowHeader } from '@/src/components/MarketItemRow';
+import { useResponsiveColumns, WIDE_DESKTOP_BREAKPOINT } from '@/src/hooks/useResponsiveColumns';
 import { ItemSearchBar } from '@/src/components/ItemSearchBar';
 import { SortPicker } from '@/src/components/SortPicker';
 import { GoldSpinner } from '@/src/components/LoadingState';
@@ -36,7 +30,6 @@ const PAGE_SIZE = 50;
 // page, matching the old behavior.
 const INITIAL_COUNT_MOBILE = 20;
 const INITIAL_COUNT_DESKTOP = 50;
-const DESKTOP_BREAKPOINT = 900;
 const VIEW_MODE_KEY = 'tibia_view_mode_v1';
 type ViewMode = 'list' | 'grid';
 
@@ -48,8 +41,7 @@ export default function MarketScreen() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('month_sold');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const { width } = useWindowDimensions();
-  const isDesktop = width >= DESKTOP_BREAKPOINT;
+  const { width, isDesktop } = useResponsiveColumns();
   const initialCount = isDesktop ? INITIAL_COUNT_DESKTOP : INITIAL_COUNT_MOBILE;
   const [displayCount, setDisplayCount] = useState(initialCount);
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
@@ -60,7 +52,8 @@ export default function MarketScreen() {
   // Default: grid on desktop (more info at a glance), list on mobile (full-width cards).
   // Overridden by user preference stored in localStorage on first load.
   const [viewMode, setViewModeState] = useState<ViewMode>(isDesktop ? 'grid' : 'list');
-  const numColumns = isDesktop && viewMode === 'grid' ? (width >= 1400 ? 3 : 2) : 1;
+  const numColumns =
+    isDesktop && viewMode === 'grid' ? (width >= WIDE_DESKTOP_BREAKPOINT ? 3 : 2) : 1;
   // Desktop + list = compact table rows instead of full-width cards.
   const useTableRows = isDesktop && viewMode === 'list';
 
