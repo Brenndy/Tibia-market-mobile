@@ -31,7 +31,11 @@ import { SortField, filterAndSortItems } from '@/src/api/tibiaMarket';
 import { storage } from '@/src/utils/storage';
 
 const PAGE_SIZE = 50;
-const INITIAL_COUNT = 50;
+// Mobile renders fewer cards up front — keeps first-paint CPU down and lifts
+// mobile Speed Insights RES (LCP + INP). Desktop users see the full first
+// page, matching the old behavior.
+const INITIAL_COUNT_MOBILE = 20;
+const INITIAL_COUNT_DESKTOP = 50;
 const DESKTOP_BREAKPOINT = 900;
 const VIEW_MODE_KEY = 'tibia_view_mode_v1';
 type ViewMode = 'list' | 'grid';
@@ -44,14 +48,15 @@ export default function MarketScreen() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('month_sold');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [displayCount, setDisplayCount] = useState(INITIAL_COUNT);
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= DESKTOP_BREAKPOINT;
+  const initialCount = isDesktop ? INITIAL_COUNT_DESKTOP : INITIAL_COUNT_MOBILE;
+  const [displayCount, setDisplayCount] = useState(initialCount);
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [showFab, setShowFab] = useState(false);
   const fabAnim = useRef(new Animated.Value(0)).current;
   const activeFilterCount = countActiveFilters(filters);
-  const { width } = useWindowDimensions();
-  const isDesktop = width >= DESKTOP_BREAKPOINT;
   // Default: grid on desktop (more info at a glance), list on mobile (full-width cards).
   // Overridden by user preference stored in localStorage on first load.
   const [viewMode, setViewModeState] = useState<ViewMode>(isDesktop ? 'grid' : 'list');
@@ -80,10 +85,13 @@ export default function MarketScreen() {
     }).start();
   }, [showFab, fabAnim]);
 
-  const handleSelectedItemsChange = useCallback((items: string[]) => {
-    setSelectedItems(items);
-    setDisplayCount(INITIAL_COUNT);
-  }, []);
+  const handleSelectedItemsChange = useCallback(
+    (items: string[]) => {
+      setSelectedItems(items);
+      setDisplayCount(initialCount);
+    },
+    [initialCount],
+  );
 
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
@@ -131,11 +139,14 @@ export default function MarketScreen() {
     });
   }, [rawData, sortField, sortOrder, selectedItems, filters]);
 
-  const handleSortChange = useCallback((field: SortField, order: 'asc' | 'desc') => {
-    setSortField(field);
-    setSortOrder(order);
-    setDisplayCount(INITIAL_COUNT);
-  }, []);
+  const handleSortChange = useCallback(
+    (field: SortField, order: 'asc' | 'desc') => {
+      setSortField(field);
+      setSortOrder(order);
+      setDisplayCount(initialCount);
+    },
+    [initialCount],
+  );
 
   const handleLoadMore = useCallback(() => {
     setDisplayCount((prev) => prev + PAGE_SIZE);
@@ -149,10 +160,13 @@ export default function MarketScreen() {
     },
   });
 
-  const handleApplyFilters = useCallback((f: FilterState) => {
-    setFilters(f);
-    setDisplayCount(INITIAL_COUNT);
-  }, []);
+  const handleApplyFilters = useCallback(
+    (f: FilterState) => {
+      setFilters(f);
+      setDisplayCount(initialCount);
+    },
+    [initialCount],
+  );
 
   const scrollToTop = useCallback(() => {
     listRef.current?.scrollToOffset({ offset: 0, animated: true });
@@ -249,7 +263,7 @@ export default function MarketScreen() {
                 onPress={() => {
                   setFilters(DEFAULT_FILTERS);
                   setSelectedItems([]);
-                  setDisplayCount(INITIAL_COUNT);
+                  setDisplayCount(initialCount);
                 }}
               >
                 <Text style={styles.clearFilters}>{t('clear_filters')} ×</Text>
@@ -301,6 +315,9 @@ export default function MarketScreen() {
           onScroll={handleScroll}
           scrollEventThrottle={16}
           bounces={false}
+          initialNumToRender={isDesktop ? 20 : 12}
+          maxToRenderPerBatch={isDesktop ? 20 : 8}
+          windowSize={isDesktop ? 11 : 7}
           ListEmptyComponent={
             <View style={styles.empty}>
               <MaterialCommunityIcons
