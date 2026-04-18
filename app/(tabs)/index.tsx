@@ -89,7 +89,8 @@ export default function MarketScreen() {
   const { data: rawData, isLoading, isError, refetch } = useMarketBoard(selectedWorld);
 
   const TOP_BAR_H = 116;
-  const HEADER_HEIGHT = TOP_BAR_H;
+  const STATS_ROW_H = 28;
+  const HEADER_HEIGHT = TOP_BAR_H + (activeFilterCount > 0 ? STATS_ROW_H : 0);
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
