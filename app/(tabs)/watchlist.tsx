@@ -96,10 +96,12 @@ function WatchCard({
   alert,
   marketItem,
   onEdit,
+  onOpenModal,
 }: {
   alert: WatchAlert;
   marketItem: MarketItem | undefined;
   onEdit: (alert: WatchAlert) => void;
+  onOpenModal?: (name: string, world: string) => void;
 }) {
   const router = useRouter();
   const { t } = useTranslation();
@@ -110,15 +112,21 @@ function WatchCard({
   const anyTriggered = triggered.buy || triggered.sell;
   const progress = alertProgress(buyOffer, sellOffer, alert);
 
+  const handlePress = () => {
+    if (onOpenModal) {
+      onOpenModal(alert.itemName, alert.world);
+    } else {
+      router.push({
+        pathname: '/item/[name]',
+        params: { name: alert.itemName, world: alert.world },
+      });
+    }
+  };
+
   return (
     <TouchableOpacity
       style={[styles.card, anyTriggered && styles.cardTriggered]}
-      onPress={() =>
-        router.push({
-          pathname: '/item/[name]',
-          params: { name: alert.itemName, world: alert.world },
-        })
-      }
+      onPress={handlePress}
       activeOpacity={0.8}
     >
       {anyTriggered && (
@@ -250,13 +258,16 @@ function WorldAlertsSection({
   world,
   alerts,
   onEdit,
-  isDesktop,
+  numColumns,
+  onItemPress,
 }: {
   world: string;
   alerts: WatchAlert[];
   onEdit: (alert: WatchAlert) => void;
-  isDesktop: boolean;
+  numColumns: number;
+  onItemPress?: (name: string, world: string) => void;
 }) {
+  const isGrid = numColumns > 1;
   const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
   const checkedRef = useRef<string>('');
@@ -343,7 +354,7 @@ function WorldAlertsSection({
         )}
       </View>
 
-      <View style={isDesktop ? styles.sectionGrid : { gap: 8 }}>
+      <View style={isGrid ? styles.sectionGrid : styles.sectionList}>
         {[...alerts]
           .sort((a, b) => {
             const aItem = getItem(a.itemName);
@@ -355,9 +366,14 @@ function WorldAlertsSection({
           .map((alert) => (
             <View
               key={`${alert.world}-${alert.itemName}`}
-              style={isDesktop ? styles.gridCardDesktop : undefined}
+              style={isGrid ? { flexBasis: `${100 / numColumns}%`, padding: 6 } : undefined}
             >
-              <WatchCard alert={alert} marketItem={getItem(alert.itemName)} onEdit={onEdit} />
+              <WatchCard
+                alert={alert}
+                marketItem={getItem(alert.itemName)}
+                onEdit={onEdit}
+                onOpenModal={isGrid ? onItemPress : undefined}
+              />
             </View>
           ))}
       </View>
@@ -433,7 +449,7 @@ export default function WatchlistScreen() {
   const [modalItemWorld, setModalItemWorld] = useState<string | null>(null);
   const { width } = useWindowDimensions();
   const isDesktop = width >= DESKTOP_BREAKPOINT;
-  const favoriteColumns = width >= 1400 ? 3 : width >= DESKTOP_BREAKPOINT ? 2 : 1;
+  const gridColumns = width >= 1400 ? 3 : width >= DESKTOP_BREAKPOINT ? 2 : 1;
 
   useEffect(() => {
     const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
@@ -568,7 +584,15 @@ export default function WatchlistScreen() {
                     world={world}
                     alerts={filteredAlerts.filter((a) => a.world === world)}
                     onEdit={setEditingAlert}
-                    isDesktop={isDesktop}
+                    numColumns={gridColumns}
+                    onItemPress={
+                      isDesktop
+                        ? (name, w) => {
+                            setModalItemWorld(w);
+                            setModalItemName(name);
+                          }
+                        : undefined
+                    }
                   />
                 ))}
               </ScrollView>
@@ -644,7 +668,7 @@ export default function WatchlistScreen() {
                     key={world}
                     world={world}
                     favoriteNames={allFavorites[world] ?? []}
-                    numColumns={favoriteColumns}
+                    numColumns={gridColumns}
                     onItemPress={
                       isDesktop
                         ? (name) => {
@@ -929,13 +953,6 @@ const styles = StyleSheet.create({
   },
   sectionList: {
     gap: 8,
-  },
-  gridCardDesktop: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-    minWidth: 380,
-    maxWidth: '50%',
   },
 
   empty: {
