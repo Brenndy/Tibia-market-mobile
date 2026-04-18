@@ -20,31 +20,12 @@ import { TabSwitcher } from '@/src/components/TabSwitcher';
 import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
 import { AlertThresholdFooter } from '@/src/components/AlertThresholdFooter';
 import { Pill } from '@/src/components/ui/Pill';
-import { ItemImageBox } from '@/src/components/ui/ItemImageBox';
 import { colors } from '@/src/theme/colors';
-import { toTitleCase } from '@/src/api/tibiaMarket';
 import { pluralKey } from '@/src/utils/plural';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const pluralActive = (n: number) =>
   pluralKey(n, { one: 'active_label_one', few: 'active_label_few', many: 'active_label_many' });
-
-// Placeholder shown when the market board hasn't yet returned data for an
-// item the user is watching — keeps the alert visible and preserves layout.
-function AlertLoadingCard({ alert }: { alert: WatchAlert }) {
-  const { t } = useTranslation();
-  return (
-    <View style={styles.loadingCard}>
-      <ItemImageBox wikiName={alert.wikiName} size={42} />
-      <View style={styles.loadingCol}>
-        <Text style={styles.loadingName} numberOfLines={1}>
-          {toTitleCase(alert.itemName)}
-        </Text>
-        <Text style={styles.loadingText}>{t('loading_ellipsis')}</Text>
-      </View>
-    </View>
-  );
-}
 
 // ─── WorldAlertsSection ───────────────────────────────────────────────────────
 
@@ -66,7 +47,8 @@ function WorldAlertsSection({
   const { t } = useTranslation();
   const checkedRef = useRef<string>('');
 
-  const getItem = (name: string) => data?.items.find((i) => i.name === name);
+  const alertByName = new Map(alerts.map((a) => [a.itemName, a]));
+  const watchedItems = (data?.items ?? []).filter((i) => alertByName.has(i.name));
 
   useEffect(() => {
     if (!data) return;
@@ -113,9 +95,9 @@ function WorldAlertsSection({
     })();
   }, [data, alerts, world]);
 
-  const triggeredCount = alerts.filter((a) => {
-    const item = getItem(a.itemName);
-    const tr = isAlertTriggered(a, item?.buy_offer ?? null, item?.sell_offer ?? null);
+  const triggeredCount = watchedItems.filter((item) => {
+    const alert = alertByName.get(item.name)!;
+    const tr = isAlertTriggered(alert, item.buy_offer ?? null, item.sell_offer ?? null);
     return tr.buy || tr.sell;
   }).length;
 
@@ -131,11 +113,11 @@ function WorldAlertsSection({
     <Pill label="OK" tone="ok" icon="check-circle-outline" />
   );
 
-  const sorted = [...alerts].sort((a, b) => {
-    const aItem = getItem(a.itemName);
-    const bItem = getItem(b.itemName);
-    const aT = isAlertTriggered(a, aItem?.buy_offer ?? null, aItem?.sell_offer ?? null);
-    const bT = isAlertTriggered(b, bItem?.buy_offer ?? null, bItem?.sell_offer ?? null);
+  const sortedItems = [...watchedItems].sort((a, b) => {
+    const aAlert = alertByName.get(a.name)!;
+    const bAlert = alertByName.get(b.name)!;
+    const aT = isAlertTriggered(aAlert, a.buy_offer ?? null, a.sell_offer ?? null);
+    const bT = isAlertTriggered(bAlert, b.buy_offer ?? null, b.sell_offer ?? null);
     return (bT.buy || bT.sell ? 1 : 0) - (aT.buy || aT.sell ? 1 : 0);
   });
 
@@ -148,30 +130,20 @@ function WorldAlertsSection({
         right={right}
       />
       <View style={isGrid ? styles.grid : styles.list}>
-        {sorted.map((alert) => {
-          const marketItem = getItem(alert.itemName);
-          if (!marketItem) {
-            return (
-              <View
-                key={`${alert.world}-${alert.itemName}`}
-                style={isGrid ? { flexBasis: `${100 / numColumns}%`, padding: 6 } : undefined}
-              >
-                <AlertLoadingCard alert={alert} />
-              </View>
-            );
-          }
+        {sortedItems.map((item) => {
+          const alert = alertByName.get(item.name)!;
           return (
             <MarketItemGridItem
-              key={`${alert.world}-${alert.itemName}`}
-              item={marketItem}
+              key={`${world}-${item.name}`}
+              item={item}
               world={world}
               numColumns={numColumns}
-              onPress={isGrid && onItemPress ? () => onItemPress(alert.itemName, world) : undefined}
+              onPress={isGrid && onItemPress ? () => onItemPress(item.name, world) : undefined}
               footerSlot={
                 <AlertThresholdFooter
                   alert={alert}
-                  currentBuy={marketItem.buy_offer ?? null}
-                  currentSell={marketItem.sell_offer ?? null}
+                  currentBuy={item.buy_offer ?? null}
+                  currentSell={item.sell_offer ?? null}
                 />
               }
             />
@@ -394,18 +366,4 @@ const styles = StyleSheet.create({
 
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -6 },
   list: { gap: 8 },
-
-  loadingCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 14,
-    padding: 14,
-  },
-  loadingCol: { flex: 1, gap: 4 },
-  loadingName: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
-  loadingText: { color: colors.textMuted, fontSize: 11, fontStyle: 'italic' },
 });
