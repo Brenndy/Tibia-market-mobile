@@ -26,5 +26,16 @@
       "destination": "https://api.tibiamarket.top:8001/market_board"
     },
     { "source": "/item/:name", "destination": "/item/[name]" }
+  ],
+  "headers": [
+    {
+      "source": "/data/:file*.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
   ]
 }
