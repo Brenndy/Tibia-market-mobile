@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
-import { ITEM_LIST } from '../data/itemList';
+import { loadItemList, type ItemEntry } from '../data/lazyLoaders';
 import { toTitleCase } from '../api/tibiaMarket';
 import { useTranslation } from '../context/LanguageContext';
 
@@ -21,21 +21,27 @@ export function ItemSearchBar({
 }: ItemSearchBarProps) {
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
+  const [itemList, setItemList] = useState<ItemEntry[]>([]);
   const inputRef = useRef<TextInput>(null);
   const blurTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { t } = useTranslation();
 
   const suggestions =
     query.length >= 2
-      ? ITEM_LIST.filter(
-          (i) => i.n.toLowerCase().includes(query.toLowerCase()) && !selectedItems.includes(i.n),
-        ).slice(0, MAX_SUGGESTIONS)
+      ? itemList
+          .filter(
+            (i) => i.n.toLowerCase().includes(query.toLowerCase()) && !selectedItems.includes(i.n),
+          )
+          .slice(0, MAX_SUGGESTIONS)
       : [];
 
   const handleFocus = useCallback(() => {
     if (blurTimerRef.current) clearTimeout(blurTimerRef.current);
     setFocused(true);
-  }, []);
+    if (itemList.length === 0) {
+      loadItemList().then(setItemList);
+    }
+  }, [itemList.length]);
 
   const handleBlur = useCallback(() => {
     blurTimerRef.current = setTimeout(() => setFocused(false), 200);

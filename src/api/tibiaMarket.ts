@@ -1,11 +1,6 @@
 import axios from 'axios';
-import vocationsData from '../data/vocations.json';
-import monkItemsData from '../data/monkItems.json';
-import deliveryItemsData from '../data/deliveryItems.json';
 import { getApiBaseUrl, getItemImageProxyUrl } from './config';
-
-const MONK_ITEM_SET = new Set((monkItemsData as string[]).map((n) => n.toLowerCase()));
-const DELIVERY_ITEM_SET = new Set((deliveryItemsData as string[]).map((n) => n.toLowerCase()));
+import type { StaticFilterData } from '../data/lazyLoaders';
 
 const api = axios.create({
   baseURL: getApiBaseUrl(),
@@ -282,7 +277,16 @@ export interface FilterSortOptions {
 
 // Pure client-side filter + sort on already-fetched items.
 // Call this inside useMemo — no API requests.
-export function filterAndSortItems(items: MarketItem[], options: FilterSortOptions): MarketItem[] {
+//
+// `staticData` holds the lazy-loaded filter dictionaries (vocations, monk,
+// delivery). Filters that rely on these (vocations, deliveryOnly) are
+// silently skipped when `staticData` is not yet loaded — callers should
+// disable those toggles in the UI until preload completes.
+export function filterAndSortItems(
+  items: MarketItem[],
+  options: FilterSortOptions,
+  staticData?: StaticFilterData,
+): MarketItem[] {
   let result = items;
 
   if (options.selectedItemNames && options.selectedItemNames.length > 0) {
@@ -320,16 +324,16 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
   if (options.yasirOnly) {
     result = result.filter((i) => i.npc_buy.some((e) => e.name === 'Yasir'));
   }
-  if (options.deliveryOnly) {
-    result = result.filter((i) => DELIVERY_ITEM_SET.has(i.name.toLowerCase()));
+  if (options.deliveryOnly && staticData) {
+    result = result.filter((i) => staticData.deliveryItems.has(i.name.toLowerCase()));
   }
-  if (options.vocations && options.vocations.length > 0) {
+  if (options.vocations && options.vocations.length > 0 && staticData) {
     const selectedVocs = new Set(options.vocations);
     const monkSelected = selectedVocs.has('monk');
     result = result.filter((i) => {
       const nameLower = i.name.toLowerCase();
-      if (monkSelected && MONK_ITEM_SET.has(nameLower)) return true;
-      const itemVocs: string[] = (vocationsData as Record<string, string[]>)[nameLower] ?? [];
+      if (monkSelected && staticData.monkItems.has(nameLower)) return true;
+      const itemVocs = staticData.vocations[nameLower] ?? [];
       if (itemVocs.length === 0) return false; // no restriction = not vocation-specific
       return itemVocs.some((v) => selectedVocs.has(v as Vocation));
     });

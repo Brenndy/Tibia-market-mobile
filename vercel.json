@@ -4,5 +4,16 @@
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [{ "source": "/item/:name", "destination": "/item/[name]" }]
+  "rewrites": [{ "source": "/item/:name", "destination": "/item/[name]" }],
+  "headers": [
+    {
+      "source": "/data/:file*.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
 }
