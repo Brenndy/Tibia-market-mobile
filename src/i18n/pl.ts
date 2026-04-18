@@ -139,6 +139,8 @@ export const pl = {
   filters: 'Filtry',
   quick_filters: 'Szybkie filtry',
   filter_yasir: 'Yasir',
+  filter_delivery: 'Delivery task',
+  filter_delivery_sub: 'Przedmioty z questów Delivery',
   npc_buys_for: 'NPC kupuje za',
   npc_sells_for: 'NPC sprzedaje za',
   offer_date: 'Data',
@@ -147,6 +149,7 @@ export const pl = {
   voc_paladin: 'Paladin',
   voc_sorcerer: 'Sorcerer',
   voc_druid: 'Druid',
+  voc_monk: 'Monk',
 
   // Quick presets
   preset_hot: 'Gorące',

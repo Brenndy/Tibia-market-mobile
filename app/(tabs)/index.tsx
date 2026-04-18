@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Animated, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
@@ -128,6 +128,7 @@ export default function MarketScreen() {
       minVolume: filters.minVolume ? Number(filters.minVolume) : undefined,
       minMargin: filters.minMargin ? Number(filters.minMargin) : undefined,
       yasirOnly: filters.yasirOnly || undefined,
+      deliveryOnly: filters.deliveryOnly || undefined,
       vocations: filters.vocations.length > 0 ? filters.vocations : undefined,
     });
   }, [rawData, sortField, sortOrder, selectedItems, filters]);
@@ -162,7 +163,7 @@ export default function MarketScreen() {
   );
 
   const scrollToTop = useCallback(() => {
-    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+    listRef.current?.scrollToOffset({ offset: 0, animated: Platform.OS !== 'web' });
   }, []);
 
   if (isError) {
@@ -297,8 +298,10 @@ export default function MarketScreen() {
               </View>
             )
           }
-          ListHeaderComponent={useTableRows ? <MarketRowHeader /> : null}
-          stickyHeaderIndices={useTableRows ? [0] : undefined}
+          ListHeaderComponent={
+            useTableRows && filteredItems.length > 0 ? <MarketRowHeader /> : null
+          }
+          stickyHeaderIndices={useTableRows && filteredItems.length > 0 ? [0] : undefined}
           contentContainerStyle={[
             useTableRows ? styles.listTable : styles.list,
             { paddingTop: HEADER_HEIGHT + 12 },

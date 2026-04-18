@@ -1,6 +1,11 @@
 import axios from 'axios';
 import vocationsData from '../data/vocations.json';
+import monkItemsData from '../data/monkItems.json';
+import deliveryItemsData from '../data/deliveryItems.json';
 import { getApiBaseUrl, getItemImageProxyUrl } from './config';
+
+const MONK_ITEM_SET = new Set((monkItemsData as string[]).map((n) => n.toLowerCase()));
+const DELIVERY_ITEM_SET = new Set((deliveryItemsData as string[]).map((n) => n.toLowerCase()));
 
 const api = axios.create({
   baseURL: getApiBaseUrl(),
@@ -256,7 +261,7 @@ export async function fetchMarketBoard(world: string): Promise<MarketBoard> {
   return { world, last_update, items };
 }
 
-export type Vocation = 'knight' | 'paladin' | 'sorcerer' | 'druid';
+export type Vocation = 'knight' | 'paladin' | 'sorcerer' | 'druid' | 'monk';
 
 export interface FilterSortOptions {
   sort_field?: SortField;
@@ -271,6 +276,7 @@ export interface FilterSortOptions {
   minVolume?: number;
   minMargin?: number;
   yasirOnly?: boolean;
+  deliveryOnly?: boolean;
   vocations?: Vocation[];
 }
 
@@ -314,10 +320,16 @@ export function filterAndSortItems(items: MarketItem[], options: FilterSortOptio
   if (options.yasirOnly) {
     result = result.filter((i) => i.npc_buy.some((e) => e.name === 'Yasir'));
   }
+  if (options.deliveryOnly) {
+    result = result.filter((i) => DELIVERY_ITEM_SET.has(i.name.toLowerCase()));
+  }
   if (options.vocations && options.vocations.length > 0) {
     const selectedVocs = new Set(options.vocations);
+    const monkSelected = selectedVocs.has('monk');
     result = result.filter((i) => {
-      const itemVocs: string[] = (vocationsData as Record<string, string[]>)[i.name] ?? [];
+      const nameLower = i.name.toLowerCase();
+      if (monkSelected && MONK_ITEM_SET.has(nameLower)) return true;
+      const itemVocs: string[] = (vocationsData as Record<string, string[]>)[nameLower] ?? [];
       if (itemVocs.length === 0) return false; // no restriction = not vocation-specific
       return itemVocs.some((v) => selectedVocs.has(v as Vocation));
     });
