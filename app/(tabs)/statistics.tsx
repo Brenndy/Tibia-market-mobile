@@ -1,5 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, useNavigation } from 'expo-router';
 import { useWorld } from '@/src/context/WorldContext';
@@ -8,8 +15,11 @@ import { useMarketBoard } from '@/src/hooks/useMarket';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
 import { ItemImage } from '@/src/components/ItemImage';
+import { ItemDetailModal } from '@/src/components/ItemDetailModal';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/api/tibiaMarket';
+
+const DESKTOP_BREAKPOINT = 900;
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
 
@@ -32,12 +42,14 @@ function RankCard({
   field,
   world,
   units,
+  onOpenModal,
 }: {
   item: MarketItem;
   rank: number;
   field: RankType;
   world: string;
   units: string;
+  onOpenModal?: (name: string) => void;
 }) {
   const router = useRouter();
   const value = item[field];
@@ -45,10 +57,18 @@ function RankCard({
   const isPodium = rank <= 3;
   const podiumColor = isPodium ? PODIUM_COLORS[rank - 1] : colors.textMuted;
 
+  const handlePress = () => {
+    if (onOpenModal) {
+      onOpenModal(item.name);
+    } else {
+      router.push({ pathname: '/item/[name]', params: { name: item.name, world } });
+    }
+  };
+
   return (
     <TouchableOpacity
       style={[styles.rankCard, rank === 1 && styles.rankCardFirst]}
-      onPress={() => router.push({ pathname: '/item/[name]', params: { name: item.name, world } })}
+      onPress={handlePress}
       activeOpacity={0.75}
     >
       {/* Rank badge */}
@@ -94,6 +114,9 @@ export default function StatisticsScreen() {
   const navigation = useNavigation();
   const scrollRef = useRef<ScrollView>(null);
   const [activeRank, setActiveRank] = useState<RankType>('month_sold');
+  const [modalItemName, setModalItemName] = useState<string | null>(null);
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= DESKTOP_BREAKPOINT;
 
   useEffect(() => {
     const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
@@ -128,90 +151,98 @@ export default function StatisticsScreen() {
   }
 
   return (
-    <ScrollView
-      ref={scrollRef}
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* Rank type selector */}
+    <>
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.rankSelector}
+        ref={scrollRef}
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
       >
-        {RANK_OPTIONS.map((opt) => (
-          <TouchableOpacity
-            key={opt.value}
-            style={[styles.rankTab, activeRank === opt.value && styles.rankTabActive]}
-            onPress={() => setActiveRank(opt.value)}
-          >
-            <MaterialCommunityIcons
-              name={opt.icon as any}
-              size={14}
-              color={activeRank === opt.value ? colors.gold : colors.textMuted}
-            />
-            <Text
-              style={[styles.rankTabText, activeRank === opt.value && styles.rankTabTextActive]}
+        {/* Rank type selector */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.rankSelector}
+        >
+          {RANK_OPTIONS.map((opt) => (
+            <TouchableOpacity
+              key={opt.value}
+              style={[styles.rankTab, activeRank === opt.value && styles.rankTabActive]}
+              onPress={() => setActiveRank(opt.value)}
             >
-              {opt.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <MaterialCommunityIcons
+                name={opt.icon as any}
+                size={14}
+                color={activeRank === opt.value ? colors.gold : colors.textMuted}
+              />
+              <Text
+                style={[styles.rankTabText, activeRank === opt.value && styles.rankTabTextActive]}
+              >
+                {opt.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-      {/* Top 15 list */}
-      <View style={styles.listCard}>
-        <Text style={styles.listTitle}>
-          {RANK_OPTIONS.find((o) => o.value === activeRank)?.label ?? t('ranking')}
-        </Text>
-        {top15.map((item, idx) => (
-          <RankCard
-            key={item.id}
-            item={item}
-            rank={idx + 1}
-            field={activeRank}
-            world={selectedWorld}
-            units={t('units')}
-          />
-        ))}
-      </View>
-
-      {/* Summary stats */}
-      {data && (
-        <View style={styles.summaryCard}>
+        {/* Top 15 list */}
+        <View style={styles.listCard}>
           <Text style={styles.listTitle}>
-            {t('summary')} {selectedWorld}
+            {RANK_OPTIONS.find((o) => o.value === activeRank)?.label ?? t('ranking')}
           </Text>
-          <View style={styles.summaryGrid}>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
-              <Text style={styles.summaryValue}>{data.items.length.toLocaleString()}</Text>
-              <Text style={styles.summaryLabel}>{t('items_label')}</Text>
-            </View>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="trending-up" size={24} color={colors.buy} />
-              <Text style={styles.summaryValue}>
-                {formatGold(data.items[0]?.buy_offer ?? null)}
-              </Text>
-              <Text style={styles.summaryLabel}>{t('highest_buy_price')}</Text>
-            </View>
-            <View style={styles.summaryItem}>
-              <MaterialCommunityIcons name="update" size={24} color={colors.textSecondary} />
-              <Text style={styles.summaryValue}>
-                {data.last_update
-                  ? new Date(data.last_update).toLocaleTimeString(undefined, {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })
-                  : '—'}
-              </Text>
-              <Text style={styles.summaryLabel}>{t('last_update')}</Text>
+          {top15.map((item, idx) => (
+            <RankCard
+              key={item.id}
+              item={item}
+              rank={idx + 1}
+              field={activeRank}
+              world={selectedWorld}
+              units={t('units')}
+              onOpenModal={isDesktop ? setModalItemName : undefined}
+            />
+          ))}
+        </View>
+
+        {/* Summary stats */}
+        {data && (
+          <View style={styles.summaryCard}>
+            <Text style={styles.listTitle}>
+              {t('summary')} {selectedWorld}
+            </Text>
+            <View style={styles.summaryGrid}>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="package-variant" size={24} color={colors.gold} />
+                <Text style={styles.summaryValue}>{data.items.length.toLocaleString()}</Text>
+                <Text style={styles.summaryLabel}>{t('items_label')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="trending-up" size={24} color={colors.buy} />
+                <Text style={styles.summaryValue}>
+                  {formatGold(data.items[0]?.buy_offer ?? null)}
+                </Text>
+                <Text style={styles.summaryLabel}>{t('highest_buy_price')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <MaterialCommunityIcons name="update" size={24} color={colors.textSecondary} />
+                <Text style={styles.summaryValue}>
+                  {data.last_update
+                    ? new Date(data.last_update).toLocaleTimeString(undefined, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })
+                    : '—'}
+                </Text>
+                <Text style={styles.summaryLabel}>{t('last_update')}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      )}
-    </ScrollView>
+        )}
+      </ScrollView>
+      <ItemDetailModal
+        name={modalItemName}
+        world={selectedWorld}
+        onClose={() => setModalItemName(null)}
+      />
+    </>
   );
 }
 

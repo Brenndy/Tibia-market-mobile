@@ -23,6 +23,7 @@ import { useMarketBoard } from '@/src/hooks/useMarket';
 import { useTranslation } from '@/src/context/LanguageContext';
 import { WatchAlertModal } from '@/src/components/WatchAlertModal';
 import { MarketItemCard } from '@/src/components/MarketItemCard';
+import { ItemDetailModal } from '@/src/components/ItemDetailModal';
 import { ItemImage } from '@/src/components/ItemImage';
 import { colors } from '@/src/theme/colors';
 import { formatGold, toTitleCase, MarketItem } from '@/src/api/tibiaMarket';
@@ -369,16 +370,19 @@ function WorldAlertsSection({
 function WorldFavoritesSection({
   world,
   favoriteNames,
-  isDesktop,
+  numColumns,
+  onItemPress,
 }: {
   world: string;
   favoriteNames: string[];
-  isDesktop: boolean;
+  numColumns: number;
+  onItemPress?: (name: string) => void;
 }) {
   const { data, isLoading } = useMarketBoard(world);
   const { t } = useTranslation();
 
   const items = (data?.items ?? []).filter((i) => favoriteNames.includes(i.name));
+  const isGrid = numColumns > 1;
 
   return (
     <View style={styles.worldSection}>
@@ -393,13 +397,18 @@ function WorldFavoritesSection({
         </View>
         {isLoading && <Text style={styles.worldLoading}>{t('syncing')}</Text>}
       </View>
-      <View style={isDesktop ? styles.sectionGrid : undefined}>
+      <View style={isGrid ? styles.sectionGrid : styles.sectionList}>
         {items.map((item) => (
           <View
             key={`${world}-${item.name}`}
-            style={isDesktop ? styles.gridCardDesktop : undefined}
+            style={isGrid ? { flexBasis: `${100 / numColumns}%`, padding: 6 } : undefined}
           >
-            <MarketItemCard item={item} world={world} />
+            <MarketItemCard
+              item={item}
+              world={world}
+              stretch={isGrid}
+              onPress={isGrid && onItemPress ? () => onItemPress(item.name) : undefined}
+            />
           </View>
         ))}
       </View>
@@ -420,8 +429,11 @@ export default function WatchlistScreen() {
   const [worldFilter, setWorldFilter] = useState<string | null>(null);
   const [favWorldFilter, setFavWorldFilter] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'alerts' | 'favorites'>('alerts');
+  const [modalItemName, setModalItemName] = useState<string | null>(null);
+  const [modalItemWorld, setModalItemWorld] = useState<string | null>(null);
   const { width } = useWindowDimensions();
   const isDesktop = width >= DESKTOP_BREAKPOINT;
+  const favoriteColumns = width >= 1400 ? 3 : width >= DESKTOP_BREAKPOINT ? 2 : 1;
 
   useEffect(() => {
     const unsubscribe = navigation.getParent()?.addListener('tabPress' as any, () => {
@@ -632,7 +644,15 @@ export default function WatchlistScreen() {
                     key={world}
                     world={world}
                     favoriteNames={allFavorites[world] ?? []}
-                    isDesktop={isDesktop}
+                    numColumns={favoriteColumns}
+                    onItemPress={
+                      isDesktop
+                        ? (name) => {
+                            setModalItemWorld(world);
+                            setModalItemName(name);
+                          }
+                        : undefined
+                    }
                   />
                 ))}
               </ScrollView>
@@ -665,6 +685,15 @@ export default function WatchlistScreen() {
           onClose={() => setEditingAlert(null)}
         />
       )}
+
+      <ItemDetailModal
+        name={modalItemName}
+        world={modalItemWorld ?? ''}
+        onClose={() => {
+          setModalItemName(null);
+          setModalItemWorld(null);
+        }}
+      />
     </View>
   );
 }
@@ -896,7 +925,10 @@ const styles = StyleSheet.create({
   sectionGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    marginHorizontal: -6,
+  },
+  sectionList: {
+    gap: 8,
   },
   gridCardDesktop: {
     flexGrow: 1,
