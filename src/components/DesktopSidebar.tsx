@@ -17,6 +17,7 @@ import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useWorld } from '../context/WorldContext';
 import { useMarketBoard, useWorlds } from '../hooks/useMarket';
 import { WorldBadge } from './WorldBadge';
+import { WorldSelectModal } from './WorldSelectModal';
 import { LanguageToggle } from './LanguageToggle';
 import { GitHubStars } from './GitHubStars';
 import { Tooltip } from './ui/Tooltip';
@@ -111,6 +112,7 @@ export function DesktopSidebar() {
   const worldSync = currentWorld?.last_update ? timeAgo(currentWorld.last_update) : '';
   const [collapsed, setCollapsed] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [worldModalVisible, setWorldModalVisible] = useState(false);
   const widthAnim = useRef(new Animated.Value(WIDTH_EXPANDED)).current;
 
   useEffect(() => {
@@ -244,7 +246,7 @@ export function DesktopSidebar() {
           <>
             <Tooltip label={selectedWorld} sublabel={worldSync ? `Synced ${worldSync}` : undefined}>
               <TouchableOpacity
-                onPress={() => router.push('/world-select')}
+                onPress={() => setWorldModalVisible(true)}
                 style={styles.footerIconBtn}
                 accessibilityLabel={selectedWorld}
               >
@@ -270,6 +272,8 @@ export function DesktopSidebar() {
           </>
         )}
       </View>
+
+      <WorldSelectModal visible={worldModalVisible} onClose={() => setWorldModalVisible(false)} />
     </Animated.View>
   );
 }
