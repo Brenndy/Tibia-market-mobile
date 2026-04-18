@@ -18,7 +18,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0a0e1a"
       },
-      "package": "com.tibiatrader.mobile"
+      "package": "com.tibiatrader.mobile",
+      "versionCode": 1,
+      "permissions": ["POST_NOTIFICATIONS"]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -26,6 +28,15 @@
       "output": "static"
     },
     "scheme": "tibiatrader",
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/adaptive-icon.png",
+          "color": "#c9a227"
+        }
+      ]
+    ]
   }
 }
