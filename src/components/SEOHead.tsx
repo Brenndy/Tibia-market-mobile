@@ -204,7 +204,6 @@ export default function RouteSEO() {
   const crumbs = breadcrumbsForPath(pathname, locale);
   return (
     <Helmet>
-      <html lang={locale} />
       <title>{meta.title}</title>
       <meta name="description" content={meta.description} />
       <link rel="canonical" href={canonicalWithLang} />
