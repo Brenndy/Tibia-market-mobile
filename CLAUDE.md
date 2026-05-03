@@ -83,9 +83,10 @@ keywords, author, robots (`index, follow, max-image-preview:large`), google-site
 
 ## 4. i18n
 
-- **Default UI: EN.** PL available via `?lang=pl` (query param, not browser auto-detect).
-- Marketing landings: EN = `https://tibiatrader.com/`, PL = `https://tibiatrader.com/?lang=pl`.
-- localStorage key: `tibia_language_v1` (`'pl' | 'en'`).
+- **Default UI: EN.** PL via `?lang=pl`, pt-BR via `?lang=pt-BR` (query param, not browser auto-detect).
+- Marketing landings: EN = `https://tibiatrader.com/`, PL = `https://tibiatrader.com/?lang=pl`, pt-BR = `https://tibiatrader.com/?lang=pt-BR`.
+- localStorage key: `tibia_language_v1` (`'pl' | 'en' | 'pt-BR'`).
+- Translations live as flat key dictionaries: `src/i18n/{en,pl,pt-BR}.ts`. `TranslationKey` is derived from `pl.ts` — TypeScript catches missing keys in other locales.
 - Per-screen translations kept locally (no i18next) — keep it simple.
 
 ---

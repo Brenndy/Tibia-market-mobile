@@ -1,0 +1,190 @@
+import type { TranslationKey } from './pl';
+
+export const ptBR: Record<TranslationKey, string> = {
+  // Tabs
+  tab_market: 'Market',
+  tab_alerts: 'Alertas',
+  tab_statistics: 'Estatísticas',
+  tab_favorites: 'Favoritos',
+
+  // Common
+  loading: 'Carregando...',
+  cancel: 'Cancelar',
+  save: 'Salvar',
+  units: 'un.',
+
+  // Market screen
+  search_placeholder: 'Buscar item...',
+  loading_market: 'Carregando mercado...',
+  buy: 'COMPRA',
+  sell: 'VENDA',
+  volume_monthly: 'VOL/MÊS',
+  margin: 'MARGEM',
+  avg_prefix: 'méd.',
+
+  // Sort
+  sort_by: 'Ordenar por',
+  sort_month_sold: 'Volume mensal',
+  sort_margin: 'Margem',
+  sort_buy_offer: 'Preço de compra',
+  sort_sell_offer: 'Preço de venda',
+  sort_month_avg_buy: 'Méd. compra/mês',
+  sort_month_avg_sell: 'Méd. venda/mês',
+  sort_month_bought: 'Compras mensais',
+  sort_day_sold: 'Volume diário',
+  sort_name: 'Nome',
+  sort_npc_margin: 'Lucro NPC',
+
+  // Filter panel
+  advanced_filters: 'Filtros avançados',
+  reset: 'Resetar',
+  category: 'Categoria',
+  buy_price_range: 'Preço de compra',
+  sell_price_range: 'Preço de venda',
+  min_volume_monthly: 'Vol. mínimo mensal (un.)',
+  min_margin_gp: 'Margem mínima (gp)',
+  min_volume_label: 'Vol. mín.',
+  min_margin_label: 'Margem mín.',
+  apply_filters: 'Aplicar filtros',
+  min_label: 'Mín',
+  max_label: 'Máx',
+  placeholder_volume: 'ex. 100',
+  placeholder_margin: 'ex. 500',
+
+  // Watchlist
+  no_alerts_title: 'Nenhum item monitorado',
+  no_alerts_desc: 'Abra um item e toque no sino para configurar alertas de preço.',
+  go_to_market: 'Ir ao mercado',
+  opportunity: 'OPORTUNIDADE',
+  all_worlds: 'Todos',
+  no_alert_set: 'Sem alerta',
+
+  // WatchAlertModal
+  buy_alert: 'Alerta de compra',
+  sell_alert: 'Alerta de venda',
+  buy_alert_desc_below: 'Notificar quando o preço de compra cair',
+  buy_alert_desc_above: 'Notificar quando o preço de compra subir',
+  sell_alert_desc_below: 'Notificar quando o preço de venda cair',
+  sell_alert_desc_above: 'Notificar quando o preço de venda subir',
+  below_value: 'abaixo do limite',
+  above_value: 'acima do limite',
+  alert_direction_below: 'Cair ↓',
+  alert_direction_above: 'Subir ↑',
+  watch: 'Monitorar',
+  buy_prefix: 'Compra:',
+  sell_prefix: 'Venda:',
+  alert_active: '🟢 Alerta agora está ativo!',
+  price_must_drop: 'O preço deve cair em',
+  price_must_rise: 'O preço deve subir em',
+  suggest_label: 'Rápido:',
+  toast_alert_saved: 'Alerta salvo',
+  toast_alert_removed: 'Alerta removido',
+
+  // Statistics
+  loading_stats: 'Carregando estatísticas...',
+  most_sold: 'Mais negociados',
+  most_bought: 'Mais comprados',
+  most_expensive_buy: 'Mais caros (compra)',
+  most_expensive_sell: 'Mais caros (venda)',
+  top_5: 'Top 5',
+  items_label: 'Itens',
+  highest_buy_price: 'Maior compra',
+  last_update: 'Última atualização',
+  summary: 'Resumo',
+  ranking: 'Ranking',
+
+  // Favorites
+  no_favorites_title: 'Sem favoritos',
+  no_favorites_desc: 'Adicione itens aos favoritos tocando na estrela na lista do mercado.',
+  loading_favorites: 'Carregando favoritos...',
+  favorites_not_found: 'Itens favoritos não encontrados neste mundo.',
+
+  // WorldSelect
+  search_world: 'Buscar mundo...',
+  loading_worlds: 'Carregando mundos...',
+
+  // Item detail
+  loading_item: 'Carregando dados do item...',
+  item_not_found: 'Falha ao carregar dados.',
+  active_offers: 'Ofertas ativas',
+  loading_ellipsis: 'Carregando...',
+  no_buy_offers: 'Nenhuma oferta de compra',
+  no_sell_offers: 'Nenhuma oferta de venda',
+  no_offers: 'Nenhuma oferta ativa',
+  price_history: 'Histórico de preços',
+  no_history: 'Sem dados históricos',
+  price: 'Preço',
+  volume: 'Volume',
+  loading_chart: 'Carregando gráfico...',
+  buy_legend: 'Compra',
+  sell_legend: 'Venda',
+  monthly_stats: 'Estatísticas mensais',
+  avg_buy_price: 'Preço médio de compra',
+  avg_sell_price: 'Preço médio de venda',
+  sold: 'Vendidos',
+  purchased: 'Comprados',
+  highest_buy: 'Maior compra',
+  lowest_sell: 'Menor venda',
+  today: 'Hoje',
+  day_activity: 'HOJE',
+  offers: 'OFERTAS',
+  today_avg_prefix: 'Hoje méd.',
+  monthly_avg_prefix: 'Mês méd.',
+  item_detail_title: 'Detalhes do item',
+  back_market: 'Market',
+  select_world_title: 'Selecionar mundo',
+  load_more: 'Carregar mais',
+  no_results: 'Sem resultados',
+  clear_filters: 'Limpar filtros',
+
+  // Filter button
+  filters: 'Filtros',
+  quick_filters: 'Filtros rápidos',
+  filter_yasir: 'Yasir',
+  filter_delivery: 'Delivery task',
+  filter_delivery_sub: 'Itens usados em quests de entrega',
+  npc_buys_for: 'NPC compra por',
+  npc_sells_for: 'NPC vende por',
+  offer_date: 'Data',
+  vocation_filter: 'Vocação',
+  voc_knight: 'Knight',
+  voc_paladin: 'Paladin',
+  voc_sorcerer: 'Sorcerer',
+  voc_druid: 'Druid',
+  voc_monk: 'Monk',
+
+  // Quick presets
+  preset_hot: 'Em alta',
+  preset_flips: 'Flips',
+  preset_cheap: 'Baratos',
+  preset_expensive: 'Caros',
+
+  // Deal quality
+  deal_premium: 'Ótima oferta',
+  deal_good: 'Boa oferta',
+  margin_pct: '% margem',
+  flip_score: 'Pontuação flip',
+  vs_avg: 'vs méd.',
+
+  // Watchlist
+  alert_singular: 'alerta',
+  alerts_plural: 'alertas',
+  favorite_singular: 'favorito',
+  favorites_plural: 'favoritos',
+  syncing: 'sincronizando…',
+  active_label: 'ativos',
+  active_label_one: 'ativo',
+  active_label_few: 'ativos',
+  active_label_many: 'ativos',
+
+  // World select
+  worlds_count_one: 'mundo',
+  worlds_count_few: 'mundos',
+  worlds_count_many: 'mundos',
+
+  // Sidebar
+  sidebar_collapse: 'Recolher menu',
+  sidebar_expand: 'Expandir menu',
+  github_star_cta: 'Dê uma estrela no GitHub',
+  github_stars_label: 'Ver projeto no GitHub',
+};

@@ -16,7 +16,7 @@ import { useGlobalSearchParams, usePathname } from 'expo-router';
 import { POPULAR_ITEMS } from '@/src/data/popularItems';
 import { toTitleCase } from '@/src/api/tibiaMarket';
 
-type Locale = 'en' | 'pl';
+type Locale = 'en' | 'pl' | 'pt-BR';
 
 const SITE_URL = 'https://tibiatrader.com';
 
@@ -36,7 +36,9 @@ const visuallyHidden: React.CSSProperties = {
 
 function resolveLocale(lang: string | string[] | undefined): Locale {
   const value = Array.isArray(lang) ? lang[0] : lang;
-  return value === 'pl' ? 'pl' : 'en';
+  if (value === 'pl') return 'pl';
+  if (typeof value === 'string' && value.toLowerCase() === 'pt-br') return 'pt-BR';
+  return 'en';
 }
 
 function itemHref(name: string): string {
@@ -44,7 +46,12 @@ function itemHref(name: string): string {
 }
 
 function PopularItemsList({ locale, exclude }: { locale: Locale; exclude?: string }) {
-  const heading = locale === 'pl' ? 'Popularne przedmioty' : 'Popular items';
+  const heading =
+    locale === 'pl'
+      ? 'Popularne przedmioty'
+      : locale === 'pt-BR'
+        ? 'Itens populares'
+        : 'Popular items';
   return (
     <section>
       <h2>{heading}</h2>
@@ -78,6 +85,32 @@ function HomeContent({ locale }: { locale: Locale }) {
             </li>
             <li>
               <a href={`${SITE_URL}/world-select`}>Wybierz świat Tibii</a>
+            </li>
+          </ul>
+        </nav>
+        <PopularItemsList locale={locale} />
+      </>
+    );
+  }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>TibiaTrader — preços do mercado de Tibia em tempo real</h1>
+        <p>
+          Rastreador gratuito de preços do mercado de Tibia. Ofertas de compra e venda ao vivo em
+          cada mundo, margens de flip, alertas de preço e histórico de volume de 90 dias. Sem
+          cadastro, otimizado para mobile.
+        </p>
+        <nav>
+          <ul>
+            <li>
+              <a href={`${SITE_URL}/watchlist`}>Lista de alertas de preço</a>
+            </li>
+            <li>
+              <a href={`${SITE_URL}/statistics`}>Estatísticas do mercado</a>
+            </li>
+            <li>
+              <a href={`${SITE_URL}/world-select`}>Escolha seu mundo de Tibia</a>
             </li>
           </ul>
         </nav>
@@ -154,6 +187,53 @@ function WatchlistContent({ locale }: { locale: Locale }) {
         <p>
           <a href={`${SITE_URL}/`}>Przejdź do pełnego rynku</a> lub{' '}
           <a href={`${SITE_URL}/statistics`}>zobacz statystyki rynku</a>.
+        </p>
+        <PopularItemsList locale={locale} />
+      </>
+    );
+  }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>Alertas de preço de Tibia</h1>
+        <p>
+          Configure alertas de preço de compra e venda para qualquer item de Tibia. Receba
+          notificação quando o preço atingir seu alvo no mundo escolhido. Grátis, sem cadastro.
+        </p>
+        <h2>Como funcionam os alertas</h2>
+        <p>
+          Escolha um item, defina um preço-alvo (ex. 500k) e a direção — o alerta dispara quando a
+          oferta de compra atual cair abaixo ou a oferta de venda subir acima do alvo. Suportamos
+          atalhos de gold: <strong>500k</strong> = 500.000, <strong>1.2m</strong> = 1.200.000.
+        </p>
+        <h2>O que você pode acompanhar</h2>
+        <ul>
+          <li>Ofertas de compra e venda ao vivo de qualquer item negociável</li>
+          <li>Margem de flip (venda menos compra)</li>
+          <li>Quedas de preço abaixo de mínimas históricas</li>
+          <li>Picos de volume indicando mudanças de demanda</li>
+          <li>Movimentos de preço em um mundo específico</li>
+        </ul>
+        <h2>Itens mais monitorados</h2>
+        <p>
+          Os jogadores costumam alertar potions (
+          <a href={itemHref('great mana potion')}>Great Mana Potion</a>,{' '}
+          <a href={itemHref('supreme health potion')}>Supreme Health Potion</a>,{' '}
+          <a href={itemHref('ultimate mana potion')}>Ultimate Mana Potion</a>), equipamento end-game
+          (<a href={itemHref('boots of haste')}>Boots of Haste</a>,{' '}
+          <a href={itemHref('magic plate armor')}>Magic Plate Armor</a>,{' '}
+          <a href={itemHref('golden armor')}>Golden Armor</a>) e joias (
+          <a href={itemHref('stealth ring')}>Stealth Ring</a>,{' '}
+          <a href={itemHref('might ring')}>Might Ring</a>,{' '}
+          <a href={itemHref('prismatic ring')}>Prismatic Ring</a>).
+        </p>
+        <p>
+          Todos os mundos de Tibia são suportados — Open PvP, Optional PvP e Hardcore. Os dados de
+          mercado atualizam a cada hora para os alertas dispararem sem atraso.
+        </p>
+        <p>
+          <a href={`${SITE_URL}/`}>Ver o mercado completo</a> ou{' '}
+          <a href={`${SITE_URL}/statistics`}>ver as estatísticas</a>.
         </p>
         <PopularItemsList locale={locale} />
       </>
@@ -256,6 +336,58 @@ function StatisticsContent({ locale }: { locale: Locale }) {
         <p>
           <a href={`${SITE_URL}/`}>Przejdź do rynku</a> lub{' '}
           <a href={`${SITE_URL}/watchlist`}>ustaw alerty cenowe</a>.
+        </p>
+        <PopularItemsList locale={locale} />
+      </>
+    );
+  }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>Estatísticas do mercado de Tibia</h1>
+        <p>
+          Maiores variações, itens mais negociados, maiores margens de flip e volume mensal em cada
+          mundo de Tibia. Atualizado a cada hora.
+        </p>
+        <h2>Rankings de mercado</h2>
+        <ul>
+          <li>
+            <strong>Mais negociados</strong> — itens com maior volume mensal de compra e venda
+          </li>
+          <li>
+            <strong>Mais comprados</strong> — itens com mais ofertas de compra ativas
+          </li>
+          <li>
+            <strong>Compras mais caras</strong> — ranking pelo maior preço que jogadores estão
+            dispostos a pagar
+          </li>
+          <li>
+            <strong>Vendas mais caras</strong> — ranking pelo preço de listagem
+          </li>
+        </ul>
+        <h2>Para que servem as estatísticas</h2>
+        <p>
+          As estatísticas ajudam a identificar oportunidades de flip (alto volume + spread amplo),
+          estimar o valor do loot de uma hunt e acompanhar tendências de preço antes das updates de
+          Tibia. Dados agregados de todo o mercado, atualizados a cada hora.
+        </p>
+        <h2>Categorias mais consultadas</h2>
+        <p>
+          Os jogadores costumam consultar estatísticas de{' '}
+          <a href={itemHref('tibia coins')}>Tibia Coins</a>,{' '}
+          <a href={itemHref('gold token')}>Gold Tokens</a>, potions (
+          <a href={itemHref('great mana potion')}>Great Mana Potion</a>,{' '}
+          <a href={itemHref('great spirit potion')}>Great Spirit Potion</a>,{' '}
+          <a href={itemHref('ultimate health potion')}>Ultimate Health Potion</a>), equipamento
+          end-game (<a href={itemHref('demon legs')}>Demon Legs</a>,{' '}
+          <a href={itemHref('boots of haste')}>Boots of Haste</a>,{' '}
+          <a href={itemHref('magic plate armor')}>Magic Plate Armor</a>) e joias (
+          <a href={itemHref('prismatic ring')}>Prismatic Ring</a>,{' '}
+          <a href={itemHref('stone skin amulet')}>Stone Skin Amulet</a>).
+        </p>
+        <p>
+          <a href={`${SITE_URL}/`}>Ver o mercado</a> ou{' '}
+          <a href={`${SITE_URL}/watchlist`}>configurar alertas</a>.
         </p>
         <PopularItemsList locale={locale} />
       </>
@@ -364,6 +496,57 @@ function WorldSelectContent({ locale }: { locale: Locale }) {
       </>
     );
   }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>Escolha seu mundo de Tibia</h1>
+        <p>
+          Selecione seu mundo para ver preços de mercado ao vivo, margens e tendências. Suportamos
+          todos os mundos Open PvP, Optional PvP e Hardcore. Cada mundo tem preços e volume próprios
+          — a sua escolha define quais ofertas aparecem na lista do mercado e nos alertas de preço.
+        </p>
+        <h2>Tipos de mundo</h2>
+        <ul>
+          <li>
+            <strong>Open PvP</strong> — Antica, Lobera, Menera, Pacera, Serdebra, Wintera, Secura,
+            Talera — combate aberto entre jogadores, mercados mais ativos
+          </li>
+          <li>
+            <strong>Optional PvP</strong> — Belluma, Quintera, Zuna, Zunera — combate apenas com
+            consentimento, popular entre jogadores PvE
+          </li>
+          <li>
+            <strong>Hardcore PvP</strong> — Gravitera, Kalibra, Ysolera — sem proteções, killers
+            mantêm habilidades
+          </li>
+          <li>
+            <strong>Retro Open PvP / Retro Hardcore</strong> — mecânicas clássicas, mercados menores
+            e preços únicos
+          </li>
+        </ul>
+        <h2>Como os mercados diferem</h2>
+        <p>
+          Os preços de itens podem variar 20–30% entre mundos — especialmente para gear raro como{' '}
+          <a href={itemHref('boots of haste')}>Boots of Haste</a>,{' '}
+          <a href={itemHref('golden armor')}>Golden Armor</a> ou{' '}
+          <a href={itemHref('demon legs')}>Demon Legs</a>. Potions (
+          <a href={itemHref('great mana potion')}>Great Mana Potion</a>,{' '}
+          <a href={itemHref('supreme health potion')}>Supreme Health Potion</a>) ficam mais estáveis
+          pelo alto volume.
+        </p>
+        <p>
+          Sua escolha de mundo é salva localmente — ao voltar ao site você já vê seu mercado. Pode
+          trocar de mundo a qualquer momento pelo menu de navegação.
+        </p>
+        <p>
+          <a href={`${SITE_URL}/`}>Ver o mercado</a>,{' '}
+          <a href={`${SITE_URL}/statistics`}>ver estatísticas</a> ou{' '}
+          <a href={`${SITE_URL}/watchlist`}>configurar alertas</a>.
+        </p>
+        <PopularItemsList locale={locale} />
+      </>
+    );
+  }
   return (
     <>
       <h1>Select your Tibia world</h1>
@@ -433,6 +616,21 @@ function ItemContent({ name, locale }: { name: string; locale: Locale }) {
       </>
     );
   }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>{title} — preço de mercado em Tibia</h1>
+        <p>
+          Dados ao vivo de {title} no mercado de Tibia: ofertas de compra e venda, margem de flip,
+          volume mensal e histórico de preços de 90 dias em cada mundo. Atualização a cada hora.
+        </p>
+        <p>
+          <a href={`${SITE_URL}/`}>Voltar ao mercado completo</a>
+        </p>
+        <PopularItemsList locale={locale} exclude={name} />
+      </>
+    );
+  }
   return (
     <>
       <h1>{title} — live Tibia market price</h1>
@@ -456,6 +654,18 @@ function ItemTemplateContent({ locale }: { locale: Locale }) {
         <p>
           Wyszukaj dowolny przedmiot, aby zobaczyć aktualne oferty kupna i sprzedaży, marżę flipa i
           historię cen na każdym świecie.
+        </p>
+        <PopularItemsList locale={locale} />
+      </>
+    );
+  }
+  if (locale === 'pt-BR') {
+    return (
+      <>
+        <h1>Preços de itens de Tibia</h1>
+        <p>
+          Busque qualquer item para ver ofertas de compra e venda ao vivo, margem de flip e
+          histórico de preços em cada mundo.
         </p>
         <PopularItemsList locale={locale} />
       </>
