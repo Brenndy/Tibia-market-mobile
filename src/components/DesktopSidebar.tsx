@@ -12,7 +12,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { colors } from '../theme/colors';
-import { useTranslation } from '../context/LanguageContext';
+import { useTranslation, type Language } from '../context/LanguageContext';
 import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useWorld } from '../context/WorldContext';
 import { useMarketBoard, useWorlds } from '../hooks/useMarket';
@@ -39,6 +39,14 @@ interface SidebarItem {
 }
 
 const IS_WEB = Platform.OS === 'web';
+
+const LANG_ORDER: Language[] = ['en', 'pl', 'pt-BR'];
+const LANG_BADGE: Record<Language, string> = { en: 'EN', pl: 'PL', 'pt-BR': 'BR' };
+const LANG_TOOLTIP: Record<Language, string> = {
+  en: 'English',
+  pl: 'Język polski',
+  'pt-BR': 'Português (Brasil)',
+};
 
 function SidebarNavItem({
   item,
@@ -181,7 +189,10 @@ export function DesktopSidebar() {
     },
   ];
 
-  const cycleLanguage = () => setLanguage(language === 'pl' ? 'en' : 'pl');
+  const cycleLanguage = () => {
+    const idx = LANG_ORDER.indexOf(language);
+    setLanguage(LANG_ORDER[(idx + 1) % LANG_ORDER.length]);
+  };
 
   return (
     <Animated.View
@@ -253,13 +264,13 @@ export function DesktopSidebar() {
                 <MaterialCommunityIcons name="earth" size={18} color={colors.gold} />
               </TouchableOpacity>
             </Tooltip>
-            <Tooltip label={language === 'pl' ? 'Język polski' : 'English'}>
+            <Tooltip label={LANG_TOOLTIP[language]}>
               <TouchableOpacity
                 onPress={cycleLanguage}
                 style={styles.footerIconBtn}
                 accessibilityLabel="Language"
               >
-                <Text style={styles.langBadge}>{language.toUpperCase()}</Text>
+                <Text style={styles.langBadge}>{LANG_BADGE[language]}</Text>
               </TouchableOpacity>
             </Tooltip>
             <GitHubStars collapsed />

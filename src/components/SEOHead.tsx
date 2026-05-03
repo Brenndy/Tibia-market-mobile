@@ -10,7 +10,7 @@ import { Helmet } from 'expo-router/vendor/react-helmet-async/lib';
 import { toTitleCase } from '@/src/api/tibiaMarket';
 
 type RouteMeta = { title: string; description: string };
-type Locale = 'en' | 'pl';
+type Locale = 'en' | 'pl' | 'pt-BR';
 
 const SITE_URL = 'https://tibiatrader.com';
 
@@ -25,6 +25,11 @@ const HOMEPAGE_META: Record<Locale, RouteMeta> = {
     description:
       'Przeglądaj rynek Tibii: aktualne ceny kupna i sprzedaży na każdym świecie, marże flipów, alerty cenowe i historia wolumenów. Darmowe, szybkie, mobile-friendly.',
   },
+  'pt-BR': {
+    title: 'TibiaTrader — Preços do mercado Tibia ao vivo, margens e alertas',
+    description:
+      'Acompanhe o mercado in-game de Tibia: preços de compra/venda ao vivo em todos os mundos, margens de flip, alertas de preço e histórico de volume. Grátis, rápido, mobile.',
+  },
 };
 
 const WATCHLIST_META: Record<Locale, RouteMeta> = {
@@ -37,6 +42,11 @@ const WATCHLIST_META: Record<Locale, RouteMeta> = {
     title: 'Obserwowane — Alerty cenowe Tibii | TibiaTrader',
     description:
       'Ustaw alerty cen kupna i sprzedaży dla przedmiotów w Tibii. Otrzymaj powiadomienie, gdy cena osiągnie Twój próg na dowolnym świecie.',
+  },
+  'pt-BR': {
+    title: 'Lista de Alertas — Alertas de preço Tibia | TibiaTrader',
+    description:
+      'Configure alertas de preço de compra e venda para itens de Tibia. Receba notificação quando o preço atingir seu alvo em qualquer mundo — grátis e rápido.',
   },
 };
 
@@ -51,6 +61,11 @@ const STATISTICS_META: Record<Locale, RouteMeta> = {
     description:
       'Statystyki rynku Tibii: największe wzrosty i spadki, najczęściej handlowane przedmioty, największe marże i wolumen miesięczny. Aktualizacja co godzinę.',
   },
+  'pt-BR': {
+    title: 'Estatísticas de mercado — Análises de Tibia | TibiaTrader',
+    description:
+      'Estatísticas do mercado de Tibia: maiores variações, itens mais negociados, maiores margens e volume mensal em cada mundo. Dados ao vivo, atualizados a cada hora.',
+  },
 };
 
 const WORLD_SELECT_META: Record<Locale, RouteMeta> = {
@@ -64,6 +79,11 @@ const WORLD_SELECT_META: Record<Locale, RouteMeta> = {
     description:
       'Wybierz swój świat Tibii, aby zobaczyć aktualne ceny, marże i trendy rynkowe. Wszystkie światy Open PvP, Optional PvP i Hardcore.',
   },
+  'pt-BR': {
+    title: 'Escolha o mundo de Tibia — TibiaTrader',
+    description:
+      'Escolha seu mundo de Tibia para ver preços de mercado ao vivo, margens e tendências. Todos os mundos Open PvP, Optional PvP e Hardcore suportados.',
+  },
 };
 
 const ITEM_TEMPLATE_META: Record<Locale, RouteMeta> = {
@@ -76,6 +96,11 @@ const ITEM_TEMPLATE_META: Record<Locale, RouteMeta> = {
     title: 'Ceny, marże i historia przedmiotów Tibii | TibiaTrader',
     description:
       'Sprawdź dowolny przedmiot Tibii: aktualne oferty kupna i sprzedaży, marżę flipa, wolumen miesięczny i 90-dniową historię cen na każdym świecie.',
+  },
+  'pt-BR': {
+    title: 'Preços, margens e histórico de itens de Tibia | TibiaTrader',
+    description:
+      'Consulte qualquer item de Tibia: ofertas de compra e venda ao vivo, margem de flip, volume mensal e histórico de preços de 90 dias em cada mundo.',
   },
 };
 
@@ -98,6 +123,10 @@ function itemMeta(itemTitle: string): Record<Locale, RouteMeta> {
     pl: {
       title: `${itemTitle} — cena, marża i historia w Tibii | TibiaTrader`,
       description: `Aktualna cena ${itemTitle} na rynku Tibii: oferty kupna i sprzedaży, marża flipa, wolumen miesięczny i 90-dniowa historia cen na każdym świecie.`,
+    },
+    'pt-BR': {
+      title: `${itemTitle} — preço, margem e histórico em Tibia | TibiaTrader`,
+      description: `Preço atual de ${itemTitle} no mercado de Tibia: ofertas de compra e venda, margem de flip, volume mensal e histórico de 90 dias em cada mundo.`,
     },
   };
 }
@@ -130,20 +159,24 @@ function metaForPath(
 }
 
 function resolveLocale(langParam: string | string[] | undefined): Locale {
-  // ?lang=pl is the only Polish signal. During SSR the hook returns {} so we
-  // default to EN — matches the app's hard-EN default, no browser autodetect.
+  // ?lang=pl / ?lang=pt-BR are the explicit signals. During SSR the hook
+  // returns {} so we default to EN — matches the app's hard-EN default,
+  // no browser autodetect. pt-BR accepted case-insensitively (Google
+  // sometimes lowercases query params).
   const value = Array.isArray(langParam) ? langParam[0] : langParam;
-  return value === 'pl' ? 'pl' : 'en';
+  if (value === 'pl') return 'pl';
+  if (typeof value === 'string' && value.toLowerCase() === 'pt-br') return 'pt-BR';
+  return 'en';
 }
 
 type Crumb = { name: string; url: string };
 
 const CRUMB_LABELS: Record<string, Record<Locale, string>> = {
-  home: { en: 'Home', pl: 'Strona główna' },
-  watchlist: { en: 'Watchlist', pl: 'Obserwowane' },
-  statistics: { en: 'Statistics', pl: 'Statystyki' },
-  worldSelect: { en: 'Select World', pl: 'Wybierz świat' },
-  market: { en: 'Market', pl: 'Rynek' },
+  home: { en: 'Home', pl: 'Strona główna', 'pt-BR': 'Início' },
+  watchlist: { en: 'Watchlist', pl: 'Obserwowane', 'pt-BR': 'Lista de Alertas' },
+  statistics: { en: 'Statistics', pl: 'Statystyki', 'pt-BR': 'Estatísticas' },
+  worldSelect: { en: 'Select World', pl: 'Wybierz świat', 'pt-BR': 'Escolher mundo' },
+  market: { en: 'Market', pl: 'Rynek', 'pt-BR': 'Mercado' },
 };
 
 // Build the breadcrumb trail for the current route. Homepage returns an empty
@@ -194,13 +227,15 @@ export default function RouteSEO() {
   const params = useGlobalSearchParams<{ lang?: string }>();
   const locale = resolveLocale(params.lang);
   const { meta, canonical } = metaForPath(pathname, locale);
-  // When ?lang=pl is present, append it to canonical + og:url so the bilingual
-  // URL is the self-referencing canonical (prevents Google from treating the
-  // PL landing as a duplicate of the EN root).
-  const canonicalWithLang = locale === 'pl' ? `${canonical}?lang=pl` : canonical;
+  // When a non-default locale is active, append ?lang=… to canonical + og:url
+  // so the localized URL self-references (prevents Google from treating
+  // localized landings as duplicates of the EN root).
+  const langSuffix = locale === 'en' ? '' : `?lang=${locale}`;
+  const canonicalWithLang = `${canonical}${langSuffix}`;
   const hrefEn = canonical;
   const hrefPl = `${canonical}?lang=pl`;
-  const ogLocale = locale === 'pl' ? 'pl_PL' : 'en_US';
+  const hrefPtBr = `${canonical}?lang=pt-BR`;
+  const ogLocale = locale === 'pl' ? 'pl_PL' : locale === 'pt-BR' ? 'pt_BR' : 'en_US';
   const crumbs = breadcrumbsForPath(pathname, locale);
   return (
     <Helmet>
@@ -209,6 +244,7 @@ export default function RouteSEO() {
       <link rel="canonical" href={canonicalWithLang} />
       <link rel="alternate" hrefLang="en" href={hrefEn} />
       <link rel="alternate" hrefLang="pl" href={hrefPl} />
+      <link rel="alternate" hrefLang="pt-BR" href={hrefPtBr} />
       <link rel="alternate" hrefLang="x-default" href={hrefEn} />
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />

@@ -7,24 +7,30 @@ import React, {
   useEffect,
 } from 'react';
 import { Platform } from 'react-native';
-import { pl, en, TranslationKey } from '../i18n';
+import { pl, en, ptBR, TranslationKey } from '../i18n';
 import { storage } from '../utils/storage';
 
-export type Language = 'pl' | 'en';
+export type Language = 'pl' | 'en' | 'pt-BR';
 
-const translations = { pl, en };
+const translations = { pl, en, 'pt-BR': ptBR };
 
 const LANG_KEY = 'tibia_language_v1';
 
-// Allow ?lang=en|pl on web to override stored preference. Used for ad
-// landing pages (e.g. Polish Meta campaign → ?lang=pl, English AdWords
-// → ?lang=en). Default is always English — no browser-language auto-detect,
-// so international visitors with a Polish browser still land on EN.
+// Accept ?lang=pt-BR case-insensitively (Google may normalize to pt-br).
+function normalizeLangParam(raw: string | null): Language | null {
+  if (!raw) return null;
+  if (raw === 'en' || raw === 'pl') return raw;
+  if (raw.toLowerCase() === 'pt-br') return 'pt-BR';
+  return null;
+}
+
+// Allow ?lang=en|pl|pt-BR on web to override stored preference. Used for ad
+// landing pages (e.g. Polish Meta campaign → ?lang=pl, Brazilian campaign
+// → ?lang=pt-BR). Default is always English — no browser-language auto-detect,
+// so international visitors still land on EN.
 function readUrlLang(): Language | null {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return null;
-  const param = new URLSearchParams(window.location.search).get('lang');
-  if (param === 'en' || param === 'pl') return param;
-  return null;
+  return normalizeLangParam(new URLSearchParams(window.location.search).get('lang'));
 }
 
 interface LanguageContextType {
@@ -55,9 +61,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       return;
     }
     storage.getItem(LANG_KEY).then((stored) => {
-      if (stored === 'en' || stored === 'pl') {
-        setLanguageState(stored);
-      }
+      const normalized = normalizeLangParam(stored ?? null);
+      if (normalized) setLanguageState(normalized);
       setHydrated(true);
     });
   }, []);
