@@ -34,7 +34,7 @@ export default function Root({ children }: PropsWithChildren) {
       publisher: { '@type': 'Organization', name: 'CipSoft' },
     },
     author: { '@type': 'Person', name: 'Brenndy' },
-    inLanguage: ['en', 'pl'],
+    inLanguage: ['en', 'pl', 'pt-BR'],
   };
 
   // Content below is 100% static compile-time constants (no user input,
@@ -72,9 +72,10 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={ogImageAlt} />
-        {/* og:locale is emitted per-route by RouteSEO (en_US or pl_PL based on ?lang). */}
+        {/* og:locale is emitted per-route by RouteSEO (en_US, pl_PL or pt_BR based on ?lang). */}
         <meta property="og:locale:alternate" content="pl_PL" />
         <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:locale:alternate" content="pt_BR" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={ogImage} />
