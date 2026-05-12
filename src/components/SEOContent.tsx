@@ -14,11 +14,170 @@
 // renders the real screen, this stub sits harmlessly in the DOM.
 import { useGlobalSearchParams, usePathname } from 'expo-router';
 import { POPULAR_ITEMS } from '@/src/data/popularItems';
+import { getItemSeoMetadata, getRelatedItemNames, type NpcOffer } from '@/src/data/itemSeoMetadata';
 import { toTitleCase } from '@/src/api/tibiaMarket';
 
 type Locale = 'en' | 'pl' | 'pt-BR';
 
 const SITE_URL = 'https://tibiatrader.com';
+
+// Category name in singular (`noun`, used in "is a {noun}") and plural
+// (`label`, used in "Related {label} on TibiaTrader") for each supported
+// locale. Keys must match the `category` strings emitted by
+// /api/tibia/item_metadata.
+type CategoryCopy = { noun: string; label: string };
+const CATEGORY_COPY: Record<string, Record<Locale, CategoryCopy>> = {
+  Ammunition: {
+    en: { noun: 'ammunition', label: 'ammunition' },
+    pl: { noun: 'amunicja', label: 'amunicja' },
+    'pt-BR': { noun: 'munição', label: 'munições' },
+  },
+  Amulets: {
+    en: { noun: 'amulet', label: 'amulets' },
+    pl: { noun: 'amulet', label: 'amulety' },
+    'pt-BR': { noun: 'amuleto', label: 'amuletos' },
+  },
+  Armors: {
+    en: { noun: 'armor', label: 'armors' },
+    pl: { noun: 'zbroja', label: 'zbroje' },
+    'pt-BR': { noun: 'armadura', label: 'armaduras' },
+  },
+  Axes: {
+    en: { noun: 'axe', label: 'axes' },
+    pl: { noun: 'topór', label: 'topory' },
+    'pt-BR': { noun: 'machado', label: 'machados' },
+  },
+  Boots: {
+    en: { noun: 'pair of boots', label: 'boots' },
+    pl: { noun: 'buty', label: 'buty' },
+    'pt-BR': { noun: 'botas', label: 'botas' },
+  },
+  Clubs: {
+    en: { noun: 'club', label: 'clubs' },
+    pl: { noun: 'maczuga', label: 'maczugi' },
+    'pt-BR': { noun: 'maça', label: 'maças' },
+  },
+  Containers: {
+    en: { noun: 'container', label: 'containers' },
+    pl: { noun: 'pojemnik', label: 'pojemniki' },
+    'pt-BR': { noun: 'recipiente', label: 'recipientes' },
+  },
+  'Creature Products': {
+    en: { noun: 'creature product', label: 'creature products' },
+    pl: { noun: 'surowiec z potworów', label: 'surowce z potworów' },
+    'pt-BR': { noun: 'produto de criatura', label: 'produtos de criatura' },
+  },
+  Decoration: {
+    en: { noun: 'decoration', label: 'decorations' },
+    pl: { noun: 'dekoracja', label: 'dekoracje' },
+    'pt-BR': { noun: 'decoração', label: 'decorações' },
+  },
+  'Distance Weapons': {
+    en: { noun: 'distance weapon', label: 'distance weapons' },
+    pl: { noun: 'broń dystansowa', label: 'bronie dystansowe' },
+    'pt-BR': { noun: 'arma de distância', label: 'armas de distância' },
+  },
+  'Fist Weapons': {
+    en: { noun: 'fist weapon', label: 'fist weapons' },
+    pl: { noun: 'broń pięściowa', label: 'bronie pięściowe' },
+    'pt-BR': { noun: 'arma de punho', label: 'armas de punho' },
+  },
+  Food: {
+    en: { noun: 'food item', label: 'food' },
+    pl: { noun: 'jedzenie', label: 'jedzenie' },
+    'pt-BR': { noun: 'comida', label: 'comidas' },
+  },
+  'Helmets Hats': {
+    en: { noun: 'helmet', label: 'helmets and hats' },
+    pl: { noun: 'hełm', label: 'hełmy i czapki' },
+    'pt-BR': { noun: 'capacete', label: 'capacetes e chapéus' },
+  },
+  Legs: {
+    en: { noun: 'leg armor', label: 'leg armors' },
+    pl: { noun: 'spodnie', label: 'spodnie' },
+    'pt-BR': { noun: 'calça', label: 'calças' },
+  },
+  Others: {
+    en: { noun: 'item', label: 'items' },
+    pl: { noun: 'przedmiot', label: 'przedmioty' },
+    'pt-BR': { noun: 'item', label: 'itens' },
+  },
+  Potions: {
+    en: { noun: 'potion', label: 'potions' },
+    pl: { noun: 'mikstura', label: 'mikstury' },
+    'pt-BR': { noun: 'poção', label: 'poções' },
+  },
+  'Premium Scrolls': {
+    en: { noun: 'premium scroll', label: 'premium scrolls' },
+    pl: { noun: 'zwój premium', label: 'zwoje premium' },
+    'pt-BR': { noun: 'pergaminho premium', label: 'pergaminhos premium' },
+  },
+  Quiver: {
+    en: { noun: 'quiver', label: 'quivers' },
+    pl: { noun: 'kołczan', label: 'kołczany' },
+    'pt-BR': { noun: 'aljava', label: 'aljavas' },
+  },
+  Rings: {
+    en: { noun: 'ring', label: 'rings' },
+    pl: { noun: 'pierścień', label: 'pierścienie' },
+    'pt-BR': { noun: 'anel', label: 'anéis' },
+  },
+  Runes: {
+    en: { noun: 'rune', label: 'runes' },
+    pl: { noun: 'runa', label: 'runy' },
+    'pt-BR': { noun: 'runa', label: 'runas' },
+  },
+  Shields: {
+    en: { noun: 'shield', label: 'shields' },
+    pl: { noun: 'tarcza', label: 'tarcze' },
+    'pt-BR': { noun: 'escudo', label: 'escudos' },
+  },
+  'Soul Cores': {
+    en: { noun: 'soul core', label: 'soul cores' },
+    pl: { noun: 'soul core', label: 'soul cores' },
+    'pt-BR': { noun: 'soul core', label: 'soul cores' },
+  },
+  Swords: {
+    en: { noun: 'sword', label: 'swords' },
+    pl: { noun: 'miecz', label: 'miecze' },
+    'pt-BR': { noun: 'espada', label: 'espadas' },
+  },
+  'Tibia Coins': {
+    en: { noun: 'Tibia Coin', label: 'Tibia Coins' },
+    pl: { noun: 'Tibia Coin', label: 'Tibia Coins' },
+    'pt-BR': { noun: 'Tibia Coin', label: 'Tibia Coins' },
+  },
+  Tools: {
+    en: { noun: 'tool', label: 'tools' },
+    pl: { noun: 'narzędzie', label: 'narzędzia' },
+    'pt-BR': { noun: 'ferramenta', label: 'ferramentas' },
+  },
+  Valuables: {
+    en: { noun: 'valuable', label: 'valuables' },
+    pl: { noun: 'kosztowność', label: 'kosztowności' },
+    'pt-BR': { noun: 'objeto de valor', label: 'objetos de valor' },
+  },
+  'Wands Rods': {
+    en: { noun: 'wand or rod', label: 'wands and rods' },
+    pl: { noun: 'różdżka lub rod', label: 'różdżki i rody' },
+    'pt-BR': { noun: 'varinha ou rod', label: 'varinhas e rods' },
+  },
+};
+
+function categoryCopy(category: string, locale: Locale): CategoryCopy {
+  return CATEGORY_COPY[category]?.[locale] ?? CATEGORY_COPY.Others[locale];
+}
+
+function formatGoldPlain(price: number): string {
+  // Plain digit grouping — keep SEO copy locale-neutral so Google can read it
+  // the same way across all locales. (UI helpers add 'k'/'m' suffixes that
+  // would obscure the number for search.)
+  return price.toLocaleString('en-US');
+}
+
+function wikiHref(wikiName: string): string {
+  return `https://tibia.fandom.com/wiki/${encodeURIComponent(wikiName.replace(/ /g, '_'))}`;
+}
 
 // Standard "visually hidden" pattern — off-screen via clip-rect but present
 // in the accessibility tree and the raw HTML Googlebot parses.
@@ -599,47 +758,147 @@ function WorldSelectContent({ locale }: { locale: Locale }) {
   );
 }
 
+type ItemCopy = {
+  h1Suffix: string;
+  intro: (title: string) => string;
+  classification: (title: string, noun: string) => string;
+  npcSellHeading: string;
+  npcBuyHeading: string;
+  npcSellLine: (offer: NpcOffer) => string;
+  npcBuyLine: (offer: NpcOffer) => string;
+  relatedHeading: (categoryLabel: string) => string;
+  wikiLink: (wikiName: string) => string;
+  backToMarket: string;
+};
+
+// Per-locale copy fragments used to assemble the rich item SEO body. Keeping
+// the template in a single object (rather than three sibling components)
+// avoids drift between locales and makes it cheap to extend if we add a new
+// section. Each item page renders 4–6 unique sentences that include the
+// item name, category and any NPC offers — enough signal for Google to stop
+// collapsing the 150 pages as duplicates.
+const ITEM_COPY: Record<Locale, ItemCopy> = {
+  en: {
+    h1Suffix: 'live Tibia market price',
+    intro: (title) =>
+      `Live ${title} market data on Tibia: buy and sell offers, flip margin, monthly volume and 90-day price history across every world. Hourly updates.`,
+    classification: (title, noun) =>
+      `${title} is ${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun} in Tibia.`,
+    npcSellHeading: 'NPCs that sell this item',
+    npcBuyHeading: 'NPCs that buy this item',
+    npcSellLine: (o) => `${o.name} in ${o.location} sells it for ${formatGoldPlain(o.price)} gp.`,
+    npcBuyLine: (o) => `${o.name} in ${o.location} buys it for ${formatGoldPlain(o.price)} gp.`,
+    relatedHeading: (label) => `Related ${label} on TibiaTrader`,
+    wikiLink: (wikiName) => `Read the ${wikiName} entry on TibiaWiki`,
+    backToMarket: 'Back to the full market',
+  },
+  pl: {
+    h1Suffix: 'cena rynkowa w Tibii',
+    intro: (title) =>
+      `Aktualne dane rynkowe ${title} w Tibii: oferty kupna i sprzedaży, marża flipa, miesięczny wolumen i 90-dniowa historia cen na każdym świecie. Aktualizacja co godzinę.`,
+    classification: (title, noun) => `${title} to ${noun} w Tibii.`,
+    npcSellHeading: 'NPC-e, którzy sprzedają ten przedmiot',
+    npcBuyHeading: 'NPC-e, którzy kupują ten przedmiot',
+    npcSellLine: (o) =>
+      `${o.name} w lokacji ${o.location} sprzedaje go za ${formatGoldPlain(o.price)} gp.`,
+    npcBuyLine: (o) =>
+      `${o.name} w lokacji ${o.location} kupuje go za ${formatGoldPlain(o.price)} gp.`,
+    relatedHeading: (label) => `Podobne pozycje (${label}) na TibiaTrader`,
+    wikiLink: (wikiName) => `Zobacz ${wikiName} w TibiaWiki`,
+    backToMarket: 'Wróć do pełnego rynku',
+  },
+  'pt-BR': {
+    h1Suffix: 'preço de mercado em Tibia',
+    intro: (title) =>
+      `Dados ao vivo de ${title} no mercado de Tibia: ofertas de compra e venda, margem de flip, volume mensal e histórico de preços de 90 dias em cada mundo. Atualização a cada hora.`,
+    classification: (title, noun) => `${title} é um(a) ${noun} em Tibia.`,
+    npcSellHeading: 'NPCs que vendem este item',
+    npcBuyHeading: 'NPCs que compram este item',
+    npcSellLine: (o) => `${o.name} em ${o.location} vende por ${formatGoldPlain(o.price)} gp.`,
+    npcBuyLine: (o) => `${o.name} em ${o.location} compra por ${formatGoldPlain(o.price)} gp.`,
+    relatedHeading: (label) => `Itens relacionados (${label}) no TibiaTrader`,
+    wikiLink: (wikiName) => `Veja ${wikiName} na TibiaWiki`,
+    backToMarket: 'Voltar ao mercado completo',
+  },
+};
+
 function ItemContent({ name, locale }: { name: string; locale: Locale }) {
   const title = toTitleCase(name);
-  if (locale === 'pl') {
+  const meta = getItemSeoMetadata(name);
+  const copy = ITEM_COPY[locale];
+
+  // No metadata in our static bundle (e.g. Zaoan set, Tibia coins which use
+  // a different name in the API) — fall back to the simple intro + popular
+  // list. Still better than the original generic blurb because at least the
+  // item name varies.
+  if (!meta) {
     return (
       <>
-        <h1>{title} — cena rynkowa w Tibii</h1>
+        <h1>
+          {title} — {copy.h1Suffix}
+        </h1>
+        <p>{copy.intro(title)}</p>
         <p>
-          Aktualna cena {title} na rynku Tibii: oferty kupna i sprzedaży, marża flipa, miesięczny
-          wolumen i 90-dniowa historia cen na każdym świecie. Dane aktualizowane co godzinę.
-        </p>
-        <p>
-          <a href={`${SITE_URL}/`}>Wróć do pełnego rynku</a>
+          <a href={`${SITE_URL}/`}>{copy.backToMarket}</a>
         </p>
         <PopularItemsList locale={locale} exclude={name} />
       </>
     );
   }
-  if (locale === 'pt-BR') {
-    return (
-      <>
-        <h1>{title} — preço de mercado em Tibia</h1>
-        <p>
-          Dados ao vivo de {title} no mercado de Tibia: ofertas de compra e venda, margem de flip,
-          volume mensal e histórico de preços de 90 dias em cada mundo. Atualização a cada hora.
-        </p>
-        <p>
-          <a href={`${SITE_URL}/`}>Voltar ao mercado completo</a>
-        </p>
-        <PopularItemsList locale={locale} exclude={name} />
-      </>
-    );
-  }
+
+  const { noun, label } = categoryCopy(meta.category, locale);
+  const related = getRelatedItemNames(name, 8);
+
   return (
     <>
-      <h1>{title} — live Tibia market price</h1>
+      <h1>
+        {title} — {copy.h1Suffix}
+      </h1>
+      <p>{copy.intro(title)}</p>
+      <p>{copy.classification(title, noun)}</p>
+
+      {meta.npc_sell.length > 0 && (
+        <section>
+          <h2>{copy.npcSellHeading}</h2>
+          <ul>
+            {meta.npc_sell.map((offer, i) => (
+              <li key={`s${i}`}>{copy.npcSellLine(offer)}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {meta.npc_buy.length > 0 && (
+        <section>
+          <h2>{copy.npcBuyHeading}</h2>
+          <ul>
+            {meta.npc_buy.map((offer, i) => (
+              <li key={`b${i}`}>{copy.npcBuyLine(offer)}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section>
+          <h2>{copy.relatedHeading(label)}</h2>
+          <ul>
+            {related.map((n) => (
+              <li key={n}>
+                <a href={itemHref(n)}>{toTitleCase(n)}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <p>
-        Live {title} market data on Tibia: buy and sell offers, flip margin, monthly volume and
-        90-day price history across every world. Hourly updates.
+        <a href={wikiHref(meta.wiki_name)} rel="noopener" target="_blank">
+          {copy.wikiLink(meta.wiki_name)}
+        </a>
       </p>
       <p>
-        <a href={`${SITE_URL}/`}>Back to the full market</a>
+        <a href={`${SITE_URL}/`}>{copy.backToMarket}</a>
       </p>
       <PopularItemsList locale={locale} exclude={name} />
     </>
