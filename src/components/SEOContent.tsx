@@ -16,6 +16,7 @@ import { useGlobalSearchParams, usePathname } from 'expo-router';
 import { POPULAR_ITEMS } from '@/src/data/popularItems';
 import { getItemSeoMetadata, getRelatedItemNames, type NpcOffer } from '@/src/data/itemSeoMetadata';
 import { toTitleCase } from '@/src/api/tibiaMarket';
+import { nameToSlug, normalizeToName } from '@/src/utils/itemSlug';
 
 type Locale = 'en' | 'pl' | 'pt-BR';
 
@@ -201,7 +202,7 @@ function resolveLocale(lang: string | string[] | undefined): Locale {
 }
 
 function itemHref(name: string): string {
-  return `${SITE_URL}/item/${encodeURIComponent(name)}`;
+  return `${SITE_URL}/item/${nameToSlug(name)}`;
 }
 
 function PopularItemsList({ locale, exclude }: { locale: Locale; exclude?: string }) {
@@ -948,7 +949,10 @@ function contentForPath(pathname: string | null, locale: Locale): React.ReactNod
   if (itemMatch) {
     const raw = decodeURIComponent(itemMatch[1]);
     if (raw === '[name]') return <ItemTemplateContent locale={locale} />;
-    return <ItemContent name={raw} locale={locale} />;
+    // Route segment can be either a slug or a legacy space-form name. Map
+    // both to the API name so ItemContent renders the same body regardless
+    // of how the visitor arrived.
+    return <ItemContent name={normalizeToName(raw)} locale={locale} />;
   }
   const normalized = path.replace(/\?.*$/, '').replace(/#.*$/, '').replace('/(tabs)', '') || '/';
   if (normalized === '/') return <HomeContent locale={locale} />;

@@ -17,6 +17,7 @@ import { useWatchlist, isAlertTriggered } from '../context/WatchlistContext';
 import { useTranslation } from '../context/LanguageContext';
 import { ItemImage } from './ItemImage';
 import { WatchAlertModal } from './WatchAlertModal';
+import { nameToSlug } from '../utils/itemSlug';
 
 interface MarketItemCardProps {
   item: MarketItem;
@@ -125,7 +126,7 @@ export const MarketItemCard = memo(function MarketItemCard({
           } else {
             router.push({
               pathname: '/item/[name]',
-              params: { name: item.name, world },
+              params: { name: nameToSlug(item.name), world },
             });
           }
         }}
