@@ -13,6 +13,7 @@ import { FilterPillBar, FilterPill } from '@/src/components/FilterPillBar';
 import { RankBadge } from '@/src/components/ui/RankBadge';
 import { ItemImageBox } from '@/src/components/ui/ItemImageBox';
 import { colors } from '@/src/theme/colors';
+import { nameToSlug } from '@/src/utils/itemSlug';
 import { formatGold, toTitleCase, filterAndSortItems, MarketItem } from '@/src/api/tibiaMarket';
 
 type RankType = 'month_sold' | 'month_bought' | 'buy_offer' | 'sell_offer';
@@ -49,7 +50,7 @@ function RankCard({
   const value = item[field];
   const handlePress = () => {
     if (onOpenModal) onOpenModal(item.name);
-    else router.push({ pathname: '/item/[name]', params: { name: item.name, world } });
+    else router.push({ pathname: '/item/[name]', params: { name: nameToSlug(item.name), world } });
   };
 
   return (

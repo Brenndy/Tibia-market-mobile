@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tibiatrader.com/</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/" />
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://tibiatrader.com/watchlist</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/watchlist" />
@@ -23,7 +23,7 @@
   </url>
   <url>
     <loc>https://tibiatrader.com/statistics</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/statistics" />
@@ -33,7 +33,7 @@
   </url>
   <url>
     <loc>https://tibiatrader.com/world-select</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/world-select" />
@@ -42,948 +42,948 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/world-select" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/demon%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/demon-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magic%20plate%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magic-plate-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic%20plate%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic%20plate%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic%20plate%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic%20plate%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic-plate-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic-plate-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic-plate-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic-plate-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/golden%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/golden-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/royal%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/royal-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crown%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crown-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crown%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crown-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crown%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crown-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crown%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crown-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crown-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crown-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crown-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crown-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/mastermind%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/mastermind-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mastermind%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mastermind%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mastermind%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mastermind%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mastermind-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mastermind-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mastermind-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mastermind-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/demon%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/demon-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/great%20health%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/great-health-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great%20health%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great%20health%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great%20health%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great%20health%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great-health-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great-health-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great-health-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great-health-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/great%20mana%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/great-mana-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great%20mana%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great%20mana%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great%20mana%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great%20mana%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great-mana-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great-mana-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great-mana-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great-mana-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/supreme%20health%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/supreme-health-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/supreme%20health%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/supreme%20health%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/supreme%20health%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/supreme%20health%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/supreme-health-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/supreme-health-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/supreme-health-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/supreme-health-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ultimate%20health%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ultimate-health-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate%20health%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate%20health%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate%20health%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate%20health%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate-health-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate-health-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate-health-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate-health-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ultimate%20spirit%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ultimate-spirit-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate%20spirit%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate%20spirit%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate%20spirit%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate%20spirit%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate-spirit-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate-spirit-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate-spirit-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate-spirit-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ultimate%20mana%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ultimate-mana-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate%20mana%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate%20mana%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate%20mana%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate%20mana%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ultimate-mana-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ultimate-mana-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ultimate-mana-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ultimate-mana-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/strong%20mana%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/strong-mana-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/strong%20mana%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/strong%20mana%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/strong%20mana%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/strong%20mana%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/strong-mana-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/strong-mana-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/strong-mana-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/strong-mana-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/strong%20health%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/strong-health-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/strong%20health%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/strong%20health%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/strong%20health%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/strong%20health%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/strong-health-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/strong-health-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/strong-health-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/strong-health-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/might%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/might-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/might%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/might%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/might%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/might%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/might-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/might-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/might-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/might-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/life%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/life-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/life%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/life%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/life%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/life%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/life-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/life-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/life-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/life-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/stealth%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/stealth-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/stealth%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/stealth%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/stealth%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/stealth%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/stealth-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/stealth-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/stealth-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/stealth-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gold%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gold-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/terra%20boots</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/terra-boots</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra%20boots" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra%20boots?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra%20boots?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra%20boots" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra-boots" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra-boots?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra-boots?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra-boots" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/fire%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/fire-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/fire%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/fire%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/fire%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/fire%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/fire-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/fire-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/fire-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/fire-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magic%20longsword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magic-longsword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic%20longsword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic%20longsword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic%20longsword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic%20longsword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic-longsword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic-longsword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic-longsword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic-longsword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/mana%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/mana-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mana%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mana%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mana%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mana%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mana-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mana-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mana-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mana-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/health%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/health-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/health%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/health%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/health%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/health%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/health-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/health-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/health-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/health-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/great%20spirit%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/great-spirit-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great%20spirit%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great%20spirit%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great%20spirit%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great%20spirit%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/great-spirit-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/great-spirit-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/great-spirit-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/great-spirit-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/mastermind%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/mastermind-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mastermind%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mastermind%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mastermind%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mastermind%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/mastermind-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/mastermind-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/mastermind-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/mastermind-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/berserk%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/berserk-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/berserk%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/berserk%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/berserk%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/berserk%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/berserk-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/berserk-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/berserk-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/berserk-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/bullseye%20potion</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/bullseye-potion</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bullseye%20potion" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bullseye%20potion?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bullseye%20potion?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bullseye%20potion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bullseye-potion" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bullseye-potion?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bullseye-potion?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bullseye-potion" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/demon%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/demon-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/demon%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/demon-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/demon-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/demon-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/demon-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/demon-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/golden%20boots</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/golden-boots</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden%20boots" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden%20boots?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden%20boots?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden%20boots" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden-boots" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden-boots?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden-boots?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden-boots" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/golden%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/golden-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/golden%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/golden-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/golden-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/golden-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/golden-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/golden-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/royal%20crossbow</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/royal-crossbow</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal%20crossbow" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal%20crossbow?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal%20crossbow?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal%20crossbow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal-crossbow" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal-crossbow?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal-crossbow?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal-crossbow" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/royal%20scale%20robe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/royal-scale-robe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal%20scale%20robe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal%20scale%20robe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal%20scale%20robe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal%20scale%20robe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal-scale-robe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal-scale-robe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal-scale-robe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal-scale-robe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magic%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magic-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magic-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magic-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magic-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magic-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/giant%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/giant-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/giant%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/giant%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/giant%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/giant%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/giant-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/giant-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/giant-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/giant-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/thunder%20hammer</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/thunder-hammer</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/thunder%20hammer" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/thunder%20hammer?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/thunder%20hammer?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/thunder%20hammer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/thunder-hammer" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/thunder-hammer?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/thunder-hammer?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/thunder-hammer" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/warlord%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/warlord-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/warlord%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/warlord%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/warlord%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/warlord%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/warlord-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/warlord-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/warlord-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/warlord-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/boots%20of%20haste</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/boots-of-haste</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/boots%20of%20haste" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/boots%20of%20haste?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/boots%20of%20haste?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/boots%20of%20haste" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/boots-of-haste" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/boots-of-haste?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/boots-of-haste?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/boots-of-haste" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/spellbook%20of%20dark%20mysteries</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/spellbook-of-dark-mysteries</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellbook%20of%20dark%20mysteries" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellbook%20of%20dark%20mysteries?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellbook%20of%20dark%20mysteries?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellbook%20of%20dark%20mysteries" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellbook-of-dark-mysteries" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellbook-of-dark-mysteries?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellbook-of-dark-mysteries?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellbook-of-dark-mysteries" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/spellbook%20of%20lost%20souls</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/spellbook-of-lost-souls</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellbook%20of%20lost%20souls" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellbook%20of%20lost%20souls?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellbook%20of%20lost%20souls?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellbook%20of%20lost%20souls" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellbook-of-lost-souls" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellbook-of-lost-souls?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellbook-of-lost-souls?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellbook-of-lost-souls" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ring%20of%20wishes</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ring-of-wishes</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring%20of%20wishes" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring%20of%20wishes?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring%20of%20wishes?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring%20of%20wishes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring-of-wishes" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring-of-wishes?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring-of-wishes?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring-of-wishes" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ring%20of%20green%20plasma</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ring-of-green-plasma</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring%20of%20green%20plasma" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring%20of%20green%20plasma?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring%20of%20green%20plasma?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring%20of%20green%20plasma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring-of-green-plasma" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring-of-green-plasma?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring-of-green-plasma?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring-of-green-plasma" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ring%20of%20red%20plasma</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ring-of-red-plasma</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring%20of%20red%20plasma" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring%20of%20red%20plasma?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring%20of%20red%20plasma?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring%20of%20red%20plasma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring-of-red-plasma" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring-of-red-plasma?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring-of-red-plasma?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring-of-red-plasma" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ring%20of%20blue%20plasma</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ring-of-blue-plasma</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring%20of%20blue%20plasma" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring%20of%20blue%20plasma?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring%20of%20blue%20plasma?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring%20of%20blue%20plasma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ring-of-blue-plasma" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ring-of-blue-plasma?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ring-of-blue-plasma?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ring-of-blue-plasma" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/prismatic%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/prismatic-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/prismatic%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/prismatic%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/prismatic%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/prismatic%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/prismatic-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/prismatic-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/prismatic-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/prismatic-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/wedding%20ring</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/wedding-ring</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wedding%20ring" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wedding%20ring?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wedding%20ring?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wedding%20ring" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wedding-ring" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wedding-ring?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wedding-ring?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wedding-ring" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/amulet%20of%20loss</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/amulet-of-loss</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/amulet%20of%20loss" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/amulet%20of%20loss?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/amulet%20of%20loss?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/amulet%20of%20loss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/amulet-of-loss" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/amulet-of-loss?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/amulet-of-loss?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/amulet-of-loss" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/stone%20skin%20amulet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/stone-skin-amulet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/stone%20skin%20amulet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/stone%20skin%20amulet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/stone%20skin%20amulet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/stone%20skin%20amulet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/stone-skin-amulet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/stone-skin-amulet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/stone-skin-amulet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/stone-skin-amulet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/elvish%20talisman</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/elvish-talisman</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/elvish%20talisman" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/elvish%20talisman?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/elvish%20talisman?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/elvish%20talisman" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/elvish-talisman" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/elvish-talisman?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/elvish-talisman?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/elvish-talisman" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/wyvern%20talisman</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/wyvern-talisman</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wyvern%20talisman" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wyvern%20talisman?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wyvern%20talisman?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wyvern%20talisman" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wyvern-talisman" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wyvern-talisman?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wyvern-talisman?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wyvern-talisman" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/sacred%20tree%20amulet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/sacred-tree-amulet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/sacred%20tree%20amulet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/sacred%20tree%20amulet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/sacred%20tree%20amulet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/sacred%20tree%20amulet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/sacred-tree-amulet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/sacred-tree-amulet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/sacred-tree-amulet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/sacred-tree-amulet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/depth%20galea</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/depth-galea</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth%20galea" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth%20galea?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth%20galea?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth%20galea" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth-galea" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth-galea?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth-galea?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth-galea" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/depth%20lorica</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/depth-lorica</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth%20lorica" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth%20lorica?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth%20lorica?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth%20lorica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth-lorica" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth-lorica?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth-lorica?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth-lorica" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/depth%20ocrea</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/depth-ocrea</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth%20ocrea" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth%20ocrea?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth%20ocrea?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth%20ocrea" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth-ocrea" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth-ocrea?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth-ocrea?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth-ocrea" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/depth%20calcei</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/depth-calcei</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth%20calcei" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth%20calcei?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth%20calcei?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth%20calcei" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/depth-calcei" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/depth-calcei?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/depth-calcei?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/depth-calcei" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/terra%20mantle</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/terra-mantle</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra%20mantle" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra%20mantle?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra%20mantle?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra%20mantle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra-mantle" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra-mantle?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra-mantle?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra-mantle" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/terra%20hood</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/terra-hood</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra%20hood" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra%20hood?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra%20hood?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra%20hood" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra-hood" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra-hood?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra-hood?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra-hood" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/terra%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/terra-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/terra%20amulet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/terra-amulet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra%20amulet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra%20amulet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra%20amulet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra%20amulet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/terra-amulet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/terra-amulet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/terra-amulet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/terra-amulet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/lightning%20headband</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/lightning-headband</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning%20headband" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning%20headband?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning%20headband?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning%20headband" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning-headband" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning-headband?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning-headband?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning-headband" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/lightning%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/lightning-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/lightning%20boots</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/lightning-boots</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning%20boots" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning%20boots?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning%20boots?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning%20boots" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning-boots" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning-boots?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning-boots?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning-boots" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/lightning%20pendant</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/lightning-pendant</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning%20pendant" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning%20pendant?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning%20pendant?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning%20pendant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/lightning-pendant" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/lightning-pendant?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/lightning-pendant?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/lightning-pendant" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/glacier%20shoes</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/glacier-shoes</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier%20shoes" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier%20shoes?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier%20shoes?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier%20shoes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier-shoes" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier-shoes?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier-shoes?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier-shoes" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/glacier%20kilt</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/glacier-kilt</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier%20kilt" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier%20kilt?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier%20kilt?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier%20kilt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier-kilt" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier-kilt?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier-kilt?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier-kilt" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/glacier%20mask</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/glacier-mask</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier%20mask" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier%20mask?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier%20mask?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier%20mask" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier-mask" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier-mask?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier-mask?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier-mask" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/glacier%20amulet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/glacier-amulet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier%20amulet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier%20amulet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier%20amulet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier%20amulet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/glacier-amulet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/glacier-amulet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/glacier-amulet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/glacier-amulet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magma%20coat</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magma-coat</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma%20coat" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma%20coat?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma%20coat?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma%20coat" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma-coat" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma-coat?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma-coat?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma-coat" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magma%20boots</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magma-boots</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma%20boots" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma%20boots?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma%20boots?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma%20boots" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma-boots" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma-boots?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma-boots?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma-boots" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magma%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magma-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magma%20monocle</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magma-monocle</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma%20monocle" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma%20monocle?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma%20monocle?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma%20monocle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma-monocle" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma-monocle?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma-monocle?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma-monocle" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/magma%20amulet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/magma-amulet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma%20amulet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma%20amulet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma%20amulet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma%20amulet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/magma-amulet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/magma-amulet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/magma-amulet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/magma-amulet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/paladin%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/paladin-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/paladin%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/paladin%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/paladin%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/paladin%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/paladin-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/paladin-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/paladin-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/paladin-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/assassin%20dagger</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/assassin-dagger</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/assassin%20dagger" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/assassin%20dagger?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/assassin%20dagger?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/assassin%20dagger" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/assassin-dagger" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/assassin-dagger?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/assassin-dagger?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/assassin-dagger" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20slayer</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-slayer</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20slayer" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20slayer?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20slayer?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20slayer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-slayer" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-slayer?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-slayer?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-slayer" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/obsidian%20lance</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/obsidian-lance</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/obsidian%20lance" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/obsidian%20lance?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/obsidian%20lance?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/obsidian%20lance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/obsidian-lance" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/obsidian-lance?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/obsidian-lance?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/obsidian-lance" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/tibia%20coins</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/tibia-coins</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/tibia%20coins" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/tibia%20coins?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/tibia%20coins?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/tibia%20coins" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/tibia-coins" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/tibia-coins?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/tibia-coins?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/tibia-coins" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/silver%20token</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/silver-token</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/silver%20token" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/silver%20token?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/silver%20token?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/silver%20token" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/silver-token" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/silver-token?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/silver-token?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/silver-token" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gold%20token</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gold-token</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold%20token" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold%20token?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold%20token?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold%20token" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold-token" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold-token?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold-token?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold-token" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/empty%20potion%20flask</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/empty-potion-flask</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/empty%20potion%20flask" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/empty%20potion%20flask?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/empty%20potion%20flask?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/empty%20potion%20flask" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/empty-potion-flask" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/empty-potion-flask?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/empty-potion-flask?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/empty-potion-flask" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gold%20nugget</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gold-nugget</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold%20nugget" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold%20nugget?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold%20nugget?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold%20nugget" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gold-nugget" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gold-nugget?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gold-nugget?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gold-nugget" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ornate%20chestplate</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ornate-chestplate</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate%20chestplate" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate%20chestplate?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate%20chestplate?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate%20chestplate" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate-chestplate" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate-chestplate?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate-chestplate?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate-chestplate" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ornate%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ornate-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/ornate%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/ornate-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/ornate-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/ornate-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/ornate-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/ornate-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crystalline%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crystalline-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crystalline%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crystalline-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/crystalline%20axe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/crystalline-axe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline%20axe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline%20axe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline%20axe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline%20axe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crystalline-axe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/crystalline-axe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/crystalline-axe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crystalline-axe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/molten%20plate</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/molten-plate</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/molten%20plate" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/molten%20plate?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/molten%20plate?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/molten%20plate" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/molten-plate" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/molten-plate?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/molten-plate?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/molten-plate" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/spirit%20cloak</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/spirit-cloak</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spirit%20cloak" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spirit%20cloak?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spirit%20cloak?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spirit%20cloak" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spirit-cloak" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spirit-cloak?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spirit-cloak?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spirit-cloak" />
   </url>
   <url>
     <loc>https://tibiatrader.com/item/winterblade</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/winterblade" />
@@ -992,488 +992,488 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/winterblade" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/cobra%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/cobra-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/cobra%20axe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/cobra-axe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra%20axe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra%20axe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra%20axe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra%20axe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra-axe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra-axe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra-axe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra-axe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/cobra%20rod</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/cobra-rod</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra%20rod" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra%20rod?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra%20rod?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra%20rod" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra-rod" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra-rod?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra-rod?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra-rod" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/cobra%20wand</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/cobra-wand</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra%20wand" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra%20wand?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra%20wand?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra%20wand" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra-wand" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra-wand?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra-wand?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra-wand" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/cobra%20crossbow</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/cobra-crossbow</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra%20crossbow" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra%20crossbow?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra%20crossbow?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra%20crossbow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/cobra-crossbow" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/cobra-crossbow?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/cobra-crossbow?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/cobra-crossbow" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20crest</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-crest</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20crest" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20crest?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20crest?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20crest" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-crest" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-crest?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-crest?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-crest" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20battleaxe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-battleaxe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20battleaxe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20battleaxe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20battleaxe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20battleaxe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-battleaxe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-battleaxe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-battleaxe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-battleaxe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20longsword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-longsword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20longsword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20longsword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20longsword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20longsword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-longsword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-longsword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-longsword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-longsword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20rod</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-rod</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20rod" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20rod?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20rod?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20rod" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-rod" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-rod?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-rod?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-rod" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20wand</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-wand</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20wand" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20wand?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20wand?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20wand" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-wand" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-wand?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-wand?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-wand" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/falcon%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/falcon-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/falcon-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/falcon-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/falcon-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/falcon-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/zaoan%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/zaoan-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/zaoan%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/zaoan-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/zaoan%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/zaoan-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/zaoan%20shoes</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/zaoan-shoes</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan%20shoes" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan%20shoes?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan%20shoes?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan%20shoes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/zaoan-shoes" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/zaoan-shoes?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/zaoan-shoes?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/zaoan-shoes" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/soul%20stone</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/soul-stone</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/soul%20stone" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/soul%20stone?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/soul%20stone?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/soul%20stone" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/soul-stone" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/soul-stone?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/soul-stone?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/soul-stone" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/soul%20orb</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/soul-orb</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/soul%20orb" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/soul%20orb?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/soul%20orb?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/soul%20orb" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/soul-orb" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/soul-orb?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/soul-orb?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/soul-orb" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/blessed%20wooden%20stake</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/blessed-wooden-stake</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/blessed%20wooden%20stake" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/blessed%20wooden%20stake?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/blessed%20wooden%20stake?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/blessed%20wooden%20stake" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/blessed-wooden-stake" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/blessed-wooden-stake?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/blessed-wooden-stake?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/blessed-wooden-stake" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/arcane%20staff</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/arcane-staff</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/arcane%20staff" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/arcane%20staff?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/arcane%20staff?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/arcane%20staff" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/arcane-staff" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/arcane-staff?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/arcane-staff?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/arcane-staff" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/hellforged%20axe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/hellforged-axe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/hellforged%20axe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/hellforged%20axe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/hellforged%20axe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/hellforged%20axe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/hellforged-axe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/hellforged-axe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/hellforged-axe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/hellforged-axe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/skull%20staff</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/skull-staff</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/skull%20staff" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/skull%20staff?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/skull%20staff?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/skull%20staff" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/skull-staff" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/skull-staff?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/skull-staff?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/skull-staff" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/spellscroll%20of%20prophecies</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/spellscroll-of-prophecies</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellscroll%20of%20prophecies" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellscroll%20of%20prophecies?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellscroll%20of%20prophecies?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellscroll%20of%20prophecies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/spellscroll-of-prophecies" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/spellscroll-of-prophecies?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/spellscroll-of-prophecies?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/spellscroll-of-prophecies" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/heavy%20machete</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/heavy-machete</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/heavy%20machete" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/heavy%20machete?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/heavy%20machete?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/heavy%20machete" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/heavy-machete" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/heavy-machete?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/heavy-machete?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/heavy-machete" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dwarven%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dwarven-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/steel%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/steel-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/steel%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/steel%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/steel%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/steel%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/steel-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/steel-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/steel-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/steel-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/tower%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/tower-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/tower%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/tower%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/tower%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/tower%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/tower-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/tower-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/tower-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/tower-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gnome%20shield</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gnome-shield</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome%20shield" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome%20shield?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome%20shield?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome%20shield" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome-shield" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome-shield?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome-shield?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome-shield" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gnome%20sword</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gnome-sword</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome%20sword" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome%20sword?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome%20sword?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome%20sword" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome-sword" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome-sword?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome-sword?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome-sword" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gnome%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gnome-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gnome%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gnome-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/gnome%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/gnome-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/gnome-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/gnome-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/gnome-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/gnome-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dwarven%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dwarven-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dwarven%20legs</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dwarven-legs</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven%20legs" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven%20legs?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven%20legs?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven%20legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven-legs" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven-legs?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven-legs?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven-legs" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dwarven%20armor</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dwarven-armor</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven%20armor" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven%20armor?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven%20armor?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven%20armor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven-armor" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven-armor?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven-armor?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven-armor" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dwarven%20axe</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dwarven-axe</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven%20axe" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven%20axe?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven%20axe?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven%20axe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dwarven-axe" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dwarven-axe?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dwarven-axe?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dwarven-axe" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/elvenhair%20rope</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/elvenhair-rope</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/elvenhair%20rope" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/elvenhair%20rope?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/elvenhair%20rope?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/elvenhair%20rope" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/elvenhair-rope" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/elvenhair-rope?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/elvenhair-rope?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/elvenhair-rope" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/rope%20belt</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/rope-belt</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/rope%20belt" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/rope%20belt?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/rope%20belt?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/rope%20belt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/rope-belt" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/rope-belt?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/rope-belt?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/rope-belt" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/bear%20paw</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/bear-paw</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bear%20paw" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bear%20paw?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bear%20paw?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bear%20paw" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bear-paw" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bear-paw?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bear-paw?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bear-paw" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/bat%20wing</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/bat-wing</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bat%20wing" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bat%20wing?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bat%20wing?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bat%20wing" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bat-wing" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/bat-wing?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/bat-wing?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/bat-wing" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20scale%20mail</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-scale-mail</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20scale%20mail" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20scale%20mail?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20scale%20mail?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20scale%20mail" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-scale-mail" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-scale-mail?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-scale-mail?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-scale-mail" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20scale%20boots</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-scale-boots</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20scale%20boots" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20scale%20boots?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20scale%20boots?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20scale%20boots" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-scale-boots" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-scale-boots?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-scale-boots?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-scale-boots" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20scale%20helmet</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-scale-helmet</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20scale%20helmet" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20scale%20helmet?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20scale%20helmet?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20scale%20helmet" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-scale-helmet" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-scale-helmet?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-scale-helmet?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-scale-helmet" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20claw</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-claw</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20claw" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20claw?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20claw?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20claw" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-claw" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-claw?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-claw?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-claw" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/dragon%20ham</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/dragon-ham</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon%20ham" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon%20ham?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon%20ham?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon%20ham" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/dragon-ham" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/dragon-ham?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/dragon-ham?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/dragon-ham" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/red%20dragon%20scale</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/red-dragon-scale</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/red%20dragon%20scale" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/red%20dragon%20scale?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/red%20dragon%20scale?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/red%20dragon%20scale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/red-dragon-scale" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/red-dragon-scale?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/red-dragon-scale?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/red-dragon-scale" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/red%20dragon%20leather</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/red-dragon-leather</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/red%20dragon%20leather" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/red%20dragon%20leather?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/red%20dragon%20leather?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/red%20dragon%20leather" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/red-dragon-leather" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/red-dragon-leather?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/red-dragon-leather?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/red-dragon-leather" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/green%20dragon%20scale</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/green-dragon-scale</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/green%20dragon%20scale" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/green%20dragon%20scale?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/green%20dragon%20scale?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/green%20dragon%20scale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/green-dragon-scale" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/green-dragon-scale?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/green-dragon-scale?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/green-dragon-scale" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/green%20dragon%20leather</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/green-dragon-leather</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/green%20dragon%20leather" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/green%20dragon%20leather?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/green%20dragon%20leather?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/green%20dragon%20leather" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/green-dragon-leather" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/green-dragon-leather?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/green-dragon-leather?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/green-dragon-leather" />
   </url>
   <url>
     <loc>https://tibiatrader.com/item/bow</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/bow" />
@@ -1483,7 +1483,7 @@
   </url>
   <url>
     <loc>https://tibiatrader.com/item/crossbow</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/crossbow" />
@@ -1492,53 +1492,53 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/crossbow" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/enchanted%20spear</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/enchanted-spear</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/enchanted%20spear" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/enchanted%20spear?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/enchanted%20spear?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/enchanted%20spear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/enchanted-spear" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/enchanted-spear?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/enchanted-spear?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/enchanted-spear" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/royal%20spear</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/royal-spear</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal%20spear" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal%20spear?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal%20spear?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal%20spear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/royal-spear" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/royal-spear?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/royal-spear?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/royal-spear" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/wand%20of%20inferno</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/wand-of-inferno</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand%20of%20inferno" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand%20of%20inferno?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand%20of%20inferno?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand%20of%20inferno" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand-of-inferno" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand-of-inferno?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand-of-inferno?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand-of-inferno" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/wand%20of%20decay</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/wand-of-decay</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand%20of%20decay" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand%20of%20decay?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand%20of%20decay?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand%20of%20decay" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand-of-decay" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand-of-decay?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand-of-decay?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand-of-decay" />
   </url>
   <url>
-    <loc>https://tibiatrader.com/item/wand%20of%20voodoo</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://tibiatrader.com/item/wand-of-voodoo</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand%20of%20voodoo" />
-    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand%20of%20voodoo?lang=pl" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand%20of%20voodoo?lang=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand%20of%20voodoo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://tibiatrader.com/item/wand-of-voodoo" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://tibiatrader.com/item/wand-of-voodoo?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tibiatrader.com/item/wand-of-voodoo?lang=pt-BR" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tibiatrader.com/item/wand-of-voodoo" />
   </url>
 </urlset>

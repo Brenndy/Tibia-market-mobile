@@ -8,6 +8,7 @@
 import { useGlobalSearchParams, usePathname } from 'expo-router';
 import { Helmet } from 'expo-router/vendor/react-helmet-async/lib';
 import { toTitleCase } from '@/src/api/tibiaMarket';
+import { normalizeToName, normalizeToSlug } from '@/src/utils/itemSlug';
 
 type RouteMeta = { title: string; description: string };
 type Locale = 'en' | 'pl' | 'pt-BR';
@@ -142,12 +143,15 @@ function metaForPath(
   // injected client-side after hydration.
   const itemMatch = path.match(/^\/item\/([^/?#]+)/);
   if (itemMatch) {
-    const rawName = decodeURIComponent(itemMatch[1]);
-    const isTemplate = rawName === '[name]';
-    const byLocale = isTemplate ? ITEM_TEMPLATE_META : itemMeta(toTitleCase(rawName));
-    // usePathname returns the decoded form (spaces, not %20). Re-encode the
-    // item segment so the canonical URL is a valid absolute URL Google can crawl.
-    const canonicalPath = isTemplate ? path : `/item/${encodeURIComponent(rawName)}`;
+    const rawSegment = decodeURIComponent(itemMatch[1]);
+    const isTemplate = rawSegment === '[name]';
+    // Display title uses the human-readable name ("Demon Armor"); canonical
+    // URL uses the kebab-case slug ("/item/demon-armor"). Both legacy
+    // (space-form) and new (slug) URLs end up pointing at the same canonical.
+    const apiName = isTemplate ? '' : normalizeToName(rawSegment);
+    const slug = isTemplate ? '' : normalizeToSlug(rawSegment);
+    const byLocale = isTemplate ? ITEM_TEMPLATE_META : itemMeta(toTitleCase(apiName));
+    const canonicalPath = isTemplate ? path : `/item/${slug}`;
     return { meta: byLocale[locale], canonical: `${SITE_URL}${canonicalPath}` };
   }
   const normalized = path.replace(/\?.*$/, '').replace(/#.*$/, '');
@@ -189,12 +193,14 @@ function breadcrumbsForPath(pathname: string | null, locale: Locale): Crumb[] {
 
   const itemMatch = path.match(/^\/item\/([^/?#]+)/);
   if (itemMatch) {
-    const rawName = decodeURIComponent(itemMatch[1]);
-    if (rawName === '[name]') return [];
+    const rawSegment = decodeURIComponent(itemMatch[1]);
+    if (rawSegment === '[name]') return [];
+    const apiName = normalizeToName(rawSegment);
+    const slug = normalizeToSlug(rawSegment);
     return [
       home,
       { name: CRUMB_LABELS.market[locale], url: `${SITE_URL}/` },
-      { name: toTitleCase(rawName), url: `${SITE_URL}/item/${encodeURIComponent(rawName)}` },
+      { name: toTitleCase(apiName), url: `${SITE_URL}/item/${slug}` },
     ];
   }
   if (normalized === '/watchlist') {
