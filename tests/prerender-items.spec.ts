@@ -75,6 +75,27 @@ test.describe('SEO — SSR body content (Soft 404 guard)', () => {
     expect(linkCount).toBeGreaterThan(10);
   });
 
+  test('pre-rendered item page with metadata renders rich SEO body', () => {
+    // Guards against regression of the rich content added in PR #55. Without
+    // this, every item page collapsed to "URL is unknown to Google" because
+    // the SEO body was a one-liner + identical "Popular items" list (thin
+    // content). The new body weaves in category + NPC offers + related-by-
+    // category links, which gives Google a reason to index each page.
+    const html = readIfExported('item/demon-armor.html');
+    test.skip(html === null, 'dist/ not built');
+    // Category sentence ("Demon Armor is an armor in Tibia.")
+    expect(html).toMatch(/is an? armor in Tibia/);
+    // NPC offer line ("H.L. in Outlaw Camp buys it for 195 gp.")
+    expect(html).toContain('NPCs that buy this item');
+    expect(html).toMatch(/in Outlaw Camp buys it for/);
+    // Related-category section + at least 5 same-category slug links
+    expect(html).toContain('Related armors on TibiaTrader');
+    expect(html).toContain('href="https://tibiatrader.com/item/crown-armor"');
+    expect(html).toContain('href="https://tibiatrader.com/item/golden-armor"');
+    // TibiaWiki outbound link
+    expect(html).toContain('https://tibia.fandom.com/wiki/Demon_Armor');
+  });
+
   test('every popular item has a prerendered slug page with a matching h1', () => {
     const missing = POPULAR_ITEMS.filter((name) => {
       const html = readIfExported(`item/${nameToSlug(name)}.html`);
