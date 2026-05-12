@@ -91,17 +91,28 @@ test.describe('SEO — per-route head tags', () => {
     );
   });
 
-  test('item page emits item name in title and canonical', async ({ page }) => {
-    // URL path segment is URL-encoded; RouteSEO decodes it and Title-Cases.
-    await page.goto('/item/demon%20legs');
+  test('item page emits item name in title and slug-form canonical', async ({ page }) => {
+    // The new slug form is the canonical URL — even when the visitor arrives
+    // on the legacy %20 variant, RouteSEO emits the slug as canonical so
+    // Google consolidates indexing signals.
+    await page.goto('/item/demon-legs');
     await waitForHelmet(page);
 
     await expect(page).toHaveTitle(/demon legs/i, { timeout: 10_000 });
     await expect(page).toHaveTitle(/TibiaTrader/);
 
-    const canonicalHref = await helmetAttr(page, 'link[rel="canonical"]', 'href');
-    expect(canonicalHref).toContain('/item/');
-    expect(canonicalHref).toMatch(/demon(%20|\s)legs/i);
+    expect(await helmetAttr(page, 'link[rel="canonical"]', 'href')).toBe(
+      'https://tibiatrader.com/item/demon-legs',
+    );
+  });
+
+  test('legacy %20 item URL still emits the slug as canonical', async ({ page }) => {
+    await page.goto('/item/demon%20legs');
+    await waitForHelmet(page);
+
+    expect(await helmetAttr(page, 'link[rel="canonical"]', 'href')).toBe(
+      'https://tibiatrader.com/item/demon-legs',
+    );
   });
 
   test('canonical never contains the (tabs) group', async ({ page }) => {
@@ -188,13 +199,11 @@ test.describe('SEO — hreflang alternates', () => {
     expect(await hreflangHref(page, 'x-default')).toBe('https://tibiatrader.com/watchlist');
   });
 
-  test('item page hreflang preserves the item slug', async ({ page }) => {
-    await page.goto('/item/demon%20legs');
+  test('item page hreflang uses the kebab-case slug', async ({ page }) => {
+    await page.goto('/item/demon-legs');
     await waitForHelmet(page);
-    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/item/demon%20legs');
-    expect(await hreflangHref(page, 'pl')).toBe(
-      'https://tibiatrader.com/item/demon%20legs?lang=pl',
-    );
+    expect(await hreflangHref(page, 'en')).toBe('https://tibiatrader.com/item/demon-legs');
+    expect(await hreflangHref(page, 'pl')).toBe('https://tibiatrader.com/item/demon-legs?lang=pl');
   });
 
   test('Polish landing still points hreflang=en at the EN URL (no self-ref to PL)', async ({
@@ -240,12 +249,12 @@ test.describe('SEO — BreadcrumbList JSON-LD', () => {
   });
 
   test('item page emits Home → Market → Item breadcrumbs', async ({ page }) => {
-    await page.goto('/item/demon%20legs');
+    await page.goto('/item/demon-legs');
     await waitForHelmet(page);
     const data = await breadcrumbJson(page);
     expect(data?.itemListElement).toHaveLength(3);
     expect(data?.itemListElement[2].name).toBe('Demon Legs');
-    expect(data?.itemListElement[2].item).toBe('https://tibiatrader.com/item/demon%20legs');
+    expect(data?.itemListElement[2].item).toBe('https://tibiatrader.com/item/demon-legs');
   });
 
   test('Polish landing emits Polish breadcrumb labels', async ({ page }) => {

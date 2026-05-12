@@ -6,8 +6,9 @@
 // late-game set pieces — items players actively search for. Keep the list
 // stable; append rather than rewrite so canonical URLs don't churn.
 //
-// Names match the API's raw item name (lowercase, spaces preserved). They
-// are the URL segment after encoding — e.g. "demon legs" → "/item/demon%20legs".
+// Names match the API's raw item name (lowercase, spaces preserved). For
+// public URLs we slugify these names via src/utils/itemSlug.ts —
+// e.g. "demon legs" → "/item/demon-legs".
 
 export const POPULAR_ITEMS: string[] = [
   'demon legs',

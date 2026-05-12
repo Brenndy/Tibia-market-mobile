@@ -16,6 +16,7 @@ import Svg, {
 } from 'react-native-svg';
 import { useItemStats, useItemHistory, useItemOffers } from '@/src/hooks/useMarket';
 import { POPULAR_ITEMS } from '@/src/data/popularItems';
+import { nameToSlug, normalizeToName } from '@/src/utils/itemSlug';
 import { LoadingState } from '@/src/components/LoadingState';
 import { ErrorState } from '@/src/components/ErrorState';
 import { ItemImage } from '@/src/components/ItemImage';
@@ -1007,17 +1008,25 @@ export function ItemDetailBody({ name, world, embedded = false, onClose }: ItemD
 }
 
 export default function ItemDetailScreen() {
-  const { name, world: paramWorld } = useLocalSearchParams<{ name: string; world: string }>();
+  const { name: rawParam, world: paramWorld } = useLocalSearchParams<{
+    name: string;
+    world: string;
+  }>();
   const { selectedWorld } = useWorld();
-  return <ItemDetailBody name={name} world={paramWorld ?? selectedWorld} />;
+  // The route param can arrive as either the new slug ("demon-armor") or the
+  // legacy URL-encoded name ("demon armor" once decoded by expo-router). The
+  // API only knows about names, so we map to that form before fetching.
+  const apiName = normalizeToName(rawParam);
+  return <ItemDetailBody name={apiName} world={paramWorld ?? selectedWorld} />;
 }
 
 // Pre-render a static HTML page for each popular item at build time so Google
-// can crawl them without executing JS. Consumed by expo-router's static export.
-// Non-pre-rendered item names still work as client-side routes — they just
-// don't have their own static HTML entry point.
+// can crawl them without executing JS. We emit both the new slug
+// ("demon-armor") and the legacy space-form ("demon armor") so old indexed
+// URLs keep resolving — both prerenders use the slug as the canonical link,
+// letting Google consolidate ranking signals on the new URL.
 export async function generateStaticParams(): Promise<{ name: string }[]> {
-  return POPULAR_ITEMS.map((name) => ({ name }));
+  return POPULAR_ITEMS.flatMap((name) => [{ name: nameToSlug(name) }, { name }]);
 }
 
 const styles = StyleSheet.create({
