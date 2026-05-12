@@ -1,0 +1,6612 @@
+{
+  "strong health potion": {
+    "id": 236,
+    "category": "Potions",
+    "wiki_name": "Strong Health Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 10
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 115
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 115
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 115
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 115
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 115
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 115
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 115
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 115
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 115
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 115
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 115
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 115
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 115
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 115
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 115
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 115
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 115
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 115
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 115
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 115
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 115
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 115
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 115
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 115
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 115
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 115
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 115
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 115
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 115
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 115
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 115
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 115
+      }
+    ],
+    "npc_buy": []
+  },
+  "strong mana potion": {
+    "id": 237,
+    "category": "Potions",
+    "wiki_name": "Strong Mana Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 8
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 108
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 108
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 108
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 108
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 108
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 108
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 108
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 108
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 108
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 108
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 108
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 108
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 108
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 108
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 108
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 108
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 108
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 108
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 108
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 108
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 108
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 108
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 108
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 108
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 108
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 108
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 108
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 108
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 108
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 108
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 108
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 108
+      }
+    ],
+    "npc_buy": []
+  },
+  "great mana potion": {
+    "id": 238,
+    "category": "Potions",
+    "wiki_name": "Great Mana Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 12
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 158
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 158
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 158
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 158
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 158
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 158
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 158
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 158
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 158
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 158
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 158
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 158
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 158
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 158
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 158
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 158
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 158
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 158
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 158
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 158
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 158
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 158
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 158
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 158
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 158
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 158
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 158
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 158
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 158
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 158
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 158
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 158
+      }
+    ],
+    "npc_buy": []
+  },
+  "great health potion": {
+    "id": 239,
+    "category": "Potions",
+    "wiki_name": "Great Health Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 19
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 225
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 225
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 225
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 225
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 225
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 225
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 225
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 225
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 225
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 225
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 225
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 225
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 225
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 225
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 225
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 225
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 225
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 225
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 225
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 225
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 225
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 225
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 225
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 225
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 225
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 225
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 225
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 225
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 225
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 225
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 225
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 225
+      }
+    ],
+    "npc_buy": []
+  },
+  "health potion": {
+    "id": 266,
+    "category": "Potions",
+    "wiki_name": "Health Potion",
+    "npc_sell": [
+      {
+        "name": "Hamish",
+        "location": "Dawnport Centre",
+        "price": 50
+      },
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 5
+      },
+      {
+        "name": "Raffael",
+        "location": "Isle of Destiny",
+        "price": 50
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 50
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 50
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 50
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 50
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 50
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 50
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 50
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 50
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 50
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 50
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 50
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 50
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 50
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 50
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 50
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 50
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 50
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 50
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 50
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 50
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 50
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 50
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 50
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 50
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 50
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 50
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 50
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 50
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 50
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 50
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 50
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 50
+      },
+      {
+        "name": "Hector the Mentor",
+        "location": "Thais Peninsula",
+        "price": 50
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 50
+      },
+      {
+        "name": "Aurelia",
+        "location": "Targuna",
+        "price": 50
+      }
+    ],
+    "npc_buy": []
+  },
+  "mana potion": {
+    "id": 268,
+    "category": "Potions",
+    "wiki_name": "Mana Potion",
+    "npc_sell": [
+      {
+        "name": "Hamish",
+        "location": "Dawnport Centre",
+        "price": 56
+      },
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 5
+      },
+      {
+        "name": "Raffael",
+        "location": "Isle of Destiny",
+        "price": 56
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 56
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 56
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 56
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 56
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 56
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 56
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 56
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 56
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 56
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 56
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 56
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 56
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 56
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 56
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 56
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 56
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 56
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 56
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 56
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 56
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 56
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 56
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 56
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 56
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 56
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 56
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 56
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 56
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 56
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 56
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 56
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 56
+      },
+      {
+        "name": "Hector the Mentor",
+        "location": "Thais Peninsula",
+        "price": 56
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 56
+      },
+      {
+        "name": "Aurelia",
+        "location": "Targuna",
+        "price": 56
+      }
+    ],
+    "npc_buy": []
+  },
+  "empty potion flask": {
+    "id": 283,
+    "category": "Potions",
+    "wiki_name": "Empty Potion Flask (Medium)",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 5
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 5
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 5
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 5
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 5
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 5
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 5
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 5
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 5
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 5
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 5
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 5
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 5
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 5
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 5
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 5
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 5
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 5
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 5
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 5
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 5
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 5
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 5
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 5
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 5
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 5
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 5
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 5
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 5
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 5
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 5
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 5
+      }
+    ]
+  },
+  "elvenhair rope": {
+    "id": 646,
+    "category": "Tools",
+    "wiki_name": "Elvenhair Rope",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "terra mantle": {
+    "id": 811,
+    "category": "Armors",
+    "wiki_name": "Terra Mantle",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "terra legs": {
+    "id": 812,
+    "category": "Legs",
+    "wiki_name": "Terra Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "terra boots": {
+    "id": 813,
+    "category": "Boots",
+    "wiki_name": "Terra Boots",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "terra amulet": {
+    "id": 814,
+    "category": "Amulets",
+    "wiki_name": "Terra Amulet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 1500
+      }
+    ]
+  },
+  "glacier amulet": {
+    "id": 815,
+    "category": "Amulets",
+    "wiki_name": "Glacier Amulet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 1500
+      }
+    ]
+  },
+  "lightning pendant": {
+    "id": 816,
+    "category": "Amulets",
+    "wiki_name": "Lightning Pendant",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 1500
+      }
+    ]
+  },
+  "magma amulet": {
+    "id": 817,
+    "category": "Amulets",
+    "wiki_name": "Magma Amulet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 1500
+      }
+    ]
+  },
+  "magma boots": {
+    "id": 818,
+    "category": "Boots",
+    "wiki_name": "Magma Boots",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "glacier shoes": {
+    "id": 819,
+    "category": "Boots",
+    "wiki_name": "Glacier Shoes",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "lightning boots": {
+    "id": 820,
+    "category": "Boots",
+    "wiki_name": "Lightning Boots",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "magma legs": {
+    "id": 821,
+    "category": "Legs",
+    "wiki_name": "Magma Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "lightning legs": {
+    "id": 822,
+    "category": "Legs",
+    "wiki_name": "Lightning Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "glacier kilt": {
+    "id": 823,
+    "category": "Legs",
+    "wiki_name": "Glacier Kilt",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "magma coat": {
+    "id": 826,
+    "category": "Armors",
+    "wiki_name": "Magma Coat",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 11000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 11000
+      }
+    ]
+  },
+  "magma monocle": {
+    "id": 827,
+    "category": "Helmets Hats",
+    "wiki_name": "Magma Monocle",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "lightning headband": {
+    "id": 828,
+    "category": "Helmets Hats",
+    "wiki_name": "Lightning Headband",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "glacier mask": {
+    "id": 829,
+    "category": "Helmets Hats",
+    "wiki_name": "Glacier Mask",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "terra hood": {
+    "id": 830,
+    "category": "Helmets Hats",
+    "wiki_name": "Terra Hood",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 2500
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 2500
+      }
+    ]
+  },
+  "wedding ring": {
+    "id": 3004,
+    "category": "Rings",
+    "wiki_name": "Wedding Ring",
+    "npc_sell": [
+      {
+        "name": "Carina",
+        "location": "Venore City",
+        "price": 990
+      },
+      {
+        "name": "Augustin",
+        "location": "Bounac",
+        "price": 990
+      },
+      {
+        "name": "Briasol",
+        "location": "Ab'Dendriel City",
+        "price": 990
+      },
+      {
+        "name": "Chantalle",
+        "location": "Liberty Bay City",
+        "price": 990
+      },
+      {
+        "name": "Edmund",
+        "location": "Rathleton City",
+        "price": 990
+      },
+      {
+        "name": "Gail",
+        "location": "Port Hope City",
+        "price": 990
+      },
+      {
+        "name": "Hanna",
+        "location": "Thais City",
+        "price": 990
+      },
+      {
+        "name": "Ishina",
+        "location": "Darashia City",
+        "price": 990
+      },
+      {
+        "name": "Iwan",
+        "location": "Edron Castle",
+        "price": 990
+      },
+      {
+        "name": "Jessica",
+        "location": "Svargrond City",
+        "price": 990
+      },
+      {
+        "name": "Odemara",
+        "location": "Venore City",
+        "price": 990
+      },
+      {
+        "name": "Oiriz",
+        "location": "Yalahar Centre",
+        "price": 990
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 990
+      },
+      {
+        "name": "Tesha",
+        "location": "Ankrahmun City",
+        "price": 990
+      },
+      {
+        "name": "Tezila",
+        "location": "Kazordoon City",
+        "price": 990
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 990
+      },
+      {
+        "name": "Yonan",
+        "location": "Issavi",
+        "price": 990
+      },
+      {
+        "name": "Giri",
+        "location": "Moonfall",
+        "price": 990
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 990
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Carina",
+        "location": "Venore City",
+        "price": 100
+      },
+      {
+        "name": "Augustin",
+        "location": "Bounac",
+        "price": 100
+      },
+      {
+        "name": "Briasol",
+        "location": "Ab'Dendriel City",
+        "price": 100
+      },
+      {
+        "name": "Chantalle",
+        "location": "Liberty Bay City",
+        "price": 100
+      },
+      {
+        "name": "Edmund",
+        "location": "Rathleton City",
+        "price": 100
+      },
+      {
+        "name": "Gail",
+        "location": "Port Hope City",
+        "price": 100
+      },
+      {
+        "name": "Hanna",
+        "location": "Thais City",
+        "price": 100
+      },
+      {
+        "name": "Ishina",
+        "location": "Darashia City",
+        "price": 100
+      },
+      {
+        "name": "Iwan",
+        "location": "Edron Castle",
+        "price": 100
+      },
+      {
+        "name": "Jessica",
+        "location": "Svargrond City",
+        "price": 100
+      },
+      {
+        "name": "Odemara",
+        "location": "Venore City",
+        "price": 100
+      },
+      {
+        "name": "Oiriz",
+        "location": "Yalahar Centre",
+        "price": 100
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 100
+      },
+      {
+        "name": "Tesha",
+        "location": "Ankrahmun City",
+        "price": 100
+      },
+      {
+        "name": "Tezila",
+        "location": "Kazordoon City",
+        "price": 100
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 100
+      },
+      {
+        "name": "Yonan",
+        "location": "Issavi",
+        "price": 100
+      },
+      {
+        "name": "Giri",
+        "location": "Moonfall",
+        "price": 100
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 100
+      }
+    ]
+  },
+  "gold nugget": {
+    "id": 3040,
+    "category": "Valuables",
+    "wiki_name": "Gold Nugget",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Augustin",
+        "location": "Bounac",
+        "price": 850
+      },
+      {
+        "name": "Briasol",
+        "location": "Ab'Dendriel City",
+        "price": 850
+      },
+      {
+        "name": "Chantalle",
+        "location": "Liberty Bay City",
+        "price": 850
+      },
+      {
+        "name": "Edmund",
+        "location": "Rathleton City",
+        "price": 850
+      },
+      {
+        "name": "Gail",
+        "location": "Port Hope City",
+        "price": 850
+      },
+      {
+        "name": "Hanna",
+        "location": "Thais City",
+        "price": 850
+      },
+      {
+        "name": "Ishina",
+        "location": "Darashia City",
+        "price": 850
+      },
+      {
+        "name": "Iwan",
+        "location": "Edron Castle",
+        "price": 850
+      },
+      {
+        "name": "Jessica",
+        "location": "Svargrond City",
+        "price": 850
+      },
+      {
+        "name": "Odemara",
+        "location": "Venore City",
+        "price": 850
+      },
+      {
+        "name": "Oiriz",
+        "location": "Yalahar Centre",
+        "price": 850
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 850
+      },
+      {
+        "name": "Tesha",
+        "location": "Ankrahmun City",
+        "price": 850
+      },
+      {
+        "name": "Tezila",
+        "location": "Kazordoon City",
+        "price": 850
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 850
+      },
+      {
+        "name": "Yonan",
+        "location": "Issavi",
+        "price": 850
+      },
+      {
+        "name": "Giri",
+        "location": "Moonfall",
+        "price": 850
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 850
+      }
+    ]
+  },
+  "might ring": {
+    "id": 3048,
+    "category": "Rings",
+    "wiki_name": "Might Ring",
+    "npc_sell": [
+      {
+        "name": "Yaman",
+        "location": "Mal'ouquah",
+        "price": 25000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Yaman",
+        "location": "Mal'ouquah",
+        "price": 250
+      }
+    ]
+  },
+  "stealth ring": {
+    "id": 3049,
+    "category": "Rings",
+    "wiki_name": "Stealth Ring",
+    "npc_sell": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 5000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 200
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 200
+      },
+      {
+        "name": "Aurelia",
+        "location": "Targuna",
+        "price": 200
+      }
+    ]
+  },
+  "life ring": {
+    "id": 3052,
+    "category": "Rings",
+    "wiki_name": "Life Ring",
+    "npc_sell": [
+      {
+        "name": "Alexander",
+        "location": "Edron Castle",
+        "price": 900
+      },
+      {
+        "name": "Khanna",
+        "location": "Issavi",
+        "price": 1000
+      },
+      {
+        "name": "Yaman",
+        "location": "Mal'ouquah",
+        "price": 900
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Yaman",
+        "location": "Mal'ouquah",
+        "price": 50
+      }
+    ]
+  },
+  "amulet of loss": {
+    "id": 3057,
+    "category": "Amulets",
+    "wiki_name": "Amulet of Loss",
+    "npc_sell": [
+      {
+        "name": "Eremo",
+        "location": "Edron Surroundings",
+        "price": 50000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Eremo",
+        "location": "Edron Surroundings",
+        "price": 45000
+      }
+    ]
+  },
+  "gold ring": {
+    "id": 3063,
+    "category": "Rings",
+    "wiki_name": "Gold Ring",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 8000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 8000
+      }
+    ]
+  },
+  "wand of inferno": {
+    "id": 3071,
+    "category": "Wands Rods",
+    "wiki_name": "Wand of Inferno",
+    "npc_sell": [
+      {
+        "name": "Alexander",
+        "location": "Edron Castle",
+        "price": 15000
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 15000
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 15000
+      },
+      {
+        "name": "Fenech",
+        "location": "Ankrahmun City",
+        "price": 15000
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 15000
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 15000
+      },
+      {
+        "name": "Khanna",
+        "location": "Issavi",
+        "price": 15000
+      },
+      {
+        "name": "Mordecai",
+        "location": "Rathleton City",
+        "price": 15000
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 15000
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 15000
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 15000
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 15000
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 15000
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 15000
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 15000
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 15000
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 15000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 3000
+      }
+    ]
+  },
+  "wand of decay": {
+    "id": 3072,
+    "category": "Wands Rods",
+    "wiki_name": "Wand of Decay",
+    "npc_sell": [
+      {
+        "name": "Hamish",
+        "location": "Dawnport Centre",
+        "price": 5000
+      },
+      {
+        "name": "Frans",
+        "location": "Venore City",
+        "price": 5000
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 5000
+      },
+      {
+        "name": "Khanna",
+        "location": "Issavi",
+        "price": 5000
+      },
+      {
+        "name": "Mordecai",
+        "location": "Rathleton City",
+        "price": 5000
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 5000
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 5000
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 5000
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 5000
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 5000
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 5000
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 5000
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 5000
+      },
+      {
+        "name": "Alexander",
+        "location": "Edron Castle",
+        "price": 5000
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 5000
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 5000
+      },
+      {
+        "name": "Fenech",
+        "location": "Ankrahmun City",
+        "price": 5000
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 5000
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 5000
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 5000
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 5000
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 5000
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 5000
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 5000
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 5000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 1000
+      }
+    ]
+  },
+  "boots of haste": {
+    "id": 3079,
+    "category": "Boots",
+    "wiki_name": "Boots of Haste",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 30000
+      }
+    ]
+  },
+  "stone skin amulet": {
+    "id": 3081,
+    "category": "Amulets",
+    "wiki_name": "Stone Skin Amulet",
+    "npc_sell": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 25000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 500
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 500
+      }
+    ]
+  },
+  "ring of wishes": {
+    "id": 3245,
+    "category": "Rings",
+    "wiki_name": "Ring of Wishes",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "magic longsword": {
+    "id": 3278,
+    "category": "Swords",
+    "wiki_name": "Magic Longsword",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 460
+      }
+    ]
+  },
+  "fire sword": {
+    "id": 3280,
+    "category": "Swords",
+    "wiki_name": "Fire Sword",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 335
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 4000
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 1000
+      },
+      {
+        "name": "Baltim",
+        "location": "Tyrsung",
+        "price": 1000
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 1000
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 1000
+      },
+      {
+        "name": "Esrik",
+        "location": "Farmine City",
+        "price": 1000
+      },
+      {
+        "name": "Flint",
+        "location": "Rathleton City",
+        "price": 1000
+      },
+      {
+        "name": "Gamel",
+        "location": "Thais City",
+        "price": 1000
+      },
+      {
+        "name": "Habdel",
+        "location": "Darashia City",
+        "price": 1000
+      },
+      {
+        "name": "Hardek",
+        "location": "Thais Surroundings",
+        "price": 1000
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 1000
+      },
+      {
+        "name": "Memech",
+        "location": "Ankrahmun City",
+        "price": 1000
+      },
+      {
+        "name": "Morpel",
+        "location": "Yalahar Centre",
+        "price": 1000
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 1000
+      },
+      {
+        "name": "Romella",
+        "location": "Venore City",
+        "price": 1000
+      },
+      {
+        "name": "Rowenna",
+        "location": "Carlin City",
+        "price": 1000
+      },
+      {
+        "name": "Sam",
+        "location": "Thais City",
+        "price": 1000
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 1000
+      },
+      {
+        "name": "Turvy",
+        "location": "Thais City",
+        "price": 1000
+      },
+      {
+        "name": "Ulrik",
+        "location": "Greenshore",
+        "price": 1000
+      },
+      {
+        "name": "Uzgod",
+        "location": "Kazordoon City",
+        "price": 1000
+      },
+      {
+        "name": "Wes the Blacksmith",
+        "location": "Bounac",
+        "price": 1000
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 1000
+      }
+    ]
+  },
+  "giant sword": {
+    "id": 3281,
+    "category": "Swords",
+    "wiki_name": "Giant Sword",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Alesar",
+        "location": "Mal'ouquah",
+        "price": 17000
+      },
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 100
+      }
+    ]
+  },
+  "magic sword": {
+    "id": 3288,
+    "category": "Swords",
+    "wiki_name": "Magic Sword",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 350
+      }
+    ]
+  },
+  "warlord sword": {
+    "id": 3296,
+    "category": "Swords",
+    "wiki_name": "Warlord Sword",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 360
+      }
+    ]
+  },
+  "thunder hammer": {
+    "id": 3309,
+    "category": "Clubs",
+    "wiki_name": "Thunder Hammer",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 450
+      }
+    ]
+  },
+  "obsidian lance": {
+    "id": 3313,
+    "category": "Axes",
+    "wiki_name": "Obsidian Lance",
+    "npc_sell": [
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 3000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 50
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 500
+      }
+    ]
+  },
+  "dwarven axe": {
+    "id": 3323,
+    "category": "Axes",
+    "wiki_name": "Dwarven Axe",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Gnomission",
+        "location": "Gnomegate",
+        "price": 1500
+      }
+    ]
+  },
+  "skull staff": {
+    "id": 3324,
+    "category": "Clubs",
+    "wiki_name": "Skull Staff",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Alesar",
+        "location": "Mal'ouquah",
+        "price": 6000
+      }
+    ]
+  },
+  "heavy machete": {
+    "id": 3330,
+    "category": "Swords",
+    "wiki_name": "Heavy Machete",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 90
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 90
+      }
+    ]
+  },
+  "arcane staff": {
+    "id": 3341,
+    "category": "Clubs",
+    "wiki_name": "Arcane Staff",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Gnomission",
+        "location": "Gnomegate",
+        "price": 42000
+      }
+    ]
+  },
+  "crossbow": {
+    "id": 3349,
+    "category": "Distance Weapons",
+    "wiki_name": "Crossbow",
+    "npc_sell": [
+      {
+        "name": "Coltrayne",
+        "location": "Dawnport Centre",
+        "price": 500
+      },
+      {
+        "name": "Talphion",
+        "location": "Kazordoon City",
+        "price": 500
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 500
+      },
+      {
+        "name": "Galuna",
+        "location": "Thais City",
+        "price": 500
+      },
+      {
+        "name": "Gnomerrow",
+        "location": "Kazordoon",
+        "price": 500
+      },
+      {
+        "name": "Irea",
+        "location": "Ab'Dendriel City",
+        "price": 500
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 500
+      },
+      {
+        "name": "Perac",
+        "location": "Carlin City",
+        "price": 500
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 500
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 500
+      },
+      {
+        "name": "Uzgod",
+        "location": "Kazordoon City",
+        "price": 500
+      },
+      {
+        "name": "Xed",
+        "location": "Venore City",
+        "price": 500
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 500
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 500
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 500
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 500
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 500
+      },
+      {
+        "name": "Dario",
+        "location": "Ankrahmun City",
+        "price": 500
+      },
+      {
+        "name": "Edoch",
+        "location": "Darashia City",
+        "price": 500
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 500
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 500
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 500
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 500
+      },
+      {
+        "name": "Perod",
+        "location": "Port Hope City",
+        "price": 500
+      },
+      {
+        "name": "Pompan",
+        "location": "Farmine City",
+        "price": 500
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 500
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 500
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 500
+      },
+      {
+        "name": "Taegen",
+        "location": "Fae Village",
+        "price": 500
+      },
+      {
+        "name": "Vincent",
+        "location": "Yalahar Centre",
+        "price": 500
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 500
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 500
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 500
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 20
+      },
+      {
+        "name": "Timur",
+        "location": "Fibula",
+        "price": 160
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 120
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 120
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 120
+      },
+      {
+        "name": "Dario",
+        "location": "Ankrahmun City",
+        "price": 120
+      },
+      {
+        "name": "Edoch",
+        "location": "Darashia City",
+        "price": 120
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 120
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 120
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 120
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 120
+      },
+      {
+        "name": "Perod",
+        "location": "Port Hope City",
+        "price": 120
+      },
+      {
+        "name": "Pompan",
+        "location": "Farmine City",
+        "price": 120
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 120
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 120
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 120
+      },
+      {
+        "name": "Taegen",
+        "location": "Fae Village",
+        "price": 120
+      },
+      {
+        "name": "Vincent",
+        "location": "Yalahar Centre",
+        "price": 120
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 120
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 120
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 120
+      },
+      {
+        "name": "Hector the Mentor",
+        "location": "Thais Peninsula",
+        "price": 100
+      }
+    ]
+  },
+  "bow": {
+    "id": 3350,
+    "category": "Distance Weapons",
+    "wiki_name": "Bow",
+    "npc_sell": [
+      {
+        "name": "Raffael",
+        "location": "Isle of Destiny",
+        "price": 350
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 400
+      },
+      {
+        "name": "Galuna",
+        "location": "Thais City",
+        "price": 400
+      },
+      {
+        "name": "Gnomerrow",
+        "location": "Kazordoon",
+        "price": 400
+      },
+      {
+        "name": "Irea",
+        "location": "Ab'Dendriel City",
+        "price": 400
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 400
+      },
+      {
+        "name": "Perac",
+        "location": "Carlin City",
+        "price": 400
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 400
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 400
+      },
+      {
+        "name": "Uzgod",
+        "location": "Kazordoon City",
+        "price": 400
+      },
+      {
+        "name": "Xed",
+        "location": "Venore City",
+        "price": 400
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 400
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 400
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 400
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 400
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 400
+      },
+      {
+        "name": "Dario",
+        "location": "Ankrahmun City",
+        "price": 400
+      },
+      {
+        "name": "Edoch",
+        "location": "Darashia City",
+        "price": 400
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 400
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 400
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 400
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 400
+      },
+      {
+        "name": "Perod",
+        "location": "Port Hope City",
+        "price": 400
+      },
+      {
+        "name": "Pompan",
+        "location": "Farmine City",
+        "price": 400
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 400
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 400
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 400
+      },
+      {
+        "name": "Taegen",
+        "location": "Fae Village",
+        "price": 400
+      },
+      {
+        "name": "Vincent",
+        "location": "Yalahar Centre",
+        "price": 400
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 400
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 400
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 400
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 350
+      },
+      {
+        "name": "Aurelia",
+        "location": "Targuna",
+        "price": 350
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 15
+      },
+      {
+        "name": "Timur",
+        "location": "Fibula",
+        "price": 130
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 100
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 100
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 100
+      },
+      {
+        "name": "Dario",
+        "location": "Ankrahmun City",
+        "price": 100
+      },
+      {
+        "name": "Edoch",
+        "location": "Darashia City",
+        "price": 100
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 100
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 100
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 100
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 100
+      },
+      {
+        "name": "Perod",
+        "location": "Port Hope City",
+        "price": 100
+      },
+      {
+        "name": "Pompan",
+        "location": "Farmine City",
+        "price": 100
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 100
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 100
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 100
+      },
+      {
+        "name": "Taegen",
+        "location": "Fae Village",
+        "price": 100
+      },
+      {
+        "name": "Vincent",
+        "location": "Yalahar Centre",
+        "price": 100
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 100
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 100
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 100
+      },
+      {
+        "name": "Hector the Mentor",
+        "location": "Thais Peninsula",
+        "price": 100
+      }
+    ]
+  },
+  "golden armor": {
+    "id": 3360,
+    "category": "Armors",
+    "wiki_name": "Golden Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 580
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 1500
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 20000
+      }
+    ]
+  },
+  "golden legs": {
+    "id": 3364,
+    "category": "Legs",
+    "wiki_name": "Golden Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 120
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 30000
+      }
+    ]
+  },
+  "golden helmet": {
+    "id": 3365,
+    "category": "Helmets Hats",
+    "wiki_name": "Golden Helmet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 420
+      }
+    ]
+  },
+  "magic plate armor": {
+    "id": 3366,
+    "category": "Armors",
+    "wiki_name": "Magic Plate Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 720
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 90000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 90000
+      }
+    ]
+  },
+  "crown armor": {
+    "id": 3381,
+    "category": "Armors",
+    "wiki_name": "Crown Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 210
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 12000
+      }
+    ]
+  },
+  "crown legs": {
+    "id": 3382,
+    "category": "Legs",
+    "wiki_name": "Crown Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 60
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 12000
+      }
+    ]
+  },
+  "crown helmet": {
+    "id": 3385,
+    "category": "Helmets Hats",
+    "wiki_name": "Crown Helmet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 70
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 2500
+      }
+    ]
+  },
+  "dragon scale mail": {
+    "id": 3386,
+    "category": "Armors",
+    "wiki_name": "Dragon Scale Mail",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 280
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 40000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 40000
+      }
+    ]
+  },
+  "demon helmet": {
+    "id": 3387,
+    "category": "Helmets Hats",
+    "wiki_name": "Demon Helmet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Gnomission",
+        "location": "Gnomegate",
+        "price": 40000
+      },
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 95
+      }
+    ]
+  },
+  "demon armor": {
+    "id": 3388,
+    "category": "Armors",
+    "wiki_name": "Demon Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 195
+      }
+    ]
+  },
+  "demon legs": {
+    "id": 3389,
+    "category": "Legs",
+    "wiki_name": "Demon Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 84
+      }
+    ]
+  },
+  "royal helmet": {
+    "id": 3392,
+    "category": "Helmets Hats",
+    "wiki_name": "Royal Helmet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 30000
+      }
+    ]
+  },
+  "dwarven helmet": {
+    "id": 3396,
+    "category": "Helmets Hats",
+    "wiki_name": "Dwarven Helmet",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "dwarven armor": {
+    "id": 3397,
+    "category": "Armors",
+    "wiki_name": "Dwarven Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 30000
+      }
+    ]
+  },
+  "dwarven legs": {
+    "id": 3398,
+    "category": "Legs",
+    "wiki_name": "Dwarven Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Gnomission",
+        "location": "Gnomegate",
+        "price": 40000
+      }
+    ]
+  },
+  "dragon scale helmet": {
+    "id": 3400,
+    "category": "Helmets Hats",
+    "wiki_name": "Dragon Scale Helmet",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "steel shield": {
+    "id": 3409,
+    "category": "Shields",
+    "wiki_name": "Steel Shield",
+    "npc_sell": [
+      {
+        "name": "Raffael",
+        "location": "Isle of Destiny",
+        "price": 200
+      },
+      {
+        "name": "Azil",
+        "location": "Darashia City",
+        "price": 240
+      },
+      {
+        "name": "Baltim",
+        "location": "Tyrsung",
+        "price": 240
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 240
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 240
+      },
+      {
+        "name": "Cornelia",
+        "location": "Carlin City",
+        "price": 240
+      },
+      {
+        "name": "Esrik",
+        "location": "Farmine City",
+        "price": 240
+      },
+      {
+        "name": "Flint",
+        "location": "Rathleton City",
+        "price": 240
+      },
+      {
+        "name": "Hardek",
+        "location": "Thais Surroundings",
+        "price": 240
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 240
+      },
+      {
+        "name": "Kroox",
+        "location": "Kazordoon City",
+        "price": 240
+      },
+      {
+        "name": "Memech",
+        "location": "Ankrahmun City",
+        "price": 240
+      },
+      {
+        "name": "Morpel",
+        "location": "Yalahar Centre",
+        "price": 240
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 240
+      },
+      {
+        "name": "Sam",
+        "location": "Thais City",
+        "price": 240
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 240
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 240
+      },
+      {
+        "name": "Turvy",
+        "location": "Thais City",
+        "price": 240
+      },
+      {
+        "name": "Ulrik",
+        "location": "Greenshore",
+        "price": 240
+      },
+      {
+        "name": "Wes the Blacksmith",
+        "location": "Bounac",
+        "price": 240
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 240
+      },
+      {
+        "name": "Yanni",
+        "location": "Venore City",
+        "price": 240
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 30
+      },
+      {
+        "name": "Azil",
+        "location": "Darashia City",
+        "price": 80
+      },
+      {
+        "name": "Baltim",
+        "location": "Tyrsung",
+        "price": 80
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 80
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 80
+      },
+      {
+        "name": "Cornelia",
+        "location": "Carlin City",
+        "price": 80
+      },
+      {
+        "name": "Esrik",
+        "location": "Farmine City",
+        "price": 80
+      },
+      {
+        "name": "Flint",
+        "location": "Rathleton City",
+        "price": 80
+      },
+      {
+        "name": "Hardek",
+        "location": "Thais Surroundings",
+        "price": 80
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 80
+      },
+      {
+        "name": "Kroox",
+        "location": "Kazordoon City",
+        "price": 80
+      },
+      {
+        "name": "Memech",
+        "location": "Ankrahmun City",
+        "price": 80
+      },
+      {
+        "name": "Morpel",
+        "location": "Yalahar Centre",
+        "price": 80
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 80
+      },
+      {
+        "name": "Sam",
+        "location": "Thais City",
+        "price": 80
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 80
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 80
+      },
+      {
+        "name": "Turvy",
+        "location": "Thais City",
+        "price": 80
+      },
+      {
+        "name": "Ulrik",
+        "location": "Greenshore",
+        "price": 80
+      },
+      {
+        "name": "Wes the Blacksmith",
+        "location": "Bounac",
+        "price": 80
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 80
+      },
+      {
+        "name": "Yanni",
+        "location": "Venore City",
+        "price": 80
+      },
+      {
+        "name": "Hector the Mentor",
+        "location": "Thais Peninsula",
+        "price": 30
+      },
+      {
+        "name": "Avriel",
+        "location": "Newhaven",
+        "price": 80
+      },
+      {
+        "name": "Aurelia",
+        "location": "Targuna",
+        "price": 80
+      }
+    ]
+  },
+  "mastermind shield": {
+    "id": 3414,
+    "category": "Shields",
+    "wiki_name": "Mastermind Shield",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 550
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 50000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 50000
+      }
+    ]
+  },
+  "crown shield": {
+    "id": 3419,
+    "category": "Shields",
+    "wiki_name": "Crown Shield",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 109
+      },
+      {
+        "name": "Nah'bob",
+        "location": "Ashta'daramai",
+        "price": 8000
+      }
+    ]
+  },
+  "demon shield": {
+    "id": 3420,
+    "category": "Shields",
+    "wiki_name": "Demon Shield",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 130
+      },
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 30000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 30000
+      }
+    ]
+  },
+  "dwarven shield": {
+    "id": 3425,
+    "category": "Shields",
+    "wiki_name": "Dwarven Shield",
+    "npc_sell": [
+      {
+        "name": "Azil",
+        "location": "Darashia City",
+        "price": 500
+      },
+      {
+        "name": "Baltim",
+        "location": "Tyrsung",
+        "price": 500
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 500
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 500
+      },
+      {
+        "name": "Cornelia",
+        "location": "Carlin City",
+        "price": 500
+      },
+      {
+        "name": "Esrik",
+        "location": "Farmine City",
+        "price": 500
+      },
+      {
+        "name": "Flint",
+        "location": "Rathleton City",
+        "price": 500
+      },
+      {
+        "name": "Hardek",
+        "location": "Thais Surroundings",
+        "price": 500
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 500
+      },
+      {
+        "name": "Kroox",
+        "location": "Kazordoon City",
+        "price": 500
+      },
+      {
+        "name": "Memech",
+        "location": "Ankrahmun City",
+        "price": 500
+      },
+      {
+        "name": "Morpel",
+        "location": "Yalahar Centre",
+        "price": 500
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 500
+      },
+      {
+        "name": "Sam",
+        "location": "Thais City",
+        "price": 500
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 500
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 500
+      },
+      {
+        "name": "Turvy",
+        "location": "Thais City",
+        "price": 500
+      },
+      {
+        "name": "Ulrik",
+        "location": "Greenshore",
+        "price": 500
+      },
+      {
+        "name": "Wes the Blacksmith",
+        "location": "Bounac",
+        "price": 500
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 500
+      },
+      {
+        "name": "Yanni",
+        "location": "Venore City",
+        "price": 500
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 55
+      },
+      {
+        "name": "Azil",
+        "location": "Darashia City",
+        "price": 100
+      },
+      {
+        "name": "Baltim",
+        "location": "Tyrsung",
+        "price": 100
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 100
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 100
+      },
+      {
+        "name": "Cornelia",
+        "location": "Carlin City",
+        "price": 100
+      },
+      {
+        "name": "Esrik",
+        "location": "Farmine City",
+        "price": 100
+      },
+      {
+        "name": "Flint",
+        "location": "Rathleton City",
+        "price": 100
+      },
+      {
+        "name": "Hardek",
+        "location": "Thais Surroundings",
+        "price": 100
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 100
+      },
+      {
+        "name": "Kroox",
+        "location": "Kazordoon City",
+        "price": 100
+      },
+      {
+        "name": "Memech",
+        "location": "Ankrahmun City",
+        "price": 100
+      },
+      {
+        "name": "Morpel",
+        "location": "Yalahar Centre",
+        "price": 100
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 100
+      },
+      {
+        "name": "Sam",
+        "location": "Thais City",
+        "price": 100
+      },
+      {
+        "name": "Shanar",
+        "location": "Ab'Dendriel City",
+        "price": 100
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 100
+      },
+      {
+        "name": "Turvy",
+        "location": "Thais City",
+        "price": 100
+      },
+      {
+        "name": "Ulrik",
+        "location": "Greenshore",
+        "price": 100
+      },
+      {
+        "name": "Wes the Blacksmith",
+        "location": "Bounac",
+        "price": 100
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 100
+      },
+      {
+        "name": "Yanni",
+        "location": "Venore City",
+        "price": 100
+      }
+    ]
+  },
+  "tower shield": {
+    "id": 3428,
+    "category": "Shields",
+    "wiki_name": "Tower Shield",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Alesar",
+        "location": "Mal'ouquah",
+        "price": 8000
+      },
+      {
+        "name": "H.L.",
+        "location": "Outlaw Camp",
+        "price": 90
+      }
+    ]
+  },
+  "golden boots": {
+    "id": 3555,
+    "category": "Boots",
+    "wiki_name": "Golden Boots",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "dragon ham": {
+    "id": 3583,
+    "category": "Food",
+    "wiki_name": "Dragon Ham",
+    "npc_sell": [
+      {
+        "name": "Jezzara",
+        "location": "Ankrahmun City",
+        "price": 25
+      }
+    ],
+    "npc_buy": []
+  },
+  "soul stone": {
+    "id": 5809,
+    "category": "Creature Products",
+    "wiki_name": "Soul Stone",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 6000
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 6000
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 6000
+      }
+    ]
+  },
+  "green dragon leather": {
+    "id": 5877,
+    "category": "Creature Products",
+    "wiki_name": "Green Dragon Leather",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Irmana",
+        "location": "Venore City",
+        "price": 100
+      },
+      {
+        "name": "Dal the Huntress",
+        "location": "Bounac",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 100
+      }
+    ]
+  },
+  "red dragon scale": {
+    "id": 5882,
+    "category": "Creature Products",
+    "wiki_name": "Red Dragon Scale",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 200
+      }
+    ]
+  },
+  "bat wing": {
+    "id": 5894,
+    "category": "Creature Products",
+    "wiki_name": "Bat Wing",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 50
+      },
+      {
+        "name": "Inigo",
+        "location": "Dawnport Centre",
+        "price": 50
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 50
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 50
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 50
+      }
+    ]
+  },
+  "bear paw": {
+    "id": 5896,
+    "category": "Creature Products",
+    "wiki_name": "Bear Paw",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Inigo",
+        "location": "Dawnport Centre",
+        "price": 100
+      },
+      {
+        "name": "Tom",
+        "location": "Rookgaard",
+        "price": 10
+      },
+      {
+        "name": "Ustan",
+        "location": "Port Hope City",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 100
+      }
+    ]
+  },
+  "dragon claw": {
+    "id": 5919,
+    "category": "Creature Products",
+    "wiki_name": "Dragon Claw",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 8000
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 8000
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 8000
+      }
+    ]
+  },
+  "green dragon scale": {
+    "id": 5920,
+    "category": "Creature Products",
+    "wiki_name": "Green Dragon Scale",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 100
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 100
+      }
+    ]
+  },
+  "blessed wooden stake": {
+    "id": 5942,
+    "category": "Tools",
+    "wiki_name": "Blessed Wooden Stake",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "soul orb": {
+    "id": 5944,
+    "category": "Valuables",
+    "wiki_name": "Soul Orb",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Augustin",
+        "location": "Bounac",
+        "price": 25
+      },
+      {
+        "name": "The Bone Master",
+        "location": "Pits of Inferno",
+        "price": 25
+      },
+      {
+        "name": "The Dream Master",
+        "location": "Pits of Inferno",
+        "price": 25
+      }
+    ]
+  },
+  "red dragon leather": {
+    "id": 5948,
+    "category": "Creature Products",
+    "wiki_name": "Red Dragon Leather",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Irmana",
+        "location": "Venore City",
+        "price": 200
+      },
+      {
+        "name": "Dal the Huntress",
+        "location": "Bounac",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 200
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 200
+      }
+    ]
+  },
+  "enchanted spear": {
+    "id": 7367,
+    "category": "Distance Weapons",
+    "wiki_name": "Enchanted Spear",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "royal spear": {
+    "id": 7378,
+    "category": "Distance Weapons",
+    "wiki_name": "Royal Spear",
+    "npc_sell": [
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 15
+      },
+      {
+        "name": "Brengus",
+        "location": "Port Hope City",
+        "price": 15
+      },
+      {
+        "name": "Cedrik",
+        "location": "Liberty Bay City",
+        "price": 15
+      },
+      {
+        "name": "Dario",
+        "location": "Ankrahmun City",
+        "price": 15
+      },
+      {
+        "name": "Edoch",
+        "location": "Darashia City",
+        "price": 15
+      },
+      {
+        "name": "Eliyas",
+        "location": "Issavi",
+        "price": 15
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 15
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 15
+      },
+      {
+        "name": "Mugruu",
+        "location": "Ogre Village",
+        "price": 15
+      },
+      {
+        "name": "Perod",
+        "location": "Port Hope City",
+        "price": 15
+      },
+      {
+        "name": "Pompan",
+        "location": "Farmine City",
+        "price": 15
+      },
+      {
+        "name": "Robert",
+        "location": "Svargrond City",
+        "price": 15
+      },
+      {
+        "name": "Silas",
+        "location": "Rathleton City",
+        "price": 15
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 15
+      },
+      {
+        "name": "Taegen",
+        "location": "Fae Village",
+        "price": 15
+      },
+      {
+        "name": "Vincent",
+        "location": "Yalahar Centre",
+        "price": 15
+      },
+      {
+        "name": "Willard",
+        "location": "Edron Castle",
+        "price": 15
+      },
+      {
+        "name": "Isika",
+        "location": "Silvertides",
+        "price": 15
+      },
+      {
+        "name": "Kiru",
+        "location": "Oskayaat",
+        "price": 15
+      }
+    ],
+    "npc_buy": []
+  },
+  "dragon slayer": {
+    "id": 7402,
+    "category": "Swords",
+    "wiki_name": "Dragon Slayer",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 15000
+      }
+    ]
+  },
+  "assassin dagger": {
+    "id": 7404,
+    "category": "Swords",
+    "wiki_name": "Assassin Dagger",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 20000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 20000
+      }
+    ]
+  },
+  "berserk potion": {
+    "id": 7439,
+    "category": "Potions",
+    "wiki_name": "Berserk Potion",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 500
+      }
+    ]
+  },
+  "mastermind potion": {
+    "id": 7440,
+    "category": "Potions",
+    "wiki_name": "Mastermind Potion",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 500
+      }
+    ]
+  },
+  "bullseye potion": {
+    "id": 7443,
+    "category": "Potions",
+    "wiki_name": "Bullseye Potion",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 500
+      }
+    ]
+  },
+  "great spirit potion": {
+    "id": 7642,
+    "category": "Potions",
+    "wiki_name": "Great Spirit Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 19
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 254
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 254
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 254
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 254
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 254
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 254
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 254
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 254
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 254
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 254
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 254
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 254
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 254
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 254
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 254
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 254
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 254
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 254
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 254
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 254
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 254
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 254
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 254
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 254
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 254
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 254
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 254
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 254
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 254
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 254
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 254
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 254
+      }
+    ],
+    "npc_buy": []
+  },
+  "ultimate health potion": {
+    "id": 7643,
+    "category": "Potions",
+    "wiki_name": "Ultimate Health Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 31
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 379
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 379
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 379
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 379
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 379
+      },
+      {
+        "name": "Digger",
+        "location": "Venore City",
+        "price": 379
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 379
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 379
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 379
+      },
+      {
+        "name": "Gnomegica",
+        "location": "Kazordoon",
+        "price": 379
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 379
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 379
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 379
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 379
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 379
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 379
+      },
+      {
+        "name": "Rachel",
+        "location": "Carlin City",
+        "price": 379
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 379
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 379
+      },
+      {
+        "name": "Shiriel",
+        "location": "Ab'Dendriel City",
+        "price": 379
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 379
+      },
+      {
+        "name": "Sigurd",
+        "location": "Kazordoon City",
+        "price": 379
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 379
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 379
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 379
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 379
+      },
+      {
+        "name": "Topsy",
+        "location": "Thais City",
+        "price": 379
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 379
+      },
+      {
+        "name": "Xodet",
+        "location": "Thais City",
+        "price": 379
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 379
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 379
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 379
+      }
+    ],
+    "npc_buy": []
+  },
+  "royal crossbow": {
+    "id": 8023,
+    "category": "Distance Weapons",
+    "wiki_name": "Royal Crossbow",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "spirit cloak": {
+    "id": 8042,
+    "category": "Armors",
+    "wiki_name": "Spirit Cloak",
+    "npc_sell": [
+      {
+        "name": "Lailene",
+        "location": "Edron Castle",
+        "price": 1000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Lailene",
+        "location": "Edron Castle",
+        "price": 350
+      }
+    ]
+  },
+  "crystalline armor": {
+    "id": 8050,
+    "category": "Armors",
+    "wiki_name": "Crystalline Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 16000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 16000
+      }
+    ]
+  },
+  "molten plate": {
+    "id": 8058,
+    "category": "Armors",
+    "wiki_name": "Molten Plate",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "paladin armor": {
+    "id": 8063,
+    "category": "Armors",
+    "wiki_name": "Paladin Armor",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 15000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 15000
+      }
+    ]
+  },
+  "spellbook of lost souls": {
+    "id": 8075,
+    "category": "Shields",
+    "wiki_name": "Spellbook of Lost Souls",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Alexander",
+        "location": "Edron Castle",
+        "price": 19000
+      },
+      {
+        "name": "Khanna",
+        "location": "Issavi",
+        "price": 17500
+      }
+    ]
+  },
+  "spellscroll of prophecies": {
+    "id": 8076,
+    "category": "Shields",
+    "wiki_name": "Spellscroll of Prophecies",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "spellbook of dark mysteries": {
+    "id": 8090,
+    "category": "Shields",
+    "wiki_name": "Spellbook of Dark Mysteries",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "wand of voodoo": {
+    "id": 8094,
+    "category": "Wands Rods",
+    "wiki_name": "Wand of Voodoo",
+    "npc_sell": [
+      {
+        "name": "Alexander",
+        "location": "Edron Castle",
+        "price": 22000
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 22000
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 22000
+      },
+      {
+        "name": "Fenech",
+        "location": "Ankrahmun City",
+        "price": 22000
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 22000
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 22000
+      },
+      {
+        "name": "Khanna",
+        "location": "Issavi",
+        "price": 22000
+      },
+      {
+        "name": "Mordecai",
+        "location": "Rathleton City",
+        "price": 22000
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 22000
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 22000
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 22000
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 22000
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 22000
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 22000
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 22000
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 22000
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 22000
+      }
+    ],
+    "npc_buy": [
+      {
+        "name": "Haroun",
+        "location": "Ashta'daramai",
+        "price": 4400
+      }
+    ]
+  },
+  "hellforged axe": {
+    "id": 8096,
+    "category": "Axes",
+    "wiki_name": "Hellforged Axe",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "sacred tree amulet": {
+    "id": 9302,
+    "category": "Amulets",
+    "wiki_name": "Sacred Tree Amulet",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rashid",
+        "location": "Darashia City",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Svargrond City",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Edron Castle",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Carlin City",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Ankrahmun City",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Liberty Bay City",
+        "price": 3000
+      },
+      {
+        "name": "Rashid",
+        "location": "Port Hope City",
+        "price": 3000
+      }
+    ]
+  },
+  "elvish talisman": {
+    "id": 9635,
+    "category": "Creature Products",
+    "wiki_name": "Elvish Talisman",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Tothdral",
+        "location": "Ankrahmun City",
+        "price": 45
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 45
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 45
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 45
+      }
+    ]
+  },
+  "wyvern talisman": {
+    "id": 9644,
+    "category": "Creature Products",
+    "wiki_name": "Wyvern Talisman",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fiona",
+        "location": "Edron Castle",
+        "price": 265
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 265
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 265
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 265
+      }
+    ]
+  },
+  "dragon scale boots": {
+    "id": 10201,
+    "category": "Boots",
+    "wiki_name": "Dragon Scale Boots",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "rope belt": {
+    "id": 11492,
+    "category": "Creature Products",
+    "wiki_name": "Rope Belt",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Irmana",
+        "location": "Venore City",
+        "price": 66
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 66
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 66
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 66
+      }
+    ]
+  },
+  "royal scale robe": {
+    "id": 11687,
+    "category": "Armors",
+    "wiki_name": "Royal Scale Robe",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "ornate chestplate": {
+    "id": 13993,
+    "category": "Armors",
+    "wiki_name": "Ornate Chestplate",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 60000
+      }
+    ]
+  },
+  "depth lorica": {
+    "id": 13994,
+    "category": "Armors",
+    "wiki_name": "Depth Lorica",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 30000
+      }
+    ]
+  },
+  "depth galea": {
+    "id": 13995,
+    "category": "Helmets Hats",
+    "wiki_name": "Depth Galea",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 35000
+      }
+    ]
+  },
+  "depth ocrea": {
+    "id": 13996,
+    "category": "Legs",
+    "wiki_name": "Depth Ocrea",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 16000
+      }
+    ]
+  },
+  "depth calcei": {
+    "id": 13997,
+    "category": "Boots",
+    "wiki_name": "Depth Calcei",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 25000
+      }
+    ]
+  },
+  "ornate legs": {
+    "id": 13999,
+    "category": "Legs",
+    "wiki_name": "Ornate Legs",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 40000
+      }
+    ]
+  },
+  "ornate shield": {
+    "id": 14000,
+    "category": "Shields",
+    "wiki_name": "Ornate Shield",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 42000
+      }
+    ]
+  },
+  "prismatic ring": {
+    "id": 16114,
+    "category": "Rings",
+    "wiki_name": "Prismatic Ring",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "crystalline sword": {
+    "id": 16160,
+    "category": "Swords",
+    "wiki_name": "Crystalline Sword",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "crystalline axe": {
+    "id": 16161,
+    "category": "Axes",
+    "wiki_name": "Crystalline Axe",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "silver token": {
+    "id": 22516,
+    "category": "Valuables",
+    "wiki_name": "Silver Token",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "gold token": {
+    "id": 22721,
+    "category": "Valuables",
+    "wiki_name": "Gold Token",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "ultimate mana potion": {
+    "id": 23373,
+    "category": "Potions",
+    "wiki_name": "Ultimate Mana Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 37
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 488
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 488
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 488
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 488
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 488
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 488
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 488
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 488
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 488
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 488
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 488
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 488
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 488
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 488
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 488
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 488
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 488
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 488
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 488
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 488
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 488
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 488
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 488
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 488
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 488
+      }
+    ],
+    "npc_buy": []
+  },
+  "ultimate spirit potion": {
+    "id": 23374,
+    "category": "Potions",
+    "wiki_name": "Ultimate Spirit Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 35
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 488
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 488
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 488
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 488
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 488
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 488
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 488
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 488
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 488
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 488
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 488
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 488
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 488
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 488
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 488
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 488
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 488
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 488
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 488
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 488
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 488
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 488
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 488
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 488
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 488
+      }
+    ],
+    "npc_buy": []
+  },
+  "supreme health potion": {
+    "id": 23375,
+    "category": "Potions",
+    "wiki_name": "Supreme Health Potion",
+    "npc_sell": [
+      {
+        "name": "Minzy",
+        "location": "Green Claw Swamp",
+        "price": 51
+      },
+      {
+        "name": "Alaistar",
+        "location": "Rathleton City",
+        "price": 650
+      },
+      {
+        "name": "Asima",
+        "location": "Darashia City",
+        "price": 650
+      },
+      {
+        "name": "Asnarus",
+        "location": "Roshamuul Mountains",
+        "price": 650
+      },
+      {
+        "name": "Chartan",
+        "location": "Spirittrails",
+        "price": 650
+      },
+      {
+        "name": "Chuckles",
+        "location": "Yalahar Centre",
+        "price": 650
+      },
+      {
+        "name": "Faloriel",
+        "location": "Issavi",
+        "price": 650
+      },
+      {
+        "name": "Frederik",
+        "location": "Liberty Bay City",
+        "price": 650
+      },
+      {
+        "name": "Ghorza",
+        "location": "Ogre Village",
+        "price": 650
+      },
+      {
+        "name": "Hireling",
+        "location": "Secret Subarea",
+        "price": 650
+      },
+      {
+        "name": "Maun",
+        "location": "Lower Roshamuul",
+        "price": 650
+      },
+      {
+        "name": "Mehkesh",
+        "location": "Ankrahmun City",
+        "price": 650
+      },
+      {
+        "name": "Nelly",
+        "location": "Svargrond City",
+        "price": 650
+      },
+      {
+        "name": "Onfroi",
+        "location": "Bounac",
+        "price": 650
+      },
+      {
+        "name": "Rabaz",
+        "location": "Farmine City",
+        "price": 650
+      },
+      {
+        "name": "Romir",
+        "location": "Svargrond Surroundings",
+        "price": 650
+      },
+      {
+        "name": "Sandra",
+        "location": "Edron Castle",
+        "price": 650
+      },
+      {
+        "name": "Siflind",
+        "location": "Nibelor",
+        "price": 650
+      },
+      {
+        "name": "Rock in a Hard Place",
+        "location": "Gray Beach",
+        "price": 650
+      },
+      {
+        "name": "Talila",
+        "location": "Fae Village",
+        "price": 650
+      },
+      {
+        "name": "Tandros",
+        "location": "Port Hope City",
+        "price": 650
+      },
+      {
+        "name": "Tarun",
+        "location": "Port Hope Surroundings",
+        "price": 650
+      },
+      {
+        "name": "Valindara",
+        "location": "Fae Village",
+        "price": 650
+      },
+      {
+        "name": "Sundara",
+        "location": "Moonfall",
+        "price": 650
+      },
+      {
+        "name": "Nipuna",
+        "location": "Silvertides",
+        "price": 650
+      },
+      {
+        "name": "Yerga",
+        "location": "Oskayaat",
+        "price": 650
+      }
+    ],
+    "npc_buy": []
+  },
+  "ring of blue plasma": {
+    "id": 23529,
+    "category": "Rings",
+    "wiki_name": "Ring of Blue Plasma",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fadil",
+        "location": "Darashia City",
+        "price": 8000
+      }
+    ]
+  },
+  "ring of green plasma": {
+    "id": 23531,
+    "category": "Rings",
+    "wiki_name": "Ring of Green Plasma",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fadil",
+        "location": "Darashia City",
+        "price": 8000
+      }
+    ]
+  },
+  "ring of red plasma": {
+    "id": 23533,
+    "category": "Rings",
+    "wiki_name": "Ring of Red Plasma",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Fadil",
+        "location": "Darashia City",
+        "price": 8000
+      }
+    ]
+  },
+  "gnome helmet": {
+    "id": 27647,
+    "category": "Helmets Hats",
+    "wiki_name": "Gnome Helmet",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "gnome armor": {
+    "id": 27648,
+    "category": "Armors",
+    "wiki_name": "Gnome Armor",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "gnome legs": {
+    "id": 27649,
+    "category": "Legs",
+    "wiki_name": "Gnome Legs",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "gnome shield": {
+    "id": 27650,
+    "category": "Shields",
+    "wiki_name": "Gnome Shield",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "gnome sword": {
+    "id": 27651,
+    "category": "Swords",
+    "wiki_name": "Gnome Sword",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon rod": {
+    "id": 28716,
+    "category": "Wands Rods",
+    "wiki_name": "Falcon Rod",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon wand": {
+    "id": 28717,
+    "category": "Wands Rods",
+    "wiki_name": "Falcon Wand",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon shield": {
+    "id": 28721,
+    "category": "Shields",
+    "wiki_name": "Falcon Shield",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon longsword": {
+    "id": 28723,
+    "category": "Swords",
+    "wiki_name": "Falcon Longsword",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon battleaxe": {
+    "id": 28724,
+    "category": "Axes",
+    "wiki_name": "Falcon Battleaxe",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "falcon crest": {
+    "id": 28823,
+    "category": "Creature Products",
+    "wiki_name": "Falcon Crest",
+    "npc_sell": [],
+    "npc_buy": [
+      {
+        "name": "Augustin",
+        "location": "Bounac",
+        "price": 650
+      },
+      {
+        "name": "Yasir",
+        "location": "Southern Darama",
+        "price": 650
+      },
+      {
+        "name": "Yasir",
+        "location": "Carlin",
+        "price": 650
+      },
+      {
+        "name": "Yasir",
+        "location": "Liberty Bay City",
+        "price": 650
+      }
+    ]
+  },
+  "winterblade": {
+    "id": 29422,
+    "category": "Swords",
+    "wiki_name": "Winterblade",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "cobra crossbow": {
+    "id": 30393,
+    "category": "Distance Weapons",
+    "wiki_name": "Cobra Crossbow",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "cobra axe": {
+    "id": 30396,
+    "category": "Axes",
+    "wiki_name": "Cobra Axe",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "cobra sword": {
+    "id": 30398,
+    "category": "Swords",
+    "wiki_name": "Cobra Sword",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "cobra wand": {
+    "id": 30399,
+    "category": "Wands Rods",
+    "wiki_name": "Cobra Wand",
+    "npc_sell": [],
+    "npc_buy": []
+  },
+  "cobra rod": {
+    "id": 30400,
+    "category": "Wands Rods",
+    "wiki_name": "Cobra Rod",
+    "npc_sell": [],
+    "npc_buy": []
+  }
+}
