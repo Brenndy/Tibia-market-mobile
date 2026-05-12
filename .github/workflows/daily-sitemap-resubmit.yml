@@ -1,0 +1,48 @@
+name: Daily sitemap resubmit
+
+# Re-pings GSC every day so the crawler keeps tibiatrader.com near the top
+# of its queue. Submission itself is idempotent — Google treats it as a
+# "we still care about this sitemap" signal rather than a content change,
+# which is exactly what we want while item URLs are still in the
+# discovered-but-not-indexed funnel.
+#
+# Setup (one-time):
+# 1. Create a Google Cloud project (or reuse one).
+# 2. Enable the Google Search Console API.
+# 3. Create a service account, generate a JSON key.
+# 4. In GSC -> Settings -> Users and permissions, add the service account's
+#    client_email as "Owner".
+# 5. In GitHub -> Settings -> Secrets and variables -> Actions, add a secret
+#    named GSC_SERVICE_ACCOUNT containing the entire JSON key.
+#
+# Security note: the only external input we touch is a repo secret passed
+# through an env var. No user-controlled github.event.* fields are
+# interpolated into shell commands, so workflow-injection patterns don't
+# apply here.
+
+on:
+  schedule:
+    # 04:00 UTC daily - quiet hours so we never compete with a deploy run.
+    - cron: '0 4 * * *'
+  # Manual trigger for ad-hoc resubmissions after big sitemap changes.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resubmit:
+    name: Re-submit sitemap to GSC
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Submit sitemap
+        env:
+          GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
+        run: node scripts/submit-sitemap.js
