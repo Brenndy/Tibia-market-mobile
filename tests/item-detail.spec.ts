@@ -8,13 +8,12 @@ test.beforeEach(async ({ page }) => {
   await clearStorage(page);
   await setSelectedWorld(page, 'Antica');
   await setLanguageEn(page);
-  await page.reload();
-  // Navigate to Demon Legs detail. Desktop now defaults to grid view so
-  // Demon Legs may render below the fold — scroll it in before clicking.
-  const demonLegs = page.getByText('Demon Legs').first();
-  await demonLegs.scrollIntoViewIfNeeded();
-  await expect(demonLegs).toBeVisible();
-  await demonLegs.click();
+  // Navigate directly to the item detail route. Clicking through the market
+  // list is brittle because FlatList virtualization on mobile viewport
+  // omits below-the-fold rows from the DOM, so getByText('Demon Legs') would
+  // never resolve. The detail route reads the item name from the URL path,
+  // so a direct goto is equivalent for detail-screen assertions.
+  await page.goto('/item/demon%20legs');
   await expect(page).toHaveURL(/item/);
 });
 
@@ -108,6 +107,9 @@ test.describe('Item detail — Demon Legs', () => {
 
   test('can navigate back to market', async ({ page }) => {
     await page.goBack();
-    await expect(page.getByText('Demon Legs').first()).toBeVisible();
+    await expect(page).toHaveURL(/\/$|\/\(tabs\)/);
+    // Market list virtualizes on mobile; assert on a stable header element
+    // instead of a specific row that may not be in the DOM.
+    await expect(page.getByPlaceholder(/search/i).first()).toBeVisible();
   });
 });
